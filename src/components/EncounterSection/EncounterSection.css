@@ -1,0 +1,78 @@
+/* ============================================================
+   ENCOUNTER SECTION — WARM BEIGE BACKGROUND
+   ============================================================ */
+
+.encounter-section {
+  background: var(--color-warm-beige);
+}
+
+.encounter-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.encounter-title {
+  color: var(--color-text-dark);
+  margin-bottom: 20px;
+}
+
+.encounter-sub {
+  color: var(--color-text-mid);
+  margin-bottom: 52px;
+  line-height: 1.7;
+}
+
+/* ---- Action rows ---- */
+.encounter-list {
+  text-align: left;
+}
+
+.encounter-list .divider {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.encounter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  text-decoration: none;
+  transition: padding-left var(--transition-fast);
+}
+
+.encounter-row:hover {
+  padding-left: 6px;
+}
+
+.enc-label {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 400;
+  color: var(--color-text-dark);
+  transition: color var(--transition-fast);
+}
+
+.encounter-row:hover .enc-label {
+  color: var(--color-black);
+}
+
+.enc-arrow {
+  font-size: 18px;
+  color: var(--color-text-dark);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.encounter-row:hover .enc-arrow {
+  transform: translateX(6px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  .encounter-inner {
+    max-width: 100%;
+  }
+}

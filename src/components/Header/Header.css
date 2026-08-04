@@ -1,0 +1,211 @@
+/* ============================================================
+   HEADER / NAVIGATION
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  background: var(--color-black);
+  transition: box-shadow var(--transition-fast);
+}
+
+.site-header.scrolled {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+}
+
+/* ---- LOGO ---- */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  /* The official ACI Diocese logo has a light background.
+     We contain it in a small rounded rectangle to keep it clean on the dark header. */
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+}
+
+.logo-tagline {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+}
+
+/* ---- NAV LIST ---- */
+.header-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.82);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.nav-link:hover,
+.nav-item.active .nav-link {
+  color: var(--color-white);
+}
+
+.chevron {
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.nav-item.active .chevron {
+  transform: rotate(180deg);
+}
+
+/* ---- DROPDOWN PANEL ---- */
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 240px;
+  background: var(--color-white);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 200;
+}
+
+.dropdown-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.dropdown-panel ul {
+  padding: 10px 0;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 11px 24px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-dark);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.dropdown-link:hover {
+  background: var(--color-soft-gray);
+  color: var(--color-black);
+}
+
+/* ---- RIGHT CONTROLS ---- */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: rgba(255, 255, 255, 0.82);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.icon-btn:hover {
+  color: var(--color-white);
+}
+
+/* Hamburger */
+.hamburger {
+  flex-direction: column;
+  gap: 5px;
+  display: none; /* shown only on mobile */
+}
+
+.ham-line {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .header-nav { display: none; }
+  .hamburger  { display: flex; }
+  .header-inner { gap: 16px; }
+}
+
+@media (max-width: 640px) {
+  .logo-tagline { display: none; }
+}

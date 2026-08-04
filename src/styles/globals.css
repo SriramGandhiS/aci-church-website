@@ -1,0 +1,305 @@
+/* ============================================================
+   ACI DIOCESE — GLOBAL STYLES
+   Design tokens, reset, typography, utilities
+   ============================================================ */
+
+/* ---------- CSS CUSTOM PROPERTIES (Design Tokens) ---------- */
+:root {
+  /* Colors */
+  --color-black:       #000000;
+  --color-near-black:  #191919;
+  --color-dark-gray:   #1C1C1C;
+  --color-dark-mid:    #1B1B1B;
+  --color-white:       #FFFFFF;
+  --color-warm-beige:  #EEE9DD;
+  --color-soft-gray:   #F3F3F1;
+  --color-text-dark:   #090909;
+  --color-text-mid:    #333333;
+  --color-text-muted:  #666666;
+  --color-text-light:  rgba(255, 255, 255, 0.85);
+  --color-divider-dark:rgba(255, 255, 255, 0.12);
+  --color-divider-light:rgba(0, 0, 0, 0.12);
+
+  /* Typography */
+  --font-serif:   'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* Spacing */
+  --section-pad-desktop: 120px;
+  --section-pad-tablet:  80px;
+  --section-pad-mobile:  60px;
+
+  /* Content width */
+  --max-width:     1280px;
+  --max-width-text: 1100px;
+
+  /* Nav */
+  --nav-height: 76px;
+
+  /* Transitions */
+  --transition-fast: 250ms ease;
+  --transition-mid:  400ms ease;
+  --transition-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- RESET ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-text-dark);
+  background-color: var(--color-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ---------- TYPOGRAPHY SCALE ---------- */
+
+/* Hero headline */
+.t-hero {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 7vw, 100px);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+}
+
+/* Major editorial headline */
+.t-headline {
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 4.5vw, 68px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Section title serif */
+.t-section-serif {
+  font-family: var(--font-serif);
+  font-size: clamp(42px, 5.5vw, 76px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Editorial serif statement */
+.t-statement {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.2vw, 50px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Body */
+.t-body {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.1vw, 17px);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* Small uppercase label */
+.t-label {
+  font-family: var(--font-sans);
+  font-size: clamp(11px, 0.85vw, 14px);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Navigation */
+.t-nav {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 0.95vw, 15px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- LAYOUT UTILITIES ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 4vw, 64px);
+  padding-right: clamp(20px, 4vw, 64px);
+}
+
+.section-pad {
+  padding-top: var(--section-pad-desktop);
+  padding-bottom: var(--section-pad-desktop);
+}
+
+/* ---------- BUTTON SYSTEM ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 26px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+}
+
+.btn .arrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Dark button (black bg, white text) */
+.btn-dark {
+  background: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+.btn-dark:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+/* Light button (white bg, black text) */
+.btn-light {
+  background: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-white);
+}
+
+.btn-light:hover {
+  background: transparent;
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+/* Outline on dark background */
+.btn-outline-white {
+  background: transparent;
+  color: var(--color-white);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.btn-outline-white:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-white);
+}
+
+/* ---------- SCROLL REVEAL ANIMATION ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- THIN DIVIDER ---------- */
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-divider-light);
+}
+
+.divider-dark {
+  background: var(--color-divider-dark);
+}
+
+/* ---------- RESPONSIVE HELPERS ---------- */
+
+@media (max-width: 1024px) {
+  .section-pad {
+    padding-top: var(--section-pad-tablet);
+    padding-bottom: var(--section-pad-tablet);
+  }
+}
+
+@media (max-width: 640px) {
+  .section-pad {
+    padding-top: var(--section-pad-mobile);
+    padding-bottom: var(--section-pad-mobile);
+  }
+}
+
+/* ---------- FOCUS STATES (accessibility) ---------- */
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.bg-dark :focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-light :focus-visible {
+  outline-color: var(--color-black);
+}

@@ -1,0 +1,75 @@
+/* ============================================================
+   FEATURED SECTION — FULL-WIDTH CINEMATIC IMAGE
+   ============================================================ */
+
+.featured-section {
+  position: relative;
+  min-height: 460px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.featured-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.featured-section:hover .featured-img {
+  transform: scale(1.02);
+}
+
+.featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.featured-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 60px;
+  padding-top: 120px;
+}
+
+.feat-eyebrow {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+}
+
+.feat-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5vw, 68px);
+  font-weight: 400;
+  color: var(--color-white);
+  line-height: 1.1;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+
+.feat-btn {
+  /* white button on dark image */
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  .featured-section {
+    min-height: 360px;
+  }
+}
