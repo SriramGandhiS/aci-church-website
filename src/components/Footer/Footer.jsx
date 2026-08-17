@@ -10,7 +10,7 @@ export default function Footer() {
         {/* Main footer grid */}
         <div className="footer-grid">
 
-          {/* Column 1 — About */}
+          {/* Column 1 — About & Office */}
           <div className="footer-col footer-col-about">
             <div className="footer-logo">
               <img
@@ -26,15 +26,14 @@ export default function Footer() {
               </div>
             </div>
             <p className="footer-about-text">
-              Apostolic Council of India Diocese — a Christ-centered community
-              committed to faith, fellowship, service and transforming lives
-              across Tamil Nadu and beyond.
+              Apostolic Council of India Diocese — serving churches, pastors, and communities across Tamil Nadu and India with commitment to Christian faith, fellowship, and service.
             </p>
             <address className="footer-address">
-              6/110, Melapatty,<br />
-              Hanumantharayan Kottai,<br />
-              Dindigul District,<br />
-              Tamil Nadu, India – 624002
+              <strong>Central Diocesan Office:</strong><br />
+              6/110, Melapatty, Hanumantharayan Kottai,<br />
+              Dindigul District, Tamil Nadu, India – 624002<br /><br />
+              <strong>Office Phone:</strong> 0451-2480100<br />
+              <strong>Working Hours:</strong> Mon – Sat: 9:30 AM – 1:30 PM &amp; 2:30 PM – 6:30 PM
             </address>
           </div>
 
@@ -42,12 +41,12 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-col-title t-label">Connect</h3>
             <ul className="footer-links" role="list">
-              <li><a href="#about" className="footer-link">About</a></li>
-              <li><a href="#leadership" className="footer-link">Leadership</a></li>
-              <li><a href="#ministries" className="footer-link">Ministries</a></li>
-              <li><a href="#events" className="footer-link">Events</a></li>
-              <li><a href="#churches" className="footer-link">Churches</a></li>
-              <li><a href="#contact" className="footer-link">Contact</a></li>
+              <li><a href="#about" className="footer-link">About Diocese</a></li>
+              <li><a href="#about" className="footer-link">Founder Message</a></li>
+              <li><a href="#schools" className="footer-link">Diocesan Board</a></li>
+              <li><a href="#schools" className="footer-link">The Synod</a></li>
+              <li><a href="#events" className="footer-link">Upcoming Events</a></li>
+              <li><a href="#contact" className="footer-link">Contact Us</a></li>
             </ul>
           </div>
 
@@ -55,11 +54,10 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-col-title t-label">Resources</h3>
             <ul className="footer-links" role="list">
-              <li><a href="#messages" className="footer-link">Messages</a></li>
-              <li><a href="#media" className="footer-link">Media</a></li>
-              <li><a href="#prayer" className="footer-link">Prayer</a></li>
-              <li><a href="#publications" className="footer-link">Publications</a></li>
-              <li><a href="#downloads" className="footer-link">Downloads</a></li>
+              <li><a href="#encounter" className="footer-link">Prayer Requests</a></li>
+              <li><a href="#featured" className="footer-link">Messages &amp; Sermons</a></li>
+              <li><a href="#ministries" className="footer-link">Outreach &amp; Ministries</a></li>
+              <li><a href="#schools" className="footer-link">Bible &amp; Synod Publications</a></li>
             </ul>
           </div>
 
@@ -67,9 +65,8 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-col-title t-label">More</h3>
             <ul className="footer-links" role="list">
-              <li><a href="#give" className="footer-link">Give</a></li>
-              <li><a href="#news" className="footer-link">News</a></li>
-              <li><a href="#bible-school" className="footer-link">Bible School</a></li>
+              <li><a href="#give" className="footer-link">Opportunity to Sow / Partnership</a></li>
+              <li><a href="#events" className="footer-link">Diocese Updates</a></li>
               <li><a href="#privacy" className="footer-link">Privacy Policy</a></li>
               <li><a href="#terms" className="footer-link">Terms of Use</a></li>
             </ul>
@@ -77,26 +74,37 @@ export default function Footer() {
 
           {/* Column 5 — Social */}
           <div className="footer-col">
-            <h3 className="footer-col-title t-label">Social</h3>
+            <h3 className="footer-col-title t-label">Social Media</h3>
             <ul className="footer-links" role="list">
-              {/* 
-                Social URLs pending — do not link to unverified accounts.
-                Replace href values when official ACI Diocese profiles are confirmed.
-              */}
               <li>
-                <span className="footer-link footer-link-disabled" aria-label="Facebook (coming soon)">
+                <a
+                  href="https://www.facebook.com/bishopacidiocese"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
                   Facebook
-                </span>
+                </a>
               </li>
               <li>
-                <span className="footer-link footer-link-disabled" aria-label="Instagram (coming soon)">
-                  Instagram
-                </span>
-              </li>
-              <li>
-                <span className="footer-link footer-link-disabled" aria-label="YouTube (coming soon)">
+                <a
+                  href="https://www.youtube.com/channel/UCbmbpSjkDBJR-59lYq-pIjQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
                   YouTube
-                </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com/revjohnsondurai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  Twitter
+                </a>
               </li>
             </ul>
           </div>
@@ -108,7 +116,7 @@ export default function Footer() {
           <div className="divider divider-dark" style={{ marginBottom: '28px' }} />
           <div className="footer-bottom-row">
             <p className="footer-copy">
-              &copy; {year} Apostolic Council of India Diocese. All Rights Reserved.
+              &copy; {year} Apostolic Council of India Diocese, Dindigul. All Rights Reserved.
             </p>
             <div className="footer-bottom-links">
               <a href="#privacy" className="footer-meta-link">Privacy</a>

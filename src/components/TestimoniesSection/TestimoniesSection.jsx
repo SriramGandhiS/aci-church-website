@@ -2,32 +2,27 @@ import { useEffect, useRef } from 'react'
 import './TestimoniesSection.css'
 
 /*
- * Testimonies — Use only real testimonials supplied by ACI Diocese.
- * The entries below are clearly marked as PLACEHOLDER content for development.
- * Replace with actual testimonies from the client before going live.
+ * Partner Testimonies — Ported from ACI Diocese Old Website
  */
 const testimonies = [
   {
     id: 1,
     quote:
-      'Being part of ACI Diocese has transformed my life and the life of my family. The fellowship, prayer and discipleship I received here gave me a foundation I carry into every aspect of ministry.',
-    name: '[Placeholder — Pastor Name, Location]',
-    role: 'Placeholder testimony — replace with actual ACI Diocese member testimony',
+      'Since 2014, the day we affiliated with Apostolic Council of India Diocese, we are being blessed in different ways in our ministries and Churches. Our Church is lifted up in the City of Madurai by believing, teaching and strengthening through the real shepherding through the Word by the diocese.',
+    name: 'Rev. Helen Daniel M.Th., Ph.D.',
+    role: 'Episcopal Pastor, Good Shepherd Revival Churches, Paravai & Vilangudi, Madurai',
   },
   {
     id: 2,
     quote:
-      'ACI Diocese has been a home for our church. The training, the community, and the pastoral support we have received have strengthened our congregation beyond what we imagined.',
-    name: '[Placeholder — Pastor Name, Location]',
-    role: 'Placeholder testimony — replace with actual ACI Diocese member testimony',
+      'The Diocese is very helpful to our Church and our believers by its various activities like Children ministry training, Village ministry (VBS), Church visits to encourage the local churches affiliated with the diocese, and the valuable biblical counseling of the Bishop.',
+    name: 'Episcopal Ministry Team',
+    role: 'Good Shepherd Revival Churches, Madurai',
   },
 ]
 
 export default function TestimoniesSection() {
-  const sectionRef   = useRef(null)
-  const activeRef    = useRef(0)
-  const indicatorRef = useRef(null)
-  const contentRef   = useRef(null)
+  const sectionRef = useRef(null)
 
   useEffect(() => {
     const els = sectionRef.current?.querySelectorAll('.reveal')
@@ -51,11 +46,14 @@ export default function TestimoniesSection() {
       ref={sectionRef}
       id="testimonies"
       className="testimonies-section section-pad"
-      aria-label="Testimonies"
+      aria-label="Partner Testimonies"
     >
       <div className="container">
 
-        <p className="test-label t-label reveal">Testimonies</p>
+        <p className="test-label t-label reveal">Partner Testimonies</p>
+        <h2 className="t-headline reveal" style={{ marginBottom: '40px', maxWidth: '640px' }}>
+          Witnesses of God&apos;s blessings through ACI Diocese.
+        </h2>
 
         <div className="test-grid">
           {testimonies.map((t) => (
@@ -71,9 +69,9 @@ export default function TestimoniesSection() {
           ))}
         </div>
 
-        <div className="test-cta reveal reveal-delay-2">
-          <a href="#testimonies-all" className="btn btn-dark">
-            Read More Stories <span className="arrow">→</span>
+        <div className="test-cta reveal reveal-delay-2" style={{ marginTop: '40px' }}>
+          <a href="#encounter" className="btn btn-dark">
+            Partner With ACI Diocese <span className="arrow">→</span>
           </a>
         </div>
 

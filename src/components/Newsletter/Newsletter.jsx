@@ -47,11 +47,6 @@ export default function Newsletter() {
       setErrors(errs)
       return
     }
-    /*
-     * TODO: Connect to email marketing API / backend endpoint.
-     * Example: POST /api/newsletter with { firstName, lastName, email }
-     * Until a backend is configured, this shows a success state.
-     */
     console.info('[ACI Newsletter] Subscribe:', form)
     setSubmitted(true)
   }
@@ -59,25 +54,52 @@ export default function Newsletter() {
   return (
     <section
       ref={sectionRef}
-      id="newsletter"
+      id="give"
       className="newsletter-section section-pad"
-      aria-label="Email Newsletter"
+      aria-label="Partnership, Giving and Newsletter"
     >
       <div className="container">
         <div className="nl-inner">
 
+          {/* Giving & Sowing Section */}
+          <div className="reveal" style={{ marginBottom: '56px', textAlign: 'center' }}>
+            <p className="nl-label t-label">PARTNERSHIP &amp; CONTRIBUTIONS</p>
+            <h2 className="nl-heading" style={{ fontSize: 'clamp(28px, 4vw, 42px)', marginBottom: '16px' }}>
+              Opportunity to Sow &amp; Support Ministries
+            </h2>
+            <p className="nl-sub t-body" style={{ maxWidth: '720px', margin: '0 auto 32px auto' }}>
+              &ldquo;Now He who supplies seed to the sower and bread for food will also supply and increase your store of seed and will enlarge the harvest of your righteousness.&rdquo; — 2 Corinthians 9:10
+            </p>
+
+            {/* Bank details card */}
+            <div style={{ background: 'rgba(255,255,255,0.06)', padding: '28px', border: '1px solid rgba(255,255,255,0.15)', display: 'inline-block', textAlign: 'left', maxWidth: '540px', width: '100%' }}>
+              <h3 style={{ fontSize: '16px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px', color: 'var(--color-white)' }}>
+                ACI Diocese Bank Details:
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '15px', color: 'rgba(255,255,255,0.9)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <li><strong>Account Name:</strong> Apostolic Council of India Diocese</li>
+                <li><strong>Account No.:</strong> <span style={{ color: '#FFD700', fontWeight: 600 }}>1567201000059</span></li>
+                <li><strong>IFSC Code:</strong> CNRB0001567</li>
+                <li><strong>Bank Name:</strong> Canara Bank</li>
+                <li><strong>Branch:</strong> Hanumantharayankottai, Dindigul District</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="divider divider-dark" style={{ marginBottom: '48px', opacity: 0.2 }} />
+
           {/* Header */}
-          <p className="nl-label t-label reveal">Email Newsletter</p>
-          <h2 className="nl-heading reveal reveal-delay-1">Stay Connected</h2>
+          <p className="nl-label t-label reveal">Email Updates</p>
+          <h2 className="nl-heading reveal reveal-delay-1">Stay Connected With ACI Diocese</h2>
           <p className="nl-sub t-body reveal reveal-delay-2">
-            Receive updates, messages and news from ACI Diocese directly in your inbox.
+            Receive pastoral messages, event invitations, and magazine publications directly in your inbox.
           </p>
 
           {/* Form */}
           {submitted ? (
             <div className="nl-success reveal" role="alert">
               <p className="nl-success-text">
-                Thank you for subscribing. You will hear from us soon.
+                Thank you for subscribing. You will receive official ACI Diocese updates soon.
               </p>
             </div>
           ) : (

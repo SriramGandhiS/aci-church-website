@@ -1,10 +1,9 @@
 import './FeaturedSection.css'
 
 /*
- * Featured section image — Tamil Nadu Christian conference/convention.
- * Replace /img-featured.jpg with actual ACI Diocese conference photograph.
+ * Featured section image — Migrated from ACI Diocese old website slider.
  */
-const FEATURED_IMG = '/img-featured.jpg'
+const FEATURED_IMG = '/migrated/02.jpg'
 
 export default function FeaturedSection() {
   return (
@@ -17,19 +16,20 @@ export default function FeaturedSection() {
       <div className="featured-bg">
         <img
           src={FEATURED_IMG}
-          alt="ACI Diocese annual conference and worship gathering"
+          alt="ACI Diocese annual gathering and worship"
           className="featured-img"
           loading="lazy"
+          onError={(e) => { e.target.src = '/img-featured.jpg' }}
         />
         <div className="featured-overlay" aria-hidden="true" />
       </div>
 
       {/* Content */}
       <div className="featured-content container">
-        <p className="feat-eyebrow t-label">Latest Message</p>
-        <h2 className="feat-headline">Walking in Faith</h2>
-        <a href="#messages" className="btn btn-light feat-btn">
-          Watch Now <span className="arrow">→</span>
+        <p className="feat-eyebrow t-label">Diocese Message &amp; Vision</p>
+        <h2 className="feat-headline">Walking in Faith &amp; Kingdom Mission</h2>
+        <a href="#about" className="btn btn-light feat-btn">
+          Read Founder Message <span className="arrow">→</span>
         </a>
       </div>
     </section>
