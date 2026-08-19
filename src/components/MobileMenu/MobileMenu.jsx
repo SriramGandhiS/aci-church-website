@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { navItems } from '../../data/navigation'
 import './MobileMenu.css'
 
 export default function MobileMenu({ isOpen, onClose }) {
   const [expandedIdx, setExpandedIdx] = useState(null)
 
-  /* ESC to close */
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
   }, [onClose])
 
-  /* Lock body scroll */
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  /* Reset expanded when menu closes */
   useEffect(() => {
     if (!isOpen) setExpandedIdx(null)
   }, [isOpen])
@@ -35,9 +33,8 @@ export default function MobileMenu({ isOpen, onClose }) {
       aria-modal="true"
       aria-label="Navigation menu"
     >
-      {/* Header row */}
       <div className="mm-header">
-        <a href="/" className="mm-logo" onClick={onClose}>
+        <Link to="/" className="mm-logo" onClick={onClose}>
           <img
             src="/aci-logo.png"
             alt="ACI Diocese"
@@ -46,7 +43,7 @@ export default function MobileMenu({ isOpen, onClose }) {
             height="40"
           />
           <span className="mm-logo-name">ACI Diocese</span>
-        </a>
+        </Link>
         <button
           className="mm-close"
           onClick={onClose}
@@ -58,31 +55,39 @@ export default function MobileMenu({ isOpen, onClose }) {
         </button>
       </div>
 
-      {/* Nav links */}
       <nav className="mm-nav" aria-label="Mobile navigation">
         <ul className="mm-list" role="list">
           {navItems.map((item, idx) => (
             <li key={idx} className="mm-item">
               {item.hasDropdown ? (
                 <>
-                  <button
-                    className="mm-link mm-toggle"
-                    onClick={() => toggleSub(idx)}
-                    aria-expanded={expandedIdx === idx}
-                    aria-controls={`mm-sub-${idx}`}
-                  >
-                    <span>{item.label}</span>
-                    <svg
-                      className={`mm-chevron${expandedIdx === idx ? ' rotated' : ''}`}
-                      width="14"
-                      height="8"
-                      viewBox="0 0 14 8"
-                      fill="none"
-                      aria-hidden="true"
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <Link
+                      to={item.href}
+                      className="mm-link"
+                      onClick={onClose}
+                      style={{ flex: 1 }}
                     >
-                      <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                      {item.label}
+                    </Link>
+                    <button
+                      className="mm-link mm-toggle"
+                      onClick={() => toggleSub(idx)}
+                      aria-expanded={expandedIdx === idx}
+                      style={{ width: 'auto', padding: '18px 20px' }}
+                    >
+                      <svg
+                        className={`mm-chevron${expandedIdx === idx ? ' rotated' : ''}`}
+                        width="14"
+                        height="8"
+                        viewBox="0 0 14 8"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
 
                   <ul
                     id={`mm-sub-${idx}`}
@@ -91,32 +96,31 @@ export default function MobileMenu({ isOpen, onClose }) {
                   >
                     {item.items.map((sub, si) => (
                       <li key={si}>
-                        <a
-                          href={sub.href}
+                        <Link
+                          to={sub.href}
                           className="mm-sub-link"
                           onClick={onClose}
                         >
                           {sub.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 </>
               ) : (
-                <a href={item.href} className="mm-link" onClick={onClose}>
+                <Link to={item.href} className="mm-link" onClick={onClose}>
                   {item.label}
-                </a>
+                </Link>
               )}
             </li>
           ))}
         </ul>
       </nav>
 
-      {/* Bottom CTA */}
       <div className="mm-bottom">
-        <a href="#give" className="btn btn-light mm-give" onClick={onClose}>
-          Give <span className="arrow">→</span>
-        </a>
+        <Link to="/partnership#sow" className="btn btn-light mm-give" onClick={onClose}>
+          Sow Your Seed <span className="arrow">→</span>
+        </Link>
       </div>
     </div>
   )

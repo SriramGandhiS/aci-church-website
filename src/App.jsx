@@ -1,43 +1,41 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
-import Hero from './components/Hero/Hero'
-import AboutSection from './components/AboutSection/AboutSection'
-import MinistriesSection from './components/MinistriesSection/MinistriesSection'
-import EncounterSection from './components/EncounterSection/EncounterSection'
-import FeaturedSection from './components/FeaturedSection/FeaturedSection'
-import SchoolsSection from './components/SchoolsSection/SchoolsSection'
-import MediaSection from './components/MediaSection/MediaSection'
-import GallerySection from './components/GallerySection/GallerySection'
-import EventsSection from './components/EventsSection/EventsSection'
-import TestimoniesSection from './components/TestimoniesSection/TestimoniesSection'
-import Newsletter from './components/Newsletter/Newsletter'
 import Footer from './components/Footer/Footer'
 import SearchOverlay from './components/SearchOverlay/SearchOverlay'
 import MobileMenu from './components/MobileMenu/MobileMenu'
+
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ActivitiesPage from './pages/ActivitiesPage'
+import PartnershipPage from './pages/PartnershipPage'
+import SynodPage from './pages/SynodPage'
+import MediaPage from './pages/MediaPage'
+import GalleryPage from './pages/GalleryPage'
+import ContactPage from './pages/ContactPage'
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <>
+    <Router>
       <Header
         onSearchOpen={() => setSearchOpen(true)}
         onMenuOpen={() => setMobileMenuOpen(true)}
       />
 
       <main>
-        <Hero />
-        <AboutSection />
-        <MinistriesSection />
-        <EncounterSection />
-        <FeaturedSection />
-        <SchoolsSection />
-        <MediaSection />
-        <GallerySection />
-        <EventsSection />
-        <TestimoniesSection />
-        <Newsletter />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/activities" element={<ActivitiesPage />} />
+          <Route path="/partnership" element={<PartnershipPage />} />
+          <Route path="/synod" element={<SynodPage />} />
+          <Route path="/media" element={<MediaPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
       </main>
 
       <Footer />
@@ -51,7 +49,7 @@ function App() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
-    </>
+    </Router>
   )
 }
 

@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { navItems } from '../../data/navigation'
 import './Header.css'
 
 export default function Header({ onSearchOpen, onMenuOpen }) {
   const [activeDropdown, setActiveDropdown] = useState(null)
-  const [isScrolled, setIsScrolled]       = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const headerRef = useRef(null)
   const closeTimer = useRef(null)
+  const location = useLocation()
 
   /* ---- Scroll state ---- */
   useEffect(() => {
@@ -14,6 +16,11 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  /* ---- Close dropdown on route change ---- */
+  useEffect(() => {
+    setActiveDropdown(null)
+  }, [location])
 
   /* ---- Click outside to close ---- */
   useEffect(() => {
@@ -26,16 +33,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  /* ---- ESC to close ---- */
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key === 'Escape') setActiveDropdown(null)
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [])
-
-  const openDropdown  = useCallback((id) => {
+  const openDropdown = useCallback((id) => {
     clearTimeout(closeTimer.current)
     setActiveDropdown(id)
   }, [])
@@ -44,7 +42,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
     closeTimer.current = setTimeout(() => setActiveDropdown(null), 180)
   }, [])
 
-  const cancelClose   = useCallback(() => {
+  const cancelClose = useCallback(() => {
     clearTimeout(closeTimer.current)
   }, [])
 
@@ -57,7 +55,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
       <div className="header-inner container">
 
         {/* ---- Logo ---- */}
-        <a href="/" className="header-logo" aria-label="ACI Diocese — Home">
+        <Link to="/" className="header-logo" aria-label="ACI Diocese — Home">
           <img
             src="/aci-logo.png"
             alt="ACI Diocese — Apostolic Council of India Diocese"
@@ -69,7 +67,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
             <span className="logo-name">ACI Diocese</span>
             <span className="logo-tagline">Shepherding the Shepherds</span>
           </div>
-        </a>
+        </Link>
 
         {/* ---- Desktop Navigation ---- */}
         <nav className="header-nav" aria-label="Main navigation">
@@ -83,7 +81,8 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
               >
                 {item.hasDropdown ? (
                   <>
-                    <button
+                    <Link
+                      to={item.href}
                       className="nav-link t-nav"
                       aria-expanded={activeDropdown === idx}
                       aria-haspopup="true"
@@ -109,7 +108,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
                           strokeLinejoin="round"
                         />
                       </svg>
-                    </button>
+                    </Link>
 
                     {/* Dropdown panel */}
                     <div
@@ -122,23 +121,23 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
                       <ul role="list">
                         {item.items.map((sub, si) => (
                           <li key={si} role="none">
-                            <a
-                              href={sub.href}
+                            <Link
+                              to={sub.href}
                               className="dropdown-link"
                               role="menuitem"
                               onClick={() => setActiveDropdown(null)}
                             >
                               {sub.label}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </>
                 ) : (
-                  <a href={item.href} className="nav-link t-nav">
+                  <Link to={item.href} className="nav-link t-nav">
                     {item.label}
-                  </a>
+                  </Link>
                 )}
               </li>
             ))}
