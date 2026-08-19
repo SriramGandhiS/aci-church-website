@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
+import { getMediaUrl } from '../../utils/imageUrl'
 import galleryAlbumsData from '../../data/allGalleryAlbumsWithPhotos.json'
 import './GallerySection.css'
-
-const BASE = 'http://acidiocese.org/'
 
 /* Normalize: "WordSharingMeet" == "Word Sharing Meet" */
 const normalize = s => s.toLowerCase().replace(/[\s\-_]+/g, '')
@@ -137,7 +136,7 @@ export default function GallerySection() {
                 title={album.title}
               >
                 <img
-                  src={`${BASE}${album.thumb}`}
+                  src={getMediaUrl(album.thumb)}
                   alt={album.title}
                   className="gallery-img"
                   loading="lazy"

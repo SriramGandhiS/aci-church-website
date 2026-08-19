@@ -1,0 +1,5 @@
+# Netlify Proxy for acidiocese.org media (solves HTTP/HTTPS Mixed Content)
+/api-media/* http://acidiocese.org/:splat 200
+
+# Netlify SPA fallback for client-side React Router routing
+/* /index.html 200

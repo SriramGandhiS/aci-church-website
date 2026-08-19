@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { getMediaUrl } from '../utils/imageUrl'
 
-const BASE = 'http://acidiocese.org/media_title_img/'
+const BASE_MEDIA = 'http://acidiocese.org/media_title_img/'
 
 const S = {
   page: { paddingTop: '80px', background: '#0a0a0a', color: '#fff', minHeight: '100vh' },
@@ -21,17 +22,17 @@ const S = {
 }
 
 const magazines = [
-  { title: 'July–Sep 2023', img: '022024/bb40213a776035388b512b46c8d569ed.jpg', pdf: '022024/48d7e8af9012ba63fa98c9ca67a17c86.pdf' },
-  { title: 'April–June 2023', img: '072023/4f100f571faac76fef118ce16ba41c36.jpg', pdf: '072023/922406c553db13317f931bc8cdb11fff.pdf' },
-  { title: 'January–March 2022', img: '052022/6d639377fd5f0e69fabbbab02294140c.jpg', pdf: '052022/fcd70462c313ba02c5c889490d4e08df.pdf' },
-  { title: 'October–December 2021', img: '032022/5b0a9e8f254ddfd5db416f8bafb464e3.jpg', pdf: '032022/c4da7899a8203aa8807992b07380d04b.pdf' },
+  { title: 'July–Sep 2023', img: 'media_title_img/022024/bb40213a776035388b512b46c8d569ed.jpg', pdf: '022024/48d7e8af9012ba63fa98c9ca67a17c86.pdf' },
+  { title: 'April–June 2023', img: 'media_title_img/072023/4f100f571faac76fef118ce16ba41c36.jpg', pdf: '072023/922406c553db13317f931bc8cdb11fff.pdf' },
+  { title: 'January–March 2022', img: 'media_title_img/052022/6d639377fd5f0e69fabbbab02294140c.jpg', pdf: '052022/fcd70462c313ba02c5c889490d4e08df.pdf' },
+  { title: 'October–December 2021', img: 'media_title_img/032022/5b0a9e8f254ddfd5db416f8bafb464e3.jpg', pdf: '032022/c4da7899a8203aa8807992b07380d04b.pdf' },
 ]
 
 const audios = [
-  { title: 'Worship Vol-1 (ஆராதனை தொகுதி-1)', img: '072017/242712606e594b1005c87f9730c6d1b4.gif', mp3: '072017/59edc8705915219c2fb135b5fc48a33d.mp3' },
-  { title: 'Worship Vol-2 (ஆராதனை தொகுதி-2)', img: '072017/85ec64d2b419c828a65a6a7e2379b487.gif', mp3: '072017/d822adb6f7d6de0eadc46523ebee4253.mp3' },
-  { title: 'Worship Vol-3 (ஆராதனை தொகுதி-3)', img: '072017/4016b8f806a135319eb7525590ff050e.gif', mp3: '072017/878363c95161e6f459171e23aec2ae67.mp3' },
-  { title: 'Worship Vol-4 (ஆராதனை தொகுதி-4)', img: '072017/6fc61a41982b2a3ebc3eab724f6ee681.gif', mp3: '072017/9704c1ccfafe382c2207a2e8eb606e6b.mp3' },
+  { title: 'Worship Vol-1 (ஆராதனை தொகுதி-1)', img: 'media_title_img/072017/242712606e594b1005c87f9730c6d1b4.gif', mp3: '072017/59edc8705915219c2fb135b5fc48a33d.mp3' },
+  { title: 'Worship Vol-2 (ஆராதனை தொகுதி-2)', img: 'media_title_img/072017/85ec64d2b419c828a65a6a7e2379b487.gif', mp3: '072017/d822adb6f7d6de0eadc46523ebee4253.mp3' },
+  { title: 'Worship Vol-3 (ஆராதனை தொகுதி-3)', img: 'media_title_img/072017/4016b8f806a135319eb7525590ff050e.gif', mp3: '072017/878363c95161e6f459171e23aec2ae67.mp3' },
+  { title: 'Worship Vol-4 (ஆராதனை தொகுதி-4)', img: 'media_title_img/072017/6fc61a41982b2a3ebc3eab724f6ee681.gif', mp3: '072017/9704c1ccfafe382c2207a2e8eb606e6b.mp3' },
 ]
 
 const videos = [
@@ -41,10 +42,10 @@ const videos = [
 ]
 
 const literature = [
-  { title: 'Church — The Body Of Christ', img: '082016/1147f89dd0a5949b70b2f643776ed9ad.gif', pdf: '082016/9515307632e92ed4ce7c566ce7df771b.pdf' },
-  { title: 'கிறிஸ்துவின் தெய்வத்துவம்', img: '022018/b6dca61b3613fab17a9940f061c61e76.jpg', pdf: '022018/6ff334dc48b2102c69dc11084e5b850c.pdf' },
-  { title: 'கிறிஸ்துவின் மனு அவதாரம்', img: '032018/526c7c1bbe95a4c3f9baa3b76664c26f.jpg', pdf: '032018/9edd5dd406e5215154e73c44898ce843.pdf' },
-  { title: 'கிறிஸ்துவின் கிரியைகள்-அலுவல்கள்', img: '062018/801c2fd5bed9035db857f9003b225448.jpg', pdf: '062018/9e551d1ed6efb9a22b39e37de149693f.pdf' },
+  { title: 'Church — The Body Of Christ', img: 'media_title_img/082016/1147f89dd0a5949b70b2f643776ed9ad.gif', pdf: '082016/9515307632e92ed4ce7c566ce7df771b.pdf' },
+  { title: 'கிறிஸ்துவின் தெய்வத்துவம்', img: 'media_title_img/022018/b6dca61b3613fab17a9940f061c61e76.jpg', pdf: '022018/6ff334dc48b2102c69dc11084e5b850c.pdf' },
+  { title: 'கிறிஸ்துவின் மனு அவதாரம்', img: 'media_title_img/032018/526c7c1bbe95a4c3f9baa3b76664c26f.jpg', pdf: '032018/9edd5dd406e5215154e73c44898ce843.pdf' },
+  { title: 'கிறிஸ்துவின் கிரியைகள்-அலுவல்கள்', img: 'media_title_img/062018/801c2fd5bed9035db857f9003b225448.jpg', pdf: '062018/9e551d1ed6efb9a22b39e37de149693f.pdf' },
 ]
 
 function AudioCard({ item }) {
@@ -53,11 +54,11 @@ function AudioCard({ item }) {
       onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(200,169,110,0.4)' }}
       onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
     >
-      <img src={`${BASE}${item.img}`} alt={item.title} style={{ ...S.cardImg, height: '160px', objectFit: 'contain', padding: '16px' }} />
+      <img src={getMediaUrl(item.img)} alt={item.title} style={{ ...S.cardImg, height: '160px', objectFit: 'contain', padding: '16px' }} />
       <div style={S.cardBody}>
         <p style={S.cardTitle}>{item.title}</p>
         <audio controls style={{ width: '100%', marginTop: '8px', accentColor: '#c8a96e' }}>
-          <source src={`${BASE}${item.mp3}`} type="audio/mpeg" />
+          <source src={`${BASE_MEDIA}${item.mp3}`} type="audio/mpeg" />
           Your browser does not support audio.
         </audio>
       </div>
@@ -66,7 +67,7 @@ function AudioCard({ item }) {
 }
 
 export default function MediaPage() {
-  const { lang, t } = useLanguage()
+  const { lang } = useLanguage()
   const isTa = lang === 'ta'
   const { hash } = useLocation()
 
@@ -100,12 +101,12 @@ export default function MediaPage() {
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'rgba(200,169,110,0.4)' }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
               >
-                <img src={`${BASE}${item.img}`} alt={item.title} style={S.cardImg}
+                <img src={getMediaUrl(item.img)} alt={item.title} style={S.cardImg}
                   onError={e => { e.target.style.background = '#1a1a1a'; e.target.style.opacity = '0.3' }} />
                 <div style={S.cardBody}>
                   <p style={S.cardTitle}>{item.title}</p>
                   <p style={S.p}>{isTa ? 'ஏசிஐ பேராய காலாண்டு இதழ்' : 'ACI Diocese Quarterly Magazine'}</p>
-                  <a href={`${BASE}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
+                  <a href={`${BASE_MEDIA}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
                     📄 {isTa ? 'PDF படிக்க' : 'Read PDF'}
                   </a>
                 </div>
@@ -137,7 +138,7 @@ export default function MediaPage() {
             {videos.map((item, i) => (
               <div key={i} style={{ ...S.card }}>
                 <video controls style={{ width: '100%', display: 'block', background: '#000', maxHeight: '220px' }}>
-                  <source src={`${BASE}${item.mp4}`} type="video/mp4" />
+                  <source src={`${BASE_MEDIA}${item.mp4}`} type="video/mp4" />
                   Your browser does not support video.
                 </video>
                 <div style={S.cardBody}>
@@ -160,12 +161,12 @@ export default function MediaPage() {
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'rgba(200,169,110,0.4)' }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
               >
-                <img src={`${BASE}${item.img}`} alt={item.title} style={{ ...S.cardImg, objectFit: 'contain', padding: '12px', background: '#0a0a0a' }}
+                <img src={getMediaUrl(item.img)} alt={item.title} style={{ ...S.cardImg, objectFit: 'contain', padding: '12px', background: '#0a0a0a' }}
                   onError={e => { e.target.style.opacity = '0.3' }} />
                 <div style={S.cardBody}>
                   <p style={S.cardTitle}>{item.title}</p>
                   <p style={S.p}>{isTa ? 'எழுதியவர்: பேரருட்திரு ச. ஜான்சன் துரை' : 'By Rt. Rev. S. Johnson Durai'}</p>
-                  <a href={`${BASE}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
+                  <a href={`${BASE_MEDIA}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
                     📖 {isTa ? 'நூலை படிக்க (PDF)' : 'Read PDF'}
                   </a>
                 </div>

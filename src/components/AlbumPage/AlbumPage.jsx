@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import { getMediaUrl } from '../../utils/imageUrl'
 import allAlbumsData from '../../data/allGalleryAlbumsWithPhotos.json'
 import './AlbumPage.css'
 
-const BASE = 'http://acidiocese.org/'
-
 export default function AlbumPage() {
   const { uniq } = useParams()
-  const navigate = useNavigate()
   const [lightboxIdx, setLightboxIdx] = useState(null)
 
   const album = allAlbumsData.find(a => a.uniq === uniq)
@@ -59,7 +57,7 @@ export default function AlbumPage() {
               onClick={() => setLightboxIdx(idx)}
             >
               <img
-                src={`${BASE}${photo}`}
+                src={getMediaUrl(photo)}
                 alt={`${album.title} - Photo ${idx + 1}`}
                 className="album-photo-img"
                 loading="lazy"
@@ -87,7 +85,7 @@ export default function AlbumPage() {
             )}
 
             <img
-              src={`${BASE}${album.photos[lightboxIdx]}`}
+              src={getMediaUrl(album.photos[lightboxIdx])}
               alt={`${album.title} - Photo ${lightboxIdx + 1}`}
               className="lb-img"
               onError={e => { e.target.style.opacity = '0.3' }}

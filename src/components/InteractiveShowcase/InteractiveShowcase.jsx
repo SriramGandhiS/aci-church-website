@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { getMediaUrl } from '../../utils/imageUrl'
 import './InteractiveShowcase.css'
 
 const HIGHLIGHT_ITEMS = [
@@ -10,7 +11,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Consecration & Calling',
     catTa: 'பிரதிஷ்டை ஊழியம்',
     count: '41 Photos',
-    img: 'http://acidiocese.org/gallery/23rd%20Ordination%2010.04.2024/4498769c2b5924c919c9336e04979875.jpg',
+    img: 'gallery/23rd Ordination 10.04.2024/4498769c2b5924c919c9336e04979875.jpg',
     link: '/gallery?cat=Ordination',
   },
   {
@@ -19,7 +20,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Regional Expansion',
     catTa: 'மண்டல வளர்ச்சி',
     count: '25 Photos',
-    img: 'http://acidiocese.org/gallery/Madurai%20Zonal%20Office%20Dedication%20Service/7cc60a065180716a1dd0a3fe4db93be3.jpg',
+    img: 'gallery/Madurai Zonal Office Dedication Service/7cc60a065180716a1dd0a3fe4db93be3.jpg',
     link: '/gallery?cat=Zonal Meet',
   },
   {
@@ -28,7 +29,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Next Generation',
     catTa: 'வாலிபர் ஊழியம்',
     count: '50 Photos',
-    img: 'http://acidiocese.org/gallery/YOUTH%20DAY%202022/ecb0b4a539fb2fa8e455481c94fc593c.jpg',
+    img: 'gallery/YOUTH DAY 2022/ecb0b4a539fb2fa8e455481c94fc593c.jpg',
     link: '/gallery?cat=Youth Ministry',
   },
   {
@@ -37,7 +38,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Pastoral Care',
     catTa: 'சபை சந்திப்பு',
     count: '32 Photos',
-    img: 'http://acidiocese.org/gallery/5th%20Church%20Visit/c50ad7cfc01b9dfaf710f5bf102b1851.jpg',
+    img: 'gallery/5th Church Visit/c50ad7cfc01b9dfaf710f5bf102b1851.jpg',
     link: '/gallery?cat=Church Visit',
   },
   {
@@ -46,7 +47,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Sanctuary Dedication',
     catTa: 'ஆலய பிரதிஷ்டை',
     count: '35 Photos',
-    img: 'http://acidiocese.org/gallery/Church%20Dedication%20/f79744d5293e7c9c16935e976bffa844.jpg',
+    img: 'gallery/Church Dedication /f79744d5293e7c9c16935e976bffa844.jpg',
     link: '/gallery?cat=Others1',
   },
   {
@@ -55,7 +56,7 @@ const HIGHLIGHT_ITEMS = [
     catEn: 'Child Evangelism',
     catTa: 'சிறுவர் ஊழியம்',
     count: '42 Photos',
-    img: 'http://acidiocese.org/gallery/VBS%202018/c57c7e9fa81e376829a69dc50471b34b.jpg',
+    img: 'gallery/VBS 2018/c57c7e9fa81e376829a69dc50471b34b.jpg',
     link: '/gallery?cat=Children Ministry',
   },
 ]
@@ -137,7 +138,7 @@ export default function InteractiveShowcase() {
             >
               <div className="showcase-img-wrap">
                 <img
-                  src={item.img}
+                  src={getMediaUrl(item.img)}
                   alt={item.titleEn}
                   className="showcase-img"
                   loading="lazy"

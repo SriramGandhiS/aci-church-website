@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { getMediaUrl } from '../../utils/imageUrl'
 import allAlbumsData from '../../data/allGalleryAlbumsWithPhotos.json'
 import './HomeGallerySpotlight.css'
-
-const BASE = 'http://acidiocese.org/'
 
 export default function HomeGallerySpotlight() {
   const { t } = useLanguage()
@@ -65,7 +64,7 @@ export default function HomeGallerySpotlight() {
             >
               <div className="spotlight-card-img-wrapper">
                 <img
-                  src={`${BASE}${album.thumb}`}
+                  src={getMediaUrl(album.thumb)}
                   alt={album.title}
                   className="spotlight-card-img"
                   loading="lazy"
