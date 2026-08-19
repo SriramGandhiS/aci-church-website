@@ -6,6 +6,8 @@ import MinistriesSection from './components/MinistriesSection/MinistriesSection'
 import EncounterSection from './components/EncounterSection/EncounterSection'
 import FeaturedSection from './components/FeaturedSection/FeaturedSection'
 import SchoolsSection from './components/SchoolsSection/SchoolsSection'
+import MediaSection from './components/MediaSection/MediaSection'
+import GallerySection from './components/GallerySection/GallerySection'
 import EventsSection from './components/EventsSection/EventsSection'
 import TestimoniesSection from './components/TestimoniesSection/TestimoniesSection'
 import Newsletter from './components/Newsletter/Newsletter'
@@ -31,6 +33,8 @@ function App() {
         <EncounterSection />
         <FeaturedSection />
         <SchoolsSection />
+        <MediaSection />
+        <GallerySection />
         <EventsSection />
         <TestimoniesSection />
         <Newsletter />

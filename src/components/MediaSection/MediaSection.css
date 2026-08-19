@@ -1,0 +1,107 @@
+/* ============================================================
+   MEDIA SECTION CSS
+   ============================================================ */
+
+.media-section {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-divider-light);
+}
+
+.media-header {
+  margin-bottom: 40px;
+}
+
+.media-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 2px solid var(--color-divider-light);
+  padding-bottom: 12px;
+}
+
+.media-tab-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -14px;
+}
+
+.media-tab-btn:hover {
+  color: var(--color-black);
+}
+
+.media-tab-btn.active {
+  color: var(--color-black);
+  border-bottom-color: var(--color-black);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.media-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-divider-light);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.media-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+
+.media-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.media-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.media-tag {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.media-card-title {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  margin-bottom: 16px;
+}
+
+.media-link {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-black);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.media-link:hover .arrow {
+  transform: translateX(4px);
+}

@@ -1,72 +1,76 @@
 /* ============================================================
-   Navigation data — easily update menu items here
+   ACI Diocese Navigation Data — Ported from acidiocese.org
    ============================================================ */
 
 export const navItems = [
   {
-    label: 'Church',
-    hasDropdown: true,
-    items: [
-      { label: 'About ACI', href: '#about' },
-      { label: 'Diocese', href: '#diocese' },
-      { label: 'Leadership', href: '#leadership' },
-      { label: 'Vision & Mission', href: '#vision' },
-      { label: 'Statement of Faith', href: '#faith' },
-      { label: 'Churches', href: '#churches' },
-      { label: 'Contact', href: '#contact' },
-    ],
-  },
-  {
-    label: 'Get Involved',
-    hasDropdown: true,
-    items: [
-      { label: 'Ministries', href: '#ministries' },
-      { label: 'Prayer', href: '#prayer' },
-      { label: 'Youth Ministry', href: '#youth' },
-      { label: 'Women Ministry', href: '#women' },
-      { label: 'Children Ministry', href: '#children' },
-      { label: 'Outreach', href: '#outreach' },
-      { label: 'Volunteer', href: '#volunteer' },
-    ],
-  },
-  {
-    label: 'Events',
-    hasDropdown: true,
-    items: [
-      { label: 'Calendar', href: '#calendar' },
-      { label: 'Featured Events', href: '#featured-events' },
-      { label: 'Conferences', href: '#conferences' },
-      { label: 'Diocese Events', href: '#diocese-events' },
-    ],
-  },
-  {
-    label: 'Schools',
-    hasDropdown: true,
-    items: [
-      { label: 'Bible School', href: '#bible-school' },
-      { label: 'Ministry Training', href: '#ministry-training' },
-      { label: 'Leadership Training', href: '#leadership-training' },
-    ],
-  },
-  {
-    label: 'Resources',
-    hasDropdown: true,
-    items: [
-      { label: 'Messages', href: '#messages' },
-      { label: 'Sermons', href: '#sermons' },
-      { label: 'Media', href: '#media' },
-      { label: 'Publications', href: '#publications' },
-      { label: 'Downloads', href: '#downloads' },
-    ],
-  },
-  {
-    label: 'Testimonies',
+    label: 'Home',
     hasDropdown: false,
-    href: '#testimonies',
+    href: '#',
   },
   {
-    label: 'Give',
+    label: 'About Us',
+    hasDropdown: true,
+    items: [
+      { label: 'ABOUT DIOCESE', href: '#about-diocese' },
+      { label: 'FOUNDER', href: '#founder' },
+      { label: 'VISION & MISSION', href: '#vision-mission' },
+      { label: 'STATEMENT OF FAITH', href: '#faith-statement' },
+      { label: 'ABOUT BOARD', href: '#about-board' },
+    ],
+  },
+  {
+    label: 'Activities',
+    hasDropdown: true,
+    items: [
+      { label: 'ORDINATION', href: '#ordination' },
+      { label: 'WORD SHARING MEET', href: '#word-sharing' },
+      { label: 'ZONAL MEET', href: '#zonal-meet' },
+      { label: 'CHURCH VISIT', href: '#church-visit' },
+      { label: 'CHILDREN MINISTRY', href: '#children-ministry' },
+      { label: 'YOUTH MINISTRY', href: '#youth-ministry' },
+      { label: 'OUTREACH', href: '#outreach' },
+    ],
+  },
+  {
+    label: 'Partnership',
+    hasDropdown: true,
+    items: [
+      { label: 'PRAYER', href: '#prayer-partnership' },
+      { label: 'PARTNER TESTIMONY', href: '#testimonies' },
+      { label: 'CONTRIBUTIONS', href: '#contributions' },
+      { label: 'DONATION', href: '#donation' },
+      { label: 'OPPORTUNITY TO SOW', href: '#give' },
+    ],
+  },
+  {
+    label: 'Synod',
+    hasDropdown: true,
+    items: [
+      { label: 'ABOUT SYNOD', href: '#about-synod' },
+      { label: 'SYNOD FUNCTIONS', href: '#synod-functions' },
+      { label: 'SYNOD PUBLICATIONS', href: '#synod-publications' },
+      { label: 'SYNOD MEMBERS', href: '#synod-members' },
+    ],
+  },
+  {
+    label: 'Media',
+    hasDropdown: true,
+    items: [
+      { label: 'MAGAZINES', href: '#magazines' },
+      { label: 'AUDIO', href: '#audio' },
+      { label: 'VIDEO', href: '#video' },
+      { label: 'LITERATURE', href: '#literature' },
+    ],
+  },
+  {
+    label: 'Gallery',
     hasDropdown: false,
-    href: '#give',
+    href: '#gallery',
+  },
+  {
+    label: 'Contact Us',
+    hasDropdown: false,
+    href: '#contact',
   },
 ]
