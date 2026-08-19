@@ -1,5 +1,5 @@
 /* ============================================================
-   HEADER / NAVIGATION — Premium Editorial Styling
+   HEADER / NAVIGATION — Warm Gold & Navy Brand Bar
    ============================================================ */
 
 .site-header {
@@ -8,16 +8,17 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 72px;
-  background: #0a0a0a;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  height: 76px;
+  background: #d8a448; /* Signature ACI Diocese Warm Gold Bar */
+  border-bottom: 2px solid #b88628;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-fast);
 }
 
 .site-header.scrolled {
-  background: rgba(10, 10, 10, 0.96);
+  background: rgba(216, 164, 72, 0.96);
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
 }
 
 .header-inner {
@@ -25,7 +26,7 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  gap: 24px;
+  gap: 20px;
 }
 
 /* ---- LOGO ---- */
@@ -38,36 +39,37 @@
 }
 
 .logo-img {
-  height: 46px;
+  height: 50px;
   width: auto;
   object-fit: contain;
   display: block;
   background: #ffffff;
   border-radius: 4px;
   padding: 3px 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .logo-name {
   font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.03em;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0d1b40; /* Deep Navy Blue */
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 .logo-tagline {
   font-family: var(--font-serif);
-  font-size: 11px;
-  font-weight: 400;
+  font-size: 11.5px;
+  font-weight: 600;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.65);
+  color: #2b1a04;
   letter-spacing: 0.04em;
 }
 
@@ -80,7 +82,7 @@
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .nav-item {
@@ -90,17 +92,17 @@
 .nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  color: rgba(255, 255, 255, 0.88);
+  gap: 5px;
+  padding: 10px 14px;
+  color: #0d1b40; /* Deep Navy Text */
   background: transparent;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 14.5px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   transition: all var(--transition-fast);
   white-space: nowrap;
   text-decoration: none;
@@ -109,35 +111,35 @@
 .nav-link:hover,
 .nav-item.active .nav-link {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
+  background: #0d1b40;
 }
 
 .chevron {
   transition: transform var(--transition-fast);
   flex-shrink: 0;
-  opacity: 0.75;
+  color: currentColor;
 }
 
 .nav-item.active .chevron {
   transform: rotate(180deg);
-  opacity: 1;
 }
 
 /* ---- DROPDOWN PANEL ---- */
 .dropdown-panel {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 10px);
   left: 0;
   min-width: 250px;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: 3px solid #000000;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(13, 27, 64, 0.15);
+  border-top: 4px solid #0d1b40;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
   opacity: 0;
   transform: translateY(-8px);
   pointer-events: none;
-  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 200;
+  border-radius: 0 0 6px 6px;
 }
 
 .dropdown-panel.visible {
@@ -154,29 +156,29 @@
 
 .dropdown-link {
   display: block;
-  padding: 10px 20px;
+  padding: 11px 22px;
   font-family: var(--font-sans);
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #1a1a1a;
+  color: #0d1b40;
   text-decoration: none;
   transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
   white-space: nowrap;
 }
 
 .dropdown-link:hover {
-  background: #f4f4f4;
-  color: #000000;
-  padding-left: 24px;
+  background: #eef2fa;
+  color: #0d1b40;
+  padding-left: 26px;
 }
 
 /* ---- RIGHT CONTROLS ---- */
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -186,9 +188,9 @@
   justify-content: center;
   width: 42px;
   height: 42px;
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #0d1b40;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(13, 27, 64, 0.2);
   border-radius: 4px;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -196,7 +198,7 @@
 
 .icon-btn:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.18);
+  background: #0d1b40;
 }
 
 /* Hamburger */
@@ -209,15 +211,15 @@
 .ham-line {
   display: block;
   width: 22px;
-  height: 2px;
+  height: 2.5px;
   background: currentColor;
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  border-radius: 1px;
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1120px) {
+@media (max-width: 1140px) {
   .header-nav { display: none; }
   .hamburger  { display: flex; }
   .header-inner { gap: 16px; }
