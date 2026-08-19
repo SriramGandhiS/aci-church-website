@@ -1,156 +1,160 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import galleryAlbumsData from '../../data/allGalleryAlbums.json'
+import { useSearchParams, Link } from 'react-router-dom'
+import galleryAlbumsData from '../../data/allGalleryAlbumsWithPhotos.json'
 import './GallerySection.css'
 
-const categories = [
-  { label: 'View All', value: 'All' },
+const BASE = 'http://acidiocese.org/'
+
+/* Normalize: "WordSharingMeet" == "Word Sharing Meet" */
+const normalize = s => s.toLowerCase().replace(/[\s\-_]+/g, '')
+
+const FILTER_CATEGORIES = [
+  { label: 'All', value: 'All' },
   { label: 'Ordination', value: 'Ordination' },
-  { label: 'Word Sharing Meet', value: 'Word Sharing Meet' },
+  { label: 'Word Sharing', value: 'Word Sharing Meet' },
   { label: 'Zonal Meet', value: 'Zonal Meet' },
   { label: 'Church Visit', value: 'Church Visit' },
-  { label: 'Children Ministry', value: 'Children Ministry' },
+  { label: 'Children Min.', value: 'Children Ministry' },
   { label: 'Youth Ministry', value: 'Youth Ministry' },
-  { label: 'Outreach & Relief', value: 'Others' },
-  { label: 'Graduation', value: 'Graduation' },
   { label: 'Synod', value: 'Synod' },
+  { label: 'Graduation', value: 'Graduation' },
+  { label: 'Outreach', value: 'Others' },
+  { label: 'Special Services', value: 'Others1' },
   { label: 'Special Meetings', value: 'Others2' },
-  { label: 'Branch Church', value: 'Others1' },
 ]
 
 export default function GallerySection() {
   const sectionRef = useRef(null)
   const [searchParams, setSearchParams] = useSearchParams()
-  const categoryParam = searchParams.get('cat')
+  const categoryParam = searchParams.get('cat') || 'All'
+  const [activeCat, setActiveCat] = useState(categoryParam)
 
-  const [activeCat, setActiveCat] = useState('All')
-  const [selectedImg, setSelectedImg] = useState(null)
-
-  /* Update state when URL query cat changes */
-  useEffect(() => {
-    if (categoryParam) {
-      setActiveCat(categoryParam)
-    } else {
-      setActiveCat('All')
-    }
-  }, [categoryParam])
+  useEffect(() => { setActiveCat(categoryParam) }, [categoryParam])
 
   useEffect(() => {
     const els = sectionRef.current?.querySelectorAll('.reveal')
     if (!els?.length) return
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible')
-            observer.unobserve(e.target)
-          }
-        }),
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) }
+      }),
       { threshold: 0.05 }
     )
-    els.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+    els.forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [activeCat])
 
   const filteredAlbums = activeCat === 'All'
     ? galleryAlbumsData
-    : galleryAlbumsData.filter(a =>
-        a.category.toLowerCase().includes(activeCat.toLowerCase()) ||
-        a.title.toLowerCase().includes(activeCat.toLowerCase())
-      )
+    : galleryAlbumsData.filter(a => {
+        const nc = normalize(a.category)
+        const na = normalize(activeCat)
+        return nc === na || nc.includes(na) || na.includes(nc)
+      })
 
-  const handleFilterClick = (catVal) => {
-    setActiveCat(catVal)
-    if (catVal === 'All') {
-      setSearchParams({})
-    } else {
-      setSearchParams({ cat: catVal })
-    }
+  const handleFilter = (val) => {
+    setActiveCat(val)
+    if (val === 'All') setSearchParams({})
+    else setSearchParams({ cat: val })
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="gallery"
-      className="gallery-section section-pad"
-      aria-label="Diocesan Photo Gallery"
-    >
-      <div className="container">
+    <section ref={sectionRef} style={{ background: '#0a0a0a', color: '#fff', padding: '40px 0 80px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 16px' }}>
 
-        <div className="gallery-header reveal">
-          <p className="t-label" style={{ color: 'var(--color-text-muted)', marginBottom: '12px' }}>
+        {/* Stats row */}
+        <div className="reveal" style={{ marginBottom: '24px' }}>
+          <p style={{ color: '#c8a96e', fontSize: '12px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '6px' }}>
             OFFICIAL PHOTO GALLERY
           </p>
-          <h2 className="t-headline" style={{ marginBottom: '20px' }}>
-            65+ Photo Albums Across ACI Diocese Ministries
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(20px, 4vw, 36px)', fontWeight: 400, color: '#fff', marginBottom: '4px' }}>
+            {activeCat === 'All'
+              ? `${galleryAlbumsData.length} Albums · 1,500+ Photos`
+              : `${filteredAlbums.length} Albums — ${activeCat}`}
           </h2>
+          {activeCat !== 'All' && (
+            <button
+              onClick={() => handleFilter('All')}
+              style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '5px 14px', fontSize: '12px', cursor: 'pointer', marginTop: '8px', letterSpacing: '0.06em', borderRadius: '3px' }}
+            >
+              ← All Albums
+            </button>
+          )}
+        </div>
 
-          {/* Category Filter Pills */}
-          <div className="gallery-filter-bar" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '32px' }}>
-            {categories.map((cat, idx) => (
+        {/* Filter Pills */}
+        <div className="reveal reveal-delay-1" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '32px' }}>
+          {FILTER_CATEGORIES.map((cat, i) => {
+            const isActive = cat.value === 'All'
+              ? activeCat === 'All'
+              : normalize(activeCat) === normalize(cat.value) ||
+                normalize(cat.value).includes(normalize(activeCat)) ||
+                normalize(activeCat).includes(normalize(cat.value))
+            const count = cat.value === 'All'
+              ? galleryAlbumsData.length
+              : galleryAlbumsData.filter(a => normalize(a.category) === normalize(cat.value)).length
+            return (
               <button
-                key={idx}
-                onClick={() => handleFilterClick(cat.value)}
+                key={i}
+                onClick={() => handleFilter(cat.value)}
                 style={{
-                  padding: '8px 16px',
+                  padding: '7px 14px',
                   borderRadius: '20px',
-                  border: activeCat === cat.value ? '1px solid var(--color-black)' : '1px solid var(--color-divider-light)',
-                  background: activeCat === cat.value ? 'var(--color-black)' : 'var(--color-white)',
-                  color: activeCat === cat.value ? 'var(--color-white)' : 'var(--color-text-dark)',
-                  fontSize: '13px',
+                  border: isActive ? '1.5px solid #c8a96e' : '1px solid rgba(255,255,255,0.2)',
+                  background: isActive ? 'rgba(200,169,110,0.18)' : 'rgba(255,255,255,0.04)',
+                  color: isActive ? '#c8a96e' : 'rgba(255,255,255,0.75)',
+                  fontSize: '11px',
                   fontWeight: 600,
+                  letterSpacing: '0.05em',
                   cursor: 'pointer',
-                  transition: 'all var(--transition-fast)'
+                  transition: 'all 0.2s',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                {cat.label}
+                {cat.label} <span style={{ opacity: 0.6, fontWeight: 400 }}>({count})</span>
               </button>
-            ))}
+            )
+          })}
+        </div>
+
+        {/* Album Grid */}
+        {filteredAlbums.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '60px 0', color: 'rgba(255,255,255,0.4)' }}>
+            <p style={{ fontSize: '18px', marginBottom: '12px' }}>No albums for this category yet</p>
+            <button onClick={() => handleFilter('All')} style={{ color: '#c8a96e', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
+              ← Show all albums
+            </button>
           </div>
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="gallery-grid reveal reveal-delay-1">
-          {filteredAlbums.map((album) => (
-            <div
-              key={album.id}
-              className="gallery-item"
-              onClick={() => setSelectedImg(album)}
-            >
-              <img
-                src={`http://acidiocese.org/${album.img}`}
-                alt={album.title}
-                className="gallery-img"
-                loading="lazy"
-                onError={(e) => { e.target.src = '/img-about.jpg' }}
-              />
-              <div className="gallery-overlay">
-                <span className="gallery-cat t-label" style={{ color: '#FFD700', fontWeight: 600 }}>
-                  {album.count}
-                </span>
-                <h3 className="gallery-title">{album.title}</h3>
-                <span style={{ fontSize: '11px', opacity: 0.8, marginTop: '2px' }}>Category: {album.category}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Lightbox Modal */}
-        {selectedImg && (
-          <div className="lightbox-backdrop" onClick={() => setSelectedImg(null)}>
-            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-              <button className="lightbox-close" onClick={() => setSelectedImg(null)}>✕</button>
-              <img
-                src={`http://acidiocese.org/${selectedImg.img}`}
-                alt={selectedImg.title}
-                className="lightbox-img"
-                onError={(e) => { e.target.src = '/img-about.jpg' }}
-              />
-              <div className="lightbox-caption">
-                <span className="t-label" style={{ color: '#FFD700' }}>{selectedImg.count} • {selectedImg.category}</span>
-                <h3 style={{ fontSize: '20px', marginTop: '4px' }}>{selectedImg.title}</h3>
-              </div>
-            </div>
+        ) : (
+          <div className="gallery-grid reveal reveal-delay-1">
+            {filteredAlbums.map(album => (
+              <Link
+                key={album.uniq}
+                to={`/gallery/album/${album.uniq}`}
+                className="gallery-item"
+                style={{ textDecoration: 'none' }}
+                title={album.title}
+              >
+                <img
+                  src={`${BASE}${album.thumb}`}
+                  alt={album.title}
+                  className="gallery-img"
+                  loading="lazy"
+                  onError={e => {
+                    e.target.onerror = null
+                    e.target.style.opacity = '0.2'
+                    e.target.style.background = '#222'
+                  }}
+                />
+                <div className="gallery-overlay">
+                  <span className="gallery-cat">
+                    {album.photos.length} Photos · {album.category}
+                  </span>
+                  <h3 className="gallery-title">{album.title}</h3>
+                </div>
+              </Link>
+            ))}
           </div>
         )}
 

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { navItems } from '../../data/navigation'
+import { useLanguage } from '../../context/LanguageContext'
 import './MobileMenu.css'
 
 export default function MobileMenu({ isOpen, onClose }) {
+  const { lang, setLang, t } = useLanguage()
   const [expandedIdx, setExpandedIdx] = useState(null)
 
   useEffect(() => {
@@ -25,6 +26,84 @@ export default function MobileMenu({ isOpen, onClose }) {
     setExpandedIdx((prev) => (prev === idx ? null : idx))
   }
 
+  const localizedNav = [
+    {
+      label: t('nav.home'),
+      hasDropdown: false,
+      href: '/',
+    },
+    {
+      label: t('nav.aboutUs'),
+      hasDropdown: true,
+      href: '/about',
+      items: [
+        { label: t('nav.aboutDiocese'), href: '/about#about-diocese' },
+        { label: t('nav.founder'), href: '/about#founder' },
+        { label: t('nav.visionMission'), href: '/about#vision-mission' },
+        { label: t('nav.faithStatement'), href: '/about#faith-statement' },
+        { label: t('nav.aboutBoard'), href: '/about#about-board' },
+      ],
+    },
+    {
+      label: t('nav.activities'),
+      hasDropdown: true,
+      href: '/activities',
+      items: [
+        { label: t('nav.ordination'), href: '/activities#ordination' },
+        { label: t('nav.wordSharing'), href: '/activities#wordsharingmeet' },
+        { label: t('nav.zonalMeet'), href: '/activities#zonalmeet' },
+        { label: t('nav.churchVisit'), href: '/activities#churchvisit' },
+        { label: t('nav.childrenMinistry'), href: '/activities#childrenministry' },
+        { label: t('nav.youthMinistry'), href: '/activities#youthministry' },
+        { label: t('nav.outreach'), href: '/activities#outreach' },
+      ],
+    },
+    {
+      label: t('nav.partnership'),
+      hasDropdown: true,
+      href: '/partnership',
+      items: [
+        { label: t('nav.prayer'), href: '/partnership#prayer' },
+        { label: t('nav.partnerTestimony'), href: '/partnership#partnertestimony' },
+        { label: t('nav.contributions'), href: '/partnership#contributions' },
+        { label: t('nav.donation'), href: '/partnership#donation' },
+        { label: t('nav.opportunityToSow'), href: '/partnership#opportunitytosow' },
+      ],
+    },
+    {
+      label: t('nav.synod'),
+      hasDropdown: true,
+      href: '/synod',
+      items: [
+        { label: t('nav.aboutSynod'), href: '/synod#aboutsynod' },
+        { label: t('nav.synodFunctions'), href: '/synod#synodfunctions' },
+        { label: t('nav.synodPublications'), href: '/synod#synodpublications' },
+        { label: t('nav.synodMembers'), href: '/synod#synodmembers' },
+      ],
+    },
+    {
+      label: t('nav.media'),
+      hasDropdown: true,
+      href: '/media',
+      items: [
+        { label: t('nav.magazines'), href: '/media#magazines' },
+        { label: t('nav.audio'), href: '/media#audio' },
+        { label: t('nav.video'), href: '/media#video' },
+        { label: t('nav.literature'), href: '/media#literature' },
+      ],
+    },
+    {
+      label: t('nav.gallery'),
+      hasDropdown: false,
+      href: '/gallery',
+    },
+    {
+      label: t('nav.contact'),
+      hasDropdown: false,
+      href: '/contact',
+    },
+  ]
+
   return (
     <div
       className={`mobile-menu${isOpen ? ' open' : ''}`}
@@ -42,8 +121,26 @@ export default function MobileMenu({ isOpen, onClose }) {
             width="40"
             height="40"
           />
-          <span className="mm-logo-name">ACI Diocese</span>
+          <span className="mm-logo-name">{t('common.siteName')}</span>
         </Link>
+
+        {/* Mobile Language Switcher */}
+        <div className="lang-switcher-pill" style={{ marginLeft: 'auto', marginRight: '12px' }}>
+          <button
+            onClick={() => setLang('en')}
+            className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+          >
+            EN
+          </button>
+          <span className="lang-sep">|</span>
+          <button
+            onClick={() => setLang('ta')}
+            className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+          >
+            தமிழ்
+          </button>
+        </div>
+
         <button
           className="mm-close"
           onClick={onClose}
@@ -57,7 +154,7 @@ export default function MobileMenu({ isOpen, onClose }) {
 
       <nav className="mm-nav" aria-label="Mobile navigation">
         <ul className="mm-list" role="list">
-          {navItems.map((item, idx) => (
+          {localizedNav.map((item, idx) => (
             <li key={idx} className="mm-item">
               {item.hasDropdown ? (
                 <>
@@ -118,8 +215,8 @@ export default function MobileMenu({ isOpen, onClose }) {
       </nav>
 
       <div className="mm-bottom">
-        <Link to="/partnership#sow" className="btn btn-light mm-give" onClick={onClose}>
-          Sow Your Seed <span className="arrow">→</span>
+        <Link to="/partnership#opportunitytosow" className="btn btn-light mm-give" onClick={onClose}>
+          {t('common.sowSeed')} <span className="arrow">→</span>
         </Link>
       </div>
     </div>

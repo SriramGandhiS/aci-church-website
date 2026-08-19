@@ -1,5 +1,6 @@
 /* ============================================================
    ACI Diocese Navigation Data — Multi-Page Routing
+   All href anchors match the actual section id="" on each page
    ============================================================ */
 
 export const navItems = [
@@ -26,11 +27,11 @@ export const navItems = [
     href: '/activities',
     items: [
       { label: 'ORDINATION', href: '/activities#ordination' },
-      { label: 'WORD SHARING MEET', href: '/activities#word-sharing' },
-      { label: 'ZONAL MEET', href: '/activities#zonal-meet' },
-      { label: 'CHURCH VISIT', href: '/activities#church-visit' },
-      { label: 'CHILDREN MINISTRY', href: '/activities#children-ministry' },
-      { label: 'YOUTH MINISTRY', href: '/activities#youth-ministry' },
+      { label: 'WORD SHARING MEET', href: '/activities#wordsharingmeet' },
+      { label: 'ZONAL MEET', href: '/activities#zonalmeet' },
+      { label: 'CHURCH VISIT', href: '/activities#churchvisit' },
+      { label: 'CHILDREN MINISTRY', href: '/activities#childrenministry' },
+      { label: 'YOUTH MINISTRY', href: '/activities#youthministry' },
       { label: 'OUTREACH', href: '/activities#outreach' },
     ],
   },
@@ -40,10 +41,10 @@ export const navItems = [
     href: '/partnership',
     items: [
       { label: 'PRAYER', href: '/partnership#prayer' },
-      { label: 'PARTNER TESTIMONY', href: '/partnership#testimonies' },
+      { label: 'PARTNER TESTIMONY', href: '/partnership#partnertestimony' },
       { label: 'CONTRIBUTIONS', href: '/partnership#contributions' },
       { label: 'DONATION', href: '/partnership#donation' },
-      { label: 'OPPORTUNITY TO SOW', href: '/partnership#sow' },
+      { label: 'OPPORTUNITY TO SOW', href: '/partnership#opportunitytosow' },
     ],
   },
   {
@@ -51,10 +52,10 @@ export const navItems = [
     hasDropdown: true,
     href: '/synod',
     items: [
-      { label: 'ABOUT SYNOD', href: '/synod#about-synod' },
-      { label: 'SYNOD FUNCTIONS', href: '/synod#synod-functions' },
-      { label: 'SYNOD PUBLICATIONS', href: '/synod#synod-publications' },
-      { label: 'SYNOD MEMBERS', href: '/synod#synod-members' },
+      { label: 'ABOUT SYNOD', href: '/synod#aboutsynod' },
+      { label: 'SYNOD FUNCTIONS', href: '/synod#synodfunctions' },
+      { label: 'SYNOD PUBLICATIONS', href: '/synod#synodpublications' },
+      { label: 'SYNOD MEMBERS', href: '/synod#synodmembers' },
     ],
   },
   {
@@ -70,8 +71,18 @@ export const navItems = [
   },
   {
     label: 'Gallery',
-    hasDropdown: false,
+    hasDropdown: true,
     href: '/gallery',
+    items: [
+      { label: 'ALL ALBUMS', href: '/gallery' },
+      { label: 'ORDINATION', href: '/gallery?cat=Ordination' },
+      { label: 'WORD SHARING MEET', href: '/gallery?cat=Word Sharing Meet' },
+      { label: 'ZONAL MEET', href: '/gallery?cat=Zonal Meet' },
+      { label: 'CHURCH VISIT', href: '/gallery?cat=Church Visit' },
+      { label: 'CHILDREN MINISTRY', href: '/gallery?cat=Children Ministry' },
+      { label: 'YOUTH MINISTRY', href: '/gallery?cat=Youth Ministry' },
+      { label: 'SYNOD', href: '/gallery?cat=Synod' },
+    ],
   },
   {
     label: 'Contact Us',

@@ -7,8 +7,10 @@ export default function AboutPage() {
 
   useEffect(() => {
     if (hash) {
-      const el = document.querySelector(hash)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      setTimeout(() => {
+        const el = document.querySelector(hash)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
     } else {
       window.scrollTo(0, 0)
     }

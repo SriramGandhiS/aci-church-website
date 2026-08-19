@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { useLanguage } from '../../context/LanguageContext'
 import './Hero.css'
 
-/*
- * HERO IMAGE — Tamil Nadu / South Indian Christian worship gathering.
- * Replace /img-hero.jpg with the actual ACI Diocese photograph
- * when official media is provided.
- */
 export default function Hero() {
+  const { lang, t } = useLanguage()
+  const isTa = lang === 'ta'
   const parallaxRef = useRef(null)
 
   /* Subtle image parallax on scroll */
@@ -39,26 +38,37 @@ export default function Hero() {
       <div className="hero-content container">
         <div className="hero-body">
           <p className="hero-eyebrow t-label">
-            Welcome to Apostolic Council of India Diocese
+            {isTa
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்'
+              : 'Welcome to Apostolic Council of India Diocese'}
           </p>
 
           <h1 className="hero-headline t-hero">
-            One Body.<br />
-            One Faith.<br />
-            One Mission.
+            {isTa ? (
+              <>
+                ஒரே சரீரம்.<br />
+                ஒரே விசுவாசம்.<br />
+                ஒரே பணி.
+              </>
+            ) : (
+              <>
+                One Body.<br />
+                One Faith.<br />
+                One Mission.
+              </>
+            )}
           </h1>
 
           <div className="hero-buttons">
-            <a href="#about" className="btn btn-light">
-              About ACI <span className="arrow">→</span>
-            </a>
-            <a href="#get-involved" className="btn btn-outline-white">
-              Get Involved <span className="arrow">→</span>
-            </a>
+            <Link to="/about" className="btn btn-light">
+              {isTa ? 'பேராயம் பற்றி' : 'About ACI'} <span className="arrow">→</span>
+            </Link>
+            <Link to="/activities" className="btn btn-outline-white">
+              {isTa ? 'செயல்பாடுகள்' : 'Get Involved'} <span className="arrow">→</span>
+            </Link>
           </div>
         </div>
       </div>
-
     </section>
   )
 }

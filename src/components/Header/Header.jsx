@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { navItems } from '../../data/navigation'
+import { useLanguage } from '../../context/LanguageContext'
 import './Header.css'
 
 export default function Header({ onSearchOpen, onMenuOpen }) {
+  const { lang, setLang, toggleLanguage, t } = useLanguage()
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const headerRef = useRef(null)
@@ -46,6 +47,84 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
     clearTimeout(closeTimer.current)
   }, [])
 
+  const localizedNav = [
+    {
+      label: t('nav.home'),
+      hasDropdown: false,
+      href: '/',
+    },
+    {
+      label: t('nav.aboutUs'),
+      hasDropdown: true,
+      href: '/about',
+      items: [
+        { label: t('nav.aboutDiocese'), href: '/about#about-diocese' },
+        { label: t('nav.founder'), href: '/about#founder' },
+        { label: t('nav.visionMission'), href: '/about#vision-mission' },
+        { label: t('nav.faithStatement'), href: '/about#faith-statement' },
+        { label: t('nav.aboutBoard'), href: '/about#about-board' },
+      ],
+    },
+    {
+      label: t('nav.activities'),
+      hasDropdown: true,
+      href: '/activities',
+      items: [
+        { label: t('nav.ordination'), href: '/activities#ordination' },
+        { label: t('nav.wordSharing'), href: '/activities#wordsharingmeet' },
+        { label: t('nav.zonalMeet'), href: '/activities#zonalmeet' },
+        { label: t('nav.churchVisit'), href: '/activities#churchvisit' },
+        { label: t('nav.childrenMinistry'), href: '/activities#childrenministry' },
+        { label: t('nav.youthMinistry'), href: '/activities#youthministry' },
+        { label: t('nav.outreach'), href: '/activities#outreach' },
+      ],
+    },
+    {
+      label: t('nav.partnership'),
+      hasDropdown: true,
+      href: '/partnership',
+      items: [
+        { label: t('nav.prayer'), href: '/partnership#prayer' },
+        { label: t('nav.partnerTestimony'), href: '/partnership#partnertestimony' },
+        { label: t('nav.contributions'), href: '/partnership#contributions' },
+        { label: t('nav.donation'), href: '/partnership#donation' },
+        { label: t('nav.opportunityToSow'), href: '/partnership#opportunitytosow' },
+      ],
+    },
+    {
+      label: t('nav.synod'),
+      hasDropdown: true,
+      href: '/synod',
+      items: [
+        { label: t('nav.aboutSynod'), href: '/synod#aboutsynod' },
+        { label: t('nav.synodFunctions'), href: '/synod#synodfunctions' },
+        { label: t('nav.synodPublications'), href: '/synod#synodpublications' },
+        { label: t('nav.synodMembers'), href: '/synod#synodmembers' },
+      ],
+    },
+    {
+      label: t('nav.media'),
+      hasDropdown: true,
+      href: '/media',
+      items: [
+        { label: t('nav.magazines'), href: '/media#magazines' },
+        { label: t('nav.audio'), href: '/media#audio' },
+        { label: t('nav.video'), href: '/media#video' },
+        { label: t('nav.literature'), href: '/media#literature' },
+      ],
+    },
+    {
+      label: t('nav.gallery'),
+      hasDropdown: false,
+      href: '/gallery',
+    },
+    {
+      label: t('nav.contact'),
+      hasDropdown: false,
+      href: '/contact',
+    },
+  ]
+
   return (
     <header
       ref={headerRef}
@@ -64,15 +143,15 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
             height="48"
           />
           <div className="logo-text">
-            <span className="logo-name">ACI Diocese</span>
-            <span className="logo-tagline">Shepherding the Shepherds</span>
+            <span className="logo-name">{t('common.siteName')}</span>
+            <span className="logo-tagline">{t('common.tagline')}</span>
           </div>
         </Link>
 
         {/* ---- Desktop Navigation ---- */}
         <nav className="header-nav" aria-label="Main navigation">
           <ul className="nav-list" role="list">
-            {navItems.map((item, idx) => (
+            {localizedNav.map((item, idx) => (
               <li
                 key={idx}
                 className={`nav-item${item.hasDropdown ? ' has-dropdown' : ''}${activeDropdown === idx ? ' active' : ''}`}
@@ -144,8 +223,29 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
           </ul>
         </nav>
 
-        {/* ---- Right Controls ---- */}
+        {/* ---- Right Controls: Language Switcher + Search + Mobile hamburger ---- */}
         <div className="header-controls">
+
+          {/* Bilingual Language Switcher Pill */}
+          <div className="lang-switcher-pill" role="group" aria-label="Language Selector">
+            <button
+              onClick={() => setLang('en')}
+              className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+              aria-pressed={lang === 'en'}
+            >
+              EN
+            </button>
+            <span className="lang-sep">|</span>
+            <button
+              onClick={() => setLang('ta')}
+              className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+              aria-pressed={lang === 'ta'}
+            >
+              தமிழ்
+            </button>
+          </div>
+
+          {/* Search Icon */}
           <button
             className="icon-btn search-btn"
             aria-label="Open search"
