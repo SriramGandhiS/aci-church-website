@@ -12,9 +12,15 @@ export default function FeaturedSection() {
       className="featured-section"
       aria-label="Latest Message from ACI Diocese"
     >
-      {/* Clean Premium Dark Background */}
+      {/* Background image */}
       <div className="featured-bg">
-        <div className="featured-gradient-overlay" />
+        <img
+          src="/crowd.jpeg"
+          alt="ACI Diocese gathering and worship"
+          className="featured-img"
+          loading="lazy"
+        />
+        <div className="featured-overlay" aria-hidden="true" />
       </div>
 
       {/* Content */}
