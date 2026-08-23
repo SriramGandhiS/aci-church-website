@@ -22,16 +22,10 @@ export default function Hero() {
 
   return (
     <section className="hero" aria-label="Welcome to ACI Diocese">
-      {/* Background image */}
+      {/* Clean Premium Background */}
       <div className="hero-bg">
-        <img
-          ref={parallaxRef}
-          src="/img-hero.jpg"
-          alt="ACI Diocese Tamil Nadu Christian worship gathering"
-          className="hero-img"
-          fetchpriority="high"
-        />
-        <div className="hero-overlay" aria-hidden="true" />
+        <div className="hero-gradient-overlay" />
+        <div className="hero-ambient-glow" />
       </div>
 
       {/* Content */}

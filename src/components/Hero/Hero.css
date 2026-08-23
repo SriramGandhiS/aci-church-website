@@ -14,31 +14,35 @@
   background-color: #111111; /* fallback when image loads */
 }
 
-/* ---- Background image ---- */
+/* ---- Background styling ---- */
 .hero-bg {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: radial-gradient(circle at 80% 20%, rgba(200, 169, 110, 0.12) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(30, 40, 60, 0.3) 0%, transparent 60%),
+              linear-gradient(135deg, #0d0d0d 0%, #141414 50%, #0a0a0a 100%);
 }
 
-.hero-img {
-  width: 100%;
-  height: 120%;          /* extra height for parallax */
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  will-change: transform;
-}
-
-.hero-overlay {
+.hero-gradient-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.78) 0%,
-    rgba(0, 0, 0, 0.42) 50%,
-    rgba(0, 0, 0, 0.25) 100%
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.6) 100%
   );
+}
+
+.hero-ambient-glow {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200, 169, 110, 0.08) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
 }
 
 /* ---- Content ---- */
