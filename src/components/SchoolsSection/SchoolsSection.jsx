@@ -5,8 +5,8 @@ const synodMembersList = [
   {
     sno: '1',
     tnNo: 'TN 0001',
-    name: 'Rt. Rev. S. Johnson Durai',
-    role: 'Managing Trustee & Episcopal Bishop',
+    name: 'The Most Rev. S. Johnson Durai',
+    role: 'Managing Trustee & Archbishop',
     email: 'rev.johnsondurai@gmail.com',
     ministry: 'Power In The Word Church',
     exp: '25 Years',
@@ -94,7 +94,7 @@ export default function SchoolsSection() {
               The Synod comprises all the Trustees of the Board and ordained Apostles, Prophets, Evangelists, Pastors, and Teachers. They look after the spiritual needs, doctrine, and welfare of the Apostolic Council of India Diocese.
             </p>
             <ul style={{ listStyle: 'disc', paddingLeft: '20px', fontSize: '14px', lineHeight: '1.6', color: 'var(--color-text-mid)' }}>
-              <li><strong>Chairman:</strong> Episcopal Bishop Rt. Rev. S. Johnson Durai, Author of the Trust, serves as Chairman for life.</li>
+              <li><strong>Chairman:</strong> The Most Reverend Archbishop S. Johnson Durai, Author of the Trust, serves as Chairman for life.</li>
               <li><strong>Appointment:</strong> Synod members are nominated in consultation with the Board of Trustees.</li>
               <li><strong>Composition:</strong> The Synod consists of between 9 and 20 dedicated ordained leaders.</li>
             </ul>

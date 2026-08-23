@@ -22,6 +22,20 @@ export const navItems = [
     ],
   },
   {
+    label: 'Diocese',
+    hasDropdown: true,
+    href: '/diocese',
+    items: [
+      { label: 'ACI TIRUPATTUR DIOCESE', href: '/diocese#tirupattur' },
+      { label: 'ACI CHENGALPATTU DIOCESE', href: '/diocese#chengalpattu' },
+      { label: 'ACI VILLUPURAM DIOCESE', href: '/diocese#villupuram' },
+      { label: 'ACI MADURAI DIOCESE', href: '/diocese#madurai' },
+      { label: 'ACI TRICHY DIOCESE', href: '/diocese#trichy' },
+      { label: 'ACI VIRUDHUNAGAR DIOCESE', href: '/diocese#virudhunagar' },
+      { label: 'ACI KANNIYAKUMARI DIOCESE', href: '/diocese#kanniyakumari' },
+    ],
+  },
+  {
     label: 'Activities',
     hasDropdown: true,
     href: '/activities',
@@ -55,7 +69,8 @@ export const navItems = [
       { label: 'ABOUT SYNOD', href: '/synod#aboutsynod' },
       { label: 'SYNOD FUNCTIONS', href: '/synod#synodfunctions' },
       { label: 'SYNOD PUBLICATIONS', href: '/synod#synodpublications' },
-      { label: 'SYNOD MEMBERS', href: '/synod#synodmembers' },
+      { label: 'SYNOD ACADEMIC COUNCIL', href: '/synod#synodacademiccouncil' },
+      { label: 'SYNOD GENERAL COUNCIL', href: '/synod#synodgeneralcouncil' },
     ],
   },
   {

@@ -165,7 +165,7 @@ export default function MediaPage() {
                   onError={e => { e.target.style.opacity = '0.3' }} />
                 <div style={S.cardBody}>
                   <p style={S.cardTitle}>{item.title}</p>
-                  <p style={S.p}>{isTa ? 'எழுதியவர்: பேரருட்திரு ச. ஜான்சன் துரை' : 'By Rt. Rev. S. Johnson Durai'}</p>
+                  <p style={S.p}>{isTa ? 'எழுதியவர்: பேரருட்திரு ச. ஜான்சன் துரை' : 'By The Most Rev. S. Johnson Durai'}</p>
                   <a href={`${BASE_MEDIA}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
                     📖 {isTa ? 'நூலை படிக்க (PDF)' : 'Read PDF'}
                   </a>

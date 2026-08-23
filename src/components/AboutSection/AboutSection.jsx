@@ -146,7 +146,7 @@ export default function AboutSection() {
               {isTa ? 'பேராயத்தின் ஸ்தாபகர்' : 'THE FOUNDER'}
             </p>
             <h2 className="t-headline" style={{ fontSize: '32px', marginBottom: '16px', color: 'var(--color-text-dark)' }}>
-              {isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'Bishop Rt. Rev. S. Johnson Durai'}
+              {isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'The Most Rev. S. Johnson Durai'}
             </h2>
             <div style={{ borderLeft: '3px solid var(--color-black)', paddingLeft: '16px', margin: '16px 0', color: 'var(--color-text-mid)', fontStyle: 'italic', fontSize: '15px', lineHeight: '1.7' }}>
               {isTa
@@ -160,9 +160,9 @@ export default function AboutSection() {
             </p>
           </div>
           <div className="about-photo-wrap">
-            <img src="/migrated/d2.png" alt="Bishop Rt. Rev. S. Johnson Durai" className="about-photo" />
+            <img src="/archbishop_new.jpg" alt="The Most Rev. S. Johnson Durai" className="about-photo" />
             <div style={{ padding: '12px', background: 'var(--color-near-black)', color: 'var(--color-white)', fontSize: '13px', textAlign: 'center' }}>
-              <strong>{isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'Bishop Rt. Rev. S. Johnson Durai'}</strong> — {isTa ? 'ஸ்தாபகர் & தலைமை பேராயர்' : 'Founder & Senior Bishop'}
+              <strong>{isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'The Most Rev. S. Johnson Durai'}</strong> — {isTa ? 'ஸ்தாபகர் & தலைமைப் பேராயர்' : 'Founder & Archbishop'}
             </div>
           </div>
         </div>

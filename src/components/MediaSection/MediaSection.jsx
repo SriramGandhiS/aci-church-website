@@ -22,10 +22,10 @@ const videos = [
 ]
 
 const literature = [
-  { title: 'Church The Body Of Christ', author: 'Rt. Rev. S. Johnson Durai', lang: 'English' },
-  { title: 'கிறிஸ்துவின் தெய்வத்துவம் (Deity of Christ)', author: 'Rt. Rev. S. Johnson Durai', lang: 'Tamil' },
-  { title: 'கிறிஸ்துவின் மனு அவதாரம் (Incarnation)', author: 'Rt. Rev. S. Johnson Durai', lang: 'Tamil' },
-  { title: 'கிறிஸ்துவின் கிரியைகள்-அலுவல்கள் (Works of Christ)', author: 'Rt. Rev. S. Johnson Durai', lang: 'Tamil' },
+  { title: 'Church The Body Of Christ', author: 'The Most Rev. S. Johnson Durai', lang: 'English' },
+  { title: 'கிறிஸ்துவின் தெய்வத்துவம் (Deity of Christ)', author: 'The Most Rev. S. Johnson Durai', lang: 'Tamil' },
+  { title: 'கிறிஸ்துவின் மனு அவதாரம் (Incarnation)', author: 'The Most Rev. S. Johnson Durai', lang: 'Tamil' },
+  { title: 'கிறிஸ்துவின் கிரியைகள்-அலுவல்கள் (Works of Christ)', author: 'The Most Rev. S. Johnson Durai', lang: 'Tamil' },
 ]
 
 export default function MediaSection() {

@@ -1,0 +1,341 @@
+/* ============================================================
+   DIOCESE HOME SECTION — DARK EDITORIAL THEME WITH GOLD ACCENTS
+   ============================================================ */
+
+.diocese-home-section {
+  background: var(--color-near-black);
+  color: var(--color-white);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header */
+.diocese-header {
+  max-width: 960px;
+  margin-bottom: 48px;
+}
+
+.diocese-label {
+  color: #c8a96e;
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+
+.diocese-title {
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(32px, 4.5vw, 56px);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.diocese-sub {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.7;
+}
+
+/* 4 Key Stat Cards */
+.diocese-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 20px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: #c8a96e;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 600;
+  color: #c8a96e;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-title {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 6px;
+}
+
+.stat-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+/* Tabs Container */
+.diocese-tabs-wrapper {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.diocese-tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+
+.diocese-tab-btn {
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.diocese-tab-btn:hover {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.diocese-tab-btn.active {
+  color: var(--color-near-black);
+  background: #c8a96e;
+  border-color: #c8a96e;
+}
+
+/* Tab Panes */
+.tab-pane {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-pane-title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 14px;
+}
+
+.tab-pane-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+  max-width: 860px;
+}
+
+.tab-pane-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 32px;
+  align-items: start;
+}
+
+.tab-pane-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tab-pane-list li {
+  padding-left: 20px;
+  position: relative;
+}
+
+.tab-pane-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: #c8a96e;
+  font-size: 11px;
+  top: 3px;
+}
+
+.tab-pane-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.tab-card-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.tab-card-caption {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.tab-card-caption strong {
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.tab-card-caption span {
+  font-size: 12px;
+  color: #c8a96e;
+}
+
+/* Synod Preview Grid */
+.synod-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.synod-mini-box {
+  display: flex;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.synod-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.synod-mini-box strong {
+  display: block;
+  font-size: 15px;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+
+.synod-mini-box p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+}
+
+/* Trustees Grid */
+.trustees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.trustee-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.t-role {
+  font-size: 12px;
+  color: #c8a96e;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.t-name {
+  font-size: 15px;
+  color: var(--color-white);
+}
+
+.t-min {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Office Box */
+.office-address-box {
+  display: flex;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.address-icon {
+  font-size: 28px;
+}
+
+.address-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+.address-contacts {
+  font-size: 13px;
+  color: #c8a96e;
+  margin-top: 10px;
+}
+
+/* Actions */
+.diocese-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .tab-pane-grid {
+    grid-template-columns: 1fr;
+  }
+  .tab-pane-card {
+    max-width: 320px;
+  }
+  .diocese-tabs-wrapper {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .diocese-tab-buttons {
+    flex-direction: column;
+  }
+  .diocese-tab-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

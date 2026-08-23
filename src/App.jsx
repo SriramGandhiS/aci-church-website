@@ -8,6 +8,7 @@ import MobileMenu from './components/MobileMenu/MobileMenu'
 
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
+import DiocesePage from './pages/DiocesePage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import PartnershipPage from './pages/PartnershipPage'
 import SynodPage from './pages/SynodPage'
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/diocese" element={<DiocesePage />} />
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/partnership" element={<PartnershipPage />} />
             <Route path="/synod" element={<SynodPage />} />

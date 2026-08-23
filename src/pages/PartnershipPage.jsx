@@ -106,7 +106,7 @@ export default function PartnershipPage() {
               <p>The Diocese is very helpful to our Church and our believers by its various activities like Children ministry training, Village ministry – VBS, Church visit to encourage the local churches affiliated with the diocese and also the valuable counselling of the Bishop.</p>
             </div>
             <div style={S.quoteBlock}>
-              <p>Now we and our Churches are the witness and also identified by many people as precious ministry by getting the real spiritual food and believing the same through the vision of our diocese "Shepherding the shepherd". As we believe the Booklet named as "The Church the body of Christ" written by Rt.Rev.S.Johnson Durai, we received a wonderful building for our Church.</p>
+              <p>Now we and our Churches are the witness and also identified by many people as precious ministry by getting the real spiritual food and believing the same through the vision of our diocese "Shepherding the shepherd". As we believe the Booklet named as "The Church the body of Christ" written by The Most Rev. S. Johnson Durai, we received a wonderful building for our Church.</p>
             </div>
             <div style={S.quoteBlock}>
               <p><em>All these above blessings are possible to us; because of the affiliation with the vision of the diocese thus we are the witnesses.</em></p>

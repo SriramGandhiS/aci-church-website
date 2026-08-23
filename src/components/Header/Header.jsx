@@ -66,6 +66,20 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
       ],
     },
     {
+      label: t('nav.diocese'),
+      hasDropdown: true,
+      href: '/diocese',
+      items: [
+        { label: t('nav.tirupatturDiocese'), href: '/diocese#tirupattur' },
+        { label: t('nav.chengalpattuDiocese'), href: '/diocese#chengalpattu' },
+        { label: t('nav.villupuramDiocese'), href: '/diocese#villupuram' },
+        { label: t('nav.maduraiDiocese'), href: '/diocese#madurai' },
+        { label: t('nav.trichyDiocese'), href: '/diocese#trichy' },
+        { label: t('nav.virudhunagarDiocese'), href: '/diocese#virudhunagar' },
+        { label: t('nav.kanniyakumariDiocese'), href: '/diocese#kanniyakumari' },
+      ],
+    },
+    {
       label: t('nav.activities'),
       hasDropdown: true,
       href: '/activities',
@@ -99,7 +113,8 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
         { label: t('nav.aboutSynod'), href: '/synod#aboutsynod' },
         { label: t('nav.synodFunctions'), href: '/synod#synodfunctions' },
         { label: t('nav.synodPublications'), href: '/synod#synodpublications' },
-        { label: t('nav.synodMembers'), href: '/synod#synodmembers' },
+        { label: t('nav.synodAcademicCouncil'), href: '/synod#synodacademiccouncil' },
+        { label: t('nav.synodGeneralCouncil'), href: '/synod#synodgeneralcouncil' },
       ],
     },
     {

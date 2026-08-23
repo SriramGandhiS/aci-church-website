@@ -1,6 +1,7 @@
 import Hero from '../components/Hero/Hero'
 import InteractiveShowcase from '../components/InteractiveShowcase/InteractiveShowcase'
 import AboutSection from '../components/AboutSection/AboutSection'
+import DioceseSection from '../components/DioceseSection/DioceseSection'
 import MinistriesSection from '../components/MinistriesSection/MinistriesSection'
 import FeaturedSection from '../components/FeaturedSection/FeaturedSection'
 import EventsSection from '../components/EventsSection/EventsSection'
@@ -19,19 +20,22 @@ export default function HomePage() {
       {/* 3. About Section with Statement of Faith & Vision */}
       <AboutSection />
 
-      {/* 4. Core Ministries & Equipments */}
+      {/* 4. Diocese Governance & Statutory Accreditation Overview */}
+      <DioceseSection />
+
+      {/* 5. Core Ministries & Equipments */}
       <MinistriesSection />
 
-      {/* 5. Featured Conference & Word Sharing */}
+      {/* 6. Featured Conference & Word Sharing */}
       <FeaturedSection />
 
-      {/* 6. Upcoming Events */}
+      {/* 7. Upcoming Events */}
       <EventsSection />
 
-      {/* 7. Partner Testimonies */}
+      {/* 8. Partner Testimonies */}
       <TestimoniesSection />
 
-      {/* 8. Newsletter & Sowing */}
+      {/* 9. Newsletter & Sowing */}
       <Newsletter />
     </>
   )
