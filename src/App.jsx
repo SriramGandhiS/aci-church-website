@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
 import Header from './components/Header/Header'
@@ -20,12 +20,18 @@ import AlbumPage from './components/AlbumPage/AlbumPage'
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const handleOpenMenu = useCallback(() => {
+    setMobileMenuOpen(true)
+  }, [])
+
+  const handleCloseMenu = useCallback(() => {
+    setMobileMenuOpen(false)
+  }, [])
+
   return (
     <LanguageProvider>
       <Router>
-        <Header
-          onMenuOpen={() => setMobileMenuOpen(true)}
-        />
+        <Header onMenuOpen={handleOpenMenu} />
 
         <main>
           <Routes>
@@ -47,7 +53,7 @@ function App() {
 
         <MobileMenu
           isOpen={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
+          onClose={handleCloseMenu}
         />
       </Router>
     </LanguageProvider>

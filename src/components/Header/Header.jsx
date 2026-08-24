@@ -243,6 +243,7 @@ export default function Header({ onMenuOpen }) {
           {/* Bilingual Language Switcher Pill */}
           <div className="lang-switcher-pill" role="group" aria-label="Language Selector">
             <button
+              type="button"
               onClick={() => setLang('en')}
               className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
               aria-pressed={lang === 'en'}
@@ -251,6 +252,7 @@ export default function Header({ onMenuOpen }) {
             </button>
             <span className="lang-sep">|</span>
             <button
+              type="button"
               onClick={() => setLang('ta')}
               className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
               aria-pressed={lang === 'ta'}
@@ -271,10 +273,14 @@ export default function Header({ onMenuOpen }) {
 
           {/* Mobile hamburger */}
           <button
+            type="button"
             className="icon-btn hamburger"
             aria-label="Open navigation menu"
             aria-expanded={false}
-            onClick={onMenuOpen}
+            onClick={(e) => {
+              e.stopPropagation()
+              onMenuOpen?.()
+            }}
           >
             <span className="ham-line" />
             <span className="ham-line" />

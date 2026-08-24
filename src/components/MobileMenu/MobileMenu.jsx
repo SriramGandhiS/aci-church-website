@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import './MobileMenu.css'
@@ -7,11 +7,15 @@ export default function MobileMenu({ isOpen, onClose }) {
   const { lang, setLang, t } = useLanguage()
   const [openSubmenu, setOpenSubmenu] = useState(null)
   const location = useLocation()
+  const prevPathnameRef = useRef(location.pathname)
 
-  // Close on route change
+  // Close ONLY when location.pathname actually changes
   useEffect(() => {
-    onClose()
-  }, [location, onClose])
+    if (prevPathnameRef.current !== location.pathname) {
+      prevPathnameRef.current = location.pathname
+      onClose?.()
+    }
+  }, [location.pathname, onClose])
 
   // Prevent background scrolling when open
   useEffect(() => {
@@ -148,6 +152,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         {/* Mobile Language Switcher */}
         <div className="lang-switcher-pill" style={{ marginLeft: 'auto', marginRight: '12px' }}>
           <button
+            type="button"
             onClick={() => setLang('en')}
             className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
           >
@@ -155,6 +160,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           </button>
           <span className="lang-sep">|</span>
           <button
+            type="button"
             onClick={() => setLang('ta')}
             className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
           >
@@ -163,6 +169,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         </div>
 
         <button
+          type="button"
           className="mm-close"
           onClick={onClose}
           aria-label="Close navigation menu"
@@ -189,6 +196,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                       {item.label}
                     </Link>
                     <button
+                      type="button"
                       className={`mm-expand-btn${openSubmenu === idx ? ' open' : ''}`}
                       aria-expanded={openSubmenu === idx}
                       aria-label={`Toggle ${item.label} sub-links`}
