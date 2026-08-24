@@ -147,7 +147,7 @@ export default function DiocesePage() {
       {/* Hero Header */}
       <div style={{ background: '#111111', padding: '64px 0 48px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div className="container">
-          <p className="t-label" style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '8px', letterSpacing: '0.15em', fontSize: '11px', textTransform: 'uppercase' }}>
+          <p className="t-label" style={{ color: '#c8a96e', marginBottom: '8px', letterSpacing: '0.16em', fontSize: '11px', textTransform: 'uppercase', fontWeight: 700 }}>
             {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயங்கள்' : 'APOSTOLIC COUNCIL OF INDIA DIOCESES'}
           </p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 400, marginBottom: '16px', color: '#ffffff' }}>
@@ -164,7 +164,7 @@ export default function DiocesePage() {
       <div className="container" style={{ padding: '64px 24px 80px' }}>
 
         {/* Overview Banner */}
-        <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #ffffff', padding: '28px 32px', marginBottom: '56px', borderRadius: '4px' }}>
+        <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #c8a96e', padding: '28px 32px', marginBottom: '56px', borderRadius: '4px' }}>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', color: '#ffffff', marginBottom: '8px', fontWeight: 400 }}>
             {isTa ? 'மண்டல பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across 7 Regional Dioceses'}
           </h3>
@@ -192,7 +192,7 @@ export default function DiocesePage() {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px' }}>
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
                     DIOCESE · {d.num}
                   </span>
                   <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.5vw, 34px)', color: '#ffffff', marginTop: '6px', marginBottom: '4px', fontWeight: 400 }}>
@@ -202,8 +202,8 @@ export default function DiocesePage() {
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
                   </span>
                 </div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.18)', color: '#ffffff', padding: '6px 14px', fontSize: '12px', fontWeight: 600, borderRadius: '4px' }}>
-                  <LocationIcon size={13} color="#ffffff" />
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(200, 169, 110, 0.1)', border: '1px solid rgba(200, 169, 110, 0.3)', color: '#c8a96e', padding: '6px 14px', fontSize: '12px', fontWeight: 600, borderRadius: '4px' }}>
+                  <LocationIcon size={13} color="#c8a96e" />
                   <span>{isTa ? d.headquartersTa : d.headquarters}</span>
                 </div>
               </div>
@@ -213,13 +213,13 @@ export default function DiocesePage() {
               </p>
 
               <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px', padding: '20px 24px', marginBottom: '24px' }}>
-                <h4 style={{ fontSize: '11.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)', marginBottom: '14px', fontWeight: 700 }}>
+                <h4 style={{ fontSize: '11.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#c8a96e', marginBottom: '14px', fontWeight: 700 }}>
                   {isTa ? 'முக்கிய அமைப்புகள் & செயல்பாடுகள்' : 'Key Pillars & Active Ministries'}
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
                   {d.highlights.map((h, hi) => (
                     <div key={hi} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13.5px', color: '#ffffff' }}>
-                      <StarIcon size={9} color="#ffffff" />
+                      <StarIcon size={9} color="#c8a96e" />
                       <span>{isTa ? h.ta : h.en}</span>
                     </div>
                   ))}
@@ -241,8 +241,8 @@ export default function DiocesePage() {
         </div>
 
         {/* Central Secretariat Card */}
-        <div style={{ marginTop: '64px', padding: '36px', background: '#111111', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', color: '#ffffff' }}>
-          <p className="t-label" style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '8px', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+        <div style={{ marginTop: '64px', padding: '36px', background: '#111111', border: '1px solid rgba(200, 169, 110, 0.3)', borderRadius: '6px', color: '#ffffff' }}>
+          <p className="t-label" style={{ color: '#c8a96e', marginBottom: '8px', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 700 }}>
             {isTa ? 'மத்திய பேராய தலைமை அலுவலகம்' : 'CENTRAL DIOCESAN SECRETARIAT'}
           </p>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '28px', marginBottom: '12px', fontWeight: 400, color: '#ffffff' }}>

@@ -80,13 +80,13 @@ export default function MinistriesSection() {
     <section
       ref={sectionRef}
       className="ministries-section section-pad"
-      style={{ background: '#000000', borderTop: '1px solid rgba(255,255,255,0.1)' }}
+      style={{ background: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}
     >
       <div className="container">
 
         {/* Section Header */}
         <div className="ministries-header reveal" style={{ marginBottom: '48px' }}>
-          <p className="t-label" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: '0.15em', fontSize: '11px', textTransform: 'uppercase' }}>
+          <p className="t-label" style={{ color: '#c8a96e', letterSpacing: '0.16em', fontSize: '11px', textTransform: 'uppercase', fontWeight: 700 }}>
             {t('activities.label')}
           </p>
           <h2 className="t-h2" style={{ color: '#ffffff', marginTop: '8px' }}>
@@ -121,7 +121,7 @@ export default function MinistriesSection() {
                 transition: 'all 0.25s ease',
               }}
             >
-              <span className="t-label" style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+              <span className="t-label" style={{ color: '#c8a96e', fontSize: '10.5px', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700 }}>
                 ACI DIOCESE ACTIVITY
               </span>
               <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 600, marginTop: '10px', marginBottom: '14px', color: '#ffffff', lineHeight: 1.3 }}>
@@ -149,12 +149,12 @@ export default function MinistriesSection() {
                     letterSpacing: '0.04em',
                     transition: 'opacity 0.2s',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#ffffff' }}
                 >
-                  <CameraIcon size={14} color="#ffffff" />
+                  <CameraIcon size={14} color="#c8a96e" />
                   <span>View {act.cat} Photos &amp; Albums</span>
-                  <ArrowRightIcon size={12} color="#ffffff" />
+                  <ArrowRightIcon size={12} color="#c8a96e" />
                 </Link>
               </div>
             </div>

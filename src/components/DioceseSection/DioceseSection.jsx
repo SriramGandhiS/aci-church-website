@@ -110,10 +110,10 @@ export default function DioceseSection() {
       <div className="container">
         {/* Header Block */}
         <div className="diocese-header reveal">
-          <p className="t-label diocese-label">
+          <p className="t-label diocese-label" style={{ color: '#c8a96e', letterSpacing: '0.16em', fontSize: '11px', textTransform: 'uppercase', fontWeight: 700 }}>
             {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா மண்டல பேராயங்கள்' : 'APOSTOLIC COUNCIL OF INDIA REGIONAL DIOCESES'}
           </p>
-          <h2 className="t-headline diocese-title">
+          <h2 className="t-headline diocese-title" style={{ color: '#ffffff' }}>
             {isTa
               ? '7 மண்டல பேராயங்களின் ஒருங்கிணைந்த எபிஸ்கோபல் கட்டமைப்பு'
               : '7 Regional Dioceses of ACI Across Tamil Nadu'}
@@ -134,34 +134,36 @@ export default function DioceseSection() {
               style={{
                 cursor: 'pointer',
                 padding: '24px 20px',
-                background: selectedDiocese.id === d.id ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.03)',
-                border: selectedDiocese.id === d.id ? '1.5px solid #ffffff' : '1px solid rgba(255, 255, 255, 0.08)',
+                background: selectedDiocese.id === d.id ? 'rgba(200, 169, 110, 0.08)' : '#111111',
+                border: selectedDiocese.id === d.id ? '1.5px solid #c8a96e' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '6px',
                 transition: 'all var(--transition-fast)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255, 255, 255, 0.7)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: '#c8a96e', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   DIOCESE · {d.num}
                 </span>
                 <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <LocationIcon size={12} color="currentColor" />
+                  <LocationIcon size={12} color="#c8a96e" />
                   <span>{isTa ? d.zoneTa : d.zoneEn}</span>
                 </span>
               </div>
               <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, color: '#ffffff', marginBottom: '8px' }}>
                 {isTa ? d.nameTa : d.nameEn}
               </h3>
-              <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.65)' }}>
+              <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.7)' }}>
                 {isTa ? d.descTa : d.descEn}
               </p>
               <div style={{ marginTop: '14px', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
                 <Link
                   to={`/diocese#${d.id}`}
                   style={{ color: '#ffffff', fontSize: '12px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none', letterSpacing: '0.03em' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#ffffff' }}
                 >
                   <span>{isTa ? 'முழு விபரம் காண்க' : 'View Full Details'}</span>
-                  <ArrowRightIcon size={11} color="#ffffff" />
+                  <ArrowRightIcon size={11} color="currentColor" />
                 </Link>
               </div>
             </div>
@@ -170,10 +172,10 @@ export default function DioceseSection() {
 
         {/* Selected Diocese Highlight Box */}
         {selectedDiocese && (
-          <div className="reveal reveal-delay-2" style={{ background: '#111111', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '6px', padding: '28px', marginBottom: '40px' }}>
+          <div className="reveal reveal-delay-2" style={{ background: '#111111', border: '1px solid rgba(200, 169, 110, 0.3)', borderRadius: '6px', padding: '28px', marginBottom: '40px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
               <div>
-                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                <span style={{ color: '#c8a96e', fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                   FEATURED DIOCESE · {selectedDiocese.num}
                 </span>
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '26px', color: '#ffffff', marginTop: '4px', marginBottom: '8px' }}>
