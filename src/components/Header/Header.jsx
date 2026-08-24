@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
-import { SearchIcon, IdCardIcon } from '../Icons/SvgIcons'
+import { SearchIcon } from '../Icons/SvgIcons'
 import './Header.css'
 
-export default function Header({ onSearchOpen, onMenuOpen }) {
+export default function Header({ onMenuOpen }) {
   const { lang, setLang, t } = useLanguage()
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -146,7 +146,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
       className={`site-header${isScrolled ? ' scrolled' : ''}`}
       role="banner"
     >
-      <div className="header-inner container">
+      <div className="header-inner">
 
         {/* ---- Brand Logo ---- */}
         <Link to="/" className="header-logo" aria-label="ACI Diocese Home">
@@ -184,11 +184,11 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
                         setActiveDropdown(activeDropdown === idx ? null : idx)
                       }
                     >
-                      {item.label}
+                      <span>{item.label}</span>
                       <svg
                         className="chevron"
-                        width="10"
-                        height="6"
+                        width="9"
+                        height="5"
                         viewBox="0 0 10 6"
                         fill="none"
                         aria-hidden="true"
@@ -229,7 +229,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
                   </>
                 ) : (
                   <Link to={item.href} className="nav-link t-nav">
-                    {item.label}
+                    <span>{item.label}</span>
                   </Link>
                 )}
               </li>
@@ -237,7 +237,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
           </ul>
         </nav>
 
-        {/* ---- Right Controls: Language Switcher + Search + Mobile hamburger ---- */}
+        {/* ---- Right Controls: Language Switcher + Member Search Button + Hamburger ---- */}
         <div className="header-controls">
 
           {/* Bilingual Language Switcher Pill */}
@@ -259,14 +259,15 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
             </button>
           </div>
 
-          {/* Search Icon */}
-          <button
+          {/* Search Button -> Redirects directly to Member Directory Search */}
+          <Link
+            to="/directory"
             className="icon-btn search-btn"
-            aria-label="Open search"
-            onClick={onSearchOpen}
+            aria-label={t('nav.directory')}
+            title={lang === 'ta' ? 'உறுப்பினர் தேடல் (Member Directory)' : 'Search Member Directory'}
           >
-            <SearchIcon size={18} />
-          </button>
+            <SearchIcon size={17} />
+          </Link>
 
           {/* Mobile hamburger */}
           <button

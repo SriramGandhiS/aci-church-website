@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import SearchOverlay from './components/SearchOverlay/SearchOverlay'
 import MobileMenu from './components/MobileMenu/MobileMenu'
 
 import HomePage from './pages/HomePage'
@@ -19,14 +18,12 @@ import DirectoryPage from './pages/DirectoryPage'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
-  const [searchOpen, setSearchOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <LanguageProvider>
       <Router>
         <Header
-          onSearchOpen={() => setSearchOpen(true)}
           onMenuOpen={() => setMobileMenuOpen(true)}
         />
 
@@ -47,11 +44,6 @@ function App() {
         </main>
 
         <Footer />
-
-        <SearchOverlay
-          isOpen={searchOpen}
-          onClose={() => setSearchOpen(false)}
-        />
 
         <MobileMenu
           isOpen={mobileMenuOpen}
