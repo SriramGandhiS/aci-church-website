@@ -1,6 +1,9 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import pastorsData from '../data/pastorsData.json'
+import { CloseIcon, PhoneIcon, EmailIcon, LocationIcon, ChurchIcon } from '../components/Icons/SvgIcons'
+import './SynodPage.css'
 
 const S = {
   page: { paddingTop: '80px', background: '#0a0a0a', color: '#fff', minHeight: '100vh' },
@@ -18,15 +21,6 @@ const S = {
     gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
     gap: '20px',
     marginTop: '24px',
-  },
-  memberCard: {
-    background: 'linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-    border: '1px solid rgba(200, 169, 110, 0.25)',
-    borderRadius: '8px',
-    padding: '22px 24px',
-    display: 'flex',
-    flexDirection: 'column',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
   },
   memberHeader: {
     display: 'flex',
@@ -61,7 +55,7 @@ const S = {
     color: '#c8a96e',
     fontSize: '14px',
     fontWeight: 600,
-    margin: '0 0 14px 0',
+    margin: '0 0 10px 0',
     lineHeight: 1.45,
     borderBottom: '1px solid rgba(255,255,255,0.08)',
     paddingBottom: '10px',
@@ -85,6 +79,7 @@ export default function SynodPage() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
   const { hash } = useLocation()
+  const [selectedMember, setSelectedMember] = useState(null)
 
   useEffect(() => {
     if (hash) {
@@ -97,129 +92,146 @@ export default function SynodPage() {
     }
   }, [hash])
 
-  const academicMembers = [
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (selectedMember) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [selectedMember])
+
+  // 1. General Council: 5 Members
+  const generalCouncilMembers = [
     {
       sno: 1,
+      regNo: 'TN 0001',
       name: 'The Most Rev. S. Johnson Durai',
       role: isTa ? 'தலைவர் & நிர்வாக அறங்காவலர்' : 'Chairman & Managing Trustee',
-      email: 'rev.johnsondurai@gmail.com',
-      tnno: 'TN 0001',
-      ministry: isTa ? 'தலைமைப் பேராயர் (Archbishop) — வார்த்தையின் வல்லமை சபை' : 'Archbishop — Power In The Word Church',
-      exp: '25 Years',
-      ordained: '11/06/2015'
+      excelDesignation: 'Bishop & Chairman / Synod Member',
     },
     {
       sno: 2,
+      regNo: 'TN 0005',
       name: 'Rev. R. John Durai',
       role: isTa ? 'மன்ற உறுப்பினர் & அறங்காவலர்' : 'Council Member & Trustee',
-      email: 'rjdwonder@gmail.com',
-      tnno: 'TN 0005',
-      ministry: isTa ? 'தீர்க்கதரிசி — வொண்டர் வேர்ட் மினிஸ்ட்ரி' : 'Prophet — Wonder Word Ministry',
-      exp: '29 Years',
-      ordained: '11/06/2015'
+      excelDesignation: 'Vice Chairman / Synod Member',
     },
     {
       sno: 3,
+      regNo: 'TN 0146',
       name: 'Rev. J.A.D. Samuel',
       role: isTa ? 'மன்ற உறுப்பினர் & அறங்காவலர்' : 'Council Member & Trustee',
-      email: 'jadsamuel@gmail.com',
-      tnno: 'TN 0146',
-      ministry: isTa ? 'சுவிசேஷகர் — பெத்ரா சர்வீஸ் மிஷன்' : 'Evangelist — Petra Service Mission',
-      exp: '19 Years',
-      ordained: '11/06/2015'
+      excelDesignation: 'General Secretary / Synod Member',
     },
     {
       sno: 4,
+      regNo: 'TN 0093',
       name: 'Rt. Rev. L. Suresh Daniel',
       role: isTa ? 'மன்ற உறுப்பினர் & நிதி அறங்காவலர்' : 'Council Member & Financial Trustee',
-      email: '',
-      tnno: '—',
-      ministry: isTa ? '—' : '—',
-      exp: '—',
-      ordained: '—'
+      excelDesignation: 'Finance Trustee / Synod Member',
     },
     {
       sno: 5,
+      regNo: 'TN 0058',
       name: 'Rt. Rev. John Samuel',
       role: isTa ? 'மன்ற உறுப்பினர் & பேராயர் ஆணையாளர்' : 'Council Member & Archbishop Commissary',
-      email: 'john.samuelaft@gmail.com',
-      tnno: '—',
-      ministry: isTa ? 'போதகர் — ஏசிஐ பேராயம்' : 'Pastor — ACI Diocese',
-      exp: '—',
-      ordained: '—'
+      excelDesignation: 'Trustee / Synod Member',
     },
   ]
 
-  const generalMembers = [
-    ...academicMembers,
+  // 2. Academic Council: 8 Members (General Council members + Regional Bishops)
+  const academicCouncilMembers = [
+    ...generalCouncilMembers,
     {
       sno: 6,
+      regNo: 'TN 0413',
       name: 'Rt. Rev. S. Anand',
       role: isTa ? 'பேராயர் ஏசிஐ செங்கல்பட்டு பேராயம் & சினோட் பொதுச் செயலாளர்' : 'Bishop ACI Chengalpattu Diocese & Synod General Secretary',
-      email: '—',
-      tnno: '—',
-      ministry: isTa ? 'பேராயர் — ஏசிஐ செங்கல்பட்டு பேராயம்' : 'Bishop — ACI Chengalpattu Diocese',
-      exp: '—',
-      ordained: '—'
+      excelDesignation: 'Synod Secretary / Synod Member',
     },
     {
       sno: 7,
+      regNo: 'TN 0007',
       name: 'Rt. Rev. A. Pounraj',
       role: isTa ? 'பேராயர் ஏசிஐ விழுப்புரம் பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Villupuram Diocese & Synod Member',
-      email: '—',
-      tnno: '—',
-      ministry: isTa ? 'பேராயர் — ஏசிஐ விழுப்புரம் பேராயம்' : 'Bishop — ACI Villupuram Diocese',
-      exp: '—',
-      ordained: '—'
+      excelDesignation: 'Trustee / Synod Member',
     },
     {
       sno: 8,
+      regNo: 'TN 0214',
       name: 'Rt. Rev. G. Edwin Joseph Selvaraj',
       role: isTa ? 'பேராயர் ஏசிஐ திருச்சி பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Trichy Diocese & Synod Member',
-      email: '—',
-      tnno: '—',
-      ministry: isTa ? 'பேராயர் — ஏசிஐ திருச்சி பேராயம்' : 'Bishop — ACI Trichy Diocese',
-      exp: '—',
-      ordained: '—'
+      excelDesignation: 'Bishop & Trustee & Synod Member',
     }
   ]
 
+  // Helper to fetch details from pastorsData.json (the Excel sheet dataset)
+  const getMemberData = (member) => {
+    const fromExcel = pastorsData.find(p => p.regNo === member.regNo) || {}
+    return {
+      ...fromExcel,
+      sno: member.sno,
+      regNo: member.regNo || fromExcel.regNo || '',
+      name: member.name || fromExcel.name || '',
+      role: member.role || '',
+      designation: member.excelDesignation || fromExcel.designation || member.role || 'Synod Member',
+      office: fromExcel.office || 'Pastor',
+      church: fromExcel.church || '',
+      dob: fromExcel.dob || '',
+      ordinationDate: fromExcel.ordinationDate || '',
+      phone: fromExcel.phone || '',
+      email: fromExcel.email || '',
+      address: fromExcel.address || '',
+      district: fromExcel.district || '',
+      state: fromExcel.state || 'Tamil Nadu',
+      status: fromExcel.status || 'Active'
+    }
+  }
+
   const renderMemberCards = (list) => (
     <div style={S.memberGrid}>
-      {list.map((m, i) => (
-        <div key={i} style={S.memberCard}>
-          <div style={S.memberHeader}>
-            <span style={S.memberNumber}>#{String(m.sno).padStart(2, '0')}</span>
-            {m.tnno && m.tnno !== '—' && <span style={S.memberBadge}>{m.tnno}</span>}
-          </div>
-          <h3 style={S.memberName}>{m.name}</h3>
-          <p style={S.memberDesignation}>{m.role}</p>
+      {list.map((m, i) => {
+        const fullData = getMemberData(m)
+        return (
+          <div
+            key={i}
+            className="synod-member-card"
+            onClick={() => setSelectedMember(fullData)}
+            title="Click to view full Synod Council profile"
+          >
+            <div style={S.memberHeader}>
+              <span style={S.memberNumber}>#{String(m.sno).padStart(2, '0')}</span>
+              {fullData.regNo && <span style={S.memberBadge}>{fullData.regNo}</span>}
+            </div>
 
-          {m.ministry && m.ministry !== '—' && (
-            <div style={S.memberDetail}>
-              <span style={S.detailLabel}>{isTa ? 'ஊழியம்:' : 'Ministry:'}</span> {m.ministry}
+            {/* Member Name */}
+            <h3 style={S.memberName}>{fullData.name}</h3>
+
+            {/* Designation Directly Below the Name */}
+            <p style={S.memberDesignation}>{fullData.role}</p>
+
+            {fullData.church && (
+              <div style={S.memberDetail}>
+                <span style={S.detailLabel}>{isTa ? 'சபை / ஊழியம்:' : 'Church:'}</span> {fullData.church}
+              </div>
+            )}
+            {fullData.district && (
+              <div style={S.memberDetail}>
+                <span style={S.detailLabel}>{isTa ? 'மாவட்டம்:' : 'District:'}</span> {fullData.district}, {fullData.state}
+              </div>
+            )}
+
+            <div className="synod-view-badge">
+              <span>{isTa ? 'முழு விபரம் பார்க்க' : 'View Full Details'}</span>
+              <span>→</span>
             </div>
-          )}
-          {m.email && m.email !== '—' && (
-            <div style={S.memberDetail}>
-              <span style={S.detailLabel}>{isTa ? 'மின்னஞ்சல்:' : 'Email:'}</span>{' '}
-              <a href={`mailto:${m.email}`} style={{ color: '#c8a96e', textDecoration: 'none' }}>
-                {m.email}
-              </a>
-            </div>
-          )}
-          {m.exp && m.exp !== '—' && (
-            <div style={S.memberDetail}>
-              <span style={S.detailLabel}>{isTa ? 'அனுபவம்:' : 'Exp:'}</span> {m.exp}
-            </div>
-          )}
-          {m.ordained && m.ordained !== '—' && (
-            <div style={S.memberDetail}>
-              <span style={S.detailLabel}>{isTa ? 'பிரதிஷ்டை:' : 'Ordained:'}</span> {m.ordained}
-            </div>
-          )}
-        </div>
-      ))}
+          </div>
+        )
+      })}
     </div>
   )
 
@@ -303,7 +315,7 @@ export default function SynodPage() {
         </div>
       </section>
 
-      {/* 4. SYNOD GENERAL COUNCIL & MEMBERS (SWAPPED: General Council is now 04) */}
+      {/* 4. SYNOD GENERAL COUNCIL & MEMBERS (5 MEMBERS) */}
       <section id="synodgeneralcouncil" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'சினோட் · 04' : 'Synod · 04'}</p>
@@ -311,12 +323,12 @@ export default function SynodPage() {
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
               {isTa
-                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக, சட்டமன்ற மற்றும் ஆலோசனை அமைப்பாக செயல்படுகிறது. இது தலைமை அறங்காவலர் குழு மற்றும் 7 மண்டல பேராயங்களின் பேராயர்கள், மாவட்ட கண்காணிப்பாளர்கள் மற்றும் நியமிக்கப்பட்ட ஊழியர்களை இணைத்து வழிகாட்டுகிறது:'
-                : 'The Synod General Council serves as the apex administrative, legislative, and consultative council of the ACI Diocese across India. It connects the Central Board of Trustees with the 7 Regional Dioceses, District Overseers (DOS), and ordained ministers to guide strategic expansion and church welfare:'}
+                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக மற்றும் தலைமை அறங்காவலர் குழு உறுப்பினர்களைக் கொண்டுள்ளது. (விபரங்களை அறிய உறுப்பினரை கிளிக் செய்யவும்):'
+                : 'The Synod General Council serves as the apex administrative and central trustee leadership council of the ACI Diocese across India. (Click on any member card to view complete Excel record details):'}
             </p>
 
-            {/* General Council Members Cards with Designation directly below Name */}
-            {renderMemberCards(generalMembers)}
+            {/* General Council Members (5 Members) */}
+            {renderMemberCards(generalCouncilMembers)}
 
             <div style={S.divider} />
             <p style={S.subH}>{isTa ? 'பொது ஆலோசனைப் பேரவையின் கூட்டங்கள் (தமிழ் விளக்கம்):' : 'General Council Meetings & Objectives:'}</p>
@@ -329,7 +341,7 @@ export default function SynodPage() {
         </div>
       </section>
 
-      {/* 5. SYNOD ACADEMIC COUNCIL & MEMBERS (SWAPPED: Academic Council is now 05) */}
+      {/* 5. SYNOD ACADEMIC COUNCIL & MEMBERS (8 MEMBERS) */}
       <section id="synodacademiccouncil" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'சினோட் · 05' : 'Synod · 05'}</p>
@@ -337,12 +349,12 @@ export default function SynodPage() {
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
               {isTa
-                ? 'சினோட் கல்வி ஆலோசனை மன்றமானது தலைமைப் பேராயர் (Archbishop) பேரருட்திரு ச. ஜான்சன் துரை அவர்களின் தலைமையில், இறையியல் ஆராய்ச்சி, வேத பாடத்திட்டங்கள் மற்றும் உபதேச வழிகாட்டுதல்களை வழங்கும் அர்ப்பணிக்கப்பட்ட உறுப்பினர்களைக் கொண்டுள்ளது:'
-                : 'The Synod Academic Council operates under The Most Reverend Archbishop S. Johnson Durai, comprising dedicated council members and theological overseers:'}
+                ? 'சினோட் கல்வி ஆலோசனை மன்றமானது தலைமைப் பேராயர் (Archbishop) பேரருட்திரு ச. ஜான்சன் துரை அவர்களின் தலைமையில், இறையியல் ஆராய்ச்சி, மண்டல பேராயர்கள் மற்றும் உபதேச வழிகாட்டுதல்களை வழங்கும் அர்ப்பணிக்கப்பட்ட உறுப்பினர்களைக் கொண்டுள்ளது:'
+                : 'The Synod Academic Council operates under The Most Reverend Archbishop S. Johnson Durai, comprising dedicated council members, regional diocesan bishops, and theological overseers:'}
             </p>
 
-            {/* Academic Council Members Cards with Designation directly below Name */}
-            {renderMemberCards(academicMembers)}
+            {/* Academic Council Members (8 Members) */}
+            {renderMemberCards(academicCouncilMembers)}
 
             <div style={S.divider} />
             <p style={S.subH}>{isTa ? 'கல்வி ஆலோசனை மன்ற முக்கிய நோக்கங்கள்:' : 'Academic Council Core Objectives:'}</p>
@@ -364,6 +376,165 @@ export default function SynodPage() {
         </div>
       </section>
 
+      {/* ============================================================
+          POPUP DETAIL MODAL — EXACTLY MATCHING MOBILE APP SCREENSHOT
+          ============================================================ */}
+      {selectedMember && (
+        <div
+          className="synod-modal-backdrop"
+          onClick={() => setSelectedMember(null)}
+        >
+          <div
+            className="synod-modal-sheet"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* Modal Header */}
+            <div className="synod-modal-header">
+              <div className="synod-modal-title">
+                <span style={{ fontSize: '20px' }}>🏛️</span>
+                <span>Synod Council</span>
+              </div>
+              <button
+                className="synod-modal-close-btn"
+                onClick={() => setSelectedMember(null)}
+                aria-label="Close"
+              >
+                <CloseIcon size={16} />
+              </button>
+            </div>
+
+            {/* Member Hero / Top Banner */}
+            <div className="synod-modal-hero">
+              <h2 className="synod-hero-name">{selectedMember.name}</h2>
+              <p className="synod-hero-role">{selectedMember.designation}</p>
+              <div className="synod-hero-badges">
+                {selectedMember.regNo && (
+                  <span className="synod-pill synod-pill-gold">Reg: {selectedMember.regNo}</span>
+                )}
+                {selectedMember.status && (
+                  <span className="synod-pill synod-pill-green">{selectedMember.status}</span>
+                )}
+              </div>
+            </div>
+
+            {/* Modal Details List (With Exact Icons as in Screenshot) */}
+            <div className="synod-modal-body">
+              {/* 1. Office */}
+              {selectedMember.office && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">🏢</div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Office</div>
+                    <div className="synod-detail-val">{selectedMember.office}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 2. Church */}
+              {selectedMember.church && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">
+                    <ChurchIcon size={18} color="#c8a96e" />
+                  </div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Church</div>
+                    <div className="synod-detail-val">{selectedMember.church}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 3. Date of Birth */}
+              {selectedMember.dob && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">📅</div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Date of Birth</div>
+                    <div className="synod-detail-val">{selectedMember.dob}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 4. Ordination Date */}
+              {selectedMember.ordinationDate && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">🎖️</div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Ordination Date</div>
+                    <div className="synod-detail-val">{selectedMember.ordinationDate}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 5. Phone */}
+              {selectedMember.phone && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">
+                    <PhoneIcon size={18} color="#c8a96e" />
+                  </div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Phone</div>
+                    <div className="synod-detail-val">
+                      <a href={`tel:${selectedMember.phone}`}>{selectedMember.phone}</a>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 6. Email */}
+              {selectedMember.email && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">
+                    <EmailIcon size={18} color="#c8a96e" />
+                  </div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Email</div>
+                    <div className="synod-detail-val">
+                      <a href={`mailto:${selectedMember.email}`}>{selectedMember.email}</a>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 7. Address */}
+              {selectedMember.address && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">
+                    <LocationIcon size={18} color="#c8a96e" />
+                  </div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">Address</div>
+                    <div className="synod-detail-val">{selectedMember.address}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 8. District */}
+              {selectedMember.district && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">🗺️</div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">District</div>
+                    <div className="synod-detail-val">{selectedMember.district}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* 9. State */}
+              {selectedMember.state && (
+                <div className="synod-detail-row">
+                  <div className="synod-icon-box">🚩</div>
+                  <div className="synod-detail-content">
+                    <div className="synod-detail-label">State</div>
+                    <div className="synod-detail-val">{selectedMember.state}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
