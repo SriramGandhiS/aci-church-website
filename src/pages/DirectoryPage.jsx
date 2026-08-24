@@ -8,14 +8,14 @@ import initialPastorsData from '../data/pastorsData.json'
 import './DirectoryPage.css'
 
 const TICKER_PHOTOS = [
-  'gallery/23rd Ordination 10.04.2024/4498769c2b5924c919c9336e04979875.jpg',
-  'gallery/Madurai Zonal Office Dedication Service/7cc60a065180716a1dd0a3fe4db93be3.jpg',
-  'gallery/YOUTH DAY 2022/ecb0b4a539fb2fa8e455481c94fc593c.jpg',
-  'gallery/5th Church Visit/c50ad7cfc01b9dfaf710f5bf102b1851.jpg',
-  'gallery/Church Dedication /f79744d5293e7c9c16935e976bffa844.jpg',
-  'gallery/VBS 2018/c57c7e9fa81e376829a69dc50471b34b.jpg',
   'gallery/21st Ordination Service 12.04.2023/792ee63bd98ef2da8729f4be547e098d.jpg',
-  'gallery/22nd Ordination 11.10.2023/63d76b10629ecaa8b1a8080f08960ff2.jpg',
+  'gallery/22nd Ordination 11.10.2023/f54b7697686b5589a81a61f664b7eab4.jpg',
+  'gallery/23rd Ordination 10.04.2024/4498769c2b5924c919c9336e04979875.jpg',
+  'gallery/20th Ordination Service 12.10.2022/815650c3d98066d11a77a8e964575e80.jpg',
+  'gallery/19th ORDINATION PHOTOS/1b17adc06f765722d3d75fd60a789c01.jpg',
+  'gallery/18th Ordination/d5c2f4db8cc34bce55dcef54997f0b24.jpg',
+  'gallery/17th Ordination 13.04.2021/f9ff4055931a58ccafa7bdb62690211b.jpg',
+  'gallery/16th Ordination - 11.11.2020/5751df3d8f4f03348a582d0691f11d17.jpg',
 ]
 
 const FILTER_ROLES = [
@@ -124,7 +124,13 @@ export default function DirectoryPage() {
         <div className="dir-ticker-wrap" aria-hidden="true">
           <div className="dir-ticker-track">
             {TICKER_PHOTOS.concat(TICKER_PHOTOS).map((photo, i) => (
-              <img key={i} src={getMediaUrl(photo)} alt="" className="dir-ticker-img" />
+              <img
+                key={i}
+                src={getMediaUrl(photo)}
+                alt=""
+                className="dir-ticker-img"
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
             ))}
           </div>
         </div>
