@@ -119,7 +119,7 @@ export default function DirectoryPage() {
   return (
     <div className="dir-page">
 
-      {/* Hero Header with Animated Gallery Backdrop */}
+      {/* Hero Header with Full Color Moving Gallery Backdrop */}
       <section className="dir-hero">
         <div className="dir-ticker-wrap" aria-hidden="true">
           <div className="dir-ticker-track">
@@ -137,7 +137,7 @@ export default function DirectoryPage() {
 
         <div className="dir-hero-inner">
           <div className="dir-badge">
-            <ShieldIcon size={14} color="#ffffff" />
+            <ShieldIcon size={14} color="#c8a96e" />
             <span>{isTa ? 'அதிகாரப்பூர்வ பேராய பதிவேடு' : 'Official Registered Directory'}</span>
           </div>
 
@@ -213,12 +213,13 @@ export default function DirectoryPage() {
             <button
               onClick={() => fileInputRef.current?.click()}
               style={{
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                color: '#ffffff',
-                padding: '6px 14px',
+                background: 'rgba(200, 169, 110, 0.1)',
+                border: '1px solid rgba(200, 169, 110, 0.35)',
+                color: '#c8a96e',
+                padding: '7px 16px',
                 borderRadius: '4px',
                 fontSize: '12px',
+                fontWeight: 600,
                 cursor: 'pointer',
                 letterSpacing: '0.04em',
               }}
@@ -239,7 +240,7 @@ export default function DirectoryPage() {
             </p>
             <button
               onClick={() => { setSearchTerm(''); setActiveRole('all') }}
-              style={{ background: '#ffffff', color: '#000000', border: 'none', padding: '10px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer' }}
+              style={{ background: '#c8a96e', color: '#000000', border: 'none', padding: '10px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer' }}
             >
               {isTa ? 'அனைத்து ஊழியர்களையும் காட்டு' : 'Reset All Filters'}
             </button>
@@ -255,7 +256,7 @@ export default function DirectoryPage() {
                 <div>
                   <div className="dir-card-top">
                     <div className="dir-avatar">
-                      <IdCardIcon size={24} color="#ffffff" />
+                      <IdCardIcon size={24} color="#c8a96e" />
                     </div>
                     <div className="dir-card-titles">
                       <h3 className="dir-card-name">{pastor.name}</h3>
@@ -290,9 +291,10 @@ export default function DirectoryPage() {
 
                 <div className="dir-card-footer">
                   <span className="dir-view-id-btn">
-                    {isTa ? 'அடையாள அட்டை காண்க' : 'View ID Credential'} <ArrowRightIcon size={12} />
+                    <span>{isTa ? 'அடையாள அட்டை காண்க' : 'View ID Credential'}</span>
+                    <ArrowRightIcon size={12} color="#c8a96e" />
                   </span>
-                  <span style={{ fontSize: '11px', color: '#ffffff', opacity: 0.8, fontWeight: 600 }}>
+                  <span style={{ fontSize: '11px', color: '#52c41a', opacity: 0.9, fontWeight: 600 }}>
                     ● {pastor.status || 'Active'}
                   </span>
                 </div>
@@ -315,7 +317,7 @@ export default function DirectoryPage() {
 
       </div>
 
-      {/* Official ID Card Modal */}
+      {/* Official Large Animated Modal Dossier */}
       {selectedPastor && (
         <MemberIdCardModal
           pastor={selectedPastor}
