@@ -1,0 +1,121 @@
+export const diocesesList = [
+  {
+    id: 'tirupattur',
+    num: '01',
+    nameEn: 'ACI Tirupattur Diocese',
+    nameTa: 'ஏசிஐ திருப்பத்தூர் பேராயம்',
+    headquarters: 'Tirupattur Zone',
+    headquartersTa: 'திருப்பத்தூர் மண்டலம்',
+    region: 'Northern Tamil Nadu Region',
+    regionTa: 'வட தமிழக மண்டலம்',
+    descriptionEn: 'Shepherding churches and pastoral ministers across Tirupattur, Vaniyambadi, Ambur, Natrampalli, and adjoining rural mission fields with active youth evangelism and ministry training.',
+    descriptionTa: 'திருப்பத்தூர், வாணியம்பாடி, ஆம்பூர், நாட்ராம்பள்ளி மற்றும் சுற்றியுள்ள கிராமப்புற சுவிசேஷப் பணிகளை ஒருங்கிணைத்து போதகர்களையும் சபைகளையும் தாங்கி நடத்தும் பேராயம்.',
+    highlights: [
+      { en: 'Pastoral Fellowship & Leadership Training', ta: 'மேய்ப்பர்கள் ஐக்கியம் & தலைமைத்துவ பயிற்சி' },
+      { en: 'Rural Mission & Church Planting Wings', ta: 'கிராமப்புற நற்செய்தி பணி & சபை நிறுவுதல்' },
+      { en: 'Zonal Pastors Word Fellowship', ta: 'மண்டல போதகர்கள் வேத ஆராய்ச்சி கூட்டம்' }
+    ]
+  },
+  {
+    id: 'chengalpattu',
+    num: '02',
+    nameEn: 'ACI Chengalpattu Diocese',
+    nameTa: 'ஏசிஐ செங்கல்பட்டு பேராயம்',
+    headquarters: 'Chengalpattu Zone',
+    headquartersTa: 'செங்கல்பட்டு மண்டலம்',
+    region: 'Coastal & Greater Chennai Corridor',
+    regionTa: 'கடலோர & சென்னை புறநகர் மண்டலம்',
+    descriptionEn: 'Serving urban, suburban, and coastal congregations with dynamic youth development, pastoral care, and episcopal support across Chengalpattu and Kanchipuram belts.',
+    descriptionTa: 'செங்கல்பட்டு, காஞ்சிபுரம் மற்றும் கடலோரப் பகுதிகளில் உள்ள திருச்சபைகளுக்கு ஆவிக்குரிய வழிகாட்டுதல், வாலிபர் எழுப்புதல் மற்றும் ஊழியர்களுக்கு தகுதி உயர்வு வழங்கும் பேராயம்.',
+    highlights: [
+      { en: 'Urban & Suburban Outreach Networks', ta: 'நகர்ப்புற & புறநகர் நற்செய்தி நெட்வொர்க்' },
+      { en: 'Youth & Next-Gen Leadership Programs', ta: 'வாலிபர் & அடுத்த தலைமுறை தலைமைத்துவப் பயிற்சி' },
+      { en: 'Episcopal Marriage Officiation Services', ta: 'சட்டப்பூர்வ எபிஸ்கோபல் திருமணப் பதிவுகள்' }
+    ]
+  },
+  {
+    id: 'villupuram',
+    num: '03',
+    nameEn: 'ACI Villupuram Diocese',
+    nameTa: 'ஏசிஐ விழுப்புரம் பேராயம்',
+    headquarters: 'Villupuram Zone',
+    headquartersTa: 'விழுப்புரம் மண்டலம்',
+    region: 'Central North Tamil Nadu Belt',
+    regionTa: 'மத்திய வட தமிழக மண்டலம்',
+    descriptionEn: 'Spearheading revival crusades, Sunday School teacher certification, and establishing strong interdenominational unity among independent pastors in Villupuram district.',
+    descriptionTa: 'விழுப்புரம் மாவட்டத்தின் சுயாதீன போதகர்களை ஒன்றிணைத்து, எழுப்புதல் கூட்டங்கள், சிறுவர் ஊழிய ஆசிரியர்கள் பயிற்சி மற்றும் சபை சந்திப்புகளை நடத்தும் பேராயம்.',
+    highlights: [
+      { en: 'Independent Pastors Ordination Support', ta: 'சுயாதீன போதகர்களுக்கான பிரதிஷ்டை உதவி' },
+      { en: 'VBS Directors & Children Ministry Wings', ta: 'VBS மற்றும் சிறுவர் ஊழிய வழிகாட்டுதல்' },
+      { en: 'Village Crusades & Tract Distribution', ta: 'கிராமப்புற கூட்டங்கள் & சுவிசேஷப் பிரசுர பணி' }
+    ]
+  },
+  {
+    id: 'madurai',
+    num: '04',
+    nameEn: 'ACI Madurai Diocese',
+    nameTa: 'ஏசிஐ மதுரை பேராயம்',
+    headquarters: 'Madurai Zone',
+    headquartersTa: 'மதுரை மண்டலம்',
+    region: 'Southern Heritage & Central South Belt',
+    regionTa: 'தென் தமிழக கலாச்சார & வரலாற்று மண்டலம்',
+    descriptionEn: 'Fostering deep doctrinal clarity, apostolic church visitations, and large-scale regional conventions uniting hundreds of faithful servants of the Lord.',
+    descriptionTa: 'மதுரை மற்றும் அதன் சுற்றுவட்டார பகுதிகளில் அப்போஸ்தல சபை சந்திப்புகள், மண்டல மாநாடுகள் மற்றும் ஆழமான வேத உபதேச கூட்டங்களை நடத்தும் பேராயம்.',
+    highlights: [
+      { en: 'Regional Annual Diocesan Conventions', ta: 'மண்டல வருடாந்திர பேராய மாநாடுகள்' },
+      { en: 'Fivefold Ministry Activation & Teaching', ta: 'ஐவகை ஊழியங்களை செயல்படுத்துதல் & போதனை' },
+      { en: 'Church Construction & Pastoral Welfare Support', ta: 'சபை கட்டிடப் பணிகள் & மேய்ப்பர்கள் நல உதவிகள்' }
+    ]
+  },
+  {
+    id: 'trichy',
+    num: '05',
+    nameEn: 'ACI Trichy Diocese',
+    nameTa: 'ஏசிஐ திருச்சி பேராயம்',
+    headquarters: 'Tiruchirappalli Zone',
+    headquartersTa: 'திருச்சிராப்பள்ளி மண்டலம்',
+    region: 'Cauvery Delta & Central Tamil Nadu Hub',
+    regionTa: 'காவிரி டெல்டா & மத்திய தமிழக மண்டலம்',
+    descriptionEn: 'Theological research hub organizing bi-monthly Word Sharing meets, pastoral leadership summits, and inter-church fellowship.',
+    descriptionTa: 'திருச்சிராப்பள்ளி மற்றும் டெல்டா மாவட்டங்களில் இறையியல் கருத்தரங்குகள், இரண்டு மாதங்களுக்கு ஒருமுறை நடைபெறும் வார்த்தைப் பகிர்வு கூட்டங்களை நடத்தும் பேராயம்.',
+    highlights: [
+      { en: 'Theological Seminars & Sound Doctrine Training', ta: 'இறையியல் கருத்தரங்குகள் & உபதேசப் பயிற்சி' },
+      { en: 'Pastoral Counseling & Discipleship Wings', ta: 'போதகர்கள் ஆலோசனைகள் & சீஷத்துவப் பணி' },
+      { en: 'Delta Region Gospel Proclamation Outreaches', ta: 'டெல்டா மண்டல நற்செய்தி அறிவிப்பு கூட்டங்கள்' }
+    ]
+  },
+  {
+    id: 'virudhunagar',
+    num: '06',
+    nameEn: 'ACI Virudhunagar Diocese',
+    nameTa: 'ஏசிஐ விருதுநகர் பேராயம்',
+    headquarters: 'Virudhunagar Zone',
+    headquartersTa: 'விருதுநகர் மண்டலம்',
+    region: 'Southern Mission Belt',
+    regionTa: 'தெற்கு மிஷனெரி மண்டலம்',
+    descriptionEn: 'Mobilizing 7-member missionary teams, family enrichment programs, and planting vibrant local church communities.',
+    descriptionTa: 'விருதுநகர் மற்றும் சுற்றுவட்டார பகுதிகளில் 7 நபர் சுவிசேஷக் குழுக்கள், குடும்ப ஆசீர்வாத முகாம்கள் மற்றும் புதிய சபை நிறுவும் பணிகளை முன்னெடுக்கும் பேராயம்.',
+    highlights: [
+      { en: '7-Member Evangelistic Gospel Teams', ta: '7 நபர் நற்செய்தி சுவிசேஷக் குழுக்கள்' },
+      { en: 'Family Enrichment & Pastoral Care Retreats', ta: 'குடும்ப ஆசீர்வாத முகாம்கள் & மேய்ப்பர் ஓய்வு நாட்கள்' },
+      { en: 'Rural Literature & Film Ministry Wings', ta: 'கிராமப்புற வேத பிரசுரங்கள் & படக்காட்சி ஊழியம்' }
+    ]
+  },
+  {
+    id: 'kanniyakumari',
+    num: '07',
+    nameEn: 'ACI Kanniyakumari Diocese',
+    nameTa: 'ஏசிஐ கன்னியாகுமரி பேராயம்',
+    headquarters: 'Nagercoil / Kanniyakumari Zone',
+    headquartersTa: 'நாகர்கோவில் / கன்னியாகுமரி மண்டலம்',
+    region: 'Southern Coastal Tip & Multi-Language Mission',
+    regionTa: 'தென் கடலோர & இருமொழி மிஷனெரி மண்டலம்',
+    descriptionEn: 'Advancing coastal ministry, cross-cultural missions, youth leadership training, and theological publications in the southernmost district.',
+    descriptionTa: 'கன்னியாகுமரி மாவட்டத்தின் கடலோர கிராமங்களில் நற்செய்தி அறிவித்தல், வாலிபர் மாநாடுகள் மற்றும் வேத இலக்கிய வெளியீடுகளை வழிநடத்தும் பேராயம்.',
+    highlights: [
+      { en: 'Coastal & Fisherfolk Community Missions', ta: 'கடலோர மக்கள் நற்செய்தி ஊழியம்' },
+      { en: 'Youth Leadership Camps & Bible Training', ta: 'வாலிபர் தலைமைத்துவ முகாம்கள் & வேதப் பயிற்சி' },
+      { en: 'Interdenominational Pastoral Unity Meets', ta: 'திருச்சபைகள் ஐக்கிய போதகர்கள் கூட்டங்கள்' }
+    ]
+  }
+]
