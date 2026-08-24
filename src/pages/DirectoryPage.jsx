@@ -131,7 +131,7 @@ export default function DirectoryPage() {
 
         <div className="dir-hero-inner">
           <div className="dir-badge">
-            <ShieldIcon size={14} color="#c8a96e" />
+            <ShieldIcon size={14} color="#ffffff" />
             <span>{isTa ? 'அதிகாரப்பூர்வ பேராய பதிவேடு' : 'Official Registered Directory'}</span>
           </div>
 
@@ -207,9 +207,9 @@ export default function DirectoryPage() {
             <button
               onClick={() => fileInputRef.current?.click()}
               style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.15)',
-                color: 'rgba(255,255,255,0.8)',
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                color: '#ffffff',
                 padding: '6px 14px',
                 borderRadius: '4px',
                 fontSize: '12px',
@@ -225,7 +225,7 @@ export default function DirectoryPage() {
         {/* Ministers Cards Grid */}
         {filteredPastors.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 20px', color: 'rgba(255,255,255,0.5)' }}>
-            <p style={{ fontSize: '20px', marginBottom: '8px' }}>
+            <p style={{ fontSize: '20px', marginBottom: '8px', color: '#ffffff' }}>
               {isTa ? 'பொருத்தமான ஊழியர்கள் விபரம் கிடைக்கவில்லை' : 'No registered ministers found matching your search'}
             </p>
             <p style={{ fontSize: '14px', marginBottom: '20px' }}>
@@ -233,7 +233,7 @@ export default function DirectoryPage() {
             </p>
             <button
               onClick={() => { setSearchTerm(''); setActiveRole('all') }}
-              style={{ background: '#c8a96e', color: '#000', border: 'none', padding: '8px 20px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer' }}
+              style={{ background: '#ffffff', color: '#000000', border: 'none', padding: '10px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer' }}
             >
               {isTa ? 'அனைத்து ஊழியர்களையும் காட்டு' : 'Reset All Filters'}
             </button>
@@ -249,7 +249,7 @@ export default function DirectoryPage() {
                 <div>
                   <div className="dir-card-top">
                     <div className="dir-avatar">
-                      <IdCardIcon size={24} />
+                      <IdCardIcon size={24} color="#ffffff" />
                     </div>
                     <div className="dir-card-titles">
                       <h3 className="dir-card-name">{pastor.name}</h3>
@@ -286,7 +286,7 @@ export default function DirectoryPage() {
                   <span className="dir-view-id-btn">
                     {isTa ? 'அடையாள அட்டை காண்க' : 'View ID Credential'} <ArrowRightIcon size={12} />
                   </span>
-                  <span style={{ fontSize: '11px', color: '#4ade80', fontWeight: 600 }}>
+                  <span style={{ fontSize: '11px', color: '#ffffff', opacity: 0.8, fontWeight: 600 }}>
                     ● {pastor.status || 'Active'}
                   </span>
                 </div>

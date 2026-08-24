@@ -80,16 +80,16 @@ export default function MinistriesSection() {
     <section
       ref={sectionRef}
       className="ministries-section section-pad"
-      style={{ background: 'var(--color-near-black)', borderTop: '1px solid rgba(255,255,255,0.08)' }}
+      style={{ background: '#000000', borderTop: '1px solid rgba(255,255,255,0.1)' }}
     >
       <div className="container">
 
         {/* Section Header */}
         <div className="ministries-header reveal" style={{ marginBottom: '48px' }}>
-          <p className="t-label" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: '0.15em' }}>
+          <p className="t-label" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: '0.15em', fontSize: '11px', textTransform: 'uppercase' }}>
             {t('activities.label')}
           </p>
-          <h2 className="t-h2" style={{ color: 'var(--color-white)', marginTop: '8px' }}>
+          <h2 className="t-h2" style={{ color: '#ffffff', marginTop: '8px' }}>
             {t('activities.title')}
           </h2>
           <p className="t-body" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '720px', marginTop: '12px' }}>
@@ -111,31 +111,31 @@ export default function MinistriesSection() {
               id={act.id}
               className="reveal"
               style={{
-                background: 'rgba(255,255,255,0.05)',
+                background: '#111111',
                 border: '1px solid rgba(255,255,255,0.12)',
-                borderRadius: '8px',
-                padding: '28px',
-                color: 'var(--color-white)',
+                borderRadius: '6px',
+                padding: '32px 28px',
+                color: '#ffffff',
                 display: 'flex',
                 flexDirection: 'column',
                 transition: 'all 0.25s ease',
               }}
             >
-              <span className="t-label" style={{ color: '#c8a96e', fontSize: '11px', letterSpacing: '0.12em' }}>
+              <span className="t-label" style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                 ACI DIOCESE ACTIVITY
               </span>
-              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 600, marginTop: '8px', marginBottom: '12px', color: '#ffffff' }}>
+              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 600, marginTop: '10px', marginBottom: '14px', color: '#ffffff', lineHeight: 1.3 }}>
                 {act.title}
               </h3>
-              <p className="t-body" style={{ fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', marginBottom: '12px' }}>
+              <p className="t-body" style={{ fontSize: '14px', lineHeight: '1.65', color: 'rgba(255,255,255,0.85)', marginBottom: '14px' }}>
                 {act.summary}
               </p>
-              <p className="t-body" style={{ fontSize: '13px', lineHeight: '1.5', color: 'rgba(255,255,255,0.6)', marginBottom: '20px' }}>
+              <p className="t-body" style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>
                 {act.details}
               </p>
 
               {/* View Photo Album Link */}
-              <div style={{ marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
                 <Link
                   to={`/gallery?cat=${encodeURIComponent(act.cat)}`}
                   style={{
@@ -146,15 +146,15 @@ export default function MinistriesSection() {
                     fontSize: '13px',
                     fontWeight: 600,
                     textDecoration: 'none',
-                    letterSpacing: '0.03em',
-                    transition: 'color 0.2s',
+                    letterSpacing: '0.04em',
+                    transition: 'opacity 0.2s',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = '#ffffff' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
                 >
-                  <CameraIcon size={14} color="currentColor" />
+                  <CameraIcon size={14} color="#ffffff" />
                   <span>View {act.cat} Photos &amp; Albums</span>
-                  <ArrowRightIcon size={12} color="currentColor" />
+                  <ArrowRightIcon size={12} color="#ffffff" />
                 </Link>
               </div>
             </div>

@@ -13,7 +13,7 @@ export default function DirectoryCta() {
         <div className="dir-cta-inner">
           <div className="dir-cta-text">
             <span className="dir-cta-label">
-              <ShieldIcon size={14} color="#c8a96e" />
+              <ShieldIcon size={14} color="#ffffff" />
               {isTa ? 'அதிகாரப்பூர்வ பேராய பதிவேடு & அடையாள அட்டை' : 'Official Registered Ministerial Directory'}
             </span>
             <h2 className="dir-cta-title">
@@ -28,9 +28,9 @@ export default function DirectoryCta() {
 
           <div className="dir-cta-action">
             <Link to="/directory" className="dir-cta-btn">
-              <IdCardIcon size={18} color="#000" />
+              <IdCardIcon size={18} color="#000000" />
               <span>{isTa ? 'ஊழியர் பதிவேட்டைத் திறக்குக' : 'Open Member Directory'}</span>
-              <ArrowRightIcon size={14} color="#000" />
+              <ArrowRightIcon size={14} color="#000000" />
             </Link>
           </div>
         </div>

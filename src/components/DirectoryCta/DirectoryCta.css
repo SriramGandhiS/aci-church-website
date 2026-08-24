@@ -1,11 +1,11 @@
 /* ============================================================
-   DIRECTORY CTA BANNER CSS — Sleek Editorial Banner
+   DIRECTORY CTA BANNER CSS — Pure Black & White Editorial
    ============================================================ */
 
 .dir-cta-section {
-  background: #0d0d0d;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 64px 0;
   position: relative;
   overflow: hidden;
@@ -16,9 +16,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  background: linear-gradient(135deg, #141414 0%, #1c1c1c 100%);
-  border: 1.5px solid rgba(200, 169, 110, 0.3);
-  border-radius: 12px;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
   padding: clamp(28px, 4vw, 44px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   position: relative;
@@ -31,7 +31,7 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: #c8a96e;
+  background: #ffffff;
 }
 
 .dir-cta-text {
@@ -44,7 +44,7 @@
   gap: 6px;
   font-size: 11px;
   font-weight: 700;
-  color: #c8a96e;
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -74,23 +74,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #c8a96e;
+  background: #ffffff;
   color: #000000;
   padding: 14px 28px;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-decoration: none;
   text-transform: uppercase;
-  box-shadow: 0 4px 18px rgba(200, 169, 110, 0.3);
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .dir-cta-btn:hover {
-  background: #dfc28b;
+  background: #e0e0e0;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(200, 169, 110, 0.45);
 }
 
 @media (max-width: 768px) {
