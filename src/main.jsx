@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './styles/globals.css'
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+const rootElement = document.getElementById('app') || document.getElementById('root')
+
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  )
+}
