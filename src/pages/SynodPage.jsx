@@ -13,13 +13,72 @@ const S = {
   pTa: { color: 'rgba(255,255,255,0.8)', lineHeight: 2.1, marginBottom: '14px', fontSize: '15px' },
   subH: { color: '#c8a96e', fontSize: '17px', fontWeight: 600, marginBottom: '12px', marginTop: '28px' },
   divider: { height: '1px', background: 'rgba(255,255,255,0.07)', margin: '28px 0' },
-  tbl: { width: '100%', borderCollapse: 'collapse', marginTop: '24px', fontSize: '14px' },
-  th: { background: 'rgba(200,169,110,0.15)', color: '#c8a96e', padding: '12px 16px', textAlign: 'left', fontWeight: 700, fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', borderBottom: '1px solid rgba(200,169,110,0.3)' },
-  td: { padding: '14px 16px', color: 'rgba(255,255,255,0.85)', borderBottom: '1px solid rgba(255,255,255,0.06)', verticalAlign: 'top', lineHeight: 1.7 },
-  cardGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginTop: '24px' },
-  card: { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', padding: '24px', transition: 'all 0.25s ease' },
-  cardTitle: { color: '#c8a96e', fontSize: '16px', fontWeight: 700, marginBottom: '8px' },
-  cardText: { color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: 1.7 },
+  memberGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+    gap: '20px',
+    marginTop: '24px',
+  },
+  memberCard: {
+    background: 'linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+    border: '1px solid rgba(200, 169, 110, 0.25)',
+    borderRadius: '8px',
+    padding: '22px 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+  },
+  memberHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '10px',
+  },
+  memberNumber: {
+    color: '#c8a96e',
+    fontSize: '12px',
+    fontWeight: 700,
+    letterSpacing: '0.1em',
+  },
+  memberBadge: {
+    background: 'rgba(200,169,110,0.15)',
+    color: '#c8a96e',
+    border: '1px solid rgba(200,169,110,0.35)',
+    fontSize: '11px',
+    fontWeight: 700,
+    padding: '2px 8px',
+    borderRadius: '4px',
+    letterSpacing: '0.05em',
+  },
+  memberName: {
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#ffffff',
+    margin: '0 0 6px 0',
+    lineHeight: 1.35,
+  },
+  memberDesignation: {
+    color: '#c8a96e',
+    fontSize: '14px',
+    fontWeight: 600,
+    margin: '0 0 14px 0',
+    lineHeight: 1.45,
+    borderBottom: '1px solid rgba(255,255,255,0.08)',
+    paddingBottom: '10px',
+  },
+  memberDetail: {
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.75)',
+    lineHeight: 1.6,
+    marginTop: '4px',
+  },
+  detailLabel: {
+    color: 'rgba(255,255,255,0.45)',
+    fontSize: '12px',
+    marginRight: '4px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.04em',
+  }
 }
 
 export default function SynodPage() {
@@ -38,7 +97,7 @@ export default function SynodPage() {
     }
   }, [hash])
 
-  const members = [
+  const academicMembers = [
     {
       sno: 1,
       name: 'The Most Rev. S. Johnson Durai',
@@ -92,7 +151,7 @@ export default function SynodPage() {
   ]
 
   const generalMembers = [
-    ...members,
+    ...academicMembers,
     {
       sno: 6,
       name: 'Rt. Rev. S. Anand',
@@ -125,6 +184,45 @@ export default function SynodPage() {
     }
   ]
 
+  const renderMemberCards = (list) => (
+    <div style={S.memberGrid}>
+      {list.map((m, i) => (
+        <div key={i} style={S.memberCard}>
+          <div style={S.memberHeader}>
+            <span style={S.memberNumber}>#{String(m.sno).padStart(2, '0')}</span>
+            {m.tnno && m.tnno !== '—' && <span style={S.memberBadge}>{m.tnno}</span>}
+          </div>
+          <h3 style={S.memberName}>{m.name}</h3>
+          <p style={S.memberDesignation}>{m.role}</p>
+
+          {m.ministry && m.ministry !== '—' && (
+            <div style={S.memberDetail}>
+              <span style={S.detailLabel}>{isTa ? 'ஊழியம்:' : 'Ministry:'}</span> {m.ministry}
+            </div>
+          )}
+          {m.email && m.email !== '—' && (
+            <div style={S.memberDetail}>
+              <span style={S.detailLabel}>{isTa ? 'மின்னஞ்சல்:' : 'Email:'}</span>{' '}
+              <a href={`mailto:${m.email}`} style={{ color: '#c8a96e', textDecoration: 'none' }}>
+                {m.email}
+              </a>
+            </div>
+          )}
+          {m.exp && m.exp !== '—' && (
+            <div style={S.memberDetail}>
+              <span style={S.detailLabel}>{isTa ? 'அனுபவம்:' : 'Exp:'}</span> {m.exp}
+            </div>
+          )}
+          {m.ordained && m.ordained !== '—' && (
+            <div style={S.memberDetail}>
+              <span style={S.detailLabel}>{isTa ? 'பிரதிஷ்டை:' : 'Ordained:'}</span> {m.ordained}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+
   return (
     <div style={S.page}>
       {/* HERO SECTION */}
@@ -136,8 +234,8 @@ export default function SynodPage() {
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '15px', maxWidth: '800px', lineHeight: 1.7 }}>
             {isTa
-              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, இறையியல், கல்வி மற்றும் பொது நிர்வாக ஆலோசனை மன்றம்.'
-              : 'The spiritual, theological, academic, and general governance advisory body of the Apostolic Council of India Diocese.'}
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, இறையியல், பொது நிர்வாக மற்றும் கல்வி ஆலோசனை மன்றம்.'
+              : 'The spiritual, theological, general governance, and academic advisory body of the Apostolic Council of India Diocese.'}
           </p>
         </div>
       </div>
@@ -205,10 +303,36 @@ export default function SynodPage() {
         </div>
       </section>
 
-      {/* 4. SYNOD ACADEMIC COUNCIL & MEMBERS */}
-      <section id="synodacademiccouncil" style={S.sec}>
+      {/* 4. SYNOD GENERAL COUNCIL & MEMBERS (SWAPPED: General Council is now 04) */}
+      <section id="synodgeneralcouncil" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'சினோட் · 04' : 'Synod · 04'}</p>
+          <h2 style={S.h2}>{isTa ? 'சினோட் பொது ஆலோசனைப் பேரவை & உறுப்பினர்கள்' : 'Synod General Council & Members'}</h2>
+          <div style={{ marginTop: '28px' }}>
+            <p style={S.p}>
+              {isTa
+                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக, சட்டமன்ற மற்றும் ஆலோசனை அமைப்பாக செயல்படுகிறது. இது தலைமை அறங்காவலர் குழு மற்றும் 7 மண்டல பேராயங்களின் பேராயர்கள், மாவட்ட கண்காணிப்பாளர்கள் மற்றும் நியமிக்கப்பட்ட ஊழியர்களை இணைத்து வழிகாட்டுகிறது:'
+                : 'The Synod General Council serves as the apex administrative, legislative, and consultative council of the ACI Diocese across India. It connects the Central Board of Trustees with the 7 Regional Dioceses, District Overseers (DOS), and ordained ministers to guide strategic expansion and church welfare:'}
+            </p>
+
+            {/* General Council Members Cards with Designation directly below Name */}
+            {renderMemberCards(generalMembers)}
+
+            <div style={S.divider} />
+            <p style={S.subH}>{isTa ? 'பொது ஆலோசனைப் பேரவையின் கூட்டங்கள் (தமிழ் விளக்கம்):' : 'General Council Meetings & Objectives:'}</p>
+            <p style={S.pTa}>
+              {isTa
+                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது குறிப்பிட்ட கால இடைவெளிகளில் கூடி, திருச்சபைகளின் பாதுகாப்பு, மேய்ப்பர்களின் வாழ்வாதார உதவிகள், சபை சந்திப்புப் பணிகள் மற்றும் சுவிசேஷப் புறசந்திப்பு பணிகளை திட்டமிட்டு முன்னெடுக்கிறது.'
+                : 'The Synod General Council convenes at regular intervals to plan church protection, pastoral livelihood assistance, fellowship visits, and evangelistic outreaches across all diocesan territories.'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. SYNOD ACADEMIC COUNCIL & MEMBERS (SWAPPED: Academic Council is now 05) */}
+      <section id="synodacademiccouncil" style={{ ...S.sec, borderBottom: 'none' }}>
+        <div style={S.con}>
+          <p style={S.lbl}>{isTa ? 'சினோட் · 05' : 'Synod · 05'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் கல்வி ஆலோசனை மன்றம் & உறுப்பினர்கள்' : 'Synod Academic Council & Members'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
@@ -217,38 +341,8 @@ export default function SynodPage() {
                 : 'The Synod Academic Council operates under The Most Reverend Archbishop S. Johnson Durai, comprising dedicated council members and theological overseers:'}
             </p>
 
-            {/* Academic Council Members Table */}
-            <div style={{ overflowX: 'auto', marginTop: '20px', border: '1px solid rgba(200, 169, 110, 0.25)' }}>
-              <table style={S.tbl}>
-                <thead>
-                  <tr>
-                    <th style={S.th}>{isTa ? 'வரிசை எண்' : 'S.No'}</th>
-                    <th style={S.th}>{isTa ? 'உறுப்பினர் பெயர் & பதவி' : 'Member Name & Role'}</th>
-                    <th style={S.th}>{isTa ? 'பதிவு எண்' : 'TN No.'}</th>
-                    <th style={S.th}>{isTa ? 'ஊழியம் & அனுபவம்' : 'Ministry & Experience'}</th>
-                    <th style={S.th}>{isTa ? 'பிரதிஷ்டை தேதி' : 'Ordained On'}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {members.map((m, i) => (
-                    <tr key={i} style={{ background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                      <td style={S.td}>{m.sno}</td>
-                      <td style={S.td}>
-                        <div style={{ fontWeight: 700, color: '#fff', marginBottom: '2px', fontSize: '15px' }}>{m.name}</div>
-                        <div style={{ fontSize: '12px', color: '#c8a96e', marginBottom: '2px', fontWeight: 600 }}>{m.role}</div>
-                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{m.email}</div>
-                      </td>
-                      <td style={{ ...S.td, fontWeight: 700, color: '#c8a96e' }}>{m.tnno}</td>
-                      <td style={S.td}>
-                        <div style={{ color: 'rgba(255,255,255,0.9)' }}>{m.ministry}</div>
-                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', marginTop: '2px' }}>{m.exp}</div>
-                      </td>
-                      <td style={S.td}>{m.ordained}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {/* Academic Council Members Cards with Designation directly below Name */}
+            {renderMemberCards(academicMembers)}
 
             <div style={S.divider} />
             <p style={S.subH}>{isTa ? 'கல்வி ஆலோசனை மன்ற முக்கிய நோக்கங்கள்:' : 'Academic Council Core Objectives:'}</p>
@@ -257,58 +351,6 @@ export default function SynodPage() {
               <li>{isTa ? 'போதகர்கள் மற்றும் சுவிசேஷகர்களுக்கு தொடர் வேத ஆராய்ச்சி கருத்தரங்குகளை (Word Sharing Seminars) நடத்துதல்.' : 'Conducting bi-monthly Word Sharing meets and deep biblical research seminars.'}</li>
               <li>{isTa ? 'எபிஸ்கோபல் பிரதிஷ்டை பெற விண்ணப்பிக்கும் ஊழியர்களின் விசுவாசம் மற்றும் இறையியல் தகுதிகளை பரிசோதித்து அங்கீகரித்தல்.' : 'Vetting and evaluating candidates for ministerial ordination and episcopal recognition.'}</li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. SYNOD GENERAL COUNCIL */}
-      <section id="synodgeneralcouncil" style={{ ...S.sec, borderBottom: 'none' }}>
-        <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட் · 05' : 'Synod · 05'}</p>
-          <h2 style={S.h2}>{isTa ? 'சினோட் பொது ஆலோசனைப் பேரவை (Synod General Council)' : 'Synod General Council'}</h2>
-          <div style={{ marginTop: '28px' }}>
-            <p style={S.p}>
-              The <strong>Synod General Council</strong> serves as the apex administrative, legislative, and consultative council of the ACI Diocese across India. It connects the Central Board of Trustees with the 7 Regional Dioceses, District Overseers (DOS), and ordained ministers to guide strategic expansion and church welfare.
-            </p>
-
-            {/* General Council Members Table */}
-            <div style={{ overflowX: 'auto', marginTop: '20px', border: '1px solid rgba(200, 169, 110, 0.25)' }}>
-              <table style={S.tbl}>
-                <thead>
-                  <tr>
-                    <th style={S.th}>{isTa ? 'வரிசை எண்' : 'S.No'}</th>
-                    <th style={S.th}>{isTa ? 'உறுப்பினர் பெயர் & பதவி' : 'Member Name & Role'}</th>
-                    <th style={S.th}>{isTa ? 'பதிவு எண்' : 'TN No.'}</th>
-                    <th style={S.th}>{isTa ? 'ஊழியம் & அனுபவம்' : 'Ministry & Experience'}</th>
-                    <th style={S.th}>{isTa ? 'பிரதிஷ்டை தேதி' : 'Ordained On'}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {generalMembers.map((m, i) => (
-                    <tr key={i} style={{ background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                      <td style={S.td}>{m.sno}</td>
-                      <td style={S.td}>
-                        <div style={{ fontWeight: 700, color: '#fff', marginBottom: '2px', fontSize: '15px' }}>{m.name}</div>
-                        <div style={{ fontSize: '12px', color: '#c8a96e', marginBottom: '2px', fontWeight: 600 }}>{m.role}</div>
-                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{m.email}</div>
-                      </td>
-                      <td style={{ ...S.td, fontWeight: 700, color: '#c8a96e' }}>{m.tnno}</td>
-                      <td style={S.td}>
-                        <div style={{ color: 'rgba(255,255,255,0.9)' }}>{m.ministry}</div>
-                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', marginTop: '2px' }}>{m.exp}</div>
-                      </td>
-                      <td style={S.td}>{m.ordained}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div style={S.divider} />
-            <p style={S.subH}>பொது ஆலோசனைப் பேரவையின் கூட்டங்கள் (தமிழ் விளக்கம்):</p>
-            <p style={S.pTa}>
-              சினோட் பொது ஆலோசனைப் பேரவையானது குறிப்பிட்ட கால இடைவெளிகளில் கூடி, திருச்சபைகளின் பாதுகாப்பு, மேய்ப்பர்களின் வாழ்வாதார உதவிகள், சபை சந்திப்புப் பணிகள் மற்றும் சுவிசேஷப் புறசந்திப்பு பணிகளை திட்டமிட்டு முன்னெடுக்கிறது.
-            </p>
 
             <div style={{ display: 'flex', gap: '14px', marginTop: '28px', flexWrap: 'wrap' }}>
               <Link to="/diocese" className="btn btn-light" style={{ padding: '12px 24px', fontSize: '14px' }}>

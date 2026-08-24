@@ -69,8 +69,8 @@ export const navItems = [
       { label: 'ABOUT SYNOD', href: '/synod#aboutsynod' },
       { label: 'SYNOD FUNCTIONS', href: '/synod#synodfunctions' },
       { label: 'SYNOD PUBLICATIONS', href: '/synod#synodpublications' },
-      { label: 'SYNOD ACADEMIC COUNCIL', href: '/synod#synodacademiccouncil' },
       { label: 'SYNOD GENERAL COUNCIL', href: '/synod#synodgeneralcouncil' },
+      { label: 'SYNOD ACADEMIC COUNCIL', href: '/synod#synodacademiccouncil' },
     ],
   },
   {
