@@ -1,52 +1,47 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { SearchIcon, IdCardIcon } from '../Icons/SvgIcons'
 import './Header.css'
 
 export default function Header({ onSearchOpen, onMenuOpen }) {
-  const { lang, setLang, toggleLanguage, t } = useLanguage()
+  const { lang, setLang, t } = useLanguage()
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const headerRef = useRef(null)
-  const closeTimer = useRef(null)
+  const timeoutRef = useRef(null)
   const location = useLocation()
 
-  /* ---- Scroll state ---- */
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10)
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  /* ---- Close dropdown on route change ---- */
+  // Close dropdown on route change
   useEffect(() => {
     setActiveDropdown(null)
   }, [location])
 
-  /* ---- Click outside to close ---- */
-  useEffect(() => {
-    const handler = (e) => {
-      if (headerRef.current && !headerRef.current.contains(e.target)) {
-        setActiveDropdown(null)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
+  const openDropdown = (idx) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    setActiveDropdown(idx)
+  }
 
-  const openDropdown = useCallback((id) => {
-    clearTimeout(closeTimer.current)
-    setActiveDropdown(id)
-  }, [])
+  const scheduleClose = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null)
+    }, 150)
+  }
 
-  const scheduleClose = useCallback(() => {
-    closeTimer.current = setTimeout(() => setActiveDropdown(null), 180)
-  }, [])
+  const cancelClose = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+  }
 
-  const cancelClose = useCallback(() => {
-    clearTimeout(closeTimer.current)
-  }, [])
-
+  // Localized Navigation Items
   const localizedNav = [
     {
       label: t('nav.home'),
@@ -118,6 +113,11 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
       ],
     },
     {
+      label: t('nav.directory'),
+      hasDropdown: false,
+      href: '/directory',
+    },
+    {
       label: t('nav.media'),
       hasDropdown: true,
       href: '/media',
@@ -148,14 +148,13 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
     >
       <div className="header-inner container">
 
-        {/* ---- Logo ---- */}
-        <Link to="/" className="header-logo" aria-label="ACI Diocese — Home">
+        {/* ---- Brand Logo ---- */}
+        <Link to="/" className="header-logo" aria-label="ACI Diocese Home">
           <img
             src="/aci-logo.png"
-            alt="ACI Diocese — Apostolic Council of India Diocese"
+            alt="ACI Diocese Seal"
             className="logo-img"
-            width="48"
-            height="48"
+            onError={(e) => { e.target.src = '/aci-logo.jpg' }}
           />
           <div className="logo-text">
             <span className="logo-name">{t('common.siteName')}</span>
@@ -266,10 +265,7 @@ export default function Header({ onSearchOpen, onMenuOpen }) {
             aria-label="Open search"
             onClick={onSearchOpen}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8"/>
-              <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-            </svg>
+            <SearchIcon size={18} />
           </button>
 
           {/* Mobile hamburger */}

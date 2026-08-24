@@ -15,6 +15,7 @@ import SynodPage from './pages/SynodPage'
 import MediaPage from './pages/MediaPage'
 import GalleryPage from './pages/GalleryPage'
 import ContactPage from './pages/ContactPage'
+import DirectoryPage from './pages/DirectoryPage'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/partnership" element={<PartnershipPage />} />
             <Route path="/synod" element={<SynodPage />} />
+            <Route path="/directory" element={<DirectoryPage />} />
             <Route path="/media" element={<MediaPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/gallery/album/:uniq" element={<AlbumPage />} />

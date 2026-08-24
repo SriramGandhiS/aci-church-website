@@ -74,6 +74,11 @@ export const navItems = [
     ],
   },
   {
+    label: 'Directory',
+    hasDropdown: false,
+    href: '/directory',
+  },
+  {
     label: 'Media',
     hasDropdown: true,
     href: '/media',

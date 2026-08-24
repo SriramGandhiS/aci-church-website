@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import './MobileMenu.css'
 
 export default function MobileMenu({ isOpen, onClose }) {
   const { lang, setLang, t } = useLanguage()
-  const [expandedIdx, setExpandedIdx] = useState(null)
+  const [openSubmenu, setOpenSubmenu] = useState(null)
+  const location = useLocation()
 
+  // Close on route change
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [onClose])
+    onClose()
+  }, [location, onClose])
 
+  // Prevent background scrolling when open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
-  useEffect(() => {
-    if (!isOpen) setExpandedIdx(null)
-  }, [isOpen])
-
-  const toggleSub = (idx) => {
-    setExpandedIdx((prev) => (prev === idx ? null : idx))
-  }
-
+  // Localized Navigation Items for Mobile Drawer
   const localizedNav = [
     {
       label: t('nav.home'),
@@ -97,6 +97,11 @@ export default function MobileMenu({ isOpen, onClose }) {
       ],
     },
     {
+      label: t('nav.directory'),
+      hasDropdown: false,
+      href: '/directory',
+    },
+    {
       label: t('nav.media'),
       hasDropdown: true,
       href: '/media',
@@ -135,6 +140,7 @@ export default function MobileMenu({ isOpen, onClose }) {
             className="mm-logo-img"
             width="40"
             height="40"
+            onError={(e) => { e.target.src = '/aci-logo.jpg' }}
           />
           <span className="mm-logo-name">{t('common.siteName')}</span>
         </Link>
@@ -162,7 +168,8 @@ export default function MobileMenu({ isOpen, onClose }) {
           aria-label="Close navigation menu"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
           </svg>
         </button>
       </div>
@@ -172,55 +179,52 @@ export default function MobileMenu({ isOpen, onClose }) {
           {localizedNav.map((item, idx) => (
             <li key={idx} className="mm-item">
               {item.hasDropdown ? (
-                <>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                <div>
+                  <div className="mm-item-row">
                     <Link
                       to={item.href}
                       className="mm-link"
                       onClick={onClose}
-                      style={{ flex: 1 }}
                     >
                       {item.label}
                     </Link>
                     <button
-                      className="mm-link mm-toggle"
-                      onClick={() => toggleSub(idx)}
-                      aria-expanded={expandedIdx === idx}
-                      style={{ width: 'auto', padding: '18px 20px' }}
+                      className={`mm-expand-btn${openSubmenu === idx ? ' open' : ''}`}
+                      aria-expanded={openSubmenu === idx}
+                      aria-label={`Toggle ${item.label} sub-links`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setOpenSubmenu(openSubmenu === idx ? null : idx)
+                      }}
                     >
-                      <svg
-                        className={`mm-chevron${expandedIdx === idx ? ' rotated' : ''}`}
-                        width="14"
-                        height="8"
-                        viewBox="0 0 14 8"
-                        fill="none"
-                        aria-hidden="true"
-                      >
+                      <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
                         <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
                   </div>
 
-                  <ul
-                    id={`mm-sub-${idx}`}
-                    className={`mm-sub${expandedIdx === idx ? ' open' : ''}`}
-                    role="list"
-                  >
-                    {item.items.map((sub, si) => (
-                      <li key={si}>
-                        <Link
-                          to={sub.href}
-                          className="mm-sub-link"
-                          onClick={onClose}
-                        >
-                          {sub.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
+                  {openSubmenu === idx && (
+                    <ul className="mm-sublist" role="list">
+                      {item.items.map((sub, si) => (
+                        <li key={si} className="mm-subitem">
+                          <Link
+                            to={sub.href}
+                            className="mm-sublink"
+                            onClick={onClose}
+                          >
+                            {sub.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ) : (
-                <Link to={item.href} className="mm-link" onClick={onClose}>
+                <Link
+                  to={item.href}
+                  className="mm-link"
+                  onClick={onClose}
+                >
                   {item.label}
                 </Link>
               )}
@@ -229,10 +233,13 @@ export default function MobileMenu({ isOpen, onClose }) {
         </ul>
       </nav>
 
-      <div className="mm-bottom">
-        <Link to="/partnership#opportunitytosow" className="btn btn-light mm-give" onClick={onClose}>
-          {t('common.sowSeed')} <span className="arrow">→</span>
-        </Link>
+      <div className="mm-footer">
+        <div className="mm-contact">
+          <p className="mm-contact-label">{t('common.officialDiocese')}</p>
+          <p className="mm-contact-text">Batlagundu & Dindigul, Tamil Nadu, India</p>
+          <p className="mm-contact-text">Email: rev.johnsondurai@gmail.com</p>
+          <p className="mm-contact-text">Mobile: +91 94864 85810</p>
+        </div>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { getMediaUrl } from '../utils/imageUrl'
+import { DocumentIcon, BookIcon } from '../components/Icons/SvgIcons'
 
 const BASE_MEDIA = 'http://acidiocese.org/media_title_img/'
 
@@ -18,7 +19,7 @@ const S = {
   cardImg: { width: '100%', height: '180px', objectFit: 'cover', display: 'block', background: '#1a1a1a' },
   cardBody: { padding: '16px' },
   cardTitle: { fontSize: '15px', fontWeight: 600, marginBottom: '8px', color: '#fff' },
-  btn: { display: 'inline-block', padding: '8px 16px', background: 'rgba(200,169,110,0.15)', border: '1px solid #c8a96e', color: '#c8a96e', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textDecoration: 'none', marginRight: '8px', marginTop: '4px', transition: 'background 0.2s' },
+  btn: { display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 16px', background: 'rgba(200,169,110,0.15)', border: '1px solid #c8a96e', color: '#c8a96e', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textDecoration: 'none', marginRight: '8px', marginTop: '4px', transition: 'background 0.2s' },
 }
 
 const magazines = [
@@ -107,7 +108,8 @@ export default function MediaPage() {
                   <p style={S.cardTitle}>{item.title}</p>
                   <p style={S.p}>{isTa ? 'ஏசிஐ பேராய காலாண்டு இதழ்' : 'ACI Diocese Quarterly Magazine'}</p>
                   <a href={`${BASE_MEDIA}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
-                    📄 {isTa ? 'PDF படிக்க' : 'Read PDF'}
+                    <DocumentIcon size={14} color="#c8a96e" />
+                    <span>{isTa ? 'PDF படிக்க' : 'Read PDF'}</span>
                   </a>
                 </div>
               </div>
@@ -167,7 +169,8 @@ export default function MediaPage() {
                   <p style={S.cardTitle}>{item.title}</p>
                   <p style={S.p}>{isTa ? 'எழுதியவர்: பேரருட்திரு ச. ஜான்சன் துரை' : 'By The Most Rev. S. Johnson Durai'}</p>
                   <a href={`${BASE_MEDIA}${item.pdf}`} target="_blank" rel="noopener noreferrer" style={S.btn}>
-                    📖 {isTa ? 'நூலை படிக்க (PDF)' : 'Read PDF'}
+                    <BookIcon size={14} color="#c8a96e" />
+                    <span>{isTa ? 'நூலை படிக்க (PDF)' : 'Read PDF'}</span>
                   </a>
                 </div>
               </div>

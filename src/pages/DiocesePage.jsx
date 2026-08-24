@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { LocationIcon, StarIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
 
 export const diocesesList = [
   {
@@ -68,7 +69,7 @@ export const diocesesList = [
     highlights: [
       { en: 'Regional Annual Diocesan Conventions', ta: 'மண்டல வருடாந்திர பேராய மாநாடுகள்' },
       { en: 'Fivefold Ministry Activation & Teaching', ta: 'ஐவகை ஊழியங்களை செயல்படுத்துதல் & போதனை' },
-      { en: 'Pastoral Counseling & Church Welfare', ta: 'மேய்ப்பர்கள் ஆலோசனை & சபை நலப்பணிகள்' }
+      { en: 'Church Construction & Pastoral Welfare Support', ta: 'சபை கட்டிடப் பணிகள் & மேய்ப்பர்கள் நல உதவிகள்' }
     ]
   },
   {
@@ -78,14 +79,14 @@ export const diocesesList = [
     nameTa: 'ஏசிஐ திருச்சி பேராயம்',
     headquarters: 'Tiruchirappalli Zone',
     headquartersTa: 'திருச்சிராப்பள்ளி மண்டலம்',
-    region: 'Central Tamil Nadu Hub',
-    regionTa: 'மத்திய தமிழக இதய மண்டலம்',
-    descriptionEn: 'Serving as a central hub for theological workshops, Word Sharing meets, and multi-district pastor leadership summits in the Cauvery delta region.',
-    descriptionTa: 'காவிரி டெல்டா பகுதியில் இறையியல் கருத்தரங்குகள், வார்த்தைப் பகிர்வு கூட்டங்கள் மற்றும் மாவட்ட அளவிலான போதகர்கள் மாநாடுகளை ஒருங்கிணைக்கும் பேராயம்.',
+    region: 'Cauvery Delta & Central Tamil Nadu Hub',
+    regionTa: 'காவிரி டெல்டா & மத்திய தமிழக மண்டலம்',
+    descriptionEn: 'Theological research hub organizing bi-monthly Word Sharing meets, pastoral leadership summits, and inter-church fellowship.',
+    descriptionTa: 'திருச்சிராப்பள்ளி மற்றும் டெல்டா மாவட்டங்களில் இறையியல் கருத்தரங்குகள், இரண்டு மாதங்களுக்கு ஒருமுறை நடைபெறும் வார்த்தைப் பகிர்வு கூட்டங்களை நடத்தும் பேராயம்.',
     highlights: [
-      { en: 'Theological Seminars & Word Research', ta: 'இறையியல் கருத்தரங்குகள் & வசன ஆராய்ச்சி' },
-      { en: 'Delta Region Church Visitation Wings', ta: 'டெல்டா பகுதி சபை சந்திப்புப் பணிக் குழு' },
-      { en: 'Ministerial Certification & Training', ta: 'ஊழியர்கள் சான்றிதழ் & மேம்பாட்டு பயிற்சி' }
+      { en: 'Theological Seminars & Sound Doctrine Training', ta: 'இறையியல் கருத்தரங்குகள் & உபதேசப் பயிற்சி' },
+      { en: 'Pastoral Counseling & Discipleship Wings', ta: 'போதகர்கள் ஆலோசனைகள் & சீஷத்துவப் பணி' },
+      { en: 'Delta Region Gospel Proclamation Outreaches', ta: 'டெல்டா மண்டல நற்செய்தி அறிவிப்பு கூட்டங்கள்' }
     ]
   },
   {
@@ -95,14 +96,14 @@ export const diocesesList = [
     nameTa: 'ஏசிஐ விருதுநகர் பேராயம்',
     headquarters: 'Virudhunagar Zone',
     headquartersTa: 'விருதுநகர் மண்டலம்',
-    region: 'South Central Industrial & Rural Sector',
-    regionTa: 'தென் மத்திய தொழில் & கிராமப்புற மண்டலம்',
-    descriptionEn: 'Active in missionary evangelism, women and family empowerment, pastoral relief, and church building encouragement across southern districts.',
-    descriptionTa: 'விருதுநகர், சிவகாசி, ராஜபாளையம் பகுதிகளில் மிஷனெரி சுவிசேஷப் பணிகள், குடும்ப ஆலோசனைகள் மற்றும் சபைகளை பலப்படுத்தும் ஊழியங்களை முன்னெடுக்கும் பேராயம்.',
+    region: 'Southern Mission Belt',
+    regionTa: 'தெற்கு மிஷனெரி மண்டலம்',
+    descriptionEn: 'Mobilizing 7-member missionary teams, family enrichment programs, and planting vibrant local church communities.',
+    descriptionTa: 'விருதுநகர் மற்றும் சுற்றுவட்டார பகுதிகளில் 7 நபர் சுவிசேஷக் குழுக்கள், குடும்ப ஆசீர்வாத முகாம்கள் மற்றும் புதிய சபை நிறுவும் பணிகளை முன்னெடுக்கும் பேராயம்.',
     highlights: [
-      { en: 'Missionary Outreach & 7-Member Teams', ta: '7 பேர் கொண்ட சுவிசேஷ ஊழியக் குழுக்கள்' },
-      { en: 'Family Enrichment & Women Fellowship', ta: 'குடும்ப ஆசீர்வாத & சகோதரிகள் ஐக்கியம்' },
-      { en: 'Zonal Spiritual Gatherings', ta: 'மண்டல அளவிலான ஆவிக்குரிய எழுப்புதல் கூட்டங்கள்' }
+      { en: '7-Member Evangelistic Gospel Teams', ta: '7 நபர் நற்செய்தி சுவிசேஷக் குழுக்கள்' },
+      { en: 'Family Enrichment & Pastoral Care Retreats', ta: 'குடும்ப ஆசீர்வாத முகாம்கள் & மேய்ப்பர் ஓய்வு நாட்கள்' },
+      { en: 'Rural Literature & Film Ministry Wings', ta: 'கிராமப்புற வேத பிரசுரங்கள் & படக்காட்சி ஊழியம்' }
     ]
   },
   {
@@ -110,16 +111,16 @@ export const diocesesList = [
     num: '07',
     nameEn: 'ACI Kanniyakumari Diocese',
     nameTa: 'ஏசிஐ கன்னியாகுமரி பேராயம்',
-    headquarters: 'Kanniyakumari Zone',
-    headquartersTa: 'கன்னியாகுமரி மண்டலம்',
-    region: 'Southernmost Coastal Belt',
-    regionTa: 'தென் முனை கடலோர மண்டலம்',
-    descriptionEn: 'Strengthening coastal churches, prayer tower ministries, intercessory networks, and theological student mentorship in the southern tip of India.',
-    descriptionTa: 'இந்தியாவின் தென் முனையில் கடலோர சபைகளை பலப்படுத்தி, திறப்பின் வாசல் ஜெப வீரர்கள் நெட்வொர்க் மற்றும் ஆவிக்குரிய தலைவர்களை உருவாக்கும் பேராயம்.',
+    headquarters: 'Nagercoil / Kanniyakumari Zone',
+    headquartersTa: 'நாகர்கோவில் / கன்னியாகுமரி மண்டலம்',
+    region: 'Southern Coastal Tip & Multi-Language Mission',
+    regionTa: 'தென் கடலோர & இருமொழி மிஷனெரி மண்டலம்',
+    descriptionEn: 'Advancing coastal ministry, cross-cultural missions, youth leadership training, and theological publications in the southernmost district.',
+    descriptionTa: 'கன்னியாகுமரி மாவட்டத்தின் கடலோர கிராமங்களில் நற்செய்தி அறிவித்தல், வாலிபர் மாநாடுகள் மற்றும் வேத இலக்கிய வெளியீடுகளை வழிநடத்தும் பேராயம்.',
     highlights: [
-      { en: '24/7 Intercessory Prayer Networks', ta: 'திறப்பின் வாசல் இடைவிடா ஜெப நெட்வொர்க்' },
-      { en: 'Coastal Evangelism & Church Empowerment', ta: 'கடலோர சுவிசேஷ பணி & சபை வலுவூட்டல்' },
-      { en: 'Ordained Ministers Fellowship Meets', ta: 'பிரதிஷ்டை பெற்ற ஊழியர்களின் ஐக்கியக் கூடல்' }
+      { en: 'Coastal & Fisherfolk Community Missions', ta: 'கடலோர மக்கள் நற்செய்தி ஊழியம்' },
+      { en: 'Youth Leadership Camps & Bible Training', ta: 'வாலிபர் தலைமைத்துவ முகாம்கள் & வேதப் பயிற்சி' },
+      { en: 'Interdenominational Pastoral Unity Meets', ta: 'திருச்சபைகள் ஐக்கிய போதகர்கள் கூட்டங்கள்' }
     ]
   }
 ]
@@ -199,8 +200,9 @@ export default function DiocesePage() {
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
                   </span>
                 </div>
-                <div style={{ background: 'var(--color-near-black)', color: '#c8a96e', padding: '8px 18px', fontSize: '13px', fontWeight: 600 }}>
-                  📍 {isTa ? d.headquartersTa : d.headquarters}
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'var(--color-near-black)', color: '#c8a96e', padding: '8px 18px', fontSize: '13px', fontWeight: 600, borderRadius: '4px' }}>
+                  <LocationIcon size={14} color="#c8a96e" />
+                  <span>{isTa ? d.headquartersTa : d.headquarters}</span>
                 </div>
               </div>
 
@@ -215,7 +217,7 @@ export default function DiocesePage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
                   {d.highlights.map((h, hi) => (
                     <div key={hi} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: 'var(--color-text-dark)' }}>
-                      <span style={{ color: '#c8a96e', fontSize: '16px' }}>✦</span>
+                      <StarIcon size={10} color="#c8a96e" />
                       <span>{isTa ? h.ta : h.en}</span>
                     </div>
                   ))}

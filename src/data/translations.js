@@ -63,6 +63,7 @@ export const translations = {
       synodPublications: "SYNOD PUBLICATIONS",
       synodAcademicCouncil: "SYNOD ACADEMIC COUNCIL",
       synodGeneralCouncil: "SYNOD GENERAL COUNCIL",
+      directory: "Directory",
       media: "Media",
       magazines: "MAGAZINES",
       audio: "AUDIO",
@@ -84,30 +85,12 @@ export const translations = {
         },
         {
           eyebrow: "EPISCOPAL ORDINATION & FIVEFOLD MINISTRY",
-          title: "Ordaining Faithful Servants of God",
-          subtitle: "Equipping Apostles, Prophets, Pastors, Teachers, and Evangelists actively laboring in God's vineyard for biblical empowerment.",
-          btnPrimary: "Ordination Service",
+          title: "Consecrated Leadership for God’s Vineyard",
+          subtitle: "Recognizing, training, and legally ordaining apostolic ministers who have faithfully served for at least 5 years.",
+          btnPrimary: "Ordination Activities",
           btnSecondary: "View Photo Albums",
           linkPrimary: "/activities#ordination",
           linkSecondary: "/gallery?cat=Ordination"
-        },
-        {
-          eyebrow: "REGIONAL EMPOWERMENT & ZONAL FELLOWSHIP",
-          title: "Strengthening Local Churches Across Regions",
-          subtitle: "Bringing pastors and believers together in praise, worship, and doctrinal teachings for unstoppable revival.",
-          btnPrimary: "Zonal Gatherings",
-          btnSecondary: "Zonal Meet Gallery",
-          linkPrimary: "/activities#zonalmeet",
-          linkSecondary: "/gallery?cat=Zonal Meet"
-        },
-        {
-          eyebrow: "NEXT GENERATION LEADERSHIP",
-          title: "Equipping Youth & Children for the Kingdom",
-          subtitle: "4-Pillar leadership training, VBS master classes, and teacher certification empowering young champions for Christ.",
-          btnPrimary: "Children & Youth",
-          btnSecondary: "Youth Day Photos",
-          linkPrimary: "/activities#childrenministry",
-          linkSecondary: "/gallery?cat=Youth Ministry"
         },
         {
           eyebrow: "SYNOD ADVISORY & DOCTRINAL INTEGRITY",
@@ -120,33 +103,46 @@ export const translations = {
         }
       ]
     },
+    about: {
+      label: "ABOUT ACI DIOCESE",
+      title: "An Apostolic Movement Rooted in Word and Spirit",
+      subtitle: "Established in 2013 under Registered Trust No. 62/B.k.4/2013, Apostolic Council of India Diocese is dedicated to shepherding the shepherd.",
+      faithTitle: "15 Foundational Articles of Faith",
+      boardTitle: "Board of Trustees & Synod Leadership"
+    },
+    activities: {
+      label: "ACTIVITIES & MINISTRIES",
+      title: "Equipping Shepherds and Transforming Communities",
+      subtitle: "Seven core ministry pillars driving revival, discipleship, church empowerment, and biblical excellence across Tamil Nadu.",
+      viewPhotosBtn: "View Photo Albums"
+    },
     homeSpotlight: {
-      label: "CURATED VISUAL HIGHLIGHTS",
-      title: "Diocesan Life & Milestone Moments",
-      subtitle: "Experience recent Episcopal services, regional conventions, church visitations, and youth conferences through our lens.",
-      exploreFull: "Explore Full 65+ Albums Gallery →"
+      label: "MOMENTS OF GRACE",
+      title: "Diocesan Life & Ministries",
+      subtitle: "Glimpses into our ordination services, zonal meets, VBS camps, and church visits.",
+      exploreFull: "Explore Full Gallery →"
     }
   },
   ta: {
     common: {
       siteName: "ஏசிஐ பேராயம்",
-      tagline: "மேய்ப்பர்களுக்கு மேய்ச்சலளிக்க",
+      tagline: "மேய்ப்பர்களுக்கு மேய்ச்சல்",
       officialDiocese: "அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்",
       viewPhotos: "புகைப்பட ஆல்பங்களைக் காண்க",
-      backToGallery: "புகைப்பட தொகுப்பிற்கு திரும்பு",
-      readPdf: "நூலைப் படிக்க (PDF)",
-      searchPlaceholder: "தேடுக...",
+      backToGallery: "புகைப்படங்களுக்கு திரும்புக",
+      readPdf: "PDF படிக்க",
+      searchPlaceholder: "பேராயத்தில் தேடுக...",
       sowSeed: "உங்கள் விதையை விதையுங்கள்",
-      contactUs: "தொடர்பு கொள்க",
+      contactUs: "தொடர்பு கொள்ள",
       allRightsReserved: "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
-      bankDetailsTitle: "ஏசிஐ பேராய வங்கி விபரங்கள்",
-      accountNo: "வங்கி கணக்கு எண்",
+      bankDetailsTitle: "ஏசிஐ பேராய வங்கி விபரம்",
+      accountNo: "கணக்கு எண்",
       ifscCode: "IFSC குறியீடு",
       bankName: "வங்கி பெயர்",
-      branch: "வங்கி கிளை",
-      canaraBank: "கனரா வங்கி (Canara Bank)",
-      branchName: "ஹனுமந்தராயன்கோட்டை (Hanumantharayankottai)",
-      learnMore: "மேலும் அறிக",
+      branch: "கிளை",
+      canaraBank: "கனரா வங்கி",
+      branchName: "ஹனுமந்தராயன்கோட்டை",
+      learnMore: "மேலும் அறிய",
       exploreMinistries: "ஊழியங்களை அறிக",
       partnerWithUs: "எங்களோடு இணையுங்கள்",
       viewAll: "அனைத்தும் காண்க",
@@ -187,6 +183,7 @@ export const translations = {
       synodPublications: "சினோட் வெளியீடுகள்",
       synodAcademicCouncil: "சினோட் கல்வி ஆலோசனை மன்றம்",
       synodGeneralCouncil: "சினோட் பொது ஆலோசனைப் பேரவை",
+      directory: "உறுப்பினர் தேடல்",
       media: "ஊடகம்",
       magazines: "இதழ்கள் (Magazines)",
       audio: "பாடல்கள் (Audio)",
@@ -208,47 +205,42 @@ export const translations = {
         },
         {
           eyebrow: "எபிஸ்கோபல் பிரதிஷ்டை & ஐவகை ஊழியம்",
-          title: "தேவனுடைய உண்மையுள்ள ஊழியர்களின் பிரதிஷ்டை",
-          subtitle: "அப்போஸ்தலர், தீர்க்கதரிசி, போதகர், போதனாசிரியர், சுவிசேஷகர் என ஐவகை ஊழியர்களை வேத முறைப்படி நியமித்து தகுதிப்படுத்துதல்.",
+          title: "தேவனுடைய திராட்சைத் தோட்டத்திற்கான தலைவர்கள்",
+          subtitle: "தேவனுடைய ஊழியத்தில் குறைந்தது 5 ஆண்டுகள் உண்மையாய் பணியாற்றிய ஊழியர்களை சட்டப்பூர்வமாய் பிரதிஷ்டை செய்கிறோம்.",
           btnPrimary: "பிரதிஷ்டை ஊழியம்",
-          btnSecondary: "புகைப்படங்கள்",
+          btnSecondary: "புகைப்படங்களைக் காண்க",
           linkPrimary: "/activities#ordination",
           linkSecondary: "/gallery?cat=Ordination"
         },
         {
-          eyebrow: "மண்டல அளவிலான சபை ஐக்கியம்",
-          title: "மண்டலங்கள் தோறும் ஸ்தல சபைகளை பலப்படுத்துதல்",
-          subtitle: "போதகர்களையும் விசுவாசிகளையும் துதி, ஆராதனை மற்றும் வேத போதனையின் மூலம் ஒன்றுசேர்த்து ஆவிக்குரிய எழுப்புதலை உருவாக்குதல்.",
-          btnPrimary: "மண்டலக் கூட்டங்கள்",
-          btnSecondary: "மண்டல ஆல்பங்கள்",
-          linkPrimary: "/activities#zonalmeet",
-          linkSecondary: "/gallery?cat=Zonal Meet"
-        },
-        {
-          eyebrow: "அடுத்த தலைமுறை தலைமைத்துவம்",
-          title: "வாலிபர் & சிறுவர்களை தேவராஜ்யத்திற்கு உருவாக்குதல்",
-          subtitle: "4-தூண் தலைமைத்துவப் பயிற்சி, VBS ஆசிரியர்கள் பயிற்சி மற்றும் சிறுவர் ஊழியர்களை தகுதிப்படுத்தும் சிறப்பு திட்டங்கள்.",
-          btnPrimary: "சிறுவர் & வாலிபர்",
-          btnSecondary: "வாலிபர் தின ஆல்பங்கள்",
-          linkPrimary: "/activities#childrenministry",
-          linkSecondary: "/gallery?cat=Youth Ministry"
-        },
-        {
           eyebrow: "சினோட் ஆலோசனை மன்றம் & சத்திய உபதேசம்",
-          title: "பரிசுத்த உபதேசம் & ஆவிக்குரிய நிர்வாகம்",
-          subtitle: "பேராயர் பேரருட்திரு ச. ஜான்சன் துரை அவர்களின் தலைமையில் சினோட் அறங்காவலர்களால் வழிநடத்தப்படும் 15 விசுவாச பிரமாணங்கள்.",
+          title: "ஆரோக்கியமான உபதேசம் & ஆவிக்குரிய தலைமை",
+          subtitle: "பேராயர் பேரருட்திரு ச. ஜான்சன் துரை மற்றும் சினோட் அறங்காவலர்களால் வழிநடத்தப்படும் விசுவாசப் பேரவை.",
           btnPrimary: "சினோட் பற்றி",
-          btnSecondary: "பங்களிப்பு செய்ய",
+          btnSecondary: "பங்காளராக இணைய",
           linkPrimary: "/synod",
           linkSecondary: "/partnership#opportunitytosow"
         }
       ]
     },
+    about: {
+      label: "ஏசிஐ பேராயம் பற்றி",
+      title: "வேத வசனத்திலும் ஆவியிலும் வேரூன்றிய அப்போஸ்தல இயக்கம்",
+      subtitle: "2013-ல் பதிவு எண் 62/B.k.4/2013 கீழ் நிறுவப்பட்ட அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம் மேய்ப்பர்களுக்கு மேய்ச்சலளிக்கும் உன்னத தரிசனத்தை உடையது.",
+      faithTitle: "15 அடிப்படை விசுவாச பிரமாணங்கள்",
+      boardTitle: "அறங்காவலர் குழு & சினோட் தலைவர்கள்"
+    },
+    activities: {
+      label: "செயல்பாடுகள் & ஊழியங்கள்",
+      title: "மேய்ப்பர்களை தகுதிப்படுத்துதல் & சமூகத்தை மாற்றுதல்",
+      subtitle: "எழுப்பும் ஏழு முக்கிய ஊழியத் தூண்கள் மூலம் தமிழகமெங்கும் தேவ ராஜ்ஜியத்தை விரிவுபடுத்துகிறோம்.",
+      viewPhotosBtn: "புகைப்பட ஆல்பங்களைக் காண்க"
+    },
     homeSpotlight: {
-      label: "முக்கிய நிகழ்வுகளின் புகைப்படத் தொகுப்பு",
-      title: "பேராய வரலாற்று தருணங்கள் & நிகழ்வுகள்",
-      subtitle: "எபிஸ்கோபல் பிரதிஷ்டை சேவைகள், மண்டல மாநாடுகள், சபை சந்திப்புகள் மற்றும் வாலிபர் முகாம்களின் நேரடி காட்சிகள்.",
-      exploreFull: "65+ முழு ஆல்பங்களையும் காண்க →"
+      label: "மகிமையின் தருணங்கள்",
+      title: "பேராயத்தின் ஊழியப் புகைப்படங்கள்",
+      subtitle: "பிரதிஷ்டை ஆராதனைகள், மண்டலக் கூட்டங்கள், சிறுவர் VBS மற்றும் சபை சந்திப்பு தருணங்கள்.",
+      exploreFull: "முழு புகைப்படங்களை காண்க →"
     }
   }
 }

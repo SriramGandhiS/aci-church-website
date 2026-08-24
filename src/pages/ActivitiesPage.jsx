@@ -1,44 +1,111 @@
 import { useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { CameraIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
 
 const pageStyles = {
-  page: { paddingTop: '80px', background: '#0a0a0a', color: '#ffffff', minHeight: '100vh' },
-  hero: { background: '#111', color: '#ffffff', padding: '60px 0 40px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' },
-  container: { maxWidth: '1100px', margin: '0 auto', padding: '0 24px' },
-  section: { padding: '80px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' },
+  pageWrapper: {
+    paddingTop: '80px',
+    background: '#0a0a0a',
+    color: '#ffffff',
+    minHeight: '100vh',
+  },
+  heroBanner: {
+    background: '#111111',
+    borderBottom: '1px solid rgba(255,255,255,0.08)',
+    padding: '60px 0 40px 0',
+  },
+  container: {
+    maxWidth: '1100px',
+    margin: '0 auto',
+    padding: '0 24px',
+  },
+  section: {
+    padding: '80px 0',
+    borderBottom: '1px solid rgba(255,255,255,0.07)',
+  },
   sectionHeading: {
-    fontSize: 'clamp(22px, 3.5vw, 32px)',
-    fontFamily: 'var(--font-serif, Georgia, serif)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'clamp(26px, 4vw, 38px)',
     fontWeight: 400,
     textTransform: 'uppercase',
-    letterSpacing: '0.05em',
+    letterSpacing: '0.04em',
     marginBottom: '8px',
-    paddingBottom: '12px',
+    paddingBottom: '14px',
     borderBottom: '2px solid #c8a96e',
     display: 'inline-block',
   },
-  sectionLabel: { color: '#c8a96e', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 600 },
-  para: { color: 'rgba(255,255,255,0.88)', lineHeight: 1.85, marginBottom: '16px', fontSize: '16px' },
-  tamilPara: { color: 'rgba(255,255,255,0.85)', lineHeight: 2.1, marginBottom: '16px', fontSize: '15px' },
-  list: { listStyle: 'disc', paddingLeft: '24px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.1 },
-  numberedList: { listStyle: 'decimal', paddingLeft: '24px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.1 },
-  galleryLink: { color: '#c8a96e', textDecoration: 'none', fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', display: 'inline-block', marginTop: '20px', borderBottom: '1px solid #c8a96e', paddingBottom: '3px' },
-  divider: { height: '1px', background: 'rgba(255,255,255,0.08)', margin: '32px 0' },
-  subHeading: { color: '#c8a96e', fontSize: '16px', fontWeight: 600, marginBottom: '12px', marginTop: '24px', letterSpacing: '0.05em' },
+  label: {
+    color: '#c8a96e',
+    fontSize: '11px',
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+    marginBottom: '10px',
+    fontWeight: 600,
+  },
+  para: {
+    color: 'rgba(255,255,255,0.85)',
+    lineHeight: 1.85,
+    marginBottom: '16px',
+    fontSize: '15px',
+  },
+  tamilPara: {
+    color: 'rgba(255,255,255,0.72)',
+    lineHeight: 1.9,
+    marginBottom: '16px',
+    fontSize: '14.5px',
+    fontStyle: 'normal',
+  },
+  subHeading: {
+    color: '#c8a96e',
+    fontSize: '14px',
+    fontWeight: 600,
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    marginTop: '24px',
+    marginBottom: '12px',
+  },
+  list: {
+    paddingLeft: '24px',
+    color: 'rgba(255,255,255,0.82)',
+    lineHeight: 2.1,
+    fontSize: '14.5px',
+    marginBottom: '20px',
+  },
+  galleryLink: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    marginTop: '20px',
+    color: '#ffffff',
+    fontSize: '13px',
+    fontWeight: 600,
+    letterSpacing: '0.04em',
+    textDecoration: 'none',
+    border: '1px solid rgba(255,255,255,0.2)',
+    padding: '8px 18px',
+    borderRadius: '4px',
+    background: 'rgba(255,255,255,0.04)',
+    transition: 'all 0.2s',
+  },
+  divider: {
+    height: '1px',
+    background: 'rgba(255,255,255,0.08)',
+    margin: '32px 0',
+  },
 }
 
 function SectionHeader({ label, title }) {
   return (
-    <div style={{ marginBottom: '36px' }}>
-      <p style={pageStyles.sectionLabel}>{label}</p>
+    <div style={{ marginBottom: '28px' }}>
+      <p style={pageStyles.label}>{label}</p>
       <h2 style={pageStyles.sectionHeading}>{title}</h2>
     </div>
   )
 }
 
 export default function ActivitiesPage() {
-  const { lang, t } = useLanguage()
+  const { lang } = useLanguage()
   const isTa = lang === 'ta'
   const { hash } = useLocation()
 
@@ -54,18 +121,20 @@ export default function ActivitiesPage() {
   }, [hash])
 
   return (
-    <div style={pageStyles.page}>
-      {/* Hero */}
-      <div style={pageStyles.hero}>
+    <div style={pageStyles.pageWrapper}>
+      {/* Header Banner */}
+      <div style={pageStyles.heroBanner}>
         <div style={pageStyles.container}>
-          <p className="t-label" style={{ color: '#c8a96e', marginBottom: '8px', letterSpacing: '0.18em' }}>
-            {isTa ? 'செயல்பாடுகள் & ஊழியங்கள்' : 'ACTIVITIES & MINISTRIES'}
+          <p style={{ ...pageStyles.label, marginBottom: '8px' }}>
+            {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்' : 'APOSTOLIC COUNCIL OF INDIA DIOCESE'}
           </p>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(30px, 5vw, 48px)', fontWeight: 400, color: '#fff' }}>
-            {isTa ? 'பேராயத்தின் திருச்சபை & நற்செய்தி செயல்பாடுகள்' : 'Diocesan Activities, Ministries & Outreach'}
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 400, marginBottom: '16px' }}>
+            {isTa ? 'பேராயத்தின் முக்கிய செயல்பாடுகள் & ஊழியங்கள்' : 'Activities & Ministries'}
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '15px', marginTop: '8px' }}>
-            {isTa ? 'மேய்ப்பர்களை தாங்கி, நற்செய்தியை அறிவிக்கும் ஏழு தூண்கள்' : 'Equipping Shepherds and Transforming Communities Across India'}
+          <p style={{ color: 'rgba(255,255,255,0.65)', maxWidth: '750px', fontSize: '15px', lineHeight: 1.7 }}>
+            {isTa
+              ? 'தமிழகம் மற்றும் தேசமெங்கும் இயங்கும் 7 முக்கிய ஊழியத் தூண்கள் மூலம் போதகர்களை தாங்கி, திருச்சபைகளை பலப்படுத்துகிறோம்.'
+              : 'Detailed overview of the seven core ministerial pillars functioning under the ACI Diocese across India.'}
           </p>
         </div>
       </div>
@@ -79,17 +148,17 @@ export default function ActivitiesPage() {
           />
 
           <p style={pageStyles.para}>
-            Episcopal ministers are the servants of God, who are convinced and confirmed of their calling in God's ministry,
+            Episcopal ministers are the servants of God, who are convinced and confirmed of their calling in God&apos;s ministry,
             in any of the fivefold ministries Wz... Apostles, Prophets, Pastors, Teachers and Evangelists. More than the
-            Theological studies, day-to-day involvement and activities in God's work is considered. But for exceptional we
-            normally ordain the ministers those who worked actively in God's vineyard for at least 5 years. Such personals
-            are ordained upon confession of their faith and confirmation of calling (oath) as per the Word of God, in
-            presence of Episcopal Bishop and ordained episcopal ministers.
+            Theological studies, day-to-day involvement and activities in God&apos;s work is considered. But for exceptional we
+            normally ordain the ministers those who worked actively in God&apos;s vineyard for at least 5 years. Such personals
+            are ordained upon confession of their faith and confirmation of calling (oath) as per the Word of God, in presence
+            of Episcopal Bishop and ordained episcopal ministers.
           </p>
           <p style={pageStyles.para}>
-            While, we strongly believe that any minister is chosen and dedicated by God and ordained by the Holy Spirit,
-            this ordination is as per the law of the land in order to exercise the Christian rights. Ordination takes place
-            twice a year at Central Diocesan Office.
+            While, we strongly believe that any minister is chosen and dedicated by God and ordained by the Holy Spirit, this
+            ordination is as per the law of the land in order to exercise the Christian rights. Ordination takes place twice a
+            year at Central Diocesan Office.
           </p>
 
           <div style={pageStyles.divider} />
@@ -108,7 +177,8 @@ export default function ActivitiesPage() {
           </p>
 
           <Link to="/gallery?cat=Ordination" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'பிரதிஷ்டை புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Ordination Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'பிரதிஷ்டை புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Ordination Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -137,7 +207,8 @@ export default function ActivitiesPage() {
           </p>
 
           <Link to="/gallery?cat=Word Sharing Meet" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'வார்த்தைப் பகிர்வு புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Word Sharing Meet Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'வார்த்தைப் பகிர்வு புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Word Sharing Meet Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -151,21 +222,21 @@ export default function ActivitiesPage() {
           />
 
           <p style={pageStyles.para}>
-            It's a fellowship gathering of existing and prospective members of the Diocese at zonal levels. In zonal meet,
+            It&apos;s a fellowship gathering of existing and prospective members of the Diocese at zonal levels. In zonal meet,
             detailed synopsis of the diocesan activities are explained following Praise, Worship and Word teaching.
           </p>
 
           <div style={pageStyles.divider} />
 
-          <p style={pageStyles.subHeading}>மண்டல கூட்டம் (தமிழ் விளக்கம்):</p>
+          <p style={pageStyles.subHeading}>மண்டல கூட்டங்கள் (தமிழ் விளக்கம்):</p>
           <p style={pageStyles.tamilPara}>
-            இது மண்டல அளவில் மறைமாவட்டத்தின் தற்போதைய மற்றும் எதிர்கால அங்கத்தினர்களின் சமுதாயக் கூட்டமாகும்.
-            மண்டல கூட்டத்தில், புகழ், ஆராதனை மற்றும் வார்த்தை போதனையைத் தொடர்ந்து மறைமாவட்ட செயல்பாடுகளின்
-            விரிவான சுருக்கம் விளக்கப்படுகிறது.
+            மண்டல அளவில் மறைமாவட்டத்தின் தற்போதைய மற்றும் வருங்கால உறுப்பினர்களின் ஐக்கியக் கூட்டம் இதுவாகும். மண்டல சந்திப்பில்,
+            துதி, ஆராதனை மற்றும் வேத போதனையைத் தொடர்ந்து மறைமாவட்ட நடவடிக்கைகளின் விரிவான சுருக்கம் விளக்கப்படுகிறது.
           </p>
 
           <Link to="/gallery?cat=Zonal Meet" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'மண்டலக் கூட்ட புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Zonal Meet Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'மண்டலக் கூட்ட புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Zonal Meet Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -185,14 +256,15 @@ export default function ActivitiesPage() {
 
           <div style={pageStyles.divider} />
 
-          <p style={pageStyles.subHeading}>சபை வருகை (தமிழ் விளக்கம்):</p>
+          <p style={pageStyles.subHeading}>சபை சந்திப்பு (தமிழ் விளக்கம்):</p>
           <p style={pageStyles.tamilPara}>
-            குழுமத்தின் அறங்காவலர்கள் DOS உடன் சேர்ந்து அங்கத்தினர் சபைகளை வருகை தந்து, தேவையான போதனைகள்,
-            ஆலோசனைகள் வழங்கவும் மற்றும் அவர்களுடன் ஜெபிக்கவும் செல்கிறார்கள்.
+            வாரியத்தின் அறங்காவலர்கள், டிஓஎஸ் உடன் இணைந்து, உறுப்பினர் தேவாலயங்களை ஊக்குவிக்கவும், தேவையான போதனைகள்,
+            ஆலோசனைகளுடன் அவர்களை தயார்படுத்தவும், அவர்களுடன் பிரார்த்தனை செய்யவும் வருகை தருகின்றனர்.
           </p>
 
           <Link to="/gallery?cat=Church Visit" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'சபை சந்திப்பு புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Church Visit Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'சபை சந்திப்பு புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Church Visit Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -205,30 +277,31 @@ export default function ActivitiesPage() {
             title={isTa ? 'சிறுவர் ஊழியம் & VBS (Children Ministry)' : 'Children Ministry & VBS'}
           />
 
-          <p style={pageStyles.para}>We provide comprehensive training and equipping for those serving in children's ministry:</p>
+          <p style={pageStyles.para}>Equipping and training leaders for effective child evangelism:</p>
           <ul style={pageStyles.list}>
-            <li>Training Sunday School Teachers and equipping them with resources</li>
-            <li>Children ministry training for those who are interested</li>
-            <li>Conducting Children's Club</li>
-            <li>VBS — Teachers Training</li>
-            <li>VBS — Directors Training</li>
-            <li>Training the Trainers</li>
+            <li>Training Sunday School Teachers and equipping them with resources.</li>
+            <li>Children ministry training for those who are interested.</li>
+            <li>Conducting Children&apos;s Club in various localities.</li>
+            <li>VBS — Teachers Training workshops.</li>
+            <li>VBS — Directors Training programs.</li>
+            <li>Training the Trainers for long-term impact.</li>
           </ul>
 
           <div style={pageStyles.divider} />
 
           <p style={pageStyles.subHeading}>சிறுவர் ஊழியம் (தமிழ் விளக்கம்):</p>
-          <ul style={{ ...pageStyles.list, color: 'rgba(255,255,255,0.85)' }}>
-            <li>ஞாயிற்றுப்பள்ளி ஆசிரியர்களுக்கு பயிற்சி அளித்தல் மற்றும் வளங்களுடன் தகுதிப்படுத்துதல்</li>
-            <li>ஆர்வமுள்ளவர்களுக்கு சிறுவர் ஊழிய பயிற்சி</li>
-            <li>சிறுவர் கிளப் நடத்துதல்</li>
-            <li>VBS — ஆசிரியர் பயிற்சி</li>
-            <li>VBS — இயக்குனர் பயிற்சி</li>
-            <li>பயிற்சியாளர்களுக்கு பயிற்சி</li>
+          <ul style={pageStyles.list}>
+            <li>ஞாயிறு பள்ளி ஆசிரியர்களுக்கு பயிற்சி அளித்து, அவர்களுக்கு தேவையான வளங்களை வழங்குதல்.</li>
+            <li>ஆர்வமுள்ளவர்களுக்கு சிறுவர் ஊழியப் பயிற்சி.</li>
+            <li>சிறுவர் கிளப் நடத்துதல்.</li>
+            <li>விபிஎஸ் — ஆசிரியர்கள் பயிற்சி.</li>
+            <li>விபிஎஸ் — இயக்குநர்கள் பயிற்சி.</li>
+            <li>பயிற்சியாளர்களுக்கு பயிற்சி அளித்தல்.</li>
           </ul>
 
           <Link to="/gallery?cat=Children Ministry" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'சிறுவர் ஊழிய புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Children Ministry Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'சிறுவர் ஊழிய புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Children Ministry Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -241,27 +314,27 @@ export default function ActivitiesPage() {
             title={isTa ? 'வாலிபர் ஊழியம் (Youth Ministry)' : 'Youth Ministry'}
           />
 
-          <p style={pageStyles.para}>Training Youth Leaders in the following 4 key areas:</p>
-          <ol style={pageStyles.numberedList}>
-            <li><strong>Leadership Training</strong> — Equipping young leaders with biblical vision.</li>
-            <li><strong>Discipleship Training</strong> — Rooted in spiritual maturity and scripture.</li>
-            <li><strong>Personality Development</strong> — Character, integrity, and communication skills.</li>
-            <li><strong>Evangelism Skills</strong> — Personal soul-winning techniques and campus outreach.</li>
+          <p style={pageStyles.para}>Training Youth Leaders across the four foundational pillars:</p>
+          <ol style={pageStyles.list}>
+            <li>Leadership Training — Developing visionary Christian leaders for the future.</li>
+            <li>Discipleship Training — Rooting young people deeply in biblical truth.</li>
+            <li>Personality Development — Cultivating character, integrity, and communication.</li>
+            <li>Evangelism Skills — Equipping youth to boldly share the Gospel of Jesus Christ.</li>
           </ol>
 
           <div style={pageStyles.divider} />
 
-          <p style={pageStyles.subHeading}>இளையோர் ஊழியம் (தமிழ் விளக்கம்):</p>
-          <p style={pageStyles.tamilPara}>இளையோர் தலைவர்களுக்கு பின்வரும் நான்கு முக்கிய துறைகளில் பயிற்சி அளிக்கப்படுகிறது:</p>
-          <ol style={{ ...pageStyles.numberedList, color: 'rgba(255,255,255,0.85)' }}>
-            <li>தலைமைத்துவ பயிற்சி</li>
-            <li>சீடத்துவ பயிற்சி</li>
-            <li>ஆளுமை வளர்ச்சி</li>
-            <li>சுவிசேஷ திறன்கள்</li>
+          <p style={pageStyles.subHeading}>வாலிபர் ஊழியம் (தமிழ் விளக்கம்):</p>
+          <ol style={pageStyles.list}>
+            <li>தலைமைத்துவப் பயிற்சி (Leadership Training)</li>
+            <li>சீஷத்துவப் பயிற்சி (Discipleship Training)</li>
+            <li>ஆளுமை மேம்பாடு (Personality Development)</li>
+            <li>சுவிசேஷப் பகிர்வு திறன்கள் (Evangelism Skills)</li>
           </ol>
 
           <Link to="/gallery?cat=Youth Ministry" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'வாலிபர் ஊழிய புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Youth Ministry Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'வாலிபர் ஊழிய புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Youth Ministry Photos →'}</span>
           </Link>
         </div>
       </section>
@@ -271,45 +344,41 @@ export default function ActivitiesPage() {
         <div style={pageStyles.container}>
           <SectionHeader
             label={isTa ? 'செயல்பாடு · 07' : 'Activity · 07'}
-            title={isTa ? 'புறசந்திப்பு & சுவிசேஷ ஊழியங்கள் (Outreach)' : 'Outreach & Crusades'}
+            title={isTa ? 'புறசந்திப்பு & சுவிசேஷ ஊழியம் (Outreach)' : 'Outreach & Missions'}
           />
 
-          <p style={pageStyles.para}>
-            * Making Gospel teams out of Diocese members, each team should contain seven members of our Diocese.
-          </p>
-          <p style={pageStyles.para}>
-            * Finding out the places yet to reach by the Gospel and also reach those places with the help of local Churches of our Diocese.
-          </p>
-          <p style={pageStyles.para}>* Following of the way to share the Gospel:</p>
-
-          <ol style={pageStyles.numberedList}>
-            <li>Children ministry through the trained Children Ministers.</li>
-            <li>Film shows Ministry.</li>
-            <li>Street preaching.</li>
-            <li>Tract Distribution.</li>
-            <li>Crusades &amp; Village Conventions.</li>
-          </ol>
+          <ul style={pageStyles.list}>
+            <li>Making Gospel teams out of Diocese members — each team containing seven members of our Diocese.</li>
+            <li>Finding out places yet to be reached by the Gospel and reaching those places with local Churches of our Diocese.</li>
+            <li>Following effective ways to share the Gospel:</li>
+            <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
+              <li>1. Children ministry through trained Children Ministers.</li>
+              <li>2. Film shows Ministry.</li>
+              <li>3. Street preaching.</li>
+              <li>4. Tract Distribution.</li>
+              <li>5. Crusades &amp; Revival meetings.</li>
+            </ul>
+          </ul>
 
           <div style={pageStyles.divider} />
 
           <p style={pageStyles.subHeading}>புறசந்திப்பு (தமிழ் விளக்கம்):</p>
-          <p style={pageStyles.tamilPara}>
-            இப்பேராயத்திலுள்ள அங்கத்தினர்களில் ஏழு உறுப்பினர்களைக் கொண்ட சுவிசேஷக் குழுக்களை உருவாக்குதல்.
-          </p>
-          <p style={pageStyles.tamilPara}>
-            இந்தக் குழுக்கள் மூலம் சுவிசேஷம் அறிவிக்கப்பட வேண்டிய பகுதிகளைக் கண்டறிந்து ஸ்தல சபையோடு இணைந்து சுவிசேஷம் அறிவித்தல்.
-          </p>
-          <p style={pageStyles.tamilPara}>கீழ்கண்ட வழிகளில் சுவிசேஷம் பகிர்ந்தளித்தல்:</p>
-          <ol style={{ ...pageStyles.numberedList, color: 'rgba(255,255,255,0.85)' }}>
-            <li>சிறுவர் ஊழியங்கள் — பயிற்சி பெற்ற சிறுவர் ஊழியர்கள் மூலமாக.</li>
-            <li>படக்காட்சி ஊழியங்கள்.</li>
-            <li>தெருமுனைப் பிரசங்கங்கள்.</li>
-            <li>கைப்பிரதி ஊழியங்கள்.</li>
-            <li>சுவிசேஷ கூட்டங்கள் &amp; கிராம ஊழியங்கள்.</li>
-          </ol>
+          <ul style={pageStyles.list}>
+            <li>இப்பேராயத்திலுள்ள அங்கத்தினர்களில் ஏழு உறுப்பினர்களைக் கொண்ட சுவிசேஷக் குழுக்களை உருவாக்குதல்.</li>
+            <li>இந்தக் குழுக்கள் மூலம் சுவிசேஷம் அறிவிக்கப்பட வேண்டிய பகுதிகளைக் கண்டறிந்து ஸ்தல சபையோடு இணைந்து சுவிசேஷம் அறிவித்தல்.</li>
+            <li>கீழ்கண்ட வழிகளில் சுவிசேஷம் பகிர்ந்தளித்தல்:</li>
+            <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
+              <li>1. சிறுவர் ஊழியங்கள் பயிற்சி பெற்ற சிறுவர் ஊழியர்கள் மூலமாக.</li>
+              <li>2. படக்காட்சி ஊழியங்கள்.</li>
+              <li>3. தெருமுனைப் பிரசங்கங்கள்.</li>
+              <li>4. கைப்பிரதி ஊழியங்கள்.</li>
+              <li>5. நற்செய்தி பெருங்கூட்டங்கள்.</li>
+            </ul>
+          </ul>
 
           <Link to="/gallery?cat=Others" style={pageStyles.galleryLink}>
-            📷 {isTa ? 'புறசந்திப்பு & நிவாரண புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Outreach Photos →'}
+            <CameraIcon size={15} color="#c8a96e" />
+            <span>{isTa ? 'புறசந்திப்பு & நிவாரண புகைப்பட ஆல்பங்களைக் காண்க →' : 'View Outreach Photos →'}</span>
           </Link>
         </div>
       </section>
