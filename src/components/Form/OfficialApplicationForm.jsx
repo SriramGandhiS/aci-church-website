@@ -89,12 +89,16 @@ export default function OfficialApplicationForm({ data }) {
   const appDate = p.applicationDate || new Date().toISOString().split('T')[0]
   const sigName = p.name || 'Pastor S. John Samuel'
 
+  // Filter out completely blank rows so NO empty phantom rows are rendered
+  const validAcademic = (q.academic || []).filter(r => r.examinationPassed || r.year || r.institution)
+  const validTheological = (q.theological || []).filter(r => r.examinationPassed || r.year || r.institution)
+  const validFamily = (fam || []).filter(f => f.name || f.dob || f.relationship || f.professionEducation)
+
   return (
     <div className="digi-form-canvas-container">
 
       {/* ============================================================
-          PAGE 1 OF 2: 100% NATURAL FULL-PAGE COVERAGE (NO SQUISHING, NO GAPS)
-          Header, Admin, Personal Details (1-6), Spiritual Info (II), Affiliation (III), Church Details (IV)
+          PAGE 1 OF 2: HEADER, ADMINISTRATIVE, PERSONAL, SPIRITUAL & CHURCH DETAILS
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-1">
         
@@ -206,7 +210,7 @@ export default function OfficialApplicationForm({ data }) {
         </div>
 
         <div className="digi-personal-details-section">
-          {/* 1. Name (Full Row) */}
+          {/* 1. Name */}
           <div className="digi-form-entry-row">
             <div className="digi-entry-label">
               <strong className="l-en">1. Name</strong> <span className="l-ta">பெயர்</span>
@@ -217,7 +221,7 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 2. Baptismal Name (Full Row) */}
+          {/* 2. Baptismal Name */}
           <div className="digi-form-entry-row">
             <div className="digi-entry-label">
               <strong className="l-en">2. Baptismal Name</strong> <span className="l-ta">ஞானஸ்நானப் பெயர்</span>
@@ -227,7 +231,7 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 3. DOB & Nationality (Full Row Split) */}
+          {/* 3. DOB & Nationality */}
           <div className="digi-two-column-split">
             <div className="digi-split-col">
               <div className="digi-entry-label">
@@ -246,7 +250,7 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 4. Gender & Marital Status (Full Row Split) */}
+          {/* 4. Gender & Marital Status */}
           <div className="digi-two-column-split">
             <div className="digi-split-col">
               <div className="digi-entry-label">
@@ -271,7 +275,7 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 5. Permanent Address (Full Width Structured Table) */}
+          {/* 5. Permanent Address */}
           <div className="digi-address-structured-grid">
             <div className="digi-address-grid-heading">
               <strong>5. Permanent Address</strong> <span>நிரந்தர முகவரி</span>
@@ -310,7 +314,7 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 6. Contact Address (Full Width Structured Table) */}
+          {/* 6. Contact Address */}
           <div className="digi-address-structured-grid">
             <div className="digi-address-grid-heading">
               <strong>6. Contact Address</strong> <span>தொடர்பு முகவரி</span>
@@ -376,7 +380,7 @@ export default function OfficialApplicationForm({ data }) {
         <div className="digi-affiliation-full-list">
           <div className="digi-aff-entry">
             <FormCheckbox checked={aff.affiliationType === 'Independent Church'} labelEn="Independent Church" labelTa="ஸ்தல சுயாட்சி சபை" />
-            <span className="digi-text-underline-spec">Founder's Name (நிறுவனர் பெயர்): <strong>{aff.founderName || '___________________________'}</strong></span>
+            <span className="digi-text-underline-spec">Founder's Name: <strong>{aff.founderName || '___________________________'}</strong></span>
           </div>
           <div className="digi-aff-entry">
             <FormCheckbox checked={aff.affiliationType === 'Denomination'} labelEn="Denomination" labelTa="சபைப் பிரிவு" />
@@ -384,10 +388,10 @@ export default function OfficialApplicationForm({ data }) {
           </div>
           <div className="digi-aff-entry">
             <FormCheckbox checked={aff.affiliationType === 'Associate / Assistant'} labelEn="Associate / Assistant" labelTa="துணை / உதவி" />
-            <span className="digi-text-underline-spec">Name of Chief Pastor: <strong>{aff.associateChiefPastorName || '___________________________'}</strong></span>
+            <span className="digi-text-underline-spec">Chief Pastor: <strong>{aff.associateChiefPastorName || '___________________________'}</strong></span>
           </div>
           <div className="digi-aff-entry">
-            <span className="digi-text-underline-spec"><strong>Name of your Trust (உங்களது டிரஸ்டின் பெயர்):</strong> <strong>{aff.trustName || 'Living Word Ministries Trust'}</strong></span>
+            <span className="digi-text-underline-spec"><strong>Trust Name:</strong> <strong>{aff.trustName || 'Living Word Ministries Trust'}</strong></span>
           </div>
         </div>
 
@@ -397,7 +401,6 @@ export default function OfficialApplicationForm({ data }) {
         </div>
 
         <div className="digi-personal-details-section">
-          {/* Church Name */}
           <div className="digi-form-entry-row">
             <div className="digi-entry-label">
               <strong className="l-en">Church Name</strong> <span className="l-ta">சபையின் பெயர்</span>
@@ -407,7 +410,6 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* Church Address Grid */}
           <div className="digi-address-structured-grid" style={{ marginTop: '2px' }}>
             <div className="digi-grid-row">
               <div className="digi-grid-cell" style={{ width: '28%' }}>
@@ -465,8 +467,8 @@ export default function OfficialApplicationForm({ data }) {
       </div>
 
       {/* ============================================================
-          PAGE 2 OF 2: 100% NATURAL FULL-PAGE COVERAGE (NO SQUISHING, NO GAPS)
-          Milestones (V), Academic (VI), Theological (VII), Family (VIII), Motivation (IX), References (X), Declaration (XI), Enclosures (XII)
+          PAGE 2 OF 2: MILESTONES, QUALIFICATIONS, FAMILY, MOTIVATION, REFERENCES, DECLARATION & ENCLOSURES
+          NO BLANK PHANTOM ROWS IN TABLES — ONLY ACTUAL ENTERED DATA
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-2">
         
@@ -512,7 +514,7 @@ export default function OfficialApplicationForm({ data }) {
           </div>
         </div>
 
-        {/* VI. Academic Qualification Table */}
+        {/* VI. Academic Qualification Table (ONLY REAL ENTERED DATA ROWS) */}
         <div className="digi-full-black-banner">
           VI. Academic Qualification / பொதுக் கல்வித் தகுதி
         </div>
@@ -527,21 +529,27 @@ export default function OfficialApplicationForm({ data }) {
             </tr>
           </thead>
           <tbody>
-            {[0, 1, 2].map((idx) => {
-              const row = q.academic?.[idx] || {}
-              return (
+            {validAcademic.length > 0 ? (
+              validAcademic.map((row, idx) => (
                 <tr key={idx}>
                   <td className="center-cell">{idx + 1}</td>
                   <td>{row.examinationPassed || '\u00A0'}</td>
                   <td className="center-cell">{row.year || '\u00A0'}</td>
                   <td>{row.institution || '\u00A0'}</td>
                 </tr>
-              )
-            })}
+              ))
+            ) : (
+              <tr>
+                <td className="center-cell">1</td>
+                <td>-</td>
+                <td className="center-cell">-</td>
+                <td>-</td>
+              </tr>
+            )}
           </tbody>
         </table>
 
-        {/* VII. Theological Qualification Table */}
+        {/* VII. Theological Qualification Table (ONLY REAL ENTERED DATA ROWS) */}
         <div className="digi-full-black-banner">
           VII. Theological Qualification / இறையியல் தகுதி
         </div>
@@ -556,21 +564,27 @@ export default function OfficialApplicationForm({ data }) {
             </tr>
           </thead>
           <tbody>
-            {[0, 1].map((idx) => {
-              const row = q.theological?.[idx] || {}
-              return (
+            {validTheological.length > 0 ? (
+              validTheological.map((row, idx) => (
                 <tr key={idx}>
                   <td className="center-cell">{idx + 1}</td>
                   <td>{row.examinationPassed || '\u00A0'}</td>
                   <td className="center-cell">{row.year || '\u00A0'}</td>
                   <td>{row.institution || '\u00A0'}</td>
                 </tr>
-              )
-            })}
+              ))
+            ) : (
+              <tr>
+                <td className="center-cell">1</td>
+                <td>-</td>
+                <td className="center-cell">-</td>
+                <td>-</td>
+              </tr>
+            )}
           </tbody>
         </table>
 
-        {/* VIII. Family Details Table */}
+        {/* VIII. Family Details Table (ONLY REAL ENTERED DATA ROWS — NO EMPTY ROWS 3 & 4!) */}
         <div className="digi-full-black-banner">
           VIII. Family Details / குடும்ப விவரங்கள்
         </div>
@@ -586,9 +600,8 @@ export default function OfficialApplicationForm({ data }) {
             </tr>
           </thead>
           <tbody>
-            {[0, 1, 2, 3].map((idx) => {
-              const f = fam?.[idx] || {}
-              return (
+            {validFamily.length > 0 ? (
+              validFamily.map((f, idx) => (
                 <tr key={idx}>
                   <td className="center-cell">{idx + 1}</td>
                   <td>{f.name || '\u00A0'}</td>
@@ -596,8 +609,16 @@ export default function OfficialApplicationForm({ data }) {
                   <td>{f.relationship || '\u00A0'}</td>
                   <td>{f.professionEducation || '\u00A0'}</td>
                 </tr>
-              )
-            })}
+              ))
+            ) : (
+              <tr>
+                <td className="center-cell">1</td>
+                <td>-</td>
+                <td className="center-cell">-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            )}
           </tbody>
         </table>
 
