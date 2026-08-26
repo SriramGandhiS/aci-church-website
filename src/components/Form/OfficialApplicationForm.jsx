@@ -144,7 +144,7 @@ export default function OfficialApplicationForm({ data }) {
           Read the Application carefully, fill in CAPITAL LETTERS, DO NOT OVERWRITE, select the appropriate box by ticking it (✓) and leave the inappropriate fields blank. / விண்ணப்பத்தை கவனமாக வாசித்து ஆங்கில பெரிய எழுத்துக்களில் தெளிவாக எழுதவும். பொருத்தமான தகவல்களுக்குரிய இடத்தில் (✓) குறியிடவும்.
         </div>
 
-        {/* TOP ADMINISTRATIVE BLOCK: Office Use (1fr) | Large Official Seal (150px) | Photo (130px) */}
+        {/* TOP ADMINISTRATIVE BLOCK: Office (1fr) | Seal (150px) | Photo (130px) */}
         <div className="digi-top-admin-block">
           
           {/* Column 1: FOR OFFICE USE ONLY */}
@@ -400,7 +400,8 @@ export default function OfficialApplicationForm({ data }) {
       </div>
 
       {/* ============================================================
-          PAGE 2 OF 4: SPIRITUAL INFORMATION, AFFILIATION & CHURCH DETAILS
+          PAGE 2 OF 4: SPIRITUAL INFO, AFFILIATION, CHURCH, MILESTONES & QUALIFICATIONS
+          (Faithful distribution matching the original paper form)
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-2">
         
@@ -473,7 +474,7 @@ export default function OfficialApplicationForm({ data }) {
           </div>
 
           {/* Church Address Grid */}
-          <div className="digi-address-structured-grid" style={{ marginTop: '5px' }}>
+          <div className="digi-address-structured-grid" style={{ marginTop: '3px' }}>
             <div className="digi-grid-row">
               <div className="digi-grid-cell" style={{ width: '28%' }}>
                 <span className="c-lbl">Door No (கதவு எண்)</span>
@@ -540,7 +541,7 @@ export default function OfficialApplicationForm({ data }) {
 
         {/* V. Ministry Milestone Questions */}
         <div className="digi-full-black-banner">
-          V. Ministry Milestones / ஆவிக்குரிய அனுபவங்கள்
+          V. Ministry Milestones & Intent / ஆவிக்குரிய அனுபவங்கள் & கேள்விகள்
         </div>
 
         <div className="digi-milestones-list-block">
@@ -578,42 +579,29 @@ export default function OfficialApplicationForm({ data }) {
             </div>
             <Date8Boxes dateStr={mh.ministryStartDate} />
           </div>
-        </div>
 
-        <div className="digi-sheet-footer">
-          Apostolic Council of India Diocese, Membership Application Form, Page 2/4
-        </div>
-      </div>
-
-      {/* ============================================================
-          PAGE 3 OF 4: QUALIFICATIONS, FAMILY DETAILS & MOTIVATION
-          ============================================================ */}
-      <div className="digi-a4-sheet" id="official-page-3">
-        
-        {/* Ordination & Affiliation Questions */}
-        <div className="digi-intent-questions-wrap">
-          <div className="digi-intent-entry">
-            <span className="q-label">
+          <div className="digi-milestone-entry">
+            <div className="m-text">
               6. Do you want to be ordained by ACI Diocese? இந்தப் பேராயத்தால் பிரதிஷ்டை பெற விரும்புகிறீர்களா?
-            </span>
-            <div className="q-options">
+            </div>
+            <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantOrdination === 'Yes'} labelEn="Yes" labelTa="ஆம்" />
               <FormCheckbox checked={mh.wantOrdination === 'No'} labelEn="No" labelTa="இல்லை" />
             </div>
           </div>
 
-          <div className="digi-intent-entry">
-            <span className="q-label">
+          <div className="digi-milestone-entry">
+            <div className="m-text">
               7. Do you want to be affiliated with ACI Diocese? இந்தப் பேராயத்தின் இணைப்பைப் பெற விரும்புகிறீர்களா?
-            </span>
-            <div className="q-options">
+            </div>
+            <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantAffiliation === 'Yes'} labelEn="Yes" labelTa="ஆம்" />
               <FormCheckbox checked={mh.wantAffiliation === 'No'} labelEn="No" labelTa="இல்லை" />
             </div>
           </div>
         </div>
 
-        {/* VI. Academic Qualification Table */}
+        {/* VI. Academic Qualification Table (Original Page 2) */}
         <div className="digi-full-black-banner">
           VI. Academic Qualification / பொதுக் கல்வித் தகுதி
         </div>
@@ -642,7 +630,7 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
-        {/* VII. Theological Qualification Table */}
+        {/* VII. Theological Qualification Table (Original Page 2) */}
         <div className="digi-full-black-banner">
           VII. Theological Qualification / இறையியல் தகுதி
         </div>
@@ -671,6 +659,17 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
+        <div className="digi-sheet-footer">
+          Apostolic Council of India Diocese, Membership Application Form, Page 2/4
+        </div>
+      </div>
+
+      {/* ============================================================
+          PAGE 3 OF 4: FAMILY DETAILS & FULL-PAGE MOTIVATION STATEMENT
+          (Faithful distribution matching the original paper form)
+          ============================================================ */}
+      <div className="digi-a4-sheet" id="official-page-3">
+        
         {/* VIII. Family Details Table */}
         <div className="digi-full-black-banner">
           VIII. Family Details / குடும்ப விவரங்கள்
@@ -702,16 +701,21 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
-        {/* IX. Motivation - Generous Box matching original form */}
+        {/* IX. Motivation - Generous Full-Half Page Box matching original form */}
         <div className="digi-full-black-banner">
           IX. What prompts you to join APOSTOLIC COUNCIL OF INDIA DIOCESE? / பேராயத்தில் இணையக் காரணம்
         </div>
 
-        <div className="digi-motivation-content-frame">
+        <div className="digi-motivation-full-frame">
           {mot.reasonToJoin ? (
             <p className="digi-motivation-paragraph">{mot.reasonToJoin}</p>
           ) : (
             <div className="digi-blank-line-rules">
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
               <div className="b-rule"></div>
               <div className="b-rule"></div>
               <div className="b-rule"></div>
