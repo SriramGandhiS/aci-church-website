@@ -122,6 +122,11 @@ export default function MobileMenu({ isOpen, onClose }) {
       href: '/gallery',
     },
     {
+      label: t('nav.getInvolved'),
+      hasDropdown: false,
+      href: '/get-involved',
+    },
+    {
       label: t('nav.contact'),
       hasDropdown: false,
       href: '/contact',

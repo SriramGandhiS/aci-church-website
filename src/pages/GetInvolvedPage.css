@@ -1,0 +1,356 @@
+/* ============================================================
+   GET INVOLVED LANDING PAGE — Dark Modern Editorial Style
+   ============================================================ */
+
+.gi-page {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-top: 76px;
+}
+
+/* Hero Section */
+.gi-hero {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, rgba(200, 169, 110, 0.08) 0%, rgba(10, 10, 10, 1) 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 80px 24px 64px;
+  text-align: center;
+}
+
+.gi-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.gi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200, 169, 110, 0.12);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #c8a96e;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.gi-title {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 5.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 18px;
+}
+
+.gi-subtitle {
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 36px;
+}
+
+.gi-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.gi-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.gi-btn-primary:hover {
+  background: #c8a96e;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(200, 169, 110, 0.35);
+}
+
+.gi-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.gi-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #ffffff;
+}
+
+/* Container */
+.gi-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 64px 24px 100px;
+}
+
+/* Section Header */
+.gi-section-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.gi-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #c8a96e;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.gi-section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.gi-section-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Core Pillars Grid */
+.gi-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.gi-pillar-card {
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 32px 26px;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.gi-pillar-card:hover {
+  border-color: rgba(200, 169, 110, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.gi-pillar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgba(200, 169, 110, 0.12);
+  border: 1px solid rgba(200, 169, 110, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.gi-pillar-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.gi-pillar-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Process Journey Section */
+.gi-process-wrap {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 56px 40px;
+  margin-bottom: 80px;
+}
+
+.gi-process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+  margin-top: 40px;
+}
+
+@media (max-width: 960px) {
+  .gi-process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 540px) {
+  .gi-process-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gi-step-card {
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 24px 20px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.gi-step-card:hover {
+  border-color: rgba(200, 169, 110, 0.4);
+  background: #1b1b1b;
+}
+
+.gi-step-num {
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 800;
+  color: #c8a96e;
+  opacity: 0.9;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.gi-step-heading {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.gi-step-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Document Checklist Section */
+.gi-checklist-wrap {
+  margin-bottom: 80px;
+}
+
+.gi-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.gi-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 18px 20px;
+  transition: all 0.2s ease;
+}
+
+.gi-checklist-item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #161616;
+}
+
+.gi-check-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(200, 169, 110, 0.15);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gi-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.gi-item-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Final Action Banner */
+.gi-cta-banner {
+  background: linear-gradient(135deg, #181818 0%, #0d0d0d 100%);
+  border: 1px solid rgba(200, 169, 110, 0.35);
+  border-radius: 8px;
+  padding: 56px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gi-cta-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c8a96e, transparent);
+}
+
+.gi-cta-title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 42px);
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.gi-cta-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+
+.gi-cta-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 14px;
+}

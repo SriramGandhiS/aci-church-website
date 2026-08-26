@@ -5,8 +5,8 @@ import DioceseSection from '../components/DioceseSection/DioceseSection'
 import DirectoryCta from '../components/DirectoryCta/DirectoryCta'
 import MinistriesSection from '../components/MinistriesSection/MinistriesSection'
 import FeaturedSection from '../components/FeaturedSection/FeaturedSection'
-import EventsSection from '../components/EventsSection/EventsSection'
 import TestimoniesSection from '../components/TestimoniesSection/TestimoniesSection'
+import GetInvolvedCta from '../components/GetInvolvedCta/GetInvolvedCta'
 import Newsletter from '../components/Newsletter/Newsletter'
 
 export default function HomePage() {
@@ -33,13 +33,16 @@ export default function HomePage() {
       {/* 7. Featured Conference & Word Sharing */}
       <FeaturedSection />
 
-      {/* 8. Upcoming Events */}
+      {/* 8. Get Involved / Membership Application CTA Banner */}
+      <GetInvolvedCta />
+
+      {/* 9. Upcoming Events */}
       <EventsSection />
 
-      {/* 9. Partner Testimonies */}
+      {/* 10. Partner Testimonies */}
       <TestimoniesSection />
 
-      {/* 10. Newsletter & Sowing */}
+      {/* 11. Newsletter & Sowing */}
       <Newsletter />
     </>
   )

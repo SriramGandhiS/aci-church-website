@@ -134,6 +134,11 @@ export default function Header({ onMenuOpen }) {
       href: '/gallery',
     },
     {
+      label: t('nav.getInvolved'),
+      hasDropdown: false,
+      href: '/get-involved',
+    },
+    {
       label: t('nav.contact'),
       hasDropdown: false,
       href: '/contact',

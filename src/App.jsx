@@ -15,6 +15,8 @@ import MediaPage from './pages/MediaPage'
 import GalleryPage from './pages/GalleryPage'
 import ContactPage from './pages/ContactPage'
 import DirectoryPage from './pages/DirectoryPage'
+import GetInvolvedPage from './pages/GetInvolvedPage'
+import ApplicationPage from './pages/ApplicationPage'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
             <Route path="/partnership" element={<PartnershipPage />} />
             <Route path="/synod" element={<SynodPage />} />
             <Route path="/directory" element={<DirectoryPage />} />
+            <Route path="/get-involved" element={<GetInvolvedPage />} />
+            <Route path="/get-involved/application" element={<ApplicationPage />} />
             <Route path="/media" element={<MediaPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/gallery/album/:uniq" element={<AlbumPage />} />

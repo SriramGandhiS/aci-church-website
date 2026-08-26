@@ -70,6 +70,7 @@ export const translations = {
       video: "VIDEO",
       literature: "LITERATURE",
       gallery: "Gallery",
+      getInvolved: "Get Involved",
       contact: "Contact Us",
     },
     hero: {
@@ -190,6 +191,7 @@ export const translations = {
       video: "வீடியோக்கள் (Video)",
       literature: "புத்தகங்கள் (Literature)",
       gallery: "புகைப்படங்கள்",
+      getInvolved: "இணையுங்கள்",
       contact: "தொடர்பு கொள்ள",
     },
     hero: {
