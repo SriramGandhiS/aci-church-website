@@ -93,7 +93,7 @@ export default function OfficialApplicationForm({ data }) {
     <div className="digi-form-canvas-container">
 
       {/* ============================================================
-          PAGE 1 OF 4: PERSONAL DETAILS & ADMINISTRATIVE BLOCK
+          PAGE 1 OF 3: APPLICANT'S INFORMATIONS & PERSONAL DETAILS
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-1">
         
@@ -391,12 +391,12 @@ export default function OfficialApplicationForm({ data }) {
         </div>
 
         <div className="digi-sheet-footer">
-          Apostolic Council of India Diocese, Membership Application Form, Page 1/4
+          Apostolic Council of India Diocese, Membership Application Form, Page 1/3
         </div>
       </div>
 
       {/* ============================================================
-          PAGE 2 OF 4: SPIRITUAL INFO, AFFILIATION, CHURCH & MILESTONES
+          PAGE 2 OF 3: SPIRITUAL INFO, AFFILIATION, CHURCH & MILESTONES
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-2">
         
@@ -576,7 +576,7 @@ export default function OfficialApplicationForm({ data }) {
           </div>
         </div>
 
-        {/* VI. Academic Qualification Table (DENSE PLACEMENT ON PAGE 2) */}
+        {/* VI. Academic Qualification Table */}
         <div className="digi-full-black-banner">
           VI. Academic Qualification / பொதுக் கல்வித் தகுதி
         </div>
@@ -605,7 +605,7 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
-        {/* VII. Theological Qualification Table (DENSE PLACEMENT ON PAGE 2) */}
+        {/* VII. Theological Qualification Table */}
         <div className="digi-full-black-banner">
           VII. Theological Qualification / இறையியல் தகுதி
         </div>
@@ -635,13 +635,13 @@ export default function OfficialApplicationForm({ data }) {
         </table>
 
         <div className="digi-sheet-footer">
-          Apostolic Council of India Diocese, Membership Application Form, Page 2/4
+          Apostolic Council of India Diocese, Membership Application Form, Page 2/3
         </div>
       </div>
 
       {/* ============================================================
-          PAGE 3 OF 4: QUESTIONS, FAMILY DETAILS, MOTIVATION & TWO REFERENCES
-          (High density, zero huge white voids)
+          PAGE 3 OF 3: COMPLETE DENSE FINAL PAGE (ZERO BLANK VOID)
+          Questions + Family + Motivation + References + Declaration + Signature + Enclosures
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-3">
         
@@ -699,7 +699,7 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
-        {/* IX. Motivation Box (Compact official statement box) */}
+        {/* IX. Motivation Box */}
         <div className="digi-full-black-banner">
           IX. What prompts you to join APOSTOLIC COUNCIL OF INDIA DIOCESE? / பேராயத்தில் இணையக் காரணம்
         </div>
@@ -710,7 +710,7 @@ export default function OfficialApplicationForm({ data }) {
           </p>
         </div>
 
-        {/* X. Details of Two References (Moved to Page 3 to perfectly balance density) */}
+        {/* X. Details of Two References */}
         <div className="digi-full-black-banner">
           X. Details of Two References (Must) / இரண்டு பேராய அங்கத்தினர்களின் பரிந்துரை
         </div>
@@ -789,17 +789,6 @@ export default function OfficialApplicationForm({ data }) {
           </div>
         </div>
 
-        <div className="digi-sheet-footer">
-          Apostolic Council of India Diocese, Membership Application Form, Page 3/4
-        </div>
-      </div>
-
-      {/* ============================================================
-          PAGE 4 OF 4: DECLARATION, SIGNATURE, ENCLOSURES & DIOCESAN ENDORSEMENT
-          (Complete official final page with zero empty space)
-          ============================================================ */}
-      <div className="digi-a4-sheet" id="official-page-4">
-        
         {/* XI. Statutory Declaration */}
         <div className="digi-full-black-banner">
           XI. Statutory Declaration / உறுதிமொழி மற்றும் விண்ணப்பதாரர் கையொப்பம்
@@ -854,41 +843,8 @@ export default function OfficialApplicationForm({ data }) {
           <div className="chk-cell">☑ 8. Existing Ordination / Affiliation Certificate (if any)</div>
         </div>
 
-        {/* XIII. Official Diocesan Endorsement & Synod Approval Board */}
-        <div className="digi-full-black-banner">
-          XIII. Diocesan Synod Endorsement & Approval / பேராய நிர்வாக ஒப்புதல்
-        </div>
-
-        <div className="digi-synod-approval-grid">
-          <div className="digi-synod-col-card">
-            <div className="digi-synod-header">Board of Trustees Scrutiny / அறங்காவலர் குழு ஆய்வு</div>
-            <div className="digi-synod-body">
-              <div className="s-line"><span>Documents Verified :</span> <strong>YES [✓]</strong></div>
-              <div className="s-line"><span>Background Check :</span> <strong>APPROVED [✓]</strong></div>
-              <div className="s-line"><span>Date of Scrutiny :</span> <strong>{appDate}</strong></div>
-              <div className="s-sig-area">
-                <span className="s-sig-lbl">Managing Trustee / General Secretary</span>
-                <span className="s-sig-stamp">[ Verified & Attested ]</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="digi-synod-col-card">
-            <div className="digi-synod-header">Episcopal Bishop Approval / பேராயர் இறுதி ஒப்புதல்</div>
-            <div className="digi-synod-body">
-              <div className="s-line"><span>Membership Status :</span> <strong>GRANTED [✓]</strong></div>
-              <div className="s-line"><span>Diocesan Reg. Code :</span> <strong>TN-ACI-{appDate.slice(0,4)}-002093</strong></div>
-              <div className="s-line"><span>Ordination Status :</span> <strong>CONFIRMED [✓]</strong></div>
-              <div className="s-sig-area">
-                <span className="s-sig-lbl">Rt. Rev. S. Johnson Durai, Episcopal Bishop</span>
-                <span className="s-sig-stamp">[ Episcopal Seal & Signature ]</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="digi-sheet-footer">
-          Apostolic Council of India Diocese, Membership Application Form, Page 4/4
+          Apostolic Council of India Diocese, Membership Application Form, Page 3/3
         </div>
       </div>
 
