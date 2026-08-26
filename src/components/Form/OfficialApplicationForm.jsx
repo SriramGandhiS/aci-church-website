@@ -71,7 +71,11 @@ function FormCheckbox({ checked = false, labelEn = '', labelTa = '' }) {
   )
 }
 
-export default function OfficialApplicationForm({ data }) {
+export default function OfficialApplicationForm({ data, onEdit, showActions = true }) {
+  const handlePrint = () => {
+    window.print()
+  }
+
   const p = data?.personal || {}
   const perm = p.permanentAddress || {}
   const contact = p.contactAddressSameAsPermanent ? perm : (p.contactAddress || {})
@@ -96,6 +100,31 @@ export default function OfficialApplicationForm({ data }) {
 
   return (
     <div className="digi-form-canvas-container">
+
+      {/* ============================================================
+          TOP ACTION BAR: [ ← Edit Application ]  [ 🖨 Print / Save Official PDF ]
+          ============================================================ */}
+      {showActions && (
+        <div className="application-actions-bar">
+          <button
+            type="button"
+            onClick={onEdit ? onEdit : () => window.history.back()}
+            className="app-action-btn-edit"
+          >
+            <span className="btn-icon">←</span>
+            <span>Edit Application</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handlePrint}
+            className="app-action-btn-print"
+          >
+            <span className="btn-icon">🖨</span>
+            <span>Print / Save Official PDF</span>
+          </button>
+        </div>
+      )}
 
       {/* ============================================================
           PAGE 1 OF 2: HD TAMIL FONTS • SINGLE-ROW MILESTONES • ZERO BLANK GAP
