@@ -37,7 +37,7 @@ export default function Hero() {
       {/* Content */}
       <div className="hero-content container">
         <div className="hero-body">
-          <p className="hero-eyebrow t-label">
+          <p className="hero-eyebrow">
             {isTa
               ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்'
               : 'Welcome to Apostolic Council of India Diocese'}
@@ -46,15 +46,15 @@ export default function Hero() {
           <h1 className="hero-headline t-hero">
             {isTa ? (
               <>
-                ஒரே சரீரம்.<br />
-                ஒரே விசுவாசம்.<br />
-                ஒரே பணி.
+                ஆயத்தப்படுத்துதல்.<br />
+                பலப்படுத்துதல்.<br />
+                விரிவுபடுத்துதல்.
               </>
             ) : (
               <>
-                One Body.<br />
-                One Faith.<br />
-                One Mission.
+                Equipping.<br />
+                Empowering.<br />
+                Expanding.
               </>
             )}
           </h1>

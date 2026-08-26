@@ -75,8 +75,8 @@ export const translations = {
     hero: {
       slides: [
         {
-          eyebrow: "APOSTOLIC COUNCIL OF INDIA DIOCESE",
-          title: "One Body. One Faith. One Mission.",
+          eyebrow: "WELCOME TO APOSTOLIC COUNCIL OF INDIA DIOCESE",
+          title: "Equipping. Empowering. Expanding.",
           subtitle: "Dedicated to shepherding the shepherds, establishing biblical foundation, and equipping church leaders across nations.",
           btnPrimary: "About ACI Diocese",
           btnSecondary: "Explore Ministries",
@@ -196,7 +196,7 @@ export const translations = {
       slides: [
         {
           eyebrow: "அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்",
-          title: "ஒரே சரீரம். ஒரே விசுவாசம். ஒரே பணி.",
+          title: "ஆயத்தப்படுத்துதல். பலப்படுத்துதல். விரிவுபடுத்துதல்.",
           subtitle: "மேய்ப்பர்களுக்கு மெய்யான மேய்ச்சலளித்து, வேத அஸ்திபாரத்தை உறுதிப்படுத்தி, திருச்சபை ஊழியர்களை முழுமையாக தகுதிப்படுத்துகிறது.",
           btnPrimary: "பேராயம் பற்றி",
           btnSecondary: "ஊழியங்களை காண்க",

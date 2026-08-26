@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
-import { LocationIcon, StarIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
+import { LocationIcon, StarIcon, ArrowRightIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
 import { diocesesList } from '../data/diocesesData'
 
 export default function DiocesePage() {
@@ -34,8 +34,8 @@ export default function DiocesePage() {
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '820px', fontSize: '15px', lineHeight: '1.7' }}>
             {isTa
-              ? 'தமிழ்நாடு முழுவதும் பரந்து விரிந்து தேவ ஊழியங்களை தாங்கி நடத்தும் 7 அதிகாரப்பூர்வ மண்டல பேராயங்களின் விபரம்.'
-              : 'Discover the seven regional diocesan networks operating across Tamil Nadu under the Apostolic Council of India, empowering pastors and advancing the Kingdom of God.'}
+              ? 'தமிழ்நாடு முழுவதும் பரந்து விரிந்து தேவ ஊழியங்களை தாங்கி நடத்தும் 7 அதிகாரப்பூர்வ மண்டல பேராயங்களின் சபைகள் மற்றும் தலைமை விபரம்.'
+              : 'Discover the seven regional diocesan networks operating across Tamil Nadu under the Apostolic Council of India, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
           </p>
         </div>
       </div>
@@ -43,7 +43,7 @@ export default function DiocesePage() {
       <div className="container" style={{ padding: '64px 24px 80px' }}>
 
         {/* Overview Banner */}
-        <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #c8a96e', padding: '28px 32px', marginBottom: '56px', borderRadius: '4px' }}>
+        <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #c8a96e', padding: '28px 32px', marginBottom: '56px', borderRadius: '6px' }}>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', color: '#ffffff', marginBottom: '8px', fontWeight: 400 }}>
             {isTa ? 'மண்டல பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across 7 Regional Dioceses'}
           </h3>
@@ -55,7 +55,7 @@ export default function DiocesePage() {
         </div>
 
         {/* 7 Dioceses List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
           {diocesesList.map((d) => (
             <section
               key={d.id}
@@ -63,12 +63,13 @@ export default function DiocesePage() {
               style={{
                 scrollMarginTop: '100px',
                 border: '1px solid rgba(255,255,255,0.12)',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 background: '#111111',
                 padding: '36px',
                 position: 'relative'
               }}
             >
+              {/* Header Info */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px' }}>
                 <div>
                   <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
@@ -77,7 +78,7 @@ export default function DiocesePage() {
                   <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.5vw, 34px)', color: '#ffffff', marginTop: '6px', marginBottom: '4px', fontWeight: 400 }}>
                     {isTa ? d.nameTa : d.nameEn}
                   </h2>
-                  <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', fontWeight: 500 }}>
+                  <span style={{ fontSize: '13.5px', color: 'rgba(255,255,255,0.55)', fontWeight: 500 }}>
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
                   </span>
                 </div>
@@ -87,11 +88,135 @@ export default function DiocesePage() {
                 </div>
               </div>
 
-              <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.8)', marginBottom: '24px' }}>
+              <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.8)', marginBottom: '28px' }}>
                 {isTa ? d.descriptionTa : d.descriptionEn}
               </p>
 
-              <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px', padding: '20px 24px', marginBottom: '24px' }}>
+              {/* Church Address & Presiding Pastor Card */}
+              {d.address && (
+                <div style={{
+                  background: 'linear-gradient(145deg, rgba(200, 169, 110, 0.08) 0%, rgba(20, 20, 20, 0.95) 100%)',
+                  border: '1px solid rgba(200, 169, 110, 0.28)',
+                  borderRadius: '6px',
+                  padding: '24px 28px',
+                  marginBottom: '28px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(200, 169, 110, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <ChurchIcon size={17} color="#c8a96e" />
+                      </div>
+                      <div>
+                        <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#ffffff', margin: 0, fontFamily: 'var(--font-serif)' }}>
+                          {isTa ? (d.churchNameTa || d.churchName) : d.churchName}
+                        </h3>
+                        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
+                          {isTa ? 'முதன்மை மண்டல சபை மையம்' : 'Diocesan Church Center & Pastoral Office'}
+                        </span>
+                      </div>
+                    </div>
+                    {d.regNo && (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', padding: '4px 10px', borderRadius: '4px', fontSize: '11.5px', color: '#c8a96e', fontWeight: 600 }}>
+                        <IdCardIcon size={13} color="#c8a96e" />
+                        <span>Reg: {d.regNo}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px', marginBottom: '18px' }}>
+                    {/* Minister / Pastor Info */}
+                    <div>
+                      <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
+                        {isTa ? 'பொறுப்பு பேராயர் / தலைவர்' : 'Presiding Bishop / Leader'}
+                      </span>
+                      <p style={{ fontSize: '14.5px', fontWeight: 600, color: '#ffffff', margin: '0 0 2px 0' }}>
+                        {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
+                      </p>
+                      <span style={{ fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
+                        {isTa ? (d.pastorDesignationTa || d.pastorDesignation) : d.pastorDesignation}
+                      </span>
+                    </div>
+
+                    {/* Church Address */}
+                    <div>
+                      <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
+                        {isTa ? 'சபை முகவரி' : 'Church Address'}
+                      </span>
+                      <p style={{ fontSize: '13.5px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', margin: 0, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                        <LocationIcon size={15} color="#c8a96e" style={{ marginTop: '3px', flexShrink: 0 }} />
+                        <span>{isTa ? (d.addressTa || d.address) : d.address}</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Direct Contact Links */}
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                    {d.phone && (
+                      <a
+                        href={`tel:${d.phone.replace(/[^0-9+]/g, '')}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'rgba(200, 169, 110, 0.12)',
+                          border: '1px solid rgba(200, 169, 110, 0.25)',
+                          color: '#e4caa0',
+                          padding: '6px 14px',
+                          borderRadius: '4px',
+                          fontSize: '12.5px',
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        <PhoneIcon size={13} color="#c8a96e" />
+                        <span>{d.phone}</span>
+                      </a>
+                    )}
+                    {d.email && (
+                      <a
+                        href={`mailto:${d.email}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.12)',
+                          color: 'rgba(255, 255, 255, 0.85)',
+                          padding: '6px 14px',
+                          borderRadius: '4px',
+                          fontSize: '12.5px',
+                          textDecoration: 'none',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        <EmailIcon size={13} color="#c8a96e" />
+                        <span>{d.email}</span>
+                      </a>
+                    )}
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((d.churchName || '') + ' ' + (d.address || ''))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: 'rgba(255, 255, 255, 0.65)',
+                        padding: '6px 10px',
+                        fontSize: '12px',
+                        textDecoration: 'underline',
+                        marginLeft: 'auto'
+                      }}
+                    >
+                      <span>{isTa ? 'வரைபடத்தில் பார்க்க ↗' : 'View on Google Maps ↗'}</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {/* Highlights */}
+              <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '20px 24px', marginBottom: '24px' }}>
                 <h4 style={{ fontSize: '11.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#c8a96e', marginBottom: '14px', fontWeight: 700 }}>
                   {isTa ? 'முக்கிய அமைப்புகள் & செயல்பாடுகள்' : 'Key Pillars & Active Ministries'}
                 </h4>
@@ -105,6 +230,7 @@ export default function DiocesePage() {
                 </div>
               </div>
 
+              {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <Link to="/contact" style={{ background: '#ffffff', color: '#000000', padding: '10px 22px', fontSize: '13px', fontWeight: 700, textDecoration: 'none', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <span>{isTa ? 'தொடர்பு கொள்ள' : 'Contact Diocese'}</span>
