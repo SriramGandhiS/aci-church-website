@@ -1,7 +1,7 @@
 import React from 'react'
 import './OfficialApplicationForm.css'
 
-// Reusable Character Box Field with strictly self-contained boundaries (NO border bleed)
+// Reusable Character Box Row with strictly self-contained boundaries
 function CharacterBoxRow({ text = '', count = 24, className = '' }) {
   const clean = (text || '')
     .toString()
@@ -24,7 +24,7 @@ function CharacterBoxRow({ text = '', count = 24, className = '' }) {
   )
 }
 
-// Segmented Date: [D][D] [M][M] [Y][Y][Y][Y] with self-contained box groups
+// Segmented Date: [D][D] [M][M] [Y][Y][Y][Y]
 function SegmentedDateBoxes({ dateStr = '' }) {
   const parts = (dateStr || '').split('-')
   const yyyy = parts[0] || ''
@@ -144,7 +144,7 @@ export default function OfficialApplicationForm({ data }) {
           Read the Application carefully, fill in CAPITAL LETTERS, DO NOT OVERWRITE, select the appropriate box by ticking it (✓) and leave the inappropriate fields blank. / விண்ணப்பத்தை கவனமாக வாசித்து ஆங்கில பெரிய எழுத்துக்களில் தெளிவாக எழுதவும். பொருத்தமான தகவல்களுக்குரிய இடத்தில் (✓) குறியிடவும்.
         </div>
 
-        {/* TOP ADMINISTRATIVE BLOCK: Office Use (50%) | LARGE OFFICIAL SEAL (26%) | Photo Box (24%) */}
+        {/* TOP ADMINISTRATIVE BLOCK: Office Use (1fr) | Large Official Seal (150px) | Photo (130px) */}
         <div className="digi-top-admin-block">
           
           {/* Column 1: FOR OFFICE USE ONLY */}
@@ -702,7 +702,7 @@ export default function OfficialApplicationForm({ data }) {
           </tbody>
         </table>
 
-        {/* IX. Motivation */}
+        {/* IX. Motivation - Generous Box matching original form */}
         <div className="digi-full-black-banner">
           IX. What prompts you to join APOSTOLIC COUNCIL OF INDIA DIOCESE? / பேராயத்தில் இணையக் காரணம்
         </div>
@@ -712,6 +712,9 @@ export default function OfficialApplicationForm({ data }) {
             <p className="digi-motivation-paragraph">{mot.reasonToJoin}</p>
           ) : (
             <div className="digi-blank-line-rules">
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
+              <div className="b-rule"></div>
               <div className="b-rule"></div>
               <div className="b-rule"></div>
               <div className="b-rule"></div>
