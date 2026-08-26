@@ -70,7 +70,10 @@ export default function ApplicationPage() {
   const [isCompleted, setIsCompleted] = useState(false)
   const [reviewTab, setReviewTab] = useState('summary') // 'summary' | 'official'
 
-  const [pincodeLoading, setPincodeLoading] = useState({ perm: false, church: false })
+  const [permPostalInfo, setPermPostalInfo] = useState({ loading: false, msg: '', results: [] })
+  const [churchPostalInfo, setChurchPostalInfo] = useState({ loading: false, msg: '', results: [] })
+  const [userEditedPerm, setUserEditedPerm] = useState({ cityTown: false, taluk: false, district: false, state: false })
+  const [userEditedChurch, setUserEditedChurch] = useState({ cityTown: false, taluk: false, district: false, state: false })
 
   const photoInputRef = useRef(null)
   const isInitialMount = useRef(true)
@@ -151,6 +154,8 @@ export default function ApplicationPage() {
     setShowClearModal(false)
     setShowResumeBanner(false)
     setErrors({})
+    setPermPostalInfo({ loading: false, msg: '', results: [] })
+    setChurchPostalInfo({ loading: false, msg: '', results: [] })
   }
 
   // Centralized State Updates
@@ -200,36 +205,78 @@ export default function ApplicationPage() {
     const pin = e.target.value.replace(/\D/g, '').slice(0, 6)
     updateAddress('permanentAddress', 'pincode', pin)
 
-    if (pin.length === 6) {
-      setPincodeLoading((prev) => ({ ...prev, perm: true }))
-      const postalData = await lookupPincode(pin)
-      setPincodeLoading((prev) => ({ ...prev, perm: false }))
+    if (pin.length < 6) {
+      setPermPostalInfo({
+        loading: false,
+        msg: pin.length > 0 ? (isTa ? '6 இலக்க பின்கோடை உள்ளிடவும்' : 'Enter 6-digit PIN') : '',
+        results: [],
+      })
+      return
+    }
 
-      if (postalData) {
+    if (pin.length === 6) {
+      setPermPostalInfo({
+        loading: true,
+        msg: isTa ? 'பின்கோடு சரிபார்க்கப்படுகிறது...' : 'Checking PIN code...',
+        results: [],
+      })
+      const res = await lookupPincode(pin)
+
+      if (res.status === 'success' && res.results && res.results.length > 0) {
+        setPermPostalInfo({ loading: false, msg: res.message, results: res.results })
+
+        // Use the first locality unless manually edited
+        const loc = res.results[0]
         setFormData((prev) => {
+          const pAddr = prev.personal.permanentAddress
           const newPerm = {
-            ...prev.personal.permanentAddress,
+            ...pAddr,
             pincode: pin,
-            district: postalData.district || prev.personal.permanentAddress.district,
-            state: postalData.state || prev.personal.permanentAddress.state,
-            taluk: postalData.taluk || prev.personal.permanentAddress.taluk,
-            cityTown: postalData.cityTown || prev.personal.permanentAddress.cityTown,
+            district: userEditedPerm.district ? pAddr.district : (loc.district || pAddr.district),
+            state: userEditedPerm.state ? pAddr.state : (loc.state || pAddr.state),
+            taluk: userEditedPerm.taluk ? pAddr.taluk : (loc.taluk || pAddr.taluk),
+            cityTown: userEditedPerm.cityTown ? pAddr.cityTown : (loc.cityTown || pAddr.cityTown),
             country: 'India',
           }
           const updated = {
             ...prev,
-            personal: {
-              ...prev.personal,
-              permanentAddress: newPerm,
-            },
+            personal: { ...prev.personal, permanentAddress: newPerm },
           }
           if (prev.personal.contactAddressSameAsPermanent) {
             updated.personal.contactAddress = { ...newPerm }
           }
           return updated
         })
+      } else {
+        setPermPostalInfo({ loading: false, msg: res.message || 'PIN not found', results: [] })
       }
     }
+  }
+
+  // Select Locality from dropdown for Permanent Address
+  const handleSelectPermLocality = (locName) => {
+    const loc = permPostalInfo.results.find((r) => r.name === locName)
+    if (!loc) return
+
+    setFormData((prev) => {
+      const pAddr = prev.personal.permanentAddress
+      const newPerm = {
+        ...pAddr,
+        district: loc.district || pAddr.district,
+        state: loc.state || pAddr.state,
+        taluk: loc.taluk || pAddr.taluk,
+        cityTown: loc.cityTown || pAddr.cityTown,
+        country: 'India',
+      }
+      const updated = {
+        ...prev,
+        personal: { ...prev.personal, permanentAddress: newPerm },
+      }
+      if (prev.personal.contactAddressSameAsPermanent) {
+        updated.personal.contactAddress = { ...newPerm }
+      }
+      return updated
+    })
   }
 
   // PIN Code Auto-Lookup for Church Address
@@ -237,26 +284,67 @@ export default function ApplicationPage() {
     const pin = e.target.value.replace(/\D/g, '').slice(0, 6)
     updateChurchAddress('pincode', pin)
 
-    if (pin.length === 6) {
-      setPincodeLoading((prev) => ({ ...prev, church: true }))
-      const postalData = await lookupPincode(pin)
-      setPincodeLoading((prev) => ({ ...prev, church: false }))
+    if (pin.length < 6) {
+      setChurchPostalInfo({
+        loading: false,
+        msg: pin.length > 0 ? (isTa ? '6 இலக்க பின்கோடை உள்ளிடவும்' : 'Enter 6-digit PIN') : '',
+        results: [],
+      })
+      return
+    }
 
-      if (postalData) {
-        setFormData((prev) => ({
-          ...prev,
-          church: {
-            ...prev.church,
-            pincode: pin,
-            district: postalData.district || prev.church.district,
-            state: postalData.state || prev.church.state,
-            taluk: postalData.taluk || prev.church.taluk,
-            cityTown: postalData.cityTown || prev.church.cityTown,
-            country: 'India',
-          },
-        }))
+    if (pin.length === 6) {
+      setChurchPostalInfo({
+        loading: true,
+        msg: isTa ? 'பின்கோடு சரிபார்க்கப்படுகிறது...' : 'Checking PIN code...',
+        results: [],
+      })
+      const res = await lookupPincode(pin)
+
+      if (res.status === 'success' && res.results && res.results.length > 0) {
+        setChurchPostalInfo({ loading: false, msg: res.message, results: res.results })
+
+        const loc = res.results[0]
+        setFormData((prev) => {
+          const cAddr = prev.church
+          return {
+            ...prev,
+            church: {
+              ...cAddr,
+              pincode: pin,
+              district: userEditedChurch.district ? cAddr.district : (loc.district || cAddr.district),
+              state: userEditedChurch.state ? cAddr.state : (loc.state || cAddr.state),
+              taluk: userEditedChurch.taluk ? cAddr.taluk : (loc.taluk || cAddr.taluk),
+              cityTown: userEditedChurch.cityTown ? cAddr.cityTown : (loc.cityTown || cAddr.cityTown),
+              country: 'India',
+            },
+          }
+        })
+      } else {
+        setChurchPostalInfo({ loading: false, msg: res.message || 'PIN not found', results: [] })
       }
     }
+  }
+
+  // Select Locality from dropdown for Church Address
+  const handleSelectChurchLocality = (locName) => {
+    const loc = churchPostalInfo.results.find((r) => r.name === locName)
+    if (!loc) return
+
+    setFormData((prev) => {
+      const cAddr = prev.church
+      return {
+        ...prev,
+        church: {
+          ...cAddr,
+          district: loc.district || cAddr.district,
+          state: loc.state || cAddr.state,
+          taluk: loc.taluk || cAddr.taluk,
+          cityTown: loc.cityTown || cAddr.cityTown,
+          country: 'India',
+        },
+      }
+    })
   }
 
   // Use Contact Address for Church
@@ -937,9 +1025,9 @@ export default function ApplicationPage() {
                   <h3 style={{ fontSize: '14.5px', fontWeight: 700, color: '#0f172a', margin: 0 }}>
                     {isTa ? 'நிரந்தர முகவரி' : 'Permanent Address'}
                   </h3>
-                  {pincodeLoading.perm && (
-                    <span className="clean-hint-text">
-                      {isTa ? 'அஞ்சல் தகவல் சரிபார்க்கப்படுகிறது...' : 'Looking up postal details...'}
+                  {permPostalInfo.msg && (
+                    <span className="clean-hint-text" style={{ color: permPostalInfo.loading ? '#2563eb' : (permPostalInfo.results.length > 0 ? '#059669' : '#64748b') }}>
+                      {permPostalInfo.msg}
                     </span>
                   )}
                 </div>
@@ -977,49 +1065,6 @@ export default function ApplicationPage() {
 
                 <div className="clean-grid-3">
                   <div className="clean-field">
-                    <label className="clean-label" htmlFor="permCity">
-                      {isTa ? 'நகரம் / ஊர்' : 'City / Town'}
-                    </label>
-                    <input
-                      id="permCity"
-                      type="text"
-                      autoComplete="address-level2"
-                      value={formData.personal.permanentAddress.cityTown}
-                      onChange={(e) => updateAddress('permanentAddress', 'cityTown', e.target.value)}
-                      placeholder="e.g. Hanumantharayankottai"
-                      className="clean-input"
-                    />
-                  </div>
-                  <div className="clean-field">
-                    <label className="clean-label" htmlFor="permTaluk">
-                      {isTa ? 'தாலுகா' : 'Taluk'}
-                    </label>
-                    <input
-                      id="permTaluk"
-                      type="text"
-                      value={formData.personal.permanentAddress.taluk}
-                      onChange={(e) => updateAddress('permanentAddress', 'taluk', e.target.value)}
-                      placeholder="e.g. Dindigul"
-                      className="clean-input"
-                    />
-                  </div>
-                  <div className="clean-field">
-                    <label className="clean-label" htmlFor="permDistrict">
-                      {isTa ? 'மாவட்டம்' : 'District'}
-                    </label>
-                    <input
-                      id="permDistrict"
-                      type="text"
-                      value={formData.personal.permanentAddress.district}
-                      onChange={(e) => updateAddress('permanentAddress', 'district', e.target.value)}
-                      placeholder="e.g. Dindigul"
-                      className="clean-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="clean-grid-3">
-                  <div className="clean-field">
                     <label className="clean-label" htmlFor="permPin">
                       {isTa ? 'பின்கோடு (6 இலக்கங்கள்)' : 'PIN Code (6 digits)'}
                     </label>
@@ -1037,6 +1082,79 @@ export default function ApplicationPage() {
                     />
                   </div>
                   <div className="clean-field">
+                    <label className="clean-label" htmlFor="permCity">
+                      {isTa ? 'நகரம் / ஊர்' : 'City / Town'}
+                    </label>
+                    <input
+                      id="permCity"
+                      type="text"
+                      autoComplete="address-level2"
+                      value={formData.personal.permanentAddress.cityTown}
+                      onChange={(e) => {
+                        setUserEditedPerm(prev => ({ ...prev, cityTown: true }))
+                        updateAddress('permanentAddress', 'cityTown', e.target.value)
+                      }}
+                      placeholder="e.g. Hanumantharayankottai"
+                      className="clean-input"
+                    />
+                  </div>
+                  <div className="clean-field">
+                    <label className="clean-label" htmlFor="permTaluk">
+                      {isTa ? 'தாலுகா' : 'Taluk'}
+                    </label>
+                    <input
+                      id="permTaluk"
+                      type="text"
+                      value={formData.personal.permanentAddress.taluk}
+                      onChange={(e) => {
+                        setUserEditedPerm(prev => ({ ...prev, taluk: true }))
+                        updateAddress('permanentAddress', 'taluk', e.target.value)
+                      }}
+                      placeholder="e.g. Dindigul"
+                      className="clean-input"
+                    />
+                  </div>
+                </div>
+
+                {/* Multiple Localities Dropdown for Permanent Address */}
+                {permPostalInfo.results.length > 1 && (
+                  <div className="clean-field" style={{ marginBottom: '14px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '6px', padding: '10px 12px' }}>
+                    <label className="clean-label" style={{ color: '#1e40af', marginBottom: '4px' }}>
+                      {isTa ? 'பின்கோட்டில் உள்ள தபால் நிலையம் / பகுதியைத் தேர்வு செய்யவும்:' : 'Select your locality / post office from PIN results:'}
+                    </label>
+                    <select
+                      onChange={(e) => handleSelectPermLocality(e.target.value)}
+                      value={formData.personal.permanentAddress.cityTown}
+                      className="clean-select"
+                      style={{ borderColor: '#3b82f6', background: '#ffffff' }}
+                    >
+                      {permPostalInfo.results.map((loc) => (
+                        <option key={loc.name} value={loc.name}>
+                          {loc.name} ({loc.branchType || 'Post Office'}) — {loc.district}, {loc.state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className="clean-grid-3">
+                  <div className="clean-field">
+                    <label className="clean-label" htmlFor="permDistrict">
+                      {isTa ? 'மாவட்டம்' : 'District'}
+                    </label>
+                    <input
+                      id="permDistrict"
+                      type="text"
+                      value={formData.personal.permanentAddress.district}
+                      onChange={(e) => {
+                        setUserEditedPerm(prev => ({ ...prev, district: true }))
+                        updateAddress('permanentAddress', 'district', e.target.value)
+                      }}
+                      placeholder="e.g. Dindigul"
+                      className="clean-input"
+                    />
+                  </div>
+                  <div className="clean-field">
                     <label className="clean-label" htmlFor="permState">
                       {isTa ? 'மாநிலம்' : 'State'}
                     </label>
@@ -1045,7 +1163,10 @@ export default function ApplicationPage() {
                       type="text"
                       autoComplete="address-level1"
                       value={formData.personal.permanentAddress.state}
-                      onChange={(e) => updateAddress('permanentAddress', 'state', e.target.value)}
+                      onChange={(e) => {
+                        setUserEditedPerm(prev => ({ ...prev, state: true }))
+                        updateAddress('permanentAddress', 'state', e.target.value)
+                      }}
                       className="clean-input"
                     />
                   </div>
@@ -1366,38 +1487,11 @@ export default function ApplicationPage() {
 
                 <div className="clean-grid-3">
                   <div className="clean-field">
-                    <label className="clean-label">{isTa ? 'நகரம் / ஊர்' : 'City / Town'}</label>
+                    <label className="clean-label" htmlFor="churchPin">
+                      {isTa ? 'பின்கோடு (6 இலக்கங்கள்)' : 'PIN Code (6 digits)'}
+                    </label>
                     <input
-                      type="text"
-                      value={formData.church.cityTown}
-                      onChange={(e) => updateChurchAddress('cityTown', e.target.value)}
-                      className="clean-input"
-                    />
-                  </div>
-                  <div className="clean-field">
-                    <label className="clean-label">{isTa ? 'தாலுகா' : 'Taluk'}</label>
-                    <input
-                      type="text"
-                      value={formData.church.taluk}
-                      onChange={(e) => updateChurchAddress('taluk', e.target.value)}
-                      className="clean-input"
-                    />
-                  </div>
-                  <div className="clean-field">
-                    <label className="clean-label">{isTa ? 'மாவட்டம்' : 'District'}</label>
-                    <input
-                      type="text"
-                      value={formData.church.district}
-                      onChange={(e) => updateChurchAddress('district', e.target.value)}
-                      className="clean-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="clean-grid-3">
-                  <div className="clean-field">
-                    <label className="clean-label">{isTa ? 'பின்கோடு (6 இலக்கங்கள்)' : 'PIN Code (6 digits)'}</label>
-                    <input
+                      id="churchPin"
                       type="text"
                       inputMode="numeric"
                       maxLength={6}
@@ -1406,13 +1500,96 @@ export default function ApplicationPage() {
                       placeholder="e.g. 624002"
                       className="clean-input"
                     />
-                    {pincodeLoading.church && (
-                      <span className="clean-hint-text">
-                        {isTa ? 'அஞ்சல் தகவல் சரிபார்க்கப்படுகிறது...' : 'Looking up postal details...'}
+                    {churchPostalInfo.msg && (
+                      <span className="clean-hint-text" style={{ color: churchPostalInfo.loading ? '#2563eb' : (churchPostalInfo.results.length > 0 ? '#059669' : '#64748b') }}>
+                        {churchPostalInfo.msg}
                       </span>
                     )}
                   </div>
+                  <div className="clean-field">
+                    <label className="clean-label">{isTa ? 'நகரம் / ஊர்' : 'City / Town'}</label>
+                    <input
+                      type="text"
+                      value={formData.church.cityTown}
+                      onChange={(e) => {
+                        setUserEditedChurch(prev => ({ ...prev, cityTown: true }))
+                        updateChurchAddress('cityTown', e.target.value)
+                      }}
+                      className="clean-input"
+                    />
+                  </div>
+                  <div className="clean-field">
+                    <label className="clean-label">{isTa ? 'தாலுகா' : 'Taluk'}</label>
+                    <input
+                      type="text"
+                      value={formData.church.taluk}
+                      onChange={(e) => {
+                        setUserEditedChurch(prev => ({ ...prev, taluk: true }))
+                        updateChurchAddress('taluk', e.target.value)
+                      }}
+                      className="clean-input"
+                    />
+                  </div>
+                </div>
 
+                {/* Multiple Localities Dropdown for Church Address */}
+                {churchPostalInfo.results.length > 1 && (
+                  <div className="clean-field" style={{ marginBottom: '14px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '6px', padding: '10px 12px' }}>
+                    <label className="clean-label" style={{ color: '#1e40af', marginBottom: '4px' }}>
+                      {isTa ? 'பின்கோட்டில் உள்ள தபால் நிலையம் / பகுதியைத் தேர்வு செய்யவும்:' : 'Select church locality / post office from PIN results:'}
+                    </label>
+                    <select
+                      onChange={(e) => handleSelectChurchLocality(e.target.value)}
+                      value={formData.church.cityTown}
+                      className="clean-select"
+                      style={{ borderColor: '#3b82f6', background: '#ffffff' }}
+                    >
+                      {churchPostalInfo.results.map((loc) => (
+                        <option key={loc.name} value={loc.name}>
+                          {loc.name} ({loc.branchType || 'Post Office'}) — {loc.district}, {loc.state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className="clean-grid-3">
+                  <div className="clean-field">
+                    <label className="clean-label">{isTa ? 'மாவட்டம்' : 'District'}</label>
+                    <input
+                      type="text"
+                      value={formData.church.district}
+                      onChange={(e) => {
+                        setUserEditedChurch(prev => ({ ...prev, district: true }))
+                        updateChurchAddress('district', e.target.value)
+                      }}
+                      className="clean-input"
+                    />
+                  </div>
+                  <div className="clean-field">
+                    <label className="clean-label">{isTa ? 'மாநிலம்' : 'State'}</label>
+                    <input
+                      type="text"
+                      value={formData.church.state}
+                      onChange={(e) => {
+                        setUserEditedChurch(prev => ({ ...prev, state: true }))
+                        updateChurchAddress('state', e.target.value)
+                      }}
+                      className="clean-input"
+                    />
+                  </div>
+                  <div className="clean-field">
+                    <label className="clean-label">{isTa ? 'நாடு' : 'Country'}</label>
+                    <input
+                      type="text"
+                      value={formData.church.country}
+                      onChange={(e) => updateChurchAddress('country', e.target.value)}
+                      className="clean-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="clean-grid-3">
                   <div className="clean-field">
                     <label className="clean-label">
                       {isTa ? 'தொலைபேசி எண் (Telephone)' : 'Telephone (Landline)'}
@@ -1445,22 +1622,22 @@ export default function ApplicationPage() {
                     />
                     {errors.mobileNumber && <span className="clean-error-text">{errors.mobileNumber}</span>}
                   </div>
-                </div>
 
-                <div className="clean-field">
-                  <label className="clean-label">
-                    {isTa ? 'மின்னஞ்சல் முகவரி' : 'Email ID'}
-                    <span className="opt-tag">(Optional)</span>
-                  </label>
-                  <input
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    value={formData.church.emailId}
-                    onChange={(e) => updateChurchAddress('emailId', e.target.value)}
-                    placeholder="pastor@gmail.com"
-                    className="clean-input"
-                  />
+                  <div className="clean-field">
+                    <label className="clean-label">
+                      {isTa ? 'மின்னஞ்சல் முகவரி' : 'Email ID'}
+                      <span className="opt-tag">(Optional)</span>
+                    </label>
+                    <input
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      value={formData.church.emailId}
+                      onChange={(e) => updateChurchAddress('emailId', e.target.value)}
+                      placeholder="pastor@gmail.com"
+                      className="clean-input"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

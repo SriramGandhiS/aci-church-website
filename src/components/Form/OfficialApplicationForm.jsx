@@ -1,17 +1,54 @@
 import React from 'react'
+import {
+  FORM_CANVAS,
+  PAGE_1_FIELDS,
+  PAGE_2_FIELDS,
+  PAGE_3_FIELDS,
+  PAGE_4_FIELDS,
+} from '../../data/officialFormLayout'
 import './OfficialApplicationForm.css'
 
-// Helper to format date string YYYY-MM-DD into [D D M M Y Y Y Y] segmented boxes
-function renderDateBoxes(dateStr) {
-  if (!dateStr) {
-    return (
-      <div className="oaf-char-boxes">
-        {['D','D','M','M','Y','Y','Y','Y'].map((ch, i) => (
-          <span key={i} className="oaf-char-cell" style={{ color: '#aaa', fontSize: '9px' }}>{ch}</span>
-        ))}
-      </div>
-    )
+const toLeft = (x) => `${(x / FORM_CANVAS.width) * 100}%`
+const toTop = (y) => `${(y / FORM_CANVAS.height) * 100}%`
+const toWidth = (w) => `${(w / FORM_CANVAS.width) * 100}%`
+const toHeight = (h) => `${(h / FORM_CANVAS.height) * 100}%`
+
+// Render boxed characters (e.g. [J][O][H][N])
+function renderBoxes(text, x, y, boxW, boxH, count) {
+  const chars = (text || '').toUpperCase().slice(0, count).split('')
+  while (chars.length < count) {
+    chars.push('')
   }
+
+  return (
+    <div
+      className="oaf-overlay-boxes"
+      style={{
+        left: toLeft(x),
+        top: toTop(y),
+        height: toHeight(boxH),
+      }}
+    >
+      {chars.map((c, i) => (
+        <span
+          key={i}
+          className="oaf-overlay-char"
+          style={{
+            width: `${(boxW / FORM_CANVAS.width) * 100}vw`,
+            maxWidth: `${boxW * 0.65}px`,
+            minWidth: `${boxW * 0.65}px`,
+          }}
+        >
+          {c || ''}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+// Render Date in boxes [D D M M Y Y Y Y]
+function renderDateBoxes(dateStr, x, y, boxW = 32, boxH = 34) {
+  if (!dateStr) return null
   const parts = dateStr.split('-') // [YYYY, MM, DD]
   const yyyy = (parts[0] || '    ').split('')
   const mm = (parts[1] || '  ').split('')
@@ -19,25 +56,61 @@ function renderDateBoxes(dateStr) {
   const chars = [...dd, ...mm, ...yyyy]
 
   return (
-    <div className="oaf-char-boxes">
+    <div
+      className="oaf-overlay-boxes"
+      style={{
+        left: toLeft(x),
+        top: toTop(y),
+        height: toHeight(boxH),
+      }}
+    >
       {chars.map((c, i) => (
-        <span key={i} className="oaf-char-cell">{c || ''}</span>
+        <span
+          key={i}
+          className="oaf-overlay-char date-char"
+          style={{
+            width: `${boxW * 0.65}px`,
+            minWidth: `${boxW * 0.65}px`,
+          }}
+        >
+          {c || ''}
+        </span>
       ))}
     </div>
   )
 }
 
-// Helper to render letter boxes for Name / Text
-function renderLetterBoxes(text, boxCount = 28) {
-  const chars = (text || '').toUpperCase().slice(0, boxCount).split('')
-  while (chars.length < boxCount) {
-    chars.push('')
-  }
+// Render checkmark inside official checkbox
+function renderCheck(checked, x, y, size = 24) {
+  if (!checked) return null
   return (
-    <div className="oaf-char-boxes">
-      {chars.map((c, i) => (
-        <span key={i} className="oaf-char-cell">{c || ''}</span>
-      ))}
+    <div
+      className="oaf-overlay-check"
+      style={{
+        left: toLeft(x),
+        top: toTop(y),
+        width: `${size * 0.7}px`,
+        height: `${size * 0.7}px`,
+      }}
+    >
+      ✓
+    </div>
+  )
+}
+
+// Render single text line
+function renderLine(text, x, y, fontSize = 16) {
+  if (!text) return null
+  return (
+    <div
+      className="oaf-overlay-line"
+      style={{
+        left: toLeft(x),
+        top: toTop(y),
+        fontSize: `${fontSize * 0.75}px`,
+      }}
+    >
+      {text}
     </div>
   )
 }
@@ -55,699 +128,258 @@ export default function OfficialApplicationForm({ data, isMini = false }) {
   const mot = data?.motivation || {}
   const ref = data?.references || {}
   const dec = data?.declaration || {}
-  const enc = data?.enclosures || {}
 
   const fullName = [p.salutation, p.name].filter(Boolean).join(' ').toUpperCase()
 
   return (
-    <div className={`oaf-root ${isMini ? 'is-mini' : ''}`}>
+    <div className={`oaf-document-wrapper ${isMini ? 'is-mini-view' : ''}`}>
 
       {/* ============================================================
-          PAGE 1 OF 4: APPLICANT'S INFORMATIONS & PERSONAL DETAILS
+          PAGE 1: APPLICANT INFORMATION & ADDRESS
           ============================================================ */}
-      <div className="oaf-page" id="oaf-page-1">
-        {/* Header */}
-        <div className="oaf-header">
-          <img src="/aci-logo.png" alt="ACI Diocese Seal" className="oaf-crest" onError={(e) => { e.target.src = '/aci-logo.jpg' }} />
-          <h1 className="oaf-org-title">APOSTOLIC COUNCIL OF INDIA DIOCESE</h1>
-          <p className="oaf-org-sub-1">
-            An Episcopal Diocese & Public Religious Trust (Indian Trust Act 1882 - Regd No: 62/Bk.4/2013)
-          </p>
-          <p className="oaf-org-sub-2">
-            Under Part I, Section 5(1) Part IV Sections 10, 12, 14, 15, Part VI Section 64 of The Indian Christian Marriage Act 1872
-          </p>
-          <p className="oaf-org-sub-3">
-            Central Office: 1/153, Melapatty, Hanumantharayankottai - 624 054, Dindigul District, Tamil Nadu, India.
-          </p>
-          <p className="oaf-org-sub-3">
-            Phone: 0451 2490100 • E-mail: info@acidiocese.org / rev.johnsondurai@gmail.com
-          </p>
-        </div>
+      <div className="oaf-page-sheet" id="oaf-page-sheet-1">
+        <img
+          src="/official-forms/page_1.png"
+          alt="ACI Official Application Page 1"
+          className="oaf-scanned-bg"
+        />
 
-        {/* Title */}
-        <div className="oaf-doc-title-row">
-          <h2 className="oaf-doc-title-en">DIOCESAN MEMBERSHIP APPLICATION FORM</h2>
-          <h3 className="oaf-doc-title-ta">பேராய உறுப்பினர் விண்ணப்பப் படிவம்</h3>
-          <div className="oaf-issue-date-tag">
-            Date of issue: {p.applicationDate || '2026-08-26'}
-          </div>
-        </div>
+        <div className="oaf-overlay-layer">
+          {/* Office Use Received Date */}
+          {renderDateBoxes(p.applicationDate || '2026-08-26', PAGE_1_FIELDS.receivedDate.x, PAGE_1_FIELDS.receivedDate.y)}
 
-        <p className="oaf-instruction-note">
-          Read the Application carefully, fill in CAPITAL LETTERS, DO NOT OVERWRITE, select the appropriate box by ticking it (✓) and leave the inappropriate fields blank. / விண்ணப்பத்தை கவனமாக வாசித்து ஆங்கில பெரிய எழுத்துக்களில் தெளிவாக எழுதவும். பொருத்தமான தகவல்களுக்குரிய இடத்தில் (✓) குறியிடவும்.
-        </p>
+          {/* Passport Photo */}
+          {p.photoUrl && (
+            <div
+              className="oaf-overlay-photo"
+              style={{
+                left: toLeft(PAGE_1_FIELDS.photo.x),
+                top: toTop(PAGE_1_FIELDS.photo.y),
+                width: toWidth(PAGE_1_FIELDS.photo.width),
+                height: toHeight(PAGE_1_FIELDS.photo.height),
+              }}
+            >
+              <img src={p.photoUrl} alt="Applicant Passport" />
+            </div>
+          )}
 
-        {/* For Office Use Only + Photo Grid */}
-        <div className="oaf-office-grid">
-          <div className="oaf-office-left">
-            <div className="oaf-office-header">
-              FOR OFFICE USE ONLY / அலுவலகப் பணிக்கு மட்டும்
-            </div>
-            <div className="oaf-office-row">
-              <span className="oaf-office-lbl">Application Number:</span>
-              <strong style={{ letterSpacing: '1px' }}>002093 / ACI-2026</strong>
-            </div>
-            <div className="oaf-office-row">
-              <span className="oaf-office-lbl">Application Received on:</span>
-              {renderDateBoxes(p.applicationDate || '')}
-            </div>
-            <div className="oaf-office-row">
-              <span className="oaf-office-lbl">Application Approved on:</span>
-              {renderDateBoxes('')}
-            </div>
-            <div className="oaf-office-row">
-              <span className="oaf-office-lbl">Membership Code:</span>
-              <div className="oaf-char-boxes">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <span key={i} className="oaf-char-cell" style={{ color: '#ccc' }}>_</span>
-                ))}
-              </div>
-            </div>
+          {/* 1. Full Name in Character Boxes (ONE single location) */}
+          {renderBoxes(fullName, PAGE_1_FIELDS.name.x, PAGE_1_FIELDS.name.y, PAGE_1_FIELDS.name.boxW, PAGE_1_FIELDS.name.boxH, 28)}
 
-            <div className="oaf-stamp-row">
-              <div className="oaf-approval-box">
-                [ OFFICIAL REVIEW PENDING ]
-              </div>
-              <div className="oaf-seal-circle">
-                OFFICIAL<br />SEAL
-              </div>
-            </div>
-          </div>
+          {/* 2. Baptismal Name */}
+          {renderBoxes(p.baptismalName, PAGE_1_FIELDS.baptismalName.x, PAGE_1_FIELDS.baptismalName.y, PAGE_1_FIELDS.baptismalName.boxW, PAGE_1_FIELDS.baptismalName.boxH, 28)}
 
-          {/* Photo Box */}
-          <div className="oaf-photo-box">
-            <div className="oaf-photo-inner">
-              {p.photoUrl ? (
-                <img src={p.photoUrl} alt="Applicant Passport Photo" className="oaf-photo-img" />
-              ) : (
-                <div className="oaf-photo-placeholder-text">
-                  <strong>Affix Recent Passport size Photo</strong><br />
-                  <span style={{ fontSize: '7.5px' }}>To be Self attested</span><br />
-                  <span style={{ fontSize: '7px', color: '#555' }}>சமீபத்திய புகைப்படம்</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+          {/* 3. DOB */}
+          {renderDateBoxes(p.dob, PAGE_1_FIELDS.dob.x, PAGE_1_FIELDS.dob.y)}
 
-        {/* Applicant's Information Banner */}
-        <div className="oaf-banner-bar">
-          <span>APPLICANT'S INFORMATIONS / விண்ணப்பதாரரின் தகவல்கள்</span>
-          <span>Application Date: {p.applicationDate || '—'}</span>
-        </div>
+          {/* 4. Nationality */}
+          {renderBoxes(p.nationality || 'INDIAN', PAGE_1_FIELDS.nationality.x, PAGE_1_FIELDS.nationality.y, PAGE_1_FIELDS.nationality.boxW, PAGE_1_FIELDS.nationality.boxH, 18)}
 
-        {/* I. Personal Details */}
-        <div style={{ marginTop: '6px' }}>
-          <h4 className="oaf-section-heading">I. Personal Details / சுய விவரங்கள்</h4>
+          {/* 5. Gender Checkboxes */}
+          {renderCheck(p.gender === 'Male', PAGE_1_FIELDS.genderMale.x, PAGE_1_FIELDS.genderMale.y)}
+          {renderCheck(p.gender === 'Female', PAGE_1_FIELDS.genderFemale.x, PAGE_1_FIELDS.genderFemale.y)}
 
-          {/* Name in letter boxes */}
-          <div style={{ marginBottom: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>
-              <span>Name / பெயர்: (Salutation - Mr., Mrs., Rev., Dr., Bro., Pastor)</span>
-              <span style={{ color: '#2563eb' }}>{fullName}</span>
-            </div>
-            {renderLetterBoxes(fullName, 32)}
-          </div>
+          {/* 6. Marital Status Checkboxes */}
+          {renderCheck(p.maritalStatus === 'Married', PAGE_1_FIELDS.maritalMarried.x, PAGE_1_FIELDS.maritalMarried.y)}
+          {renderCheck(p.maritalStatus === 'Bachelor', PAGE_1_FIELDS.maritalBachelor.x, PAGE_1_FIELDS.maritalBachelor.y)}
+          {renderCheck(p.maritalStatus === 'Spinster', PAGE_1_FIELDS.maritalSpinster.x, PAGE_1_FIELDS.maritalSpinster.y)}
+          {renderCheck(p.maritalStatus === 'Widowed', PAGE_1_FIELDS.maritalWidowed.x, PAGE_1_FIELDS.maritalWidowed.y)}
 
-          {/* Baptismal Name in letter boxes */}
-          <div style={{ marginBottom: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>
-              <span>Baptismal Name / ஞானஸ்நானப் பெயர்:</span>
-              <span>{(p.baptismalName || '').toUpperCase()}</span>
-            </div>
-            {renderLetterBoxes(p.baptismalName, 32)}
-          </div>
+          {/* 7. Permanent Address Lines */}
+          {renderLine(perm.doorNo, PAGE_1_FIELDS.permDoorNo.x, PAGE_1_FIELDS.permDoorNo.y)}
+          {renderLine(perm.streetName, PAGE_1_FIELDS.permStreet.x, PAGE_1_FIELDS.permStreet.y)}
+          {renderLine(perm.cityTown, PAGE_1_FIELDS.permCity.x, PAGE_1_FIELDS.permCity.y)}
+          {renderLine(perm.taluk, PAGE_1_FIELDS.permTaluk.x, PAGE_1_FIELDS.permTaluk.y)}
+          {renderLine(perm.district, PAGE_1_FIELDS.permDistrict.x, PAGE_1_FIELDS.permDistrict.y)}
+          {renderLine(perm.state, PAGE_1_FIELDS.permState.x, PAGE_1_FIELDS.permState.y)}
+          {renderLine(perm.pincode, PAGE_1_FIELDS.permPincode.x, PAGE_1_FIELDS.permPincode.y)}
+          {renderLine(perm.country || 'India', PAGE_1_FIELDS.permCountry.x, PAGE_1_FIELDS.permCountry.y)}
 
-          {/* DOB + Nationality */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '8px' }}>
-            <div>
-              <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>Date of Birth / பிறந்த தேதி:</div>
-              {renderDateBoxes(p.dob)}
-            </div>
-            <div>
-              <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>Nationality / நாட்டுரிமை:</div>
-              {renderLetterBoxes(p.nationality || 'INDIAN', 14)}
-            </div>
-          </div>
-
-          {/* Gender + Marital Status */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '14px', marginBottom: '8px' }}>
-            <div>
-              <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '3px' }}>Gender / பாலினம்:</div>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.gender === 'Male' ? '✓' : ''}</span> Male ஆண்
-                </span>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.gender === 'Female' ? '✓' : ''}</span> Female பெண்
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '3px' }}>Marital Status / திருமண நிலை:</div>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.maritalStatus === 'Married' ? '✓' : ''}</span> Married
-                </span>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.maritalStatus === 'Bachelor' ? '✓' : ''}</span> Bachelor
-                </span>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.maritalStatus === 'Spinster' ? '✓' : ''}</span> Spinster
-                </span>
-                <span className="oaf-check-item">
-                  <span className="oaf-box-tick">{p.maritalStatus === 'Widowed' ? '✓' : ''}</span> Widowed
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Permanent Address */}
-          <div style={{ marginTop: '8px' }}>
-            <div style={{ fontSize: '11.5px', fontWeight: 'bold' }}>Permanent Address / நிரந்தர முகவரி:</div>
-            <div className="oaf-addr-grid">
-              <div className="oaf-addr-line">
-                <div style={{ width: '130px' }}>Door No: <strong>{perm.doorNo || '—'}</strong></div>
-                <div style={{ flex: 1 }}>Street Name: <strong>{perm.streetName || '—'}</strong></div>
-              </div>
-              <div className="oaf-addr-line">
-                <div style={{ flex: 1 }}>City / Town: <strong>{perm.cityTown || '—'}</strong></div>
-                <div style={{ width: '150px' }}>Pincode: <strong>{perm.pincode || '—'}</strong></div>
-              </div>
-              <div className="oaf-addr-line">
-                <div style={{ flex: 1 }}>Taluk: <strong>{perm.taluk || '—'}</strong></div>
-                <div style={{ flex: 1 }}>District: <strong>{perm.district || '—'}</strong></div>
-                <div style={{ width: '120px' }}>State: <strong>{perm.state || 'Tamil Nadu'}</strong></div>
-                <div style={{ width: '90px' }}>Country: <strong>{perm.country || 'India'}</strong></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Address */}
-          <div style={{ marginTop: '6px' }}>
-            <div style={{ fontSize: '11.5px', fontWeight: 'bold' }}>Contact Address / தொடர்பு முகவரி:</div>
-            <div className="oaf-addr-grid">
-              <div className="oaf-addr-line">
-                <div style={{ width: '130px' }}>Door No: <strong>{contact.doorNo || '—'}</strong></div>
-                <div style={{ flex: 1 }}>Street Name: <strong>{contact.streetName || '—'}</strong></div>
-              </div>
-              <div className="oaf-addr-line">
-                <div style={{ flex: 1 }}>City / Town: <strong>{contact.cityTown || '—'}</strong></div>
-                <div style={{ width: '150px' }}>Pincode: <strong>{contact.pincode || '—'}</strong></div>
-              </div>
-              <div className="oaf-addr-line">
-                <div style={{ flex: 1 }}>Taluk: <strong>{contact.taluk || '—'}</strong></div>
-                <div style={{ flex: 1 }}>District: <strong>{contact.district || '—'}</strong></div>
-                <div style={{ width: '120px' }}>State: <strong>{contact.state || 'Tamil Nadu'}</strong></div>
-                <div style={{ width: '90px' }}>Country: <strong>{contact.country || 'India'}</strong></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Page 1 Footer */}
-        <div className="oaf-page-footer">
-          <span>Apostolic Council of India Diocese</span>
-          <span>Membership Application Form, Page 1/4</span>
+          {/* 8. Contact Address Lines */}
+          {renderLine(contact.doorNo, PAGE_1_FIELDS.contactDoorNo.x, PAGE_1_FIELDS.contactDoorNo.y)}
+          {renderLine(contact.streetName, PAGE_1_FIELDS.contactStreet.x, PAGE_1_FIELDS.contactStreet.y)}
+          {renderLine(contact.cityTown, PAGE_1_FIELDS.contactCity.x, PAGE_1_FIELDS.contactCity.y)}
+          {renderLine(contact.taluk, PAGE_1_FIELDS.contactTaluk.x, PAGE_1_FIELDS.contactTaluk.y)}
+          {renderLine(contact.district, PAGE_1_FIELDS.contactDistrict.x, PAGE_1_FIELDS.contactDistrict.y)}
+          {renderLine(contact.state, PAGE_1_FIELDS.contactState.x, PAGE_1_FIELDS.contactState.y)}
+          {renderLine(contact.pincode, PAGE_1_FIELDS.contactPincode.x, PAGE_1_FIELDS.contactPincode.y)}
+          {renderLine(contact.country || 'India', PAGE_1_FIELDS.contactCountry.x, PAGE_1_FIELDS.contactCountry.y)}
         </div>
       </div>
 
-
       {/* ============================================================
-          PAGE 2 OF 4: SPIRITUAL INFORMATIONS, AFFILIATION & CHURCH DETAILS
+          PAGE 2: SPIRITUAL INFORMATION, AFFILIATION & CHURCH DETAILS
           ============================================================ */}
-      <div className="oaf-page" id="oaf-page-2">
-        <div className="oaf-header" style={{ paddingBottom: '4px', marginBottom: '8px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 900, margin: 0, textTransform: 'uppercase' }}>
-            ACI - Diocese Membership Application Form
-          </h2>
-        </div>
+      <div className="oaf-page-sheet" id="oaf-page-sheet-2">
+        <img
+          src="/official-forms/page_2.png"
+          alt="ACI Official Application Page 2"
+          className="oaf-scanned-bg"
+        />
 
-        {/* II. Spiritual Informations */}
-        <div style={{ marginBottom: '12px' }}>
-          <h4 className="oaf-section-heading">II. Spiritual Informations / ஆவிக்குரிய தகவல்கள்</h4>
-          <p style={{ fontSize: '11px', margin: '0 0 6px' }}>
-            Please specify by selecting (✓) current ministry function தாங்கள் செய்யும் ஊழியத்தை (✓) குறிப்பிடவும்:
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', fontSize: '11.5px' }}>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Apostle' ? '✓' : ''}</span> Apostle - அப்போஸ்தலர்
-            </span>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Prophet' ? '✓' : ''}</span> Prophet - தீர்க்கதரிசி
-            </span>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Pastor' ? '✓' : ''}</span> Pastor - மேய்ப்பர்
-            </span>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Teacher' ? '✓' : ''}</span> Teacher - போதகர்
-            </span>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Evangelist' ? '✓' : ''}</span> Evangelist - சுவிசேஷகர்
-            </span>
-            <span className="oaf-check-item">
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Associate Pastor' ? '✓' : ''}</span> Associate Pastor - உதவி மேய்ப்பர்
-            </span>
-          </div>
+        <div className="oaf-overlay-layer">
+          {/* II. Calling Checkboxes */}
+          {renderCheck(sp.ministryFunction === 'Apostle', PAGE_2_FIELDS.callingApostle.x, PAGE_2_FIELDS.callingApostle.y)}
+          {renderCheck(sp.ministryFunction === 'Prophet', PAGE_2_FIELDS.callingProphet.x, PAGE_2_FIELDS.callingProphet.y)}
+          {renderCheck(sp.ministryFunction === 'Pastor', PAGE_2_FIELDS.callingPastor.x, PAGE_2_FIELDS.callingPastor.y)}
+          {renderCheck(sp.ministryFunction === 'Teacher', PAGE_2_FIELDS.callingTeacher.x, PAGE_2_FIELDS.callingTeacher.y)}
+          {renderCheck(sp.ministryFunction === 'Evangelist', PAGE_2_FIELDS.callingEvangelist.x, PAGE_2_FIELDS.callingEvangelist.y)}
+          {renderCheck(sp.ministryFunction === 'Associate Pastor', PAGE_2_FIELDS.callingAssociate.x, PAGE_2_FIELDS.callingAssociate.y)}
+          {renderCheck(sp.ministryFunction === 'Other Ministry', PAGE_2_FIELDS.callingOther.x, PAGE_2_FIELDS.callingOther.y)}
+          {sp.ministryFunction === 'Other Ministry' && renderLine(sp.otherMinistrySpecify, PAGE_2_FIELDS.callingOtherText.x, PAGE_2_FIELDS.callingOtherText.y)}
 
-          <div className="oaf-field-row" style={{ marginTop: '6px' }}>
-            <span className="oaf-check-item" style={{ minWidth: '170px' }}>
-              <span className="oaf-box-tick">{sp.ministryFunction === 'Other Ministry' ? '✓' : ''}</span> Other Ministry - மற்ற ஊழியம்:
-            </span>
-            <span className="oaf-field-val">{sp.otherMinistrySpecify || '—'}</span>
-          </div>
-        </div>
+          {/* III. Affiliation */}
+          {renderCheck(aff.affiliationType === 'Independent Church', PAGE_2_FIELDS.affIndependent.x, PAGE_2_FIELDS.affIndependent.y)}
+          {aff.affiliationType === 'Independent Church' && renderLine(aff.founderName, PAGE_2_FIELDS.affFounderName.x, PAGE_2_FIELDS.affFounderName.y)}
+          {renderCheck(aff.affiliationType === 'Denomination', PAGE_2_FIELDS.affDenomination.x, PAGE_2_FIELDS.affDenomination.y)}
+          {aff.affiliationType === 'Denomination' && renderLine(aff.denominationSpecify, PAGE_2_FIELDS.affDenomSpecify.x, PAGE_2_FIELDS.affDenomSpecify.y)}
+          {renderCheck(aff.affiliationType === 'Associate / Assistant', PAGE_2_FIELDS.affAssociate.x, PAGE_2_FIELDS.affAssociate.y)}
+          {aff.affiliationType === 'Associate / Assistant' && (
+            <>
+              {renderLine(aff.associateChiefPastorName, PAGE_2_FIELDS.affChiefPastor.x, PAGE_2_FIELDS.affChiefPastor.y)}
+              {renderLine(aff.associateChurchName, PAGE_2_FIELDS.affMotherChurch.x, PAGE_2_FIELDS.affMotherChurch.y)}
+            </>
+          )}
+          {renderLine(aff.trustName, PAGE_2_FIELDS.affTrustName.x, PAGE_2_FIELDS.affTrustName.y)}
 
-        {/* III. Affiliation */}
-        <div style={{ marginBottom: '12px' }}>
-          <h4 className="oaf-section-heading">III. Affiliation / பேராயம், நிறுவனம், ஐக்கிய இணைப்பு</h4>
-          <p style={{ fontSize: '10.5px', margin: '0 0 6px' }}>
-            Are you having any affiliation with fellowship / Organization / Diocese? / வேறு எந்த பேராயம், நிறுவனம், ஐக்கியத்தில் உறுப்பினரா? குறிப்பிடவும்.
-          </p>
+          {/* IV. Church Details */}
+          {renderBoxes(ch.churchName, PAGE_2_FIELDS.churchName.x, PAGE_2_FIELDS.churchName.y, PAGE_2_FIELDS.churchName.boxW, PAGE_2_FIELDS.churchName.boxH, 28)}
+          {renderLine(ch.doorNo, PAGE_2_FIELDS.churchDoorNo.x, PAGE_2_FIELDS.churchDoorNo.y)}
+          {renderLine(ch.streetName, PAGE_2_FIELDS.churchStreet.x, PAGE_2_FIELDS.churchStreet.y)}
+          {renderLine(ch.cityTown, PAGE_2_FIELDS.churchCity.x, PAGE_2_FIELDS.churchCity.y)}
+          {renderLine(ch.taluk, PAGE_2_FIELDS.churchTaluk.x, PAGE_2_FIELDS.churchTaluk.y)}
+          {renderLine(ch.district, PAGE_2_FIELDS.churchDistrict.x, PAGE_2_FIELDS.churchDistrict.y)}
+          {renderLine(ch.state, PAGE_2_FIELDS.churchState.x, PAGE_2_FIELDS.churchState.y)}
+          {renderLine(ch.pincode, PAGE_2_FIELDS.churchPincode.x, PAGE_2_FIELDS.churchPincode.y)}
+          {renderLine(ch.telephone, PAGE_2_FIELDS.churchTelephone.x, PAGE_2_FIELDS.churchTelephone.y)}
+          {renderLine(ch.mobileNumber, PAGE_2_FIELDS.churchMobile.x, PAGE_2_FIELDS.churchMobile.y)}
+          {renderLine(ch.emailId, PAGE_2_FIELDS.churchEmail.x, PAGE_2_FIELDS.churchEmail.y)}
 
-          <div style={{ marginBottom: '6px' }}>
-            <div className="oaf-field-row">
-              <span className="oaf-check-item" style={{ minWidth: '220px' }}>
-                <span className="oaf-box-tick">{aff.affiliationType === 'Independent Church' ? '✓' : ''}</span> Independent Church - சுயாதீன திருச்சபை
-              </span>
-              <span className="oaf-field-label">Founder's Name:</span>
-              <span className="oaf-field-val">{aff.founderName || '—'}</span>
-            </div>
-          </div>
-
-          <div style={{ marginBottom: '6px' }}>
-            <div className="oaf-field-row">
-              <span className="oaf-check-item" style={{ minWidth: '220px' }}>
-                <span className="oaf-box-tick">{aff.affiliationType === 'Denomination' ? '✓' : ''}</span> Denomination (Specify) / சபைப் பிரிவு:
-              </span>
-              <span className="oaf-field-val">{aff.denominationSpecify || '—'}</span>
-            </div>
-          </div>
-
-          <div style={{ marginBottom: '6px' }}>
-            <div className="oaf-check-item" style={{ marginBottom: '4px' }}>
-              <span className="oaf-box-tick">{aff.affiliationType === 'Associate / Assistant' ? '✓' : ''}</span> Associate / Assistant (if so, provide the name of the chief Pastor and the Church you attend)*
-            </div>
-            <div style={{ paddingLeft: '22px' }}>
-              <div className="oaf-field-row">
-                <span className="oaf-field-label">Name of Chief Pastor:</span>
-                <span className="oaf-field-val">{aff.associateChiefPastorName || '—'}</span>
-              </div>
-              <div className="oaf-field-row">
-                <span className="oaf-field-label">Name of Church:</span>
-                <span className="oaf-field-val">{aff.associateChurchName || '—'}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Name of Trust */}
-          <div style={{ marginTop: '8px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>
-              Name of your Trust / உங்களது டிரஸ்டின் பெயர்:
-            </div>
-            {renderLetterBoxes(aff.trustName || '', 32)}
-          </div>
-        </div>
-
-        {/* IV. Church Details */}
-        <div style={{ marginBottom: '12px' }}>
-          <h4 className="oaf-section-heading">IV. Church Details / சபையின் விவரங்கள்</h4>
-
-          <div style={{ marginBottom: '6px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '2px' }}>Church Name / சபையின் பெயர்:</div>
-            {renderLetterBoxes(ch.churchName || '', 32)}
-          </div>
-
-          <div style={{ fontSize: '11px', fontWeight: 'bold', marginTop: '6px' }}>Church Address / சபையின் முகவரி:</div>
-          <div className="oaf-addr-grid">
-            <div className="oaf-addr-line">
-              <div style={{ width: '130px' }}>Door No: <strong>{ch.doorNo || '—'}</strong></div>
-              <div style={{ flex: 1 }}>Street Name: <strong>{ch.streetName || '—'}</strong></div>
-            </div>
-            <div className="oaf-addr-line">
-              <div style={{ flex: 1 }}>City / Town: <strong>{ch.cityTown || '—'}</strong></div>
-              <div style={{ width: '150px' }}>Pincode: <strong>{ch.pincode || '—'}</strong></div>
-            </div>
-            <div className="oaf-addr-line">
-              <div style={{ flex: 1 }}>Taluk: <strong>{ch.taluk || '—'}</strong></div>
-              <div style={{ flex: 1 }}>District: <strong>{ch.district || '—'}</strong></div>
-              <div style={{ width: '120px' }}>State: <strong>{ch.state || 'Tamil Nadu'}</strong></div>
-              <div style={{ width: '90px' }}>Country: <strong>{ch.country || 'India'}</strong></div>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginTop: '6px' }}>
-            <div className="oaf-field-row">
-              <span className="oaf-field-label">Telephone:</span>
-              <span className="oaf-field-val">{ch.telephone || '—'}</span>
-            </div>
-            <div className="oaf-field-row">
-              <span className="oaf-field-label">Mobile No:</span>
-              <span className="oaf-field-val"><strong>{ch.mobileNumber || '—'}</strong></span>
-            </div>
-          </div>
-
-          <div className="oaf-field-row">
-            <span className="oaf-field-label">Email ID:</span>
-            <span className="oaf-field-val">{ch.emailId || '—'}</span>
-          </div>
-        </div>
-
-        {/* V. Ministry Dates */}
-        <div>
-          <h4 className="oaf-section-heading">V. Ministry Dates & Milestones / ஊழிய மைல்கற்கள்</h4>
-
-          <div className="oaf-field-row" style={{ alignItems: 'center' }}>
-            <span className="oaf-field-label" style={{ minWidth: '420px', fontSize: '11px' }}>
-              1. When did you born again? - எப்பொழுது மறுபிறப்பின் அனுபவத்தைப் பெற்றீர்கள்?
-            </span>
-            {renderDateBoxes(mh.bornAgainDate)}
-          </div>
-
-          <div className="oaf-field-row" style={{ alignItems: 'center' }}>
-            <span className="oaf-field-label" style={{ minWidth: '420px', fontSize: '11px' }}>
-              2. When did you baptize in full immersion? - எப்பொழுது முழுக்கு ஞானஸ்நானம் பெற்றீர்கள்?
-            </span>
-            {renderDateBoxes(mh.waterBaptismDate)}
-          </div>
-
-          <div className="oaf-field-row" style={{ alignItems: 'center' }}>
-            <span className="oaf-field-label" style={{ minWidth: '420px', fontSize: '11px' }}>
-              3. When did you fill with the Holy Spirit? - எப்பொழுது பரிசுத்த ஆவியின் அபிஷேகத்தைப் பெற்றீர்கள்?
-            </span>
-            {renderDateBoxes(mh.holySpiritBaptismDate)}
-          </div>
-
-          <div className="oaf-field-row" style={{ alignItems: 'center' }}>
-            <span className="oaf-field-label" style={{ minWidth: '420px', fontSize: '11px' }}>
-              4. When did you call for Ministry? - எப்பொழுது ஊழிய அழைப்பைப் பெற்றீர்கள்?
-            </span>
-            {renderDateBoxes(mh.callingDate)}
-          </div>
-
-          <div className="oaf-field-row" style={{ alignItems: 'center' }}>
-            <span className="oaf-field-label" style={{ minWidth: '420px', fontSize: '11px' }}>
-              5. When did you start the Ministry? - எப்பொழுது ஊழியத்தைத் துவக்கினீர்கள்?
-            </span>
-            {renderDateBoxes(mh.ministryStartDate)}
-          </div>
-        </div>
-
-        <div className="oaf-page-footer">
-          <span>Apostolic Council of India Diocese</span>
-          <span>Membership Application Form, Page 2/4</span>
+          {/* V. Spiritual Milestones */}
+          {renderDateBoxes(mh.bornAgainDate, PAGE_2_FIELDS.bornAgainDate.x, PAGE_2_FIELDS.bornAgainDate.y)}
+          {renderDateBoxes(mh.waterBaptismDate, PAGE_2_FIELDS.waterBaptismDate.x, PAGE_2_FIELDS.waterBaptismDate.y)}
+          {renderDateBoxes(mh.holySpiritBaptismDate, PAGE_2_FIELDS.holySpiritDate.x, PAGE_2_FIELDS.holySpiritDate.y)}
+          {renderDateBoxes(mh.callingDate, PAGE_2_FIELDS.callingDate.x, PAGE_2_FIELDS.callingDate.y)}
+          {renderDateBoxes(mh.ministryStartDate, PAGE_2_FIELDS.ministryStartDate.x, PAGE_2_FIELDS.ministryStartDate.y)}
         </div>
       </div>
 
-
       {/* ============================================================
-          PAGE 3 OF 4: QUALIFICATIONS, FAMILY & MOTIVATION
+          PAGE 3: QUALIFICATIONS, FAMILY DETAILS & MOTIVATION
           ============================================================ */}
-      <div className="oaf-page" id="oaf-page-3">
-        <div className="oaf-header" style={{ paddingBottom: '4px', marginBottom: '8px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 900, margin: 0, textTransform: 'uppercase' }}>
-            ACI Diocese Membership Application Form
-          </h2>
-        </div>
+      <div className="oaf-page-sheet" id="oaf-page-sheet-3">
+        <img
+          src="/official-forms/page_3.png"
+          alt="ACI Official Application Page 3"
+          className="oaf-scanned-bg"
+        />
 
-        {/* Ordination & Affiliation Intent */}
-        <div style={{ marginBottom: '10px' }}>
-          <div className="oaf-field-row" style={{ marginBottom: '4px' }}>
-            <span className="oaf-field-label" style={{ minWidth: '380px', fontSize: '11.5px' }}>
-              6. Do you want to be ordained by us? இந்தப் பேராயத்தால் பிரதிஷ்டை செய்யப்பட விரும்புகிறீர்களா?
-            </span>
-            <div style={{ display: 'flex', gap: '14px' }}>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{mh.wantOrdination === 'Yes' ? '✓' : ''}</span> Yes ஆம்
-              </span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{mh.wantOrdination === 'No' ? '✓' : ''}</span> No இல்லை
-              </span>
+        <div className="oaf-overlay-layer">
+          {/* Ordination & Affiliation intent */}
+          {renderCheck(mh.wantOrdination === 'Yes', PAGE_3_FIELDS.wantOrdinationYes.x, PAGE_3_FIELDS.wantOrdinationYes.y)}
+          {renderCheck(mh.wantOrdination === 'No', PAGE_3_FIELDS.wantOrdinationNo.x, PAGE_3_FIELDS.wantOrdinationNo.y)}
+          {renderCheck(mh.wantAffiliation === 'Yes', PAGE_3_FIELDS.wantAffiliationYes.x, PAGE_3_FIELDS.wantAffiliationYes.y)}
+          {renderCheck(mh.wantAffiliation === 'No', PAGE_3_FIELDS.wantAffiliationNo.x, PAGE_3_FIELDS.wantAffiliationNo.y)}
+
+          {/* VI. Academic Table */}
+          {q.academic?.slice(0, 3).map((row, idx) => {
+            const coords = PAGE_3_FIELDS.academicRows[idx]
+            if (!coords) return null
+            return (
+              <React.Fragment key={row.id || idx}>
+                {renderLine(row.examinationPassed, coords.colExam, coords.y, 15)}
+                {renderLine(row.year, coords.colYear, coords.y, 15)}
+                {renderLine(row.institution, coords.colInst, coords.y, 15)}
+              </React.Fragment>
+            )
+          })}
+
+          {/* VII. Theological Table */}
+          {q.theological?.slice(0, 2).map((row, idx) => {
+            const coords = PAGE_3_FIELDS.theologicalRows[idx]
+            if (!coords) return null
+            return (
+              <React.Fragment key={row.id || idx}>
+                {renderLine(row.examinationPassed, coords.colExam, coords.y, 15)}
+                {renderLine(row.year, coords.colYear, coords.y, 15)}
+                {renderLine(row.institution, coords.colInst, coords.y, 15)}
+              </React.Fragment>
+            )
+          })}
+
+          {/* VIII. Family Table */}
+          {fam?.slice(0, 4).map((f, idx) => {
+            const coords = PAGE_3_FIELDS.familyRows[idx]
+            if (!coords) return null
+            return (
+              <React.Fragment key={f.id || idx}>
+                {renderLine(f.name, coords.colName, coords.y, 15)}
+                {renderLine(f.dob, coords.colDob, coords.y, 15)}
+                {renderLine(f.relationship, coords.colRel, coords.y, 15)}
+                {renderLine(f.professionEducation, coords.colProf, coords.y, 15)}
+              </React.Fragment>
+            )
+          })}
+
+          {/* IX. Motivation Box */}
+          {mot.reasonToJoin && (
+            <div
+              className="oaf-overlay-multiline"
+              style={{
+                left: toLeft(PAGE_3_FIELDS.motivation.x),
+                top: toTop(PAGE_3_FIELDS.motivation.y),
+                width: toWidth(PAGE_3_FIELDS.motivation.width),
+                height: toHeight(PAGE_3_FIELDS.motivation.height),
+              }}
+            >
+              {mot.reasonToJoin}
             </div>
-          </div>
-
-          <div className="oaf-field-row">
-            <span className="oaf-field-label" style={{ minWidth: '380px', fontSize: '11.5px' }}>
-              7. Do you want to be affiliated with us? இந்தப் பேராயத்தின் அதிகாரப்பூர்வ இணைப்பைப் பெற விரும்புகிறீர்களா?
-            </span>
-            <div style={{ display: 'flex', gap: '14px' }}>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{mh.wantAffiliation === 'Yes' ? '✓' : ''}</span> Yes ஆம்
-              </span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{mh.wantAffiliation === 'No' ? '✓' : ''}</span> No இல்லை
-              </span>
-            </div>
-          </div>
-          <p style={{ fontSize: '9px', fontStyle: 'italic', margin: '2px 0 6px', color: '#444' }}>
-            * If "Yes", please attach xerox copy of your ordination certificate. ஆம் என்றால் தங்களது பிரதிஷ்டை சான்றிதழின் நகலை இணைக்கவும்.
-          </p>
-        </div>
-
-        {/* VI. Academic Qualification Table */}
-        <div style={{ marginBottom: '10px' }}>
-          <h4 className="oaf-section-heading">VI. Academic Qualification / கல்வித் தகுதி</h4>
-          <table className="oaf-table">
-            <thead>
-              <tr>
-                <th style={{ width: '40px' }}>S.No<br />வ.எண்</th>
-                <th>Examination Passed<br />தேர்ச்சி பெற்ற தேர்வு</th>
-                <th style={{ width: '65px' }}>Year<br />வருடம்</th>
-                <th>School / College / University<br />பள்ளி / கல்லூரி / பல்கலைக்கழகம்</th>
-              </tr>
-            </thead>
-            <tbody>
-              {q.academic && q.academic.length > 0 ? (
-                q.academic.map((r, idx) => (
-                  <tr key={r.id || idx}>
-                    <td className="center">{idx + 1}</td>
-                    <td><strong>{r.examinationPassed || '—'}</strong></td>
-                    <td className="center">{r.year || '—'}</td>
-                    <td>{r.institution || '—'}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td className="center">1</td>
-                  <td>—</td>
-                  <td className="center">—</td>
-                  <td>—</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* VII. Theological Qualification Table */}
-        <div style={{ marginBottom: '10px' }}>
-          <h4 className="oaf-section-heading">VII. Theological Qualification / இறையியல் தகுதி</h4>
-          <table className="oaf-table">
-            <thead>
-              <tr>
-                <th style={{ width: '40px' }}>S.No<br />வ.எண்</th>
-                <th>Examination Passed<br />தேர்ச்சி பெற்ற தேர்வு</th>
-                <th style={{ width: '65px' }}>Year<br />வருடம்</th>
-                <th>School / Seminary / University<br />பள்ளி / இறையியல் கல்லூரி / பல்கலைக்கழகம்</th>
-              </tr>
-            </thead>
-            <tbody>
-              {q.theological && q.theological.length > 0 ? (
-                q.theological.map((r, idx) => (
-                  <tr key={r.id || idx}>
-                    <td className="center">{idx + 1}</td>
-                    <td><strong>{r.examinationPassed || '—'}</strong></td>
-                    <td className="center">{r.year || '—'}</td>
-                    <td>{r.institution || '—'}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td className="center">1</td>
-                  <td>—</td>
-                  <td className="center">—</td>
-                  <td>—</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* VIII. Family Details Table */}
-        <div style={{ marginBottom: '10px' }}>
-          <h4 className="oaf-section-heading">VIII. Family Details / குடும்ப விவரங்கள்</h4>
-          <table className="oaf-table">
-            <thead>
-              <tr>
-                <th style={{ width: '40px' }}>S.No<br />வ.எண்</th>
-                <th>Name<br />பெயர்</th>
-                <th style={{ width: '90px' }}>Date of Birth<br />பிறந்த தேதி</th>
-                <th>Relationship<br />உறவு</th>
-                <th>Profession / Education<br />தொழில் / படிப்பு</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fam && fam.length > 0 ? (
-                fam.map((r, idx) => (
-                  <tr key={r.id || idx}>
-                    <td className="center">{idx + 1}</td>
-                    <td><strong>{r.name || '—'}</strong></td>
-                    <td className="center">{r.dob || '—'}</td>
-                    <td>{r.relationship || '—'}</td>
-                    <td>{r.professionEducation || '—'}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td className="center">1</td>
-                  <td>—</td>
-                  <td className="center">—</td>
-                  <td>—</td>
-                  <td>—</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* IX. Motivation */}
-        <div>
-          <h4 className="oaf-section-heading">
-            IX. What prompts you to join APOSTOLIC COUNCIL OF INDIA DIOCESE? / அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தில் இணையக் காரணம் என்ன?
-          </h4>
-          <div className="oaf-motivation-box">
-            {mot.reasonToJoin || 'I am convinced and confirmed of my calling to serve the Lord under the episcopal guidance and doctrinal shepherding of the Apostolic Council of India Diocese.'}
-          </div>
-        </div>
-
-        <div className="oaf-page-footer">
-          <span>Apostolic Council of India Diocese</span>
-          <span>Membership Application Form, Page 3/4</span>
+          )}
         </div>
       </div>
 
-
       {/* ============================================================
-          PAGE 4 OF 4: REFERENCES, STATUTORY DECLARATION & ENCLOSURES
+          PAGE 4: REFERENCES, STATUTORY DECLARATION & SIGNATURE
           ============================================================ */}
-      <div className="oaf-page" id="oaf-page-4">
-        <div className="oaf-header" style={{ paddingBottom: '4px', marginBottom: '8px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 900, margin: 0, textTransform: 'uppercase' }}>
-            ACI Diocese Membership Application Form
-          </h2>
-        </div>
+      <div className="oaf-page-sheet" id="oaf-page-sheet-4">
+        <img
+          src="/official-forms/page_4.png"
+          alt="ACI Official Application Page 4"
+          className="oaf-scanned-bg"
+        />
 
-        {/* X. Details of Two References */}
-        <div style={{ marginBottom: '10px' }}>
-          <h4 className="oaf-section-heading">X. Details of two references (Must) / பரிந்துரை விவரங்கள் (அவசியம் தேவை)</h4>
-          <p style={{ fontSize: '10.5px', margin: '0 0 6px' }}>
-            Two Personal references of good standing members of ACI Diocese (அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் இரண்டு அங்கத்தினர்களின் பரிந்துரைகள்)
-          </p>
-
+        <div className="oaf-overlay-layer">
           {/* Reference 1 */}
-          <div style={{ border: '1px solid #000', padding: '6px 8px', marginBottom: '8px', fontSize: '11.5px' }}>
-            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
-              Reference 1. District overseer (Diocesan Member - if there is no DOS) / மாவட்ட மேற்பார்வையாளர்
-            </div>
-            <div style={{ display: 'flex', gap: '14px', marginBottom: '4px' }}>
-              <span>I know this person since: <strong>{ref.ref1?.knownSince || '5 Years'}</strong></span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{ref.ref1?.relationshipType === 'Personally' || !ref.ref1?.relationshipType ? '✓' : ''}</span> Personally நேரில்
-              </span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{ref.ref1?.relationshipType === 'Professionally' ? '✓' : ''}</span> Professionally ஊழிய ரீதியாக
-              </span>
-            </div>
-            <div className="oaf-field-row">
-              <span className="oaf-field-label">Name:</span>
-              <span className="oaf-field-val"><strong>{ref.ref1?.name || '—'}</strong></span>
-              <span className="oaf-field-label" style={{ marginLeft: '12px' }}>Signature:</span>
-              <span className="oaf-field-val" style={{ maxWidth: '140px' }}>{ref.ref1?.name ? `[S/d ${ref.ref1.name}]` : '—'}</span>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '8px', marginTop: '4px' }}>
-              <div>Diocesan ID No: <strong>{ref.ref1?.diocesanId || '—'}</strong></div>
-              <div>Tel: <strong>{ref.ref1?.tel || '—'}</strong></div>
-              <div>Mobile: <strong>{ref.ref1?.phone || '—'}</strong></div>
-            </div>
-          </div>
+          {renderLine(ref.ref1?.name, PAGE_4_FIELDS.ref1Name.x, PAGE_4_FIELDS.ref1Name.y)}
+          {renderLine(ref.ref1?.diocesanId, PAGE_4_FIELDS.ref1Id.x, PAGE_4_FIELDS.ref1Id.y)}
+          {renderLine(ref.ref1?.phone, PAGE_4_FIELDS.ref1Phone.x, PAGE_4_FIELDS.ref1Phone.y)}
+          {renderLine(ref.ref1?.knownSince, PAGE_4_FIELDS.ref1Since.x, PAGE_4_FIELDS.ref1Since.y)}
+          {renderCheck(ref.ref1?.relationshipType === 'Personally' || !ref.ref1?.relationshipType, PAGE_4_FIELDS.ref1Personally.x, PAGE_4_FIELDS.ref1Personally.y)}
+          {renderCheck(ref.ref1?.relationshipType === 'Professionally', PAGE_4_FIELDS.ref1Professionally.x, PAGE_4_FIELDS.ref1Professionally.y)}
 
           {/* Reference 2 */}
-          <div style={{ border: '1px solid #000', padding: '6px 8px', fontSize: '11.5px' }}>
-            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
-              Reference 2. Taluk Co-ordinator (Diocesan Member - if there is no DOS) / தாலுகா ஒருங்கிணைப்பாளர்
-            </div>
-            <div style={{ display: 'flex', gap: '14px', marginBottom: '4px' }}>
-              <span>I know this person since: <strong>{ref.ref2?.knownSince || '3 Years'}</strong></span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{ref.ref2?.relationshipType === 'Personally' ? '✓' : ''}</span> Personally நேரில்
-              </span>
-              <span className="oaf-check-item">
-                <span className="oaf-box-tick">{ref.ref2?.relationshipType === 'Professionally' || !ref.ref2?.relationshipType ? '✓' : ''}</span> Professionally ஊழிய ரீதியாக
-              </span>
-            </div>
-            <div className="oaf-field-row">
-              <span className="oaf-field-label">Name:</span>
-              <span className="oaf-field-val"><strong>{ref.ref2?.name || '—'}</strong></span>
-              <span className="oaf-field-label" style={{ marginLeft: '12px' }}>Signature:</span>
-              <span className="oaf-field-val" style={{ maxWidth: '140px' }}>{ref.ref2?.name ? `[S/d ${ref.ref2.name}]` : '—'}</span>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '8px', marginTop: '4px' }}>
-              <div>Diocesan ID No: <strong>{ref.ref2?.diocesanId || '—'}</strong></div>
-              <div>Tel: <strong>{ref.ref2?.tel || '—'}</strong></div>
-              <div>Mobile: <strong>{ref.ref2?.phone || '—'}</strong></div>
-            </div>
+          {renderLine(ref.ref2?.name, PAGE_4_FIELDS.ref2Name.x, PAGE_4_FIELDS.ref2Name.y)}
+          {renderLine(ref.ref2?.diocesanId, PAGE_4_FIELDS.ref2Id.x, PAGE_4_FIELDS.ref2Id.y)}
+          {renderLine(ref.ref2?.phone, PAGE_4_FIELDS.ref2Phone.x, PAGE_4_FIELDS.ref2Phone.y)}
+          {renderLine(ref.ref2?.knownSince, PAGE_4_FIELDS.ref2Since.x, PAGE_4_FIELDS.ref2Since.y)}
+          {renderCheck(ref.ref2?.relationshipType === 'Personally', PAGE_4_FIELDS.ref2Personally.x, PAGE_4_FIELDS.ref2Personally.y)}
+          {renderCheck(ref.ref2?.relationshipType === 'Professionally' || !ref.ref2?.relationshipType, PAGE_4_FIELDS.ref2Professionally.x, PAGE_4_FIELDS.ref2Professionally.y)}
+
+          {/* Declaration Fields */}
+          {renderLine(dec.place || 'Dindigul', PAGE_4_FIELDS.decPlace.x, PAGE_4_FIELDS.decPlace.y)}
+          {renderLine(dec.date || p.applicationDate || '2026-08-26', PAGE_4_FIELDS.decDate.x, PAGE_4_FIELDS.decDate.y)}
+
+          {/* Digital Signature */}
+          <div
+            className="oaf-overlay-signature"
+            style={{
+              left: toLeft(PAGE_4_FIELDS.decSignature.x),
+              top: toTop(PAGE_4_FIELDS.decSignature.y),
+            }}
+          >
+            <div className="oaf-sig-name">{p.name || 'S. JOHN SAMUEL'}</div>
+            <div className="oaf-sig-tag">[ Digitally Signed ]</div>
           </div>
-        </div>
-
-        {/* XI. Disclaimer and Statutory Signature */}
-        <div style={{ border: '1.5px solid #000', padding: '8px 10px', marginBottom: '10px' }}>
-          <div className="oaf-office-header" style={{ margin: '0 0 6px', background: '#000000' }}>
-            XI. Disclaimer and Signature / உறுதிமொழி மற்றும் கையெழுத்து
-          </div>
-          <p style={{ fontSize: '10.5px', lineHeight: '1.4', margin: '0 0 6px' }}>
-            I hereby declare that the information furnished above is true to the best of my knowledge. I am fully in agreement with the Faith Statement of ACI Diocese. I understand that this is the united Ministry and I shall give attention to this ministry apart from my church ministry. I shall abide by the terms and conditions of ACI Diocese, in force from time to time.
-          </p>
-          <p style={{ fontSize: '10px', lineHeight: '1.4', margin: 0 }}>
-            மேலே குறிப்பிட்டுள்ள தகவல்கள் எல்லாம் உண்மை என்றும், இந்தப் பேராயத்தின் விசுவாச அறிக்கையை முழுமையாக சம்மதிக்கிறேன் என்றும், இந்த ஐக்கியத்தின் ஊழியத்தைப் புரிந்துகொண்டு, எனது தனிப்பட்ட ஊழியத்தின் மத்தியிலும், இதில் கவனம் செலுத்துவேன் என்றும், காலத்திற்கேற்ப தேவையான பேராயத்தின் விதிகளையும், நிபந்தனைகளையும் ஏற்றுக் கொள்வேன் என்றும் உறுதி கூறுகிறேன்.
-          </p>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '14px', fontSize: '11px' }}>
-            <div>
-              <div><strong>Place / இடம்:</strong> {dec.place || 'Tamil Nadu'}</div>
-              <div style={{ marginTop: '2px' }}><strong>Date / தேதி:</strong> {dec.date || p.applicationDate || '2026-08-26'}</div>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ borderBottom: '1px solid #000', width: '200px', paddingBottom: '2px', fontWeight: 'bold', fontSize: '12px' }}>
-                {fullName || 'DIGITAL CONFIRMATION'}
-              </div>
-              <span style={{ fontSize: '9.5px' }}>Applicant's Signature / விண்ணப்பதாரரின் கையொப்பம்</span>
-            </div>
-          </div>
-        </div>
-
-        {/* XII. Enclosures to be attached */}
-        <div>
-          <h4 className="oaf-section-heading" style={{ margin: '4px 0' }}>
-            XII. Enclosures to be attached / இணைக்க வேண்டிய இணைப்புகள்
-          </h4>
-          <ol style={{ fontSize: '10px', paddingLeft: '18px', margin: 0, lineHeight: '1.4' }}>
-            <li>Proof of Identity / அடையாளச் சான்று (Driving License / Passport / Voter ID / Ration Card / Aadhaar) {enc.proofIdentity ? '☑ [Attached]' : '☐'}</li>
-            <li>Proof of Address / வீட்டு முகவரிச் சான்று (Ration Card / Aadhaar / Resident Cert / Affidavit / DL) {enc.proofAddress ? '☑ [Attached]' : '☐'}</li>
-            <li>Proof of Date of Birth / பிறந்த தேதிக்கான சான்று (TC / 10th, 12th Marksheet / DL / Passport) {enc.proofDob ? '☑ [Attached]' : '☐'}</li>
-            <li>Proof of Name Change / பெயர் மாற்றத்திற்கான சான்று (Baptism Certificate / Affidavit)</li>
-            <li>Two Copies of recent passport size photos / சமீபத்தில் எடுத்த இரண்டு புகைப்படங்கள் {p.photoUrl ? '☑ [Provided]' : '☐'}</li>
-            <li>Your Ministry Statement / தங்களது ஊழியத்தை பற்றிய விளக்கம் (One-page summary) {enc.ministryStatement ? '☑ [Attached]' : '☐'}</li>
-            <li>Your Ministry or Church Photo / தங்களது ஊழியம் / சபையின் புகைப்படம் {enc.churchPhoto ? '☑ [Attached]' : '☐'}</li>
-            <li>Ordination Certificate copy / பிரதிஷ்டை சான்றிதழ் நகல் (if applying for affiliation) {enc.ordinationCertificate ? '☑ [Attached]' : '☐'}</li>
-          </ol>
-          <p style={{ fontSize: '9px', fontStyle: 'italic', margin: '4px 0 0', fontWeight: 'bold' }}>
-            Note : This application is valid for one month from the date of issued. / குறிப்பு : இந்த விண்ணப்பம் உங்களுக்கு வழங்கப்பட்ட தேதியிலிருந்து ஒரு மாதத்திற்குள் அனுப்பிவிட்டால் செல்லுபடியாகும்.
-          </p>
-        </div>
-
-        <div className="oaf-page-footer">
-          <span>Apostolic Council of India Diocese</span>
-          <span>Membership Application Form, Page 4/4</span>
         </div>
       </div>
 
