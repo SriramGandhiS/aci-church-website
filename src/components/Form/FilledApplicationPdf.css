@@ -1,72 +1,85 @@
 /* ============================================================
    OFFICIAL FILLED APPLICATION TEMPLATE (PRINT & PREVIEW)
-   Clean Compact Action Bar • Official Document Preview
+   Clean Standalone Action Bar • Official Document Preview
    ============================================================ */
 
 .filled-pdf-viewer {
   background: #f1f5f9;
-  padding: 20px 16px 60px;
+  padding: 24px 16px 80px;
   min-height: 100vh;
-}
-
-/* Clean, Compact Action Toolbar */
-.pdf-toolbar-clean {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  max-width: 900px;
-  margin: 0 auto 18px;
-}
-
-.pdf-print-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #1e40af;
-  color: #ffffff;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 9px 22px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
-  transition: all 0.18s ease;
-}
-
-.pdf-print-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(30, 64, 175, 0.35);
-}
-
-.pdf-edit-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  color: #334155;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 8px 18px;
-  border: 1.2px solid #cbd5e1;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.pdf-edit-btn:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
-  color: #0f172a;
-}
-
-/* Sheets Container */
-.pdf-sheets-container {
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* Standalone Action Bar Above Form */
+.application-actions-bar {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 12px 20px !important;
+  margin: 0 auto 20px !important;
+  max-width: 900px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 10 !important;
+  background: transparent !important;
+}
+
+.app-action-btn-edit {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border: 1.5px solid #94a3b8 !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.18s ease !important;
+}
+
+.app-action-btn-edit:hover {
+  background: #f8fafc !important;
+  border-color: #475569 !important;
+  color: #0f172a !important;
+}
+
+.app-action-btn-print {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #1e40af !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  padding: 10px 26px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  box-shadow: 0 3px 8px rgba(30, 64, 175, 0.35) !important;
+  transition: all 0.18s ease !important;
+}
+
+.app-action-btn-print:hover {
+  background: #1d4ed8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 12px rgba(30, 64, 175, 0.45) !important;
+}
+
+/* Official Form Preview Container */
+.official-form-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 /* Print Styles */
@@ -74,6 +87,8 @@
   body {
     background: #ffffff !important;
   }
+  .application-actions-bar,
+  .pdf-toolbar,
   .pdf-toolbar-clean,
   .site-header,
   .site-footer,

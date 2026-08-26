@@ -2013,9 +2013,20 @@ export default function ApplicationPage() {
                 </div>
               )}
 
-              {/* TAB 2: Official 4-Page Paper Form Preview */}
+              {/* TAB 2: Official Form Preview */}
               {reviewTab === 'official' && (
                 <div style={{ marginBottom: '24px', overflowX: 'auto', background: '#f1f5f9', padding: '16px', borderRadius: '8px' }}>
+                  <div className="application-actions-bar" style={{ marginBottom: '16px' }}>
+                    <button type="button" onClick={() => setReviewTab('summary')} className="app-action-btn-edit">
+                      <ArrowLeftIcon size={15} />
+                      <span>{isTa ? 'சுருக்கப் பார்வைக்குத் திரும்பு' : 'Edit Application'}</span>
+                    </button>
+
+                    <button type="button" onClick={() => window.print()} className="app-action-btn-print">
+                      <PrintIcon size={16} color="#ffffff" />
+                      <span>{isTa ? 'படிவத்தை அச்சிடுக / PDF சேமி' : 'Print / Save Official PDF'}</span>
+                    </button>
+                  </div>
                   <OfficialApplicationForm data={formData} isMini={false} />
                 </div>
               )}
