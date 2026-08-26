@@ -98,7 +98,7 @@ export default function OfficialApplicationForm({ data }) {
     <div className="digi-form-canvas-container">
 
       {/* ============================================================
-          PAGE 1 OF 2: BREATHABLE, ELEGANT, UNMERGED HEADER & CLEAN FLOW
+          PAGE 1 OF 2: HD TAMIL FONTS • SINGLE-ROW MILESTONES • ZERO BLANK GAP
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-1">
         
@@ -482,40 +482,46 @@ export default function OfficialApplicationForm({ data }) {
           </div>
         </div>
 
-        {/* V. Ministry Milestones & Questions */}
+        {/* V. Ministry Milestones & Questions (1 ITEM PER ROW • FULL WIDTH • ZERO BLUR • ZERO WHITE SPACE) */}
         <div className="digi-full-black-banner">
           V. Ministry Milestones & Questions / ஆவிக்குரிய தேதிகள் & கேள்விகள்
         </div>
 
-        <div className="digi-milestones-full-block">
-          <div className="digi-milestone-entry">
-            <span className="m-text">1. Born Again மறுபிறப்பு :</span>
+        <div className="digi-milestones-single-col-list">
+          <div className="digi-milestone-full-row">
+            <span className="m-text">1. When were you Born Again? எப்பொழுது மறுபிறப்பின் அனுபவத்தைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.bornAgainDate} />
           </div>
-          <div className="digi-milestone-entry">
-            <span className="m-text">2. Water Baptism முழுக்கு ஞானஸ்நானம் :</span>
+
+          <div className="digi-milestone-full-row">
+            <span className="m-text">2. When were you Baptized in full immersion? எப்பொழுது முழுக்கு ஞானஸ்நானம் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.waterBaptismDate} />
           </div>
-          <div className="digi-milestone-entry">
-            <span className="m-text">3. Holy Spirit அபிஷேகம் :</span>
+
+          <div className="digi-milestone-full-row">
+            <span className="m-text">3. When were you filled with the Holy Spirit? எப்பொழுது பரிசுத்த ஆவியின் அபிஷேகத்தைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.holySpiritBaptismDate} />
           </div>
-          <div className="digi-milestone-entry">
-            <span className="m-text">4. Ministry Calling ஊழிய அழைப்பு :</span>
+
+          <div className="digi-milestone-full-row">
+            <span className="m-text">4. When were you called for Ministry? எப்பொழுது ஊழிய அழைப்பைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.callingDate} />
           </div>
-          <div className="digi-milestone-entry">
-            <span className="m-text">5. Started Ministry ஊழிய துவக்கம் :</span>
+
+          <div className="digi-milestone-full-row">
+            <span className="m-text">5. When did you start active Ministry? எப்பொழுது ஊழியத்தைத் துவக்கினீர்கள்?</span>
             <Date8Boxes dateStr={mh.ministryStartDate} />
           </div>
-          <div className="digi-milestone-entry">
-            <span className="m-text">6. Want Ordination பிரதிஷ்டை?</span>
+
+          <div className="digi-milestone-full-row">
+            <span className="m-text">6. Do you want to be ordained by ACI Diocese? இந்தப் பேராயத்தால் பிரதிஷ்டை பெற விரும்புகிறீர்களா?</span>
             <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantOrdination === 'Yes'} labelEn="Yes ஆம்" />
               <FormCheckbox checked={mh.wantOrdination === 'No'} labelEn="No இல்லை" />
             </div>
           </div>
-          <div className="digi-milestone-entry" style={{ gridColumn: 'span 2' }}>
+
+          <div className="digi-milestone-full-row">
             <span className="m-text">7. Do you want to be affiliated with ACI Diocese? இந்தப் பேராயத்தின் இணைப்பைப் பெற விரும்புகிறீர்களா?</span>
             <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantAffiliation === 'Yes'} labelEn="Yes ஆம்" />
