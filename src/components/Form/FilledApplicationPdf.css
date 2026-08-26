@@ -1,38 +1,22 @@
 /* ============================================================
    OFFICIAL FILLED APPLICATION TEMPLATE (PRINT & PREVIEW)
-   Replicates the exact 4-page official ACI Diocese paper form
+   Clean Compact Action Bar • Official Document Preview
    ============================================================ */
 
 .filled-pdf-viewer {
   background: #f1f5f9;
-  padding: 30px 16px 80px;
+  padding: 20px 16px 60px;
   min-height: 100vh;
 }
 
-.pdf-toolbar {
-  max-width: 900px;
-  margin: 0 auto 24px;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 16px 24px;
+/* Clean, Compact Action Toolbar */
+.pdf-toolbar-clean {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.pdf-toolbar-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.pdf-toolbar-actions {
-  display: flex;
   gap: 12px;
+  max-width: 900px;
+  margin: 0 auto 18px;
 }
 
 .pdf-print-btn {
@@ -43,16 +27,18 @@
   color: #ffffff;
   font-size: 13.5px;
   font-weight: 600;
-  padding: 10px 20px;
+  padding: 9px 22px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
+  transition: all 0.18s ease;
 }
 
 .pdf-print-btn:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(30, 64, 175, 0.35);
 }
 
 .pdf-edit-btn {
@@ -63,205 +49,24 @@
   color: #334155;
   font-size: 13.5px;
   font-weight: 600;
-  padding: 9px 18px;
-  border: 1px solid #cbd5e1;
+  padding: 8px 18px;
+  border: 1.2px solid #cbd5e1;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 
 .pdf-edit-btn:hover {
   background: #f8fafc;
   border-color: #94a3b8;
-}
-
-/* 4-Page Sheet Container */
-.pdf-sheets-container {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-}
-
-/* Individual A4 Page */
-.pdf-page-sheet {
-  width: 850px;
-  min-height: 1200px;
-  background: #ffffff;
-  color: #000000;
-  padding: 40px 48px 50px;
-  border: 1px solid #d1d5db;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  box-sizing: border-box;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 13px;
-  line-height: 1.35;
-  position: relative;
-}
-
-/* Header Elements */
-.pdf-header-top {
-  text-align: center;
-  position: relative;
-  border-bottom: 2px solid #000000;
-  padding-bottom: 12px;
-  margin-bottom: 14px;
-}
-
-.pdf-logo-crest {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 68px;
-  height: 68px;
-  object-fit: contain;
-}
-
-.pdf-main-heading {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  margin: 0 0 2px;
-  text-transform: uppercase;
-}
-
-.pdf-reg-sub {
-  font-size: 10px;
-  font-weight: bold;
-  margin-bottom: 2px;
-}
-
-.pdf-addr-sub {
-  font-size: 9.5px;
-  margin: 0;
-}
-
-.pdf-doc-title-row {
-  margin: 10px 0 6px;
-  text-align: center;
-}
-
-.pdf-doc-title {
-  font-size: 15.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  text-decoration: underline;
-  margin: 0 0 2px;
-}
-
-.pdf-doc-sub-ta {
-  font-size: 13px;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Office Use Box */
-.pdf-office-box {
-  border: 1.5px solid #000000;
-  padding: 8px 12px;
-  margin: 10px 0 14px;
-  display: grid;
-  grid-template-columns: 1fr 140px;
-  gap: 12px;
-}
-
-.pdf-office-title {
-  font-size: 11px;
-  font-weight: bold;
-  text-align: center;
-  border-bottom: 1px solid #000000;
-  padding-bottom: 4px;
-  margin-bottom: 6px;
-  grid-column: span 2;
-  text-transform: uppercase;
-}
-
-.pdf-photo-frame {
-  border: 1px solid #000000;
-  height: 140px;
-  width: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 9px;
-  padding: 4px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.pdf-photo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Section Dividers */
-.pdf-section-title-bar {
-  background: #e2e8f0;
-  border: 1px solid #000000;
-  padding: 3px 8px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin: 14px 0 8px;
-}
-
-.pdf-field-row {
-  display: flex;
-  margin-bottom: 6px;
-  align-items: baseline;
-}
-
-.pdf-field-label {
-  font-weight: bold;
-  min-width: 160px;
-  flex-shrink: 0;
-  font-size: 12.5px;
-}
-
-.pdf-field-val {
-  border-bottom: 1px dotted #000000;
-  flex: 1;
-  padding: 0 6px 1px;
-  font-weight: 600;
   color: #0f172a;
 }
 
-/* Tables on Page 3 */
-.pdf-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 8px 0 14px;
-  font-size: 12px;
-}
-
-.pdf-table th,
-.pdf-table td {
-  border: 1px solid #000000;
-  padding: 5px 8px;
-  text-align: left;
-}
-
-.pdf-table th {
-  background: #f1f5f9;
-  font-weight: bold;
-  font-size: 11px;
-}
-
-/* Footer / Signatures */
-.pdf-footer-bar {
-  position: absolute;
-  bottom: 24px;
-  left: 48px;
-  right: 48px;
+/* Sheets Container */
+.pdf-sheets-container {
   display: flex;
-  justify-content: space-between;
-  font-size: 10.5px;
-  font-weight: bold;
-  border-top: 1px solid #cbd5e1;
-  padding-top: 6px;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Print Styles */
@@ -269,7 +74,7 @@
   body {
     background: #ffffff !important;
   }
-  .pdf-toolbar,
+  .pdf-toolbar-clean,
   .site-header,
   .site-footer,
   .app-header-bar {
@@ -278,13 +83,5 @@
   .filled-pdf-viewer {
     padding: 0 !important;
     background: #ffffff !important;
-  }
-  .pdf-page-sheet {
-    width: 100% !important;
-    min-height: 100vh !important;
-    border: none !important;
-    box-shadow: none !important;
-    page-break-after: always;
-    padding: 24px 30px !important;
   }
 }
