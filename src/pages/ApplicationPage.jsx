@@ -221,6 +221,133 @@ export default function ApplicationPage() {
     }))
   }
 
+  // Quick Auto-Fill Sample Data for Testing
+  const autoFillTestData = () => {
+    setFormData({
+      personal: {
+        salutation: 'Pastor',
+        name: 'S. JOHN SAMUEL',
+        baptismalName: 'John Samuel',
+        dob: '1988-05-15',
+        nationality: 'Indian',
+        gender: 'Male',
+        maritalStatus: 'Married',
+        photoUrl: '',
+        applicationDate: new Date().toISOString().split('T')[0],
+        permanentAddress: {
+          doorNo: '6/110',
+          streetName: 'Melapatty Street',
+          cityTown: 'Hanumantharayankottai',
+          pincode: '624002',
+          taluk: 'Dindigul',
+          district: 'Dindigul',
+          state: 'Tamil Nadu',
+          country: 'India',
+        },
+        contactAddressSameAsPermanent: true,
+        contactAddress: {
+          doorNo: '6/110',
+          streetName: 'Melapatty Street',
+          cityTown: 'Hanumantharayankottai',
+          pincode: '624002',
+          taluk: 'Dindigul',
+          district: 'Dindigul',
+          state: 'Tamil Nadu',
+          country: 'India',
+        },
+      },
+      spiritual: {
+        ministryFunction: 'Pastor',
+        otherMinistrySpecify: '',
+      },
+      affiliation: {
+        affiliationType: 'Independent Church',
+        founderName: 'Rev. S. Johnson Durai',
+        denominationSpecify: '',
+        associateChiefPastorName: '',
+        associateChurchName: '',
+        associateAddress: '',
+        trustName: 'Living Word Ministries Trust',
+      },
+      church: {
+        churchName: 'Living Redeemer Apostolic Church',
+        doorNo: '12/4A',
+        streetName: 'Mission Compound Road',
+        cityTown: 'Dindigul',
+        pincode: '624001',
+        taluk: 'Dindigul',
+        district: 'Dindigul',
+        state: 'Tamil Nadu',
+        country: 'India',
+        telephone: '0451 2490100',
+        mobileNumber: '9486485810',
+        emailId: 'pastor.samuel@gmail.com',
+      },
+      ministryHistory: {
+        bornAgainDate: '2004-03-12',
+        waterBaptismDate: '2004-08-20',
+        holySpiritBaptismDate: '2005-01-15',
+        callingDate: '2008-06-10',
+        ministryStartDate: '2012-07-01',
+        wantOrdination: 'Yes',
+        wantAffiliation: 'Yes',
+      },
+      qualifications: {
+        academic: [
+          { id: 'a-1', examinationPassed: 'B.Sc. Mathematics', year: '2009', institution: 'Madurai Kamaraj University' },
+          { id: 'a-2', examinationPassed: 'HSC (+2)', year: '2006', institution: 'St. Marys Hr Sec School' }
+        ],
+        theological: [
+          { id: 't-1', examinationPassed: 'B.Th. / M.Div.', year: '2014', institution: 'Berean Bible Seminary' }
+        ],
+      },
+      family: [
+        { id: 'f-1', name: 'Mary Samuel', dob: '1992-08-10', relationship: 'Spouse', professionEducation: 'Teacher' },
+        { id: 'f-2', name: 'Timothy Samuel', dob: '2018-04-22', relationship: 'Son', professionEducation: 'Student' }
+      ],
+      motivation: {
+        reasonToJoin: 'I am convinced and confirmed of my calling to serve the Lord under the episcopal guidance, fellowship and doctrinal shepherding of the Apostolic Council of India Diocese.',
+      },
+      references: {
+        ref1: {
+          role: 'District Overseer / Diocesan Member',
+          name: 'Rev. R. John Durai',
+          diocesanId: 'TN 0005',
+          phone: '9443210987',
+          knownSince: '8 Years',
+          relationshipType: 'Personally',
+        },
+        ref2: {
+          role: 'Taluk Co-ordinator / Diocesan Member',
+          name: 'Rev. D. Antony Raj',
+          diocesanId: 'TN 0466',
+          phone: '9876543210',
+          knownSince: '5 Years',
+          relationshipType: 'Professionally',
+        },
+      },
+      enclosures: {
+        proofIdentity: 'Aadhaar_Card_JohnSamuel.pdf',
+        proofAddress: 'Ration_Card_Family.pdf',
+        proofDob: '10th_Marksheet_TC.pdf',
+        proofNameChange: null,
+        passportPhoto: 'Passport_Photo_Attested.jpg',
+        ministryStatement: 'Ministry_Field_Work_Summary.pdf',
+        churchPhoto: 'Church_Congregation_Photo.jpg',
+        ordinationCertificate: 'Ordination_Certificate_2015.pdf',
+      },
+      declaration: {
+        acceptedFaithStatement: true,
+        acceptedTerms: true,
+        applicantName: 'S. JOHN SAMUEL',
+        date: new Date().toISOString().split('T')[0],
+        place: 'Dindigul',
+        signatureConfirmation: true,
+      },
+    })
+    setErrors({})
+  }
+
   // Validation Logic
   const validateStep = (step) => {
     const errs = {}
@@ -359,13 +486,30 @@ export default function ApplicationPage() {
                     accept="image/*"
                     style={{ display: 'none' }}
                   />
-                  <button
-                    type="button"
-                    onClick={() => photoInputRef.current?.click()}
-                    className="clean-photo-btn"
-                  >
-                    📷 {isTa ? 'புகைப்படம் தேர்வு செய்' : 'Choose Photo File'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      onClick={() => photoInputRef.current?.click()}
+                      className="clean-photo-btn"
+                    >
+                      📷 {isTa ? 'புகைப்படம் தேர்வு செய்' : 'Choose Photo File'}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={autoFillTestData}
+                      className="clean-photo-btn"
+                      style={{
+                        background: '#eff6ff',
+                        borderColor: '#2563eb',
+                        color: '#1d4ed8',
+                        fontWeight: 700,
+                      }}
+                      title="Auto-fill complete sample data across all steps for instant testing"
+                    >
+                      ⚡ {isTa ? 'தானியங்கி மாதிரி நிரப்பு (Auto-Fill Sample Data)' : 'Auto-Fill Sample Data (For Testing)'}
+                    </button>
+                  </div>
                 </div>
               </div>
 
