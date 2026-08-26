@@ -1,23 +1,23 @@
 /* ============================================================
-   OFFICIAL ACI DIOCESE FORM ACCURATE STYLES
-   Exact 4-Page Digital Completion Replica System
+   OFFICIAL ACI DIOCESE FORM DIGITAL FILLING SYSTEM
+   Pixel-Calibrated Exact Replica on Original Scanned Template
    ============================================================ */
 
-.oaf-document-wrapper {
+.oaf-document-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 36px;
   width: 100%;
 }
 
-.oaf-page-sheet {
+.oaf-page-canvas {
   position: relative;
   width: 210mm;
-  min-height: 297mm;
   height: 297mm;
+  min-height: 297mm;
   background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
   margin: 0 auto;
   overflow: hidden;
   page-break-after: always;
@@ -26,7 +26,7 @@
 }
 
 @media screen and (max-width: 850px) {
-  .oaf-page-sheet {
+  .oaf-page-canvas {
     width: 100%;
     min-height: auto;
     height: auto;
@@ -34,8 +34,8 @@
   }
 }
 
-/* Scanned Official Document Background */
-.oaf-scanned-bg {
+/* Original Scanned Form Background */
+.oaf-template-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -47,8 +47,8 @@
   pointer-events: none;
 }
 
-/* Dynamic User Data Overlays */
-.oaf-overlay-layer {
+/* Dynamic Filling Layer */
+.oaf-dynamic-layer {
   position: absolute;
   top: 0;
   left: 0;
@@ -59,61 +59,56 @@
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* Character Boxes Overlay */
-.oaf-overlay-boxes {
+/* Character Boxed Row */
+.oaf-boxed-row {
   position: absolute;
   display: flex;
   align-items: center;
   z-index: 3;
 }
 
-.oaf-overlay-char {
+.oaf-char-cell {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  color: #001f54;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #021a44;
   letter-spacing: 0;
   text-align: center;
   box-sizing: border-box;
 }
 
-.oaf-overlay-char.date-char {
-  font-size: 12px;
-  font-weight: 800;
-  color: #001f54;
-}
-
 /* Checkbox Mark */
-.oaf-overlay-check {
+.oaf-check-mark {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 900;
-  color: #001f54;
+  color: #021a44;
   z-index: 3;
   line-height: 1;
 }
 
 /* Text Line */
-.oaf-overlay-line {
+.oaf-text-line {
   position: absolute;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  color: #001f54;
+  color: #021a44;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   z-index: 3;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
-/* Passport Photo Frame */
-.oaf-overlay-photo {
+/* Passport Photo Container */
+.oaf-photo-container {
   position: absolute;
   z-index: 3;
   overflow: hidden;
@@ -123,20 +118,20 @@
   justify-content: center;
 }
 
-.oaf-overlay-photo img {
+.oaf-photo-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Multiline Motivation */
-.oaf-overlay-multiline {
+/* Motivation Essay */
+.oaf-motivation-text {
   position: absolute;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
-  color: #001f54;
+  color: #021a44;
   line-height: 1.5;
   padding: 8px 12px;
   box-sizing: border-box;
@@ -144,8 +139,8 @@
   z-index: 3;
 }
 
-/* Signature Block */
-.oaf-overlay-signature {
+/* Digital Signature */
+.oaf-signature-block {
   position: absolute;
   z-index: 3;
   display: flex;
@@ -153,17 +148,17 @@
   align-items: center;
 }
 
-.oaf-sig-name {
+.oaf-signature-text {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #001f54;
+  font-size: 14px;
+  font-weight: 800;
+  color: #021a44;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.oaf-sig-tag {
-  font-family: var(--font-sans);
+.oaf-signature-badge {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 9px;
   font-weight: 700;
   color: #059669;
@@ -172,7 +167,7 @@
 }
 
 /* ============================================================
-   PRINT STYLES FOR EXACT 4-PAGE OUTPUT
+   PRINT STYLES FOR EXACT 4 A4 PAGES
    ============================================================ */
 @media print {
   @page {
@@ -205,11 +200,11 @@
     background: transparent !important;
   }
 
-  .oaf-document-wrapper {
+  .oaf-document-container {
     gap: 0 !important;
   }
 
-  .oaf-page-sheet {
+  .oaf-page-canvas {
     width: 210mm !important;
     height: 297mm !important;
     min-height: 297mm !important;
