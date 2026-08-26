@@ -428,12 +428,9 @@ export default function ApplicationPage() {
         </div>
       </div>
 
-      {/* Dual Pane Layout (Interactive Form + Live Official Paper Form Preview) */}
-      <div className="clean-form-layout">
-
-        {/* Main Form Left Column */}
-        <div className="clean-form-container">
-          <div className="clean-form-card">
+      {/* Main Form Container */}
+      <div className="clean-form-container">
+        <div className="clean-form-card">
 
             {/* ================= STEP 1: PERSONAL INFORMATION ================= */}
             {currentStep === 1 && (
@@ -1378,25 +1375,6 @@ export default function ApplicationPage() {
 
           </div>
         </div>
-
-        {/* Live Official Form Preview Sidebar (Real-Time Synchronized Replica) */}
-        <div className="clean-form-preview-sidebar">
-          <div className="clean-preview-top-bar">
-            <div className="clean-preview-badge">
-              <DocumentIcon size={14} color="#2563eb" />
-              <span>{isTa ? 'அதிகாரப்பூர்வ படிவ நேரலை முன்னோட்டம்' : 'Official Paper Form Live Preview'}</span>
-            </div>
-            <span style={{ fontSize: '11px', color: '#64748b' }}>
-              {isTa ? 'நிகழ்நேரப் பிரதி' : 'Live Sync'}
-            </span>
-          </div>
-
-          <div className="clean-preview-scroll-area">
-            <OfficialApplicationForm data={formData} isMini={true} />
-          </div>
-        </div>
-
-      </div>
 
     </div>
   )
