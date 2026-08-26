@@ -98,7 +98,7 @@ export default function OfficialApplicationForm({ data }) {
     <div className="digi-form-canvas-container">
 
       {/* ============================================================
-          PAGE 1 OF 2: COMFORTABLE, SPACIOUS, READABLE & FULL
+          PAGE 1 OF 2: BREATHABLE, ELEGANT, UNMERGED HEADER & CLEAN FLOW
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-1">
         
@@ -108,7 +108,7 @@ export default function OfficialApplicationForm({ data }) {
           <div className="watermark-text">APOSTOLIC COUNCIL OF INDIA DIOCESE</div>
         </div>
 
-        {/* Header */}
+        {/* Breathable Header */}
         <div className="digi-page-header">
           <div className="digi-crest-container">
             <img
@@ -124,10 +124,13 @@ export default function OfficialApplicationForm({ data }) {
               An Episcopal Diocese & Public Religious Trust (Indian Trust Act 1882 - Regd No: 62/Bk.4/2013)
             </p>
             <p className="digi-trust-line-2">
-              Under Part I, Section 5(1) Part IV Sections 10, 12, 14, 15, Part VI Section 64 of The Indian Christian Marriage Act 1872
+              Under Part I, Sec. 5(1) • Part IV, Sec. 10, 12, 14, 15 • Part VI, Sec. 64 of The Indian Christian Marriage Act 1872
             </p>
             <p className="digi-trust-line-3">
-              Constituent and/or The Christian Clergy Rights and Traditions • Central Office: Melapatty, Hanumantharayankottai - 624 054, Dindigul
+              Constituent and/or The Christian Clergy Rights and Traditions
+            </p>
+            <p className="digi-office-address">
+              Central Office: Melapatty, Hanumantharayankottai - 624 054, Dindigul, Tamil Nadu, India
             </p>
             <p className="digi-contact-details">
               Phone: 0451 2490100 • E-mail: info@acidiocese.org / rev.johnsondurai@gmail.com
