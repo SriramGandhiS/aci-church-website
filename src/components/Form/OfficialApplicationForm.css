@@ -1016,56 +1016,98 @@
 }
 
 /* ============================================================
-   PRINT STYLES FOR EXACT 2 A4 PAGES
+   AIRTIGHT PRINT STYLES FOR EXACT 2 POPULATED A4 PAGES
    ============================================================ */
 @media print {
   @page {
-    size: A4 portrait;
-    margin: 0;
+    size: 210mm 297mm;
+    margin: 0mm !important;
   }
 
+  html,
   body {
-    background: #ffffff !important;
-    color: #000000 !important;
+    width: 210mm !important;
+    height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  nav,
+  /* Hide Website Navigation, Headers, Footers, and Toolbars ONLY */
   header,
+  nav,
   footer,
+  .site-header,
+  .site-footer,
   .application-actions-bar,
   .pdf-toolbar,
+  .pdf-toolbar-clean,
   .app-save-bar,
   .clean-app-header,
-  .clean-form-container,
-  .clean-app-page {
+  .clean-stepper-wrap,
+  .clean-actions-bar,
+  .app-review-tabs,
+  .app-resume-banner,
+  .app-modal-overlay,
+  .app-modal-box {
     display: none !important;
-  }
-
-  .filled-pdf-viewer {
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
-    background: transparent !important;
   }
 
+  /* Ensure containers NEVER hide the form and DO NOT add outer padding in print */
+  .clean-app-page,
+  .clean-form-container,
+  .clean-form-card,
+  .filled-pdf-viewer,
+  .official-form-preview-container,
   .digi-form-canvas-container {
+    display: block !important;
+    visibility: visible !important;
+    background: #ffffff !important;
+    margin: 0 !important;
     padding: 0 !important;
-    gap: 0 !important;
-    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 210mm !important;
   }
 
+  /* Strict A4 Print Sheets */
   .digi-a4-sheet {
+    display: flex !important;
+    visibility: visible !important;
     width: 210mm !important;
     height: 297mm !important;
+    max-height: 297mm !important;
     min-height: 297mm !important;
     margin: 0 !important;
     box-shadow: none !important;
-    page-break-after: always !important;
-    break-after: page !important;
+    border: none !important;
     box-sizing: border-box !important;
     padding: 6mm 11mm 5mm !important;
     overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    position: relative !important;
+  }
+
+  /* Force page break AFTER Page 1 */
+  .digi-a4-sheet:first-child,
+  #official-page-1 {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  /* DO NOT break after Page 2 (Prevents blank 3rd page) */
+  .digi-a4-sheet:last-child,
+  .digi-a4-sheet:last-of-type,
+  #official-page-2 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 }
