@@ -1,6 +1,6 @@
 /* ============================================================
    DIGITAL OFFICIAL ACI DIOCESE FORM STYLES
-   HD Unicode Tamil Typography • Single-Column Milestones • Zero Trailing Gaps
+   HD Unicode Tamil Typography • Generous Page 2 Fill • Zero Trailing Gaps
    ============================================================ */
 
 .digi-form-canvas-container {
@@ -391,10 +391,10 @@
 .digi-full-black-banner {
   background: #000000;
   color: #ffffff;
-  font-size: 7.6px;
+  font-size: 7.8px;
   font-weight: 700;
-  padding: 1.8px 5px;
-  margin: 1.8px 0 2.2px;
+  padding: 2.2px 6px;
+  margin: 2px 0 2.5px;
   letter-spacing: 0.03em;
   position: relative;
   z-index: 1;
@@ -661,8 +661,8 @@
 .digi-milestones-single-col-list {
   display: flex;
   flex-direction: column;
-  gap: 2.5px;
-  padding: 2px 0 1px;
+  gap: 3px;
+  padding: 2.5px 0 1.5px;
   position: relative;
   z-index: 1;
 }
@@ -672,7 +672,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 6px;
-  padding: 1.8px 2px;
+  padding: 2.2px 3px;
   border-bottom: 1px dashed #cbd5e1;
 }
 
@@ -681,7 +681,7 @@
 }
 
 .m-text {
-  font-size: 7.3px;
+  font-size: 7.4px;
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, "Noto Sans Tamil", "Mukta Malar", sans-serif;
   color: #000000;
@@ -694,8 +694,8 @@
   width: 100%;
   border-collapse: collapse;
   border: 1.2px solid #000000;
-  margin-bottom: 3px;
-  font-size: 7.8px;
+  margin-bottom: 5px;
+  font-size: 8.2px;
   position: relative;
   z-index: 1;
   background: rgba(255, 255, 255, 0.88);
@@ -704,18 +704,18 @@
 .digi-clean-form-table th {
   border: 1px solid #000000;
   background: #f8fafc;
-  padding: 2.2px 4px;
+  padding: 3px 5px;
   text-align: left;
   font-weight: 700;
-  font-size: 7.6px;
+  font-size: 8px;
 }
 
 .digi-clean-form-table td {
   border: 1px solid #000000;
-  padding: 2.5px 4px;
-  height: 20px;
+  padding: 3.5px 5px;
+  height: 25px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 8.8px;
+  font-size: 9.2px;
   font-weight: 700;
   color: #001a4e;
 }
@@ -728,10 +728,10 @@
 /* Motivation Generous Box */
 .digi-motivation-content-box {
   border: 1.2px solid #000000;
-  padding: 4px 7px;
-  margin-bottom: 3px;
+  padding: 6px 10px;
+  margin-bottom: 5px;
   background: rgba(255, 255, 255, 0.88);
-  min-height: 38px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   position: relative;
@@ -740,10 +740,10 @@
 
 .digi-motivation-text-content {
   font-family: "Courier New", Courier, monospace;
-  font-size: 8.6px;
+  font-size: 9px;
   font-weight: 600;
   color: #001a4e;
-  line-height: 1.3;
+  line-height: 1.35;
   margin: 0;
 }
 
@@ -751,8 +751,8 @@
 .digi-references-two-col-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  margin-bottom: 3px;
+  gap: 10px;
+  margin-bottom: 5px;
   position: relative;
   z-index: 1;
 }
@@ -765,27 +765,27 @@
 .digi-ref-card-header {
   background: #f1f5f9;
   border-bottom: 1.2px solid #000000;
-  padding: 1.8px 4px;
+  padding: 2.5px 5px;
   font-weight: 700;
-  font-size: 7.6px;
+  font-size: 8px;
 }
 
 .digi-ref-card-content {
-  padding: 3px 4px;
+  padding: 4px 6px;
   display: flex;
   flex-direction: column;
-  gap: 1.8px;
-  font-size: 7.4px;
+  gap: 2.2px;
+  font-size: 7.8px;
 }
 
 .digi-ref-line {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .digi-ref-line .r-lbl {
-  width: 82px;
+  width: 88px;
   flex-shrink: 0;
   font-weight: 600;
 }
@@ -794,46 +794,46 @@
   font-family: "Courier New", monospace;
   font-weight: 700;
   color: #001a4e;
-  font-size: 8.4px;
+  font-size: 8.8px;
 }
 
 .digi-ref-attestation-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5px;
-  padding-top: 1.2px;
+  margin-top: 2px;
+  padding-top: 1.8px;
   border-top: 1px dashed #cbd5e1;
 }
 
 .digi-attest-seal {
   font-weight: 700;
   color: #059669;
-  font-size: 7.2px;
+  font-size: 7.6px;
 }
 
 /* Statutory Declaration & Signature */
 .digi-declaration-enclosing-card {
   border: 1.2px solid #000000;
-  padding: 3.5px 6px;
-  margin-bottom: 3px;
+  padding: 5px 8px;
+  margin-bottom: 5px;
   background: rgba(255, 255, 255, 0.88);
   position: relative;
   z-index: 1;
 }
 
 .digi-declaration-english {
-  font-size: 7.2px;
-  line-height: 1.2;
-  margin: 0 0 1px;
+  font-size: 7.6px;
+  line-height: 1.24;
+  margin: 0 0 1.5px;
   font-weight: 500;
 }
 
 .digi-declaration-tamil {
   font-family: "Noto Sans Tamil", "Mukta Malar", sans-serif;
-  font-size: 6.6px;
-  line-height: 1.2;
-  margin: 0 0 2.5px;
+  font-size: 7px;
+  line-height: 1.24;
+  margin: 0 0 3px;
   color: #222222;
 }
 
@@ -842,22 +842,22 @@
   justify-content: space-between;
   align-items: flex-end;
   border-top: 1px solid #000000;
-  padding-top: 2.5px;
-  margin-top: 1.5px;
+  padding-top: 3.5px;
+  margin-top: 2px;
 }
 
 .digi-declaration-meta-side {
   display: flex;
   flex-direction: column;
-  gap: 1.2px;
-  font-size: 7.6px;
+  gap: 1.8px;
+  font-size: 8px;
 }
 
 .digi-meta-item .val {
   font-family: "Courier New", monospace;
   font-weight: 700;
   color: #001a4e;
-  font-size: 8.6px;
+  font-size: 9px;
   margin-left: 2px;
 }
 
@@ -866,12 +866,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 180px;
+  min-width: 190px;
 }
 
 .digi-handwritten-signature {
   font-family: "Caveat", "Dancing Script", "Brush Script MT", "Segoe Script", cursive;
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 700;
   color: #0c2461;
   letter-spacing: 0.04em;
@@ -881,19 +881,19 @@
 }
 
 .digi-sig-underline-bar {
-  width: 150px;
+  width: 160px;
   border-bottom: 1.2px solid #000000;
-  margin-bottom: 1.2px;
+  margin-bottom: 1.5px;
 }
 
 .digi-sig-title-label {
-  font-size: 6.6px;
+  font-size: 7px;
   color: #333333;
   font-weight: 600;
 }
 
 .digi-sig-verified-tag {
-  font-size: 6.2px;
+  font-size: 6.5px;
   font-weight: 700;
   color: #059669;
   letter-spacing: 0.05em;
@@ -903,8 +903,8 @@
 .digi-checklist-single-col-list {
   display: flex;
   flex-direction: column;
-  gap: 2.2px;
-  padding: 2.5px 2px 1.5px;
+  gap: 3px;
+  padding: 3px 2px 2px;
   position: relative;
   z-index: 1;
 }
@@ -912,13 +912,13 @@
 .chk-full-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 8px;
-  line-height: 1.22;
+  gap: 7px;
+  font-size: 8.4px;
+  line-height: 1.25;
 }
 
 .chk-box-dark {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 900;
   color: #000000;
   line-height: 1;
@@ -933,10 +933,10 @@
 /* Sheet Footer */
 .digi-sheet-footer {
   margin-top: auto;
-  padding-top: 1.5px;
+  padding-top: 2px;
   border-top: 1px solid #cbd5e1;
   text-align: right;
-  font-size: 6.2px;
+  font-size: 6.5px;
   color: #64748b;
   position: relative;
   z-index: 1;
