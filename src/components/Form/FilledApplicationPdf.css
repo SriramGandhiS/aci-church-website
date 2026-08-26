@@ -1,6 +1,7 @@
 /* ============================================================
    OFFICIAL FILLED APPLICATION TEMPLATE (PRINT & PREVIEW)
    Clean Standalone Action Bar • Official Document Preview
+   Desktop & Mobile Calibrated
    ============================================================ */
 
 .filled-pdf-viewer {
@@ -8,10 +9,12 @@
   padding: 24px 16px 80px;
   min-height: 100vh;
   width: 100%;
+  max-width: 100vw;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 /* Standalone Action Bar Above Form */
@@ -33,6 +36,7 @@
 .app-action-btn-edit {
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 8px !important;
   background: #ffffff !important;
   color: #1e293b !important;
@@ -44,6 +48,7 @@
   cursor: pointer !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
   transition: all 0.18s ease !important;
+  min-height: 44px;
 }
 
 .app-action-btn-edit:hover {
@@ -55,6 +60,7 @@
 .app-action-btn-print {
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 8px !important;
   background: #1e40af !important;
   color: #ffffff !important;
@@ -66,6 +72,7 @@
   cursor: pointer !important;
   box-shadow: 0 3px 8px rgba(30, 64, 175, 0.35) !important;
   transition: all 0.18s ease !important;
+  min-height: 44px;
 }
 
 .app-action-btn-print:hover {
@@ -80,9 +87,32 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
-/* Print Styles */
+/* Screen Mobile Rules <= 420px */
+@media screen and (max-width: 420px) {
+  .filled-pdf-viewer {
+    padding: 16px 8px 40px;
+  }
+
+  .application-actions-bar {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 8px 12px !important;
+  }
+
+  .app-action-btn-edit,
+  .app-action-btn-print {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 18px !important;
+  }
+}
+
+/* Print Styles (Strict Isolation) */
 @media print {
   @page {
     size: 210mm 297mm;

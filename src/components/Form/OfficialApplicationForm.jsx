@@ -580,108 +580,114 @@ export default function OfficialApplicationForm({ data, onEdit, showActions = tr
           VI. Academic Qualification / பொதுக் கல்வித் தகுதி
         </div>
 
-        <table className="digi-clean-form-table">
-          <thead>
-            <tr>
-              <th style={{ width: '38px' }}>S.No</th>
-              <th>Examination Passed / தேர்ச்சி பெற்ற தேர்வு</th>
-              <th style={{ width: '85px' }}>Year / ஆண்டு</th>
-              <th>School / College / University பள்ளி / கல்லூரி / பல்கலைக் கழகம்</th>
-            </tr>
-          </thead>
-          <tbody>
-            {validAcademic.length > 0 ? (
-              validAcademic.map((row, idx) => (
-                <tr key={idx}>
-                  <td className="center-cell">{idx + 1}</td>
-                  <td>{row.examinationPassed || '\u00A0'}</td>
-                  <td className="center-cell">{row.year || '\u00A0'}</td>
-                  <td>{row.institution || '\u00A0'}</td>
-                </tr>
-              ))
-            ) : (
+        <div className="digi-table-scroll-wrapper">
+          <table className="digi-clean-form-table">
+            <thead>
               <tr>
-                <td className="center-cell">1</td>
-                <td>-</td>
-                <td className="center-cell">-</td>
-                <td>-</td>
+                <th style={{ width: '38px' }}>S.No</th>
+                <th>Examination Passed / தேர்ச்சி பெற்ற தேர்வு</th>
+                <th style={{ width: '85px' }}>Year / ஆண்டு</th>
+                <th>School / College / University பள்ளி / கல்லூரி / பல்கலைக் கழகம்</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {validAcademic.length > 0 ? (
+                validAcademic.map((row, idx) => (
+                  <tr key={idx}>
+                    <td className="center-cell">{idx + 1}</td>
+                    <td>{row.examinationPassed || '\u00A0'}</td>
+                    <td className="center-cell">{row.year || '\u00A0'}</td>
+                    <td>{row.institution || '\u00A0'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="center-cell">1</td>
+                  <td>-</td>
+                  <td className="center-cell">-</td>
+                  <td>-</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* VII. Theological Qualification Table */}
         <div className="digi-full-black-banner">
           VII. Theological Qualification / இறையியல் தகுதி
         </div>
 
-        <table className="digi-clean-form-table">
-          <thead>
-            <tr>
-              <th style={{ width: '38px' }}>S.No</th>
-              <th>Course Passed / தேர்ச்சி பெற்ற படிப்பு</th>
-              <th style={{ width: '85px' }}>Year / ஆண்டு</th>
-              <th>Seminary / Bible College வேத பள்ளி / கல்லூரி</th>
-            </tr>
-          </thead>
-          <tbody>
-            {validTheological.length > 0 ? (
-              validTheological.map((row, idx) => (
-                <tr key={idx}>
-                  <td className="center-cell">{idx + 1}</td>
-                  <td>{row.examinationPassed || '\u00A0'}</td>
-                  <td className="center-cell">{row.year || '\u00A0'}</td>
-                  <td>{row.institution || '\u00A0'}</td>
-                </tr>
-              ))
-            ) : (
+        <div className="digi-table-scroll-wrapper">
+          <table className="digi-clean-form-table">
+            <thead>
               <tr>
-                <td className="center-cell">1</td>
-                <td>-</td>
-                <td className="center-cell">-</td>
-                <td>-</td>
+                <th style={{ width: '38px' }}>S.No</th>
+                <th>Course Passed / தேர்ச்சி பெற்ற படிப்பு</th>
+                <th style={{ width: '85px' }}>Year / ஆண்டு</th>
+                <th>Seminary / Bible College வேத பள்ளி / கல்லூரி</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {validTheological.length > 0 ? (
+                validTheological.map((row, idx) => (
+                  <tr key={idx}>
+                    <td className="center-cell">{idx + 1}</td>
+                    <td>{row.examinationPassed || '\u00A0'}</td>
+                    <td className="center-cell">{row.year || '\u00A0'}</td>
+                    <td>{row.institution || '\u00A0'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="center-cell">1</td>
+                  <td>-</td>
+                  <td className="center-cell">-</td>
+                  <td>-</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* VIII. Family Details Table */}
         <div className="digi-full-black-banner">
           VIII. Family Details / குடும்ப விவரங்கள்
         </div>
 
-        <table className="digi-clean-form-table">
-          <thead>
-            <tr>
-              <th style={{ width: '38px' }}>S.No</th>
-              <th>Name / பெயர்</th>
-              <th style={{ width: '95px' }}>DOB / பிறந்த தேதி</th>
-              <th style={{ width: '105px' }}>Relationship / உறவுமுறை</th>
-              <th>Profession & Education / தொழில் & படிப்பு</th>
-            </tr>
-          </thead>
-          <tbody>
-            {validFamily.length > 0 ? (
-              validFamily.map((f, idx) => (
-                <tr key={idx}>
-                  <td className="center-cell">{idx + 1}</td>
-                  <td>{f.name || '\u00A0'}</td>
-                  <td className="center-cell">{f.dob || '\u00A0'}</td>
-                  <td>{f.relationship || '\u00A0'}</td>
-                  <td>{f.professionEducation || '\u00A0'}</td>
-                </tr>
-              ))
-            ) : (
+        <div className="digi-table-scroll-wrapper">
+          <table className="digi-clean-form-table">
+            <thead>
               <tr>
-                <td className="center-cell">1</td>
-                <td>-</td>
-                <td className="center-cell">-</td>
-                <td>-</td>
-                <td>-</td>
+                <th style={{ width: '38px' }}>S.No</th>
+                <th>Name / பெயர்</th>
+                <th style={{ width: '95px' }}>DOB / பிறந்த தேதி</th>
+                <th style={{ width: '105px' }}>Relationship / உறவுமுறை</th>
+                <th>Profession & Education / தொழில் & படிப்பு</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {validFamily.length > 0 ? (
+                validFamily.map((f, idx) => (
+                  <tr key={idx}>
+                    <td className="center-cell">{idx + 1}</td>
+                    <td>{f.name || '\u00A0'}</td>
+                    <td className="center-cell">{f.dob || '\u00A0'}</td>
+                    <td>{f.relationship || '\u00A0'}</td>
+                    <td>{f.professionEducation || '\u00A0'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="center-cell">1</td>
+                  <td>-</td>
+                  <td className="center-cell">-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* IX. Motivation Box */}
         <div className="digi-full-black-banner">
