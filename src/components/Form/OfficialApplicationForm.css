@@ -1,6 +1,6 @@
 /* ============================================================
    DIGITAL OFFICIAL ACI DIOCESE FORM STYLES
-   Exact 4-Page Faithful Document Density & Geometry
+   High Information Density • Zero Blank Voids • 4 Complete Pages
    ============================================================ */
 
 .digi-form-canvas-container {
@@ -54,8 +54,8 @@
   align-items: center;
   gap: 12px;
   border-bottom: 2px solid #000000;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 .digi-crest-container {
@@ -63,8 +63,8 @@
 }
 
 .digi-crest-logo {
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
   display: block;
 }
@@ -156,7 +156,7 @@
 }
 
 /* ============================================================
-   TOP ADMINISTRATIVE BLOCK: Office (1fr) | Seal (150px) | Photo (130px)
+   TOP ADMINISTRATIVE BLOCK: Office (1fr) | Seal (145px) | Photo (125px)
    ============================================================ */
 .digi-top-admin-block {
   display: grid;
@@ -633,39 +633,32 @@
 }
 
 /* ============================================================
-   PAGE 3: FAMILY & LARGE MOTIVATION ESSAY FRAME
+   PAGE 3: COMPACT MOTIVATION BOX
    ============================================================ */
-.digi-motivation-full-frame {
-  border: 1.3px solid #000000;
-  min-height: 240px;
-  flex: 1;
+.digi-motivation-compact-box {
+  border: 1.2px solid #000000;
   padding: 6px 8px;
-  display: flex;
-  flex-direction: column;
   margin-bottom: 4px;
+  background: #ffffff;
+  min-height: 48px;
 }
 
-.digi-motivation-paragraph {
+.digi-motivation-text-content {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 8.8px;
   font-weight: 600;
   color: #001a4e;
-  line-height: 1.4;
+  line-height: 1.35;
   margin: 0;
 }
 
-.digi-blank-line-rules .b-rule {
-  border-bottom: 1px solid #cbd5e1;
-  height: 22px;
-}
-
 /* ============================================================
-   PAGE 4: REFERENCES & CURSIVE SIGNATURE
+   PAGE 4: REFERENCES, DECLARATION & SYNOD APPROVAL
    ============================================================ */
 .digi-references-two-col-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 3px;
 }
 
@@ -723,7 +716,7 @@
 
 /* Statutory Declaration & Signature */
 .digi-declaration-enclosing-card {
-  border: 1.3px solid #000000;
+  border: 1.2px solid #000000;
   padding: 4px 6px;
   margin-bottom: 3px;
 }
@@ -816,6 +809,59 @@
 
 .chk-cell {
   line-height: 1.15;
+}
+
+/* Diocesan Synod Approval Grid (Page 4 Bottom) */
+.digi-synod-approval-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.digi-synod-col-card {
+  border: 1.2px solid #000000;
+}
+
+.digi-synod-header {
+  background: #f1f5f9;
+  border-bottom: 1.2px solid #000000;
+  padding: 2px 5px;
+  font-weight: 700;
+  font-size: 7.8px;
+}
+
+.digi-synod-body {
+  padding: 3px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 7.5px;
+}
+
+.s-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.s-sig-area {
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px dashed #cbd5e1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.s-sig-lbl {
+  font-size: 6.8px;
+  color: #555555;
+}
+
+.s-sig-stamp {
+  font-size: 7.2px;
+  font-weight: 700;
+  color: #059669;
 }
 
 /* Sheet Footer */
