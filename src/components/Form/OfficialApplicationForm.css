@@ -1,169 +1,746 @@
 /* ============================================================
-   OFFICIAL ACI DIOCESE FORM DIGITAL FILLING SYSTEM
-   Pixel-Calibrated Exact Replica on Original Scanned Template
+   DIGITAL OFFICIAL ACI DIOCESE FORM STYLES
+   Crisp Vector-Sharp Digital Document Reconstruction
    ============================================================ */
 
-.oaf-document-container {
+.digi-official-document {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 36px;
   width: 100%;
+  background-color: #f1f5f9;
+  padding: 24px 0;
 }
 
-.oaf-page-canvas {
-  position: relative;
+/* Standard A4 Page Container */
+.digi-a4-page {
   width: 210mm;
-  height: 297mm;
   min-height: 297mm;
   background: #ffffff;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  color: #000000;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
   margin: 0 auto;
-  overflow: hidden;
+  padding: 12mm 14mm 10mm;
+  box-sizing: border-box;
+  position: relative;
   page-break-after: always;
   break-after: page;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
 }
 
 @media screen and (max-width: 850px) {
-  .oaf-page-canvas {
+  .digi-a4-page {
     width: 100%;
     min-height: auto;
-    height: auto;
-    aspect-ratio: 1240 / 1755;
+    padding: 16px 12px;
+    box-shadow: none;
   }
 }
 
-/* Original Scanned Form Background */
-.oaf-template-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
+/* Header */
+.digi-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.digi-crest-wrap {
+  flex-shrink: 0;
+}
+
+.digi-crest-img {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
   display: block;
-  z-index: 1;
-  pointer-events: none;
 }
 
-/* Dynamic Filling Layer */
-.oaf-dynamic-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-/* Character Boxed Row */
-.oaf-boxed-row {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  z-index: 3;
-}
-
-.oaf-char-cell {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #021a44;
-  letter-spacing: 0;
+.digi-header-text {
+  flex: 1;
   text-align: center;
-  box-sizing: border-box;
 }
 
-/* Checkbox Mark */
-.oaf-check-mark {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 900;
-  color: #021a44;
-  z-index: 3;
-  line-height: 1;
+.digi-diocesan-name {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #000000;
+  margin: 0 0 2px;
+  letter-spacing: 0.02em;
 }
 
-/* Text Line */
-.oaf-text-line {
-  position: absolute;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
+.digi-reg-line-1 {
+  font-size: 9.5px;
   font-weight: 700;
-  color: #021a44;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  z-index: 3;
-  line-height: 1.2;
+  margin: 0;
 }
 
-/* Passport Photo Container */
-.oaf-photo-container {
-  position: absolute;
-  z-index: 3;
-  overflow: hidden;
-  background: #ffffff;
+.digi-reg-line-2,
+.digi-reg-line-3 {
+  font-size: 8.5px;
+  margin: 1px 0 0;
+}
+
+.digi-office-line,
+.digi-contact-line {
+  font-size: 8.5px;
+  margin: 1px 0 0;
+}
+
+/* Title Section */
+.digi-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 10px;
+}
+
+.digi-title-center {
+  flex: 1;
+  text-align: center;
+}
+
+.digi-main-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  letter-spacing: 0.04em;
+}
+
+.digi-tamil-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 2px 0 0;
+}
+
+.digi-issue-date-box {
+  border: 1.5px solid #000000;
+  padding: 3px 6px;
+  text-align: center;
+  font-size: 9.5px;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.digi-issue-lbl {
+  display: block;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.digi-issue-val {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 10.5px;
+}
+
+/* Instructions */
+.digi-instructions-text {
+  font-size: 8px;
+  line-height: 1.25;
+  color: #333333;
+  margin: 0 0 8px;
+  text-align: justify;
+}
+
+/* Office & Photo Block */
+.digi-office-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.digi-office-box {
+  border: 1.5px solid #000000;
+}
+
+.digi-office-header {
+  background: #000000;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 9.5px;
+  text-align: center;
+  padding: 3px;
+  letter-spacing: 0.05em;
+}
+
+.digi-office-body {
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.digi-office-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.digi-off-lbl {
+  width: 145px;
+  flex-shrink: 0;
+}
+
+.digi-off-appno {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 11px;
+}
+
+.digi-approval-tag {
+  border: 1px solid #000000;
+  padding: 1px 6px;
+  font-size: 8.5px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.digi-seal-circle {
+  border: 1px dashed #000000;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 7px;
+  text-align: center;
+  font-weight: 700;
+  color: #666666;
+  margin-left: auto;
 }
 
-.oaf-photo-container img {
+/* Photo Box */
+.digi-photo-box {
+  border: 1.5px solid #000000;
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.digi-photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Motivation Essay */
-.oaf-motivation-text {
-  position: absolute;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
-  font-weight: 600;
-  color: #021a44;
-  line-height: 1.5;
-  padding: 8px 12px;
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 3;
+.digi-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  color: #666666;
 }
 
-/* Digital Signature */
-.oaf-signature-block {
-  position: absolute;
-  z-index: 3;
+.ph-line-1 { font-size: 8px; font-weight: 700; line-height: 1.2; }
+.ph-line-2 { font-size: 7.5px; margin: 4px 0; }
+.ph-line-3 { font-size: 7.5px; font-weight: 600; }
+
+/* Section Banner */
+.digi-section-banner {
+  background: #000000;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  margin: 6px 0 8px;
+  letter-spacing: 0.04em;
+}
+
+.digi-section-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Boxed Character Grids */
+.digi-box-row {
+  display: inline-flex;
+  border-top: 1.2px solid #000000;
+  border-left: 1.2px solid #000000;
+  border-bottom: 1.2px solid #000000;
+}
+
+.digi-box-cell {
+  width: 17.5px;
+  height: 21px;
+  border-right: 1.2px solid #000000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #001a4e;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.digi-box-cell.is-empty {
+  color: transparent;
+}
+
+/* Date Segments */
+.digi-date-segments {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.digi-date-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.digi-date-lbl {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* Field Rows & Layout */
+.digi-row-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 7px;
+}
+
+.digi-row-label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 9.5px;
+}
+
+.digi-sub-note {
+  font-size: 8px;
+  color: #555555;
+  font-weight: normal;
+}
+
+.digi-two-col-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 7px;
+}
+
+.digi-col-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Checkbox Styles */
+.digi-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.digi-check-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.digi-check-square {
+  width: 14px;
+  height: 14px;
+  border: 1.2px solid #000000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  color: #000000;
+  line-height: 1;
+}
+
+.chk-en {
+  font-weight: 700;
+}
+
+.chk-ta {
+  font-size: 8.5px;
+  margin-left: 3px;
+}
+
+/* Address Block */
+.digi-address-block {
+  border: 1.2px solid #000000;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.digi-address-title {
+  background: #f1f5f9;
+  border-bottom: 1.2px solid #000000;
+  padding: 3px 8px;
+  font-size: 9px;
+  display: flex;
+  gap: 6px;
+}
+
+.digi-addr-grid {
+  display: flex;
+  border-bottom: 1px solid #000000;
+}
+
+.digi-addr-grid:last-child {
+  border-bottom: none;
+}
+
+.digi-addr-cell {
+  border-right: 1px solid #000000;
+  padding: 3px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 30px;
+}
+
+.digi-addr-cell:last-child {
+  border-right: none;
+}
+
+.digi-addr-lbl {
+  font-size: 8px;
+  color: #444444;
+  font-weight: 600;
+}
+
+.digi-addr-val {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #001a4e;
+  margin-top: 1px;
+}
+
+/* Page 2 Spiritual & Affiliation */
+.digi-spiritual-calling-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.digi-calling-subrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0 8px;
+}
+
+.digi-other-calling {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.digi-fill-line {
+  font-size: 9px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  color: #001a4e;
+}
+
+.digi-affiliation-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 10px;
+}
+
+.digi-aff-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Milestones List */
+.digi-milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.digi-milestone-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.digi-milestone-text {
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+/* Page 3 Tables */
+.digi-intent-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 10px;
+}
+
+.digi-intent-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.digi-intent-opts {
+  display: flex;
+  gap: 14px;
+}
+
+.digi-official-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #000000;
+  margin-bottom: 8px;
+  font-size: 9px;
+}
+
+.digi-official-table th {
+  border: 1px solid #000000;
+  background: #f8fafc;
+  padding: 4px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.digi-official-table td {
+  border: 1px solid #000000;
+  padding: 4px 6px;
+  height: 24px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #001a4e;
+}
+
+.digi-official-table td.center,
+.digi-official-table th.center {
+  text-align: center;
+}
+
+/* Motivation Box */
+.digi-motivation-box {
+  border: 1.5px solid #000000;
+  min-height: 120px;
+  padding: 8px 10px;
+}
+
+.digi-motivation-text {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #001a4e;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.digi-empty-lines .line {
+  border-bottom: 1px solid #cbd5e1;
+  height: 24px;
+}
+
+/* Page 4 References & Declaration */
+.digi-references-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.digi-ref-card {
+  border: 1.2px solid #000000;
+}
+
+.digi-ref-header {
+  background: #f1f5f9;
+  border-bottom: 1.2px solid #000000;
+  padding: 4px 8px;
+  font-weight: 700;
+  font-size: 9px;
+}
+
+.digi-ref-body {
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 8.5px;
+}
+
+.digi-ref-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.digi-ref-row .lbl {
+  width: 95px;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.digi-ref-row .val {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  color: #001a4e;
+}
+
+.digi-ref-sig-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.sig-placeholder {
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Declaration Box */
+.digi-declaration-box {
+  border: 1.5px solid #000000;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.digi-dec-en {
+  font-size: 9px;
+  line-height: 1.35;
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+
+.digi-dec-ta {
+  font-size: 8px;
+  line-height: 1.35;
+  margin: 0 0 8px;
+  color: #333333;
+}
+
+.digi-dec-bottom-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #000000;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+.digi-dec-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 9.5px;
+}
+
+.digi-dec-line span {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  color: #001a4e;
+  margin-left: 4px;
+}
+
+.digi-dec-right {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.oaf-signature-text {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
-  font-weight: 800;
-  color: #021a44;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.digi-signature-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2px;
 }
 
-.oaf-signature-badge {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 9px;
+.digi-sig-name {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 800;
+  color: #001a4e;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.digi-sig-badge {
+  font-size: 7.5px;
   font-weight: 700;
   color: #059669;
-  letter-spacing: 0.05em;
-  margin-top: 2px;
+}
+
+.digi-sig-label {
+  font-size: 8px;
+  color: #555555;
+}
+
+/* Enclosures Checklist */
+.digi-enclosures-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  font-size: 8px;
+  padding: 4px 0;
+}
+
+.digi-enc-item {
+  line-height: 1.25;
+}
+
+/* Page Footer */
+.digi-page-footer {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid #cbd5e1;
+  text-align: right;
+  font-size: 7.5px;
+  color: #64748b;
 }
 
 /* ============================================================
@@ -184,14 +761,14 @@
     print-color-adjust: exact !important;
   }
 
-  /* Hide everything except official form */
   nav,
   header,
   footer,
   .pdf-toolbar,
   .app-save-bar,
   .clean-app-header,
-  .clean-form-container {
+  .clean-form-container,
+  .clean-app-page {
     display: none !important;
   }
 
@@ -200,11 +777,13 @@
     background: transparent !important;
   }
 
-  .oaf-document-container {
+  .digi-official-document {
+    padding: 0 !important;
     gap: 0 !important;
+    background: transparent !important;
   }
 
-  .oaf-page-canvas {
+  .digi-a4-page {
     width: 210mm !important;
     height: 297mm !important;
     min-height: 297mm !important;
@@ -212,6 +791,7 @@
     box-shadow: none !important;
     page-break-after: always !important;
     break-after: page !important;
-    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding: 12mm 14mm 10mm !important;
   }
 }

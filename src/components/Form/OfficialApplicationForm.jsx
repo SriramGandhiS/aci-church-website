@@ -1,114 +1,77 @@
 import React from 'react'
-import {
-  FORM_CANVAS,
-  PAGE_1_FIELDS,
-  PAGE_2_FIELDS,
-  PAGE_3_FIELDS,
-  PAGE_4_FIELDS,
-} from '../../data/officialFormLayout'
 import './OfficialApplicationForm.css'
 
-const toLeft = (x) => `${(x / FORM_CANVAS.width) * 100}%`
-const toTop = (y) => `${(y / FORM_CANVAS.height) * 100}%`
-const toWidth = (w) => `${(w / FORM_CANVAS.width) * 100}%`
-const toHeight = (h) => `${(h / FORM_CANVAS.height) * 100}%`
-
-// Render Character-by-Character in exact boxes
-function renderBoxedChars(text, startX, y, boxW, boxH, count) {
-  const chars = (text || '').toUpperCase().replace(/[^A-Z0-9\s\.\-]/g, '').slice(0, count).split('')
+// Helper to render an array of individual digital character boxes
+function DigitBoxes({ text = '', count = 24, className = '' }) {
+  const clean = (text || '')
+    .toString()
+    .toUpperCase()
+    .replace(/[^A-Z0-9\s\.\,\/\-]/g, '')
+    .slice(0, count)
+  const chars = clean.split('')
   while (chars.length < count) {
     chars.push('')
   }
 
-  const totalW = boxW * count
-
   return (
-    <div
-      className="oaf-boxed-row"
-      style={{
-        left: toLeft(startX),
-        top: toTop(y),
-        width: toWidth(totalW),
-        height: toHeight(boxH),
-      }}
-    >
-      {chars.map((char, idx) => (
-        <span
-          key={idx}
-          className="oaf-char-cell"
-          style={{
-            width: `${(1 / count) * 100}%`,
-            height: '100%',
-          }}
-        >
-          {char || ''}
+    <div className={`digi-box-row ${className}`}>
+      {chars.map((ch, idx) => (
+        <span key={idx} className={`digi-box-cell ${ch ? 'has-val' : 'is-empty'}`}>
+          {ch || '\u00A0'}
         </span>
       ))}
     </div>
   )
 }
 
-// Render Date String (YYYY-MM-DD) into segmented boxes
-function renderSegmentedDate(dateStr, dayCoords, monthCoords, yearCoords) {
-  if (!dateStr) return null
-  const parts = dateStr.split('-') // [YYYY, MM, DD]
+// Helper to render date into [D][D] [M][M] [Y][Y][Y][Y] segmented boxes
+function SegmentedDateBoxes({ dateStr = '' }) {
+  const parts = (dateStr || '').split('-') // YYYY-MM-DD
   const yyyy = parts[0] || ''
   const mm = parts[1] || ''
   const dd = parts[2] || ''
 
   return (
-    <>
-      {dayCoords && renderBoxedChars(dd, dayCoords.startX, dayCoords.y, dayCoords.boxW, dayCoords.boxH, 2)}
-      {monthCoords && renderBoxedChars(mm, monthCoords.startX, monthCoords.y, monthCoords.boxW, monthCoords.boxH, 2)}
-      {yearCoords && renderBoxedChars(yyyy, yearCoords.startX, yearCoords.y, yearCoords.boxW, yearCoords.boxH, 4)}
-    </>
-  )
-}
-
-// Render 8-digit continuous Date (DDMMYYYY)
-function renderDate8(dateStr, startX, y, boxW, boxH) {
-  if (!dateStr) return null
-  const parts = dateStr.split('-') // [YYYY, MM, DD]
-  const formatted = `${parts[2] || ''}${parts[1] || ''}${parts[0] || ''}`
-  return renderBoxedChars(formatted, startX, y, boxW, boxH, 8)
-}
-
-// Render Checkmark inside original Checkbox square
-function renderCheck(checked, x, y, size = 24) {
-  if (!checked) return null
-  return (
-    <div
-      className="oaf-check-mark"
-      style={{
-        left: toLeft(x),
-        top: toTop(y),
-        width: toWidth(size),
-        height: toHeight(size),
-      }}
-    >
-      ✓
+    <div className="digi-date-segments">
+      <div className="digi-date-group">
+        <span className="digi-date-lbl">Date</span>
+        <DigitBoxes text={dd} count={2} className="date-2" />
+      </div>
+      <div className="digi-date-group">
+        <span className="digi-date-lbl">Month</span>
+        <DigitBoxes text={mm} count={2} className="date-2" />
+      </div>
+      <div className="digi-date-group">
+        <span className="digi-date-lbl">Year</span>
+        <DigitBoxes text={yyyy} count={4} className="date-4" />
+      </div>
     </div>
   )
 }
 
-// Render single text value on line
-function renderLine(text, x, y, width = 300) {
-  if (!text) return null
+// Helper for continuous 8-box date (DDMMYYYY)
+function DateBoxes8({ dateStr = '' }) {
+  const parts = (dateStr || '').split('-')
+  const formatted = parts.length === 3 ? `${parts[2]}${parts[1]}${parts[0]}` : ''
+  return <DigitBoxes text={formatted} count={8} className="date-8" />
+}
+
+// Helper to render checkbox box
+function CheckboxBox({ checked = false, labelEn = '', labelTa = '' }) {
   return (
-    <div
-      className="oaf-text-line"
-      style={{
-        left: toLeft(x),
-        top: toTop(y),
-        width: toWidth(width),
-      }}
-    >
-      {text}
+    <div className={`digi-check-item ${checked ? 'is-checked' : ''}`}>
+      <span className="digi-check-square">
+        {checked ? '✓' : ''}
+      </span>
+      <span className="digi-check-labels">
+        <span className="chk-en">{labelEn}</span>
+        {labelTa && <span className="chk-ta">{labelTa}</span>}
+      </span>
     </div>
   )
 }
 
-export default function OfficialApplicationForm({ data, isMini = false }) {
+export default function OfficialApplicationForm({ data }) {
   const p = data?.personal || {}
   const perm = p.permanentAddress || {}
   const contact = p.contactAddressSameAsPermanent ? perm : (p.contactAddress || {})
@@ -122,262 +85,756 @@ export default function OfficialApplicationForm({ data, isMini = false }) {
   const ref = data?.references || {}
   const dec = data?.declaration || {}
 
-  // Name without salutation in boxes, or with salutation
   const fullName = [p.salutation, p.name].filter(Boolean).join(' ').toUpperCase()
+  const appDate = p.applicationDate || new Date().toISOString().split('T')[0]
 
   return (
-    <div className={`oaf-document-container ${isMini ? 'is-mini' : ''}`}>
+    <div className="digi-official-document">
 
       {/* ============================================================
-          PAGE 1 OF 4: APPLICANT INFORMATION & ADDRESS
+          PAGE 1 OF 4: APPLICANT'S INFORMATIONS & PERSONAL DETAILS
           ============================================================ */}
-      <div className="oaf-page-canvas" id="official-page-1">
-        <img
-          src="/official-forms/page_1.png"
-          alt="ACI Application Page 1 Template"
-          className="oaf-template-bg"
-        />
+      <div className="digi-a4-page" id="digi-page-1">
+        
+        {/* Top Header */}
+        <div className="digi-header">
+          <div className="digi-crest-wrap">
+            <img src="/aci-logo.png" alt="ACI Crest" className="digi-crest-img" onError={(e) => { e.target.src = '/aci-logo.jpg' }} />
+          </div>
+          <div className="digi-header-text">
+            <h1 className="digi-diocesan-name">APOSTOLIC COUNCIL OF INDIA DIOCESE</h1>
+            <p className="digi-reg-line-1">
+              An Episcopal Diocese & Public Religious Trust (Indian Trust Act 1882 - Regd No: 62/Bk.4/2013)
+            </p>
+            <p className="digi-reg-line-2">
+              Under Part I, Section 5(1) Part IV Sections 10, 12, 14, 15, Part VI Section 64 of The Indian Christian Marriage Act 1872
+            </p>
+            <p className="digi-reg-line-3">
+              Constituent and/or The Christian Clergy Rights and Traditions
+            </p>
+            <p className="digi-office-line">
+              Central Office: 1/153, Melapatty, Hanumantharayankottai - 624 054, Dindigul District, Tamil Nadu, India.
+            </p>
+            <p className="digi-contact-line">
+              Phone: 0451 2490100 • E-mail: info@acidiocese.org / rev.johnsondurai@gmail.com
+            </p>
+          </div>
+        </div>
 
-        <div className="oaf-dynamic-layer">
-          {/* Issue Date on Top Right */}
-          {renderLine(p.applicationDate || '2026-08-26', PAGE_1_FIELDS.issueDate.x + 10, PAGE_1_FIELDS.issueDate.y + 16, 110)}
+        {/* Title Bar + Date of Issue */}
+        <div className="digi-title-section">
+          <div className="digi-title-center">
+            <h2 className="digi-main-title">DIOCESAN MEMBERSHIP APPLICATION FORM</h2>
+            <h3 className="digi-tamil-title">பேராய உறுப்பினர் விண்ணப்பப் படிவம்</h3>
+          </div>
+          <div className="digi-issue-date-box">
+            <span className="digi-issue-lbl">Date of issue</span>
+            <span className="digi-issue-val">{appDate}</span>
+          </div>
+        </div>
 
-          {/* Office Use Received Date (8 boxes) */}
-          {renderDate8(p.applicationDate || '2026-08-26', PAGE_1_FIELDS.officeReceivedDate.startX, PAGE_1_FIELDS.officeReceivedDate.y, PAGE_1_FIELDS.officeReceivedDate.boxW, PAGE_1_FIELDS.officeReceivedDate.boxH)}
+        {/* Mandatory Instructions */}
+        <p className="digi-instructions-text">
+          Read the Application carefully, fill in CAPITAL LETTERS, DO NOT OVERWRITE, select the appropriate box by ticking it (✓) and leave the inappropriate fields blank. / விண்ணப்பத்தை கவனமாக வாசித்து ஆங்கில பெரிய எழுத்துக்களில் தெளிவாக எழுதவும். பொருத்தமான தகவல்களுக்குரிய இடத்தில் (✓) குறியிடவும்.
+        </p>
 
-          {/* Passport Photo Box (Top Right) */}
-          {p.photoUrl && (
-            <div
-              className="oaf-photo-container"
-              style={{
-                left: toLeft(PAGE_1_FIELDS.photo.x),
-                top: toTop(PAGE_1_FIELDS.photo.y),
-                width: toWidth(PAGE_1_FIELDS.photo.width),
-                height: toHeight(PAGE_1_FIELDS.photo.height),
-              }}
-            >
-              <img src={p.photoUrl} alt="Applicant Passport Photo" />
+        {/* Office Use & Photo Block */}
+        <div className="digi-office-photo-grid">
+          
+          {/* Office Use Box */}
+          <div className="digi-office-box">
+            <div className="digi-office-header">
+              FOR OFFICE USE ONLY / அலுவலகப் பணிக்கு மட்டும்
             </div>
-          )}
+            <div className="digi-office-body">
+              <div className="digi-office-row">
+                <span className="digi-off-lbl">Application Number:</span>
+                <span className="digi-off-appno">002093 / ACI-2026</span>
+                <div className="digi-approval-tag">APPROVAL</div>
+              </div>
 
-          {/* 1. Full Name in Character Boxes (ONE single location) */}
-          {renderBoxedChars(fullName, PAGE_1_FIELDS.name.startX, PAGE_1_FIELDS.name.y, PAGE_1_FIELDS.name.boxW, PAGE_1_FIELDS.name.boxH, PAGE_1_FIELDS.name.count)}
+              <div className="digi-office-row">
+                <span className="digi-off-lbl">Application Received on:</span>
+                <DateBoxes8 dateStr={appDate} />
+              </div>
 
-          {/* 2. Baptismal Name in Character Boxes */}
-          {renderBoxedChars(p.baptismalName, PAGE_1_FIELDS.baptismalName.startX, PAGE_1_FIELDS.baptismalName.y, PAGE_1_FIELDS.baptismalName.boxW, PAGE_1_FIELDS.baptismalName.boxH, PAGE_1_FIELDS.baptismalName.count)}
+              <div className="digi-office-row">
+                <span className="digi-off-lbl">Application Approved on:</span>
+                <DateBoxes8 dateStr="" />
+                <div className="digi-seal-circle">OFFICIAL SEAL</div>
+              </div>
 
-          {/* 3. Date of Birth (Date 2 + Month 2 + Year 4) */}
-          {renderSegmentedDate(p.dob, PAGE_1_FIELDS.dobDay, PAGE_1_FIELDS.dobMonth, PAGE_1_FIELDS.dobYear)}
+              <div className="digi-office-row">
+                <span className="digi-off-lbl">Membership Code:</span>
+                <DigitBoxes text="" count={10} className="code-10" />
+              </div>
+            </div>
+          </div>
 
-          {/* 4. Nationality in Character Boxes */}
-          {renderBoxedChars(p.nationality || 'INDIAN', PAGE_1_FIELDS.nationality.startX, PAGE_1_FIELDS.nationality.y, PAGE_1_FIELDS.nationality.boxW, PAGE_1_FIELDS.nationality.boxH, PAGE_1_FIELDS.nationality.count)}
+          {/* Dedicated Photo Box */}
+          <div className="digi-photo-box">
+            {p.photoUrl ? (
+              <img src={p.photoUrl} alt="Applicant Passport" className="digi-photo-img" />
+            ) : (
+              <div className="digi-photo-placeholder">
+                <span className="ph-line-1">Affix Recent Passport size Photo</span>
+                <span className="ph-line-2">To be Self attested</span>
+                <span className="ph-line-3">சமீபத்திய புகைப்படம்</span>
+              </div>
+            )}
+          </div>
+        </div>
 
-          {/* 5. Gender Checkboxes */}
-          {renderCheck(p.gender === 'Male', PAGE_1_FIELDS.genderMale.x, PAGE_1_FIELDS.genderMale.y, PAGE_1_FIELDS.genderMale.size)}
-          {renderCheck(p.gender === 'Female', PAGE_1_FIELDS.genderFemale.x, PAGE_1_FIELDS.genderFemale.y, PAGE_1_FIELDS.genderFemale.size)}
+        {/* Section Divider Banner */}
+        <div className="digi-section-banner">
+          APPLICANT'S INFORMATIONS / விண்ணப்பதாரரின் தகவல்கள்
+        </div>
 
-          {/* 6. Marital Status Checkboxes */}
-          {renderCheck(p.maritalStatus === 'Married', PAGE_1_FIELDS.maritalMarried.x, PAGE_1_FIELDS.maritalMarried.y, PAGE_1_FIELDS.maritalMarried.size)}
-          {renderCheck(p.maritalStatus === 'Bachelor', PAGE_1_FIELDS.maritalBachelor.x, PAGE_1_FIELDS.maritalBachelor.y, PAGE_1_FIELDS.maritalBachelor.size)}
-          {renderCheck(p.maritalStatus === 'Spinster', PAGE_1_FIELDS.maritalSpinster.x, PAGE_1_FIELDS.maritalSpinster.y, PAGE_1_FIELDS.maritalSpinster.size)}
-          {renderCheck(p.maritalStatus === 'Widowed', PAGE_1_FIELDS.maritalWidowed.x, PAGE_1_FIELDS.maritalWidowed.y, PAGE_1_FIELDS.maritalWidowed.size)}
+        {/* I. Personal Details */}
+        <div className="digi-field-group">
+          <div className="digi-section-title">
+            I. Personal Details / சுய விவரங்கள்
+          </div>
 
-          {/* 7. Permanent Address */}
-          {renderLine(perm.doorNo, PAGE_1_FIELDS.permDoorNo.x, PAGE_1_FIELDS.permDoorNo.y, PAGE_1_FIELDS.permDoorNo.width)}
-          {renderLine(perm.streetName, PAGE_1_FIELDS.permStreet.x, PAGE_1_FIELDS.permStreet.y, PAGE_1_FIELDS.permStreet.width)}
-          {renderLine(perm.cityTown, PAGE_1_FIELDS.permCity.x, PAGE_1_FIELDS.permCity.y, PAGE_1_FIELDS.permCity.width)}
-          {renderBoxedChars(perm.pincode, PAGE_1_FIELDS.permPincode.startX, PAGE_1_FIELDS.permPincode.y, PAGE_1_FIELDS.permPincode.boxW, PAGE_1_FIELDS.permPincode.boxH, 6)}
-          {renderLine(perm.taluk, PAGE_1_FIELDS.permTaluk.x, PAGE_1_FIELDS.permTaluk.y, PAGE_1_FIELDS.permTaluk.width)}
-          {renderLine(perm.district, PAGE_1_FIELDS.permDistrict.x, PAGE_1_FIELDS.permDistrict.y, PAGE_1_FIELDS.permDistrict.width)}
-          {renderLine(perm.state, PAGE_1_FIELDS.permState.x, PAGE_1_FIELDS.permState.y, PAGE_1_FIELDS.permState.width)}
-          {renderLine(perm.country || 'India', PAGE_1_FIELDS.permCountry.x, PAGE_1_FIELDS.permCountry.y, PAGE_1_FIELDS.permCountry.width)}
+          {/* 1. Name */}
+          <div className="digi-row-field">
+            <div className="digi-row-label">
+              <strong>Name</strong>
+              <span>பெயர்</span>
+              <span className="digi-sub-note">(Salutation - Mr., Mrs., Rev., Dr., Bro., Pastor)</span>
+            </div>
+            <div className="digi-row-boxes">
+              <DigitBoxes text={fullName} count={24} />
+            </div>
+          </div>
 
-          {/* 8. Contact Address */}
-          {renderLine(contact.doorNo, PAGE_1_FIELDS.contactDoorNo.x, PAGE_1_FIELDS.contactDoorNo.y, PAGE_1_FIELDS.contactDoorNo.width)}
-          {renderLine(contact.streetName, PAGE_1_FIELDS.contactStreet.x, PAGE_1_FIELDS.contactStreet.y, PAGE_1_FIELDS.contactStreet.width)}
-          {renderLine(contact.cityTown, PAGE_1_FIELDS.contactCity.x, PAGE_1_FIELDS.contactCity.y, PAGE_1_FIELDS.contactCity.width)}
-          {renderBoxedChars(contact.pincode, PAGE_1_FIELDS.contactPincode.startX, PAGE_1_FIELDS.contactPincode.y, PAGE_1_FIELDS.contactPincode.boxW, PAGE_1_FIELDS.contactPincode.boxH, 6)}
-          {renderLine(contact.taluk, PAGE_1_FIELDS.contactTaluk.x, PAGE_1_FIELDS.contactTaluk.y, PAGE_1_FIELDS.contactTaluk.width)}
-          {renderLine(contact.district, PAGE_1_FIELDS.contactDistrict.x, PAGE_1_FIELDS.contactDistrict.y, PAGE_1_FIELDS.contactDistrict.width)}
-          {renderLine(contact.state, PAGE_1_FIELDS.contactState.x, PAGE_1_FIELDS.contactState.y, PAGE_1_FIELDS.contactState.width)}
-          {renderLine(contact.country || 'India', PAGE_1_FIELDS.contactCountry.x, PAGE_1_FIELDS.contactCountry.y, PAGE_1_FIELDS.contactCountry.width)}
+          {/* 2. Baptismal Name */}
+          <div className="digi-row-field">
+            <div className="digi-row-label">
+              <strong>Baptismal Name</strong>
+              <span>ஞானஸ்நானப் பெயர்</span>
+            </div>
+            <div className="digi-row-boxes">
+              <DigitBoxes text={p.baptismalName} count={24} />
+            </div>
+          </div>
+
+          {/* 3. DOB & Nationality */}
+          <div className="digi-two-col-row">
+            <div className="digi-col-field">
+              <div className="digi-row-label">
+                <strong>Date of Birth</strong>
+                <span>பிறந்த தேதி</span>
+              </div>
+              <SegmentedDateBoxes dateStr={p.dob} />
+            </div>
+
+            <div className="digi-col-field">
+              <div className="digi-row-label">
+                <strong>Nationality</strong>
+                <span>நாட்டுரிமை</span>
+              </div>
+              <DigitBoxes text={p.nationality || 'INDIAN'} count={12} />
+            </div>
+          </div>
+
+          {/* 4. Gender & Marital Status */}
+          <div className="digi-two-col-row">
+            <div className="digi-col-field">
+              <div className="digi-row-label">
+                <strong>Gender</strong>
+                <span>பாலினம்</span>
+              </div>
+              <div className="digi-checkbox-group">
+                <CheckboxBox checked={p.gender === 'Male'} labelEn="Male" labelTa="ஆண்" />
+                <CheckboxBox checked={p.gender === 'Female'} labelEn="Female" labelTa="பெண்" />
+              </div>
+            </div>
+
+            <div className="digi-col-field">
+              <div className="digi-row-label">
+                <strong>Marital Status</strong>
+                <span>திருமண நிலை</span>
+              </div>
+              <div className="digi-checkbox-group">
+                <CheckboxBox checked={p.maritalStatus === 'Married'} labelEn="Married" />
+                <CheckboxBox checked={p.maritalStatus === 'Bachelor'} labelEn="Bachelor" />
+                <CheckboxBox checked={p.maritalStatus === 'Spinster'} labelEn="Spinster" />
+                <CheckboxBox checked={p.maritalStatus === 'Widowed'} labelEn="Widowed" />
+              </div>
+            </div>
+          </div>
+
+          {/* 5. Permanent Address */}
+          <div className="digi-address-block">
+            <div className="digi-address-title">
+              <strong>Permanent Address</strong>
+              <span>நிரந்தர முகவரி</span>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '0 0 25%' }}>
+                <span className="digi-addr-lbl">Door No (கதவு எண்)</span>
+                <span className="digi-addr-val">{perm.doorNo || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Street Name (தெருப் பெயர்)</span>
+                <span className="digi-addr-val">{perm.streetName || '\u00A0'}</span>
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">City / Town (நகரம் / ஊர்)</span>
+                <span className="digi-addr-val">{perm.cityTown || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '0 0 35%' }}>
+                <span className="digi-addr-lbl">Pincode (பின்கோடு)</span>
+                <DigitBoxes text={perm.pincode} count={6} className="pin-6" />
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Taluk (தாலுகா)</span>
+                <span className="digi-addr-val">{perm.taluk || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">District (மாவட்டம்)</span>
+                <span className="digi-addr-val">{perm.district || '\u00A0'}</span>
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">State (மாநிலம்)</span>
+                <span className="digi-addr-val">{perm.state || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Country (நாடு)</span>
+                <span className="digi-addr-val">{perm.country || 'India'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 6. Contact Address */}
+          <div className="digi-address-block">
+            <div className="digi-address-title">
+              <strong>Contact Address</strong>
+              <span>தொடர்பு முகவரி</span>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '0 0 25%' }}>
+                <span className="digi-addr-lbl">Door No (கதவு எண்)</span>
+                <span className="digi-addr-val">{contact.doorNo || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Street Name (தெருப் பெயர்)</span>
+                <span className="digi-addr-val">{contact.streetName || '\u00A0'}</span>
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">City / Town (நகரம் / ஊர்)</span>
+                <span className="digi-addr-val">{contact.cityTown || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '0 0 35%' }}>
+                <span className="digi-addr-lbl">Pincode (பின்கோடு)</span>
+                <DigitBoxes text={contact.pincode} count={6} className="pin-6" />
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Taluk (தாலுகா)</span>
+                <span className="digi-addr-val">{contact.taluk || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">District (மாவட்டம்)</span>
+                <span className="digi-addr-val">{contact.district || '\u00A0'}</span>
+              </div>
+            </div>
+
+            <div className="digi-addr-grid">
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">State (மாநிலம்)</span>
+                <span className="digi-addr-val">{contact.state || '\u00A0'}</span>
+              </div>
+              <div className="digi-addr-cell" style={{ flex: '1' }}>
+                <span className="digi-addr-lbl">Country (நாடு)</span>
+                <span className="digi-addr-val">{contact.country || 'India'}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="digi-page-footer">
+          Apostolic Council of India Diocese, Membership Application Form, Page 1/4
         </div>
       </div>
 
       {/* ============================================================
           PAGE 2 OF 4: SPIRITUAL INFORMATION, AFFILIATION & CHURCH DETAILS
           ============================================================ */}
-      <div className="oaf-page-canvas" id="official-page-2">
-        <img
-          src="/official-forms/page_2.png"
-          alt="ACI Application Page 2 Template"
-          className="oaf-template-bg"
-        />
+      <div className="digi-a4-page" id="digi-page-2">
+        
+        {/* II. Spiritual Information */}
+        <div className="digi-section-banner">
+          II. Spiritual Information / ஆவிக்குரிய தகவல்கள்
+        </div>
 
-        <div className="oaf-dynamic-layer">
-          {/* II. Ministry Calling Checkboxes */}
-          {renderCheck(sp.ministryFunction === 'Apostle', PAGE_2_FIELDS.callingApostle.x, PAGE_2_FIELDS.callingApostle.y, PAGE_2_FIELDS.callingApostle.size)}
-          {renderCheck(sp.ministryFunction === 'Prophet', PAGE_2_FIELDS.callingProphet.x, PAGE_2_FIELDS.callingProphet.y, PAGE_2_FIELDS.callingProphet.size)}
-          {renderCheck(sp.ministryFunction === 'Pastor', PAGE_2_FIELDS.callingPastor.x, PAGE_2_FIELDS.callingPastor.y, PAGE_2_FIELDS.callingPastor.size)}
-          {renderCheck(sp.ministryFunction === 'Teacher', PAGE_2_FIELDS.callingTeacher.x, PAGE_2_FIELDS.callingTeacher.y, PAGE_2_FIELDS.callingTeacher.size)}
-          {renderCheck(sp.ministryFunction === 'Evangelist', PAGE_2_FIELDS.callingEvangelist.x, PAGE_2_FIELDS.callingEvangelist.y, PAGE_2_FIELDS.callingEvangelist.size)}
-          {renderCheck(sp.ministryFunction === 'Associate Pastor', PAGE_2_FIELDS.callingAssociate.x, PAGE_2_FIELDS.callingAssociate.y, PAGE_2_FIELDS.callingAssociate.size)}
-          {renderCheck(sp.ministryFunction === 'Other Ministry', PAGE_2_FIELDS.callingOther.x, PAGE_2_FIELDS.callingOther.y, PAGE_2_FIELDS.callingOther.size)}
-          {sp.ministryFunction === 'Other Ministry' && renderLine(sp.otherMinistrySpecify, PAGE_2_FIELDS.callingOtherText.x, PAGE_2_FIELDS.callingOtherText.y, PAGE_2_FIELDS.callingOtherText.width)}
+        <div className="digi-spiritual-calling-grid">
+          <CheckboxBox checked={sp.ministryFunction === 'Apostle'} labelEn="Apostle" labelTa="அப்போஸ்தலர்" />
+          <CheckboxBox checked={sp.ministryFunction === 'Prophet'} labelEn="Prophet" labelTa="தீர்க்கதரிசி" />
+          <CheckboxBox checked={sp.ministryFunction === 'Pastor'} labelEn="Pastor" labelTa="மேய்ப்பர்" />
+          <CheckboxBox checked={sp.ministryFunction === 'Teacher'} labelEn="Teacher" labelTa="போதகர்" />
+          <CheckboxBox checked={sp.ministryFunction === 'Evangelist'} labelEn="Evangelist" labelTa="சுவிசேஷகர்" />
+        </div>
 
-          {/* III. Affiliation */}
-          {renderCheck(aff.affiliationType === 'Independent Church', PAGE_2_FIELDS.affIndependent.x, PAGE_2_FIELDS.affIndependent.y, PAGE_2_FIELDS.affIndependent.size)}
-          {aff.affiliationType === 'Independent Church' && renderLine(aff.founderName, PAGE_2_FIELDS.affFounderName.x, PAGE_2_FIELDS.affFounderName.y, PAGE_2_FIELDS.affFounderName.width)}
-          {renderCheck(aff.affiliationType === 'Denomination', PAGE_2_FIELDS.affDenomination.x, PAGE_2_FIELDS.affDenomination.y, PAGE_2_FIELDS.affDenomination.size)}
-          {aff.affiliationType === 'Denomination' && renderLine(aff.denominationSpecify, PAGE_2_FIELDS.affDenomSpecify.x, PAGE_2_FIELDS.affDenomSpecify.y, PAGE_2_FIELDS.affDenomSpecify.width)}
-          {renderCheck(aff.affiliationType === 'Associate / Assistant', PAGE_2_FIELDS.affAssociate.x, PAGE_2_FIELDS.affAssociate.y, PAGE_2_FIELDS.affAssociate.size)}
-          {aff.affiliationType === 'Associate / Assistant' && (
-            <>
-              {renderLine(aff.associateChiefPastorName, PAGE_2_FIELDS.affChiefPastor.x, PAGE_2_FIELDS.affChiefPastor.y, PAGE_2_FIELDS.affChiefPastor.width)}
-              {renderLine(aff.associateChurchName, PAGE_2_FIELDS.affMotherChurch.x, PAGE_2_FIELDS.affMotherChurch.y, PAGE_2_FIELDS.affMotherChurch.width)}
-            </>
-          )}
-          {renderLine(aff.trustName, PAGE_2_FIELDS.affTrustName.x, PAGE_2_FIELDS.affTrustName.y, PAGE_2_FIELDS.affTrustName.width)}
+        <div className="digi-calling-subrow">
+          <CheckboxBox checked={sp.ministryFunction === 'Associate Pastor'} labelEn="Associate Pastor" labelTa="உதவி மேய்ப்பர்" />
+          <div className="digi-other-calling">
+            <CheckboxBox checked={sp.ministryFunction === 'Other Ministry'} labelEn="Other Ministry" labelTa="மற்ற ஊழியங்கள்" />
+            <span className="digi-fill-line">Specify: {sp.otherMinistrySpecify || '___________________________'}</span>
+          </div>
+        </div>
 
-          {/* IV. Church Details */}
-          {renderBoxedChars(ch.churchName, PAGE_2_FIELDS.churchName.startX, PAGE_2_FIELDS.churchName.y, PAGE_2_FIELDS.churchName.boxW, PAGE_2_FIELDS.churchName.boxH, PAGE_2_FIELDS.churchName.count)}
-          {renderLine(ch.doorNo, PAGE_2_FIELDS.churchDoorNo.x, PAGE_2_FIELDS.churchDoorNo.y, PAGE_2_FIELDS.churchDoorNo.width)}
-          {renderLine(ch.streetName, PAGE_2_FIELDS.churchStreet.x, PAGE_2_FIELDS.churchStreet.y, PAGE_2_FIELDS.churchStreet.width)}
-          {renderLine(ch.cityTown, PAGE_2_FIELDS.churchCity.x, PAGE_2_FIELDS.churchCity.y, PAGE_2_FIELDS.churchCity.width)}
-          {renderBoxedChars(ch.pincode, PAGE_2_FIELDS.churchPincode.startX, PAGE_2_FIELDS.churchPincode.y, PAGE_2_FIELDS.churchPincode.boxW, PAGE_2_FIELDS.churchPincode.boxH, 6)}
-          {renderLine(ch.taluk, PAGE_2_FIELDS.churchTaluk.x, PAGE_2_FIELDS.churchTaluk.y, PAGE_2_FIELDS.churchTaluk.width)}
-          {renderLine(ch.district, PAGE_2_FIELDS.churchDistrict.x, PAGE_2_FIELDS.churchDistrict.y, PAGE_2_FIELDS.churchDistrict.width)}
-          {renderLine(ch.state, PAGE_2_FIELDS.churchState.x, PAGE_2_FIELDS.churchState.y, PAGE_2_FIELDS.churchState.width)}
-          {renderLine(ch.telephone, PAGE_2_FIELDS.churchTelephone.x, PAGE_2_FIELDS.churchTelephone.y, PAGE_2_FIELDS.churchTelephone.width)}
-          {renderLine(ch.mobileNumber, PAGE_2_FIELDS.churchMobile.x, PAGE_2_FIELDS.churchMobile.y, PAGE_2_FIELDS.churchMobile.width)}
-          {renderLine(ch.emailId, PAGE_2_FIELDS.churchEmail.x, PAGE_2_FIELDS.churchEmail.y, PAGE_2_FIELDS.churchEmail.width)}
+        {/* III. Affiliation */}
+        <div className="digi-section-banner">
+          III. Affiliation / பேராயம் / நிறுவனம் / ஐக்கிய இணைப்பு
+        </div>
 
-          {/* V. Spiritual Milestone Dates (8 Boxes each) */}
-          {renderDate8(mh.bornAgainDate, PAGE_2_FIELDS.bornAgainDate.startX, PAGE_2_FIELDS.bornAgainDate.y, PAGE_2_FIELDS.bornAgainDate.boxW, PAGE_2_FIELDS.bornAgainDate.boxH)}
-          {renderDate8(mh.waterBaptismDate, PAGE_2_FIELDS.waterBaptismDate.startX, PAGE_2_FIELDS.waterBaptismDate.y, PAGE_2_FIELDS.waterBaptismDate.boxW, PAGE_2_FIELDS.waterBaptismDate.boxH)}
-          {renderDate8(mh.holySpiritBaptismDate, PAGE_2_FIELDS.holySpiritDate.startX, PAGE_2_FIELDS.holySpiritDate.y, PAGE_2_FIELDS.holySpiritDate.boxW, PAGE_2_FIELDS.holySpiritDate.boxH)}
-          {renderDate8(mh.callingDate, PAGE_2_FIELDS.callingDate.startX, PAGE_2_FIELDS.callingDate.y, PAGE_2_FIELDS.callingDate.boxW, PAGE_2_FIELDS.callingDate.boxH)}
-          {renderDate8(mh.ministryStartDate, PAGE_2_FIELDS.ministryStartDate.startX, PAGE_2_FIELDS.ministryStartDate.y, PAGE_2_FIELDS.ministryStartDate.boxW, PAGE_2_FIELDS.ministryStartDate.boxH)}
+        <div className="digi-affiliation-block">
+          <div className="digi-aff-row">
+            <CheckboxBox checked={aff.affiliationType === 'Independent Church'} labelEn="Independent Church" labelTa="ஸ்தல சுயாட்சி சபை" />
+            <span className="digi-fill-line">Founder's Name (நிறுவனர் பெயர்): {aff.founderName || '___________________________'}</span>
+          </div>
+
+          <div className="digi-aff-row">
+            <CheckboxBox checked={aff.affiliationType === 'Denomination'} labelEn="Denomination" labelTa="சபைப் பிரிவு" />
+            <span className="digi-fill-line">Specify: {aff.denominationSpecify || '___________________________'}</span>
+          </div>
+
+          <div className="digi-aff-row">
+            <CheckboxBox checked={aff.affiliationType === 'Associate / Assistant'} labelEn="Associate / Assistant" labelTa="துணை / உதவி" />
+            <span className="digi-fill-line">Name of Chief Pastor: {aff.associateChiefPastorName || '___________________________'}</span>
+          </div>
+
+          <div className="digi-aff-row" style={{ paddingLeft: '32px' }}>
+            <span className="digi-fill-line">Name of Church: {aff.associateChurchName || '___________________________'}</span>
+          </div>
+
+          <div className="digi-aff-row">
+            <span className="digi-fill-line"><strong>Name of your Trust (உங்களது டிரஸ்டின் பெயர்):</strong> {aff.trustName || '___________________________'}</span>
+          </div>
+        </div>
+
+        {/* IV. Church Details */}
+        <div className="digi-section-banner">
+          IV. Church Details / சபையின் தகவல்கள்
+        </div>
+
+        <div className="digi-field-group">
+          {/* Church Name */}
+          <div className="digi-row-field">
+            <div className="digi-row-label">
+              <strong>Church Name</strong>
+              <span>சபையின் பெயர்</span>
+            </div>
+            <div className="digi-row-boxes">
+              <DigitBoxes text={ch.churchName} count={24} />
+            </div>
+          </div>
+
+          {/* Church Address Grid */}
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '0 0 25%' }}>
+              <span className="digi-addr-lbl">Door No (கதவு எண்)</span>
+              <span className="digi-addr-val">{ch.doorNo || '\u00A0'}</span>
+            </div>
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Street Name (தெருப் பெயர்)</span>
+              <span className="digi-addr-val">{ch.streetName || '\u00A0'}</span>
+            </div>
+          </div>
+
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">City / Town (நகரம் / ஊர்)</span>
+              <span className="digi-addr-val">{ch.cityTown || '\u00A0'}</span>
+            </div>
+            <div className="digi-addr-cell" style={{ flex: '0 0 35%' }}>
+              <span className="digi-addr-lbl">Pincode (பின்கோடு)</span>
+              <DigitBoxes text={ch.pincode} count={6} className="pin-6" />
+            </div>
+          </div>
+
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Taluk (தாலுகா)</span>
+              <span className="digi-addr-val">{ch.taluk || '\u00A0'}</span>
+            </div>
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">District (மாவட்டம்)</span>
+              <span className="digi-addr-val">{ch.district || '\u00A0'}</span>
+            </div>
+          </div>
+
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">State (மாநிலம்)</span>
+              <span className="digi-addr-val">{ch.state || '\u00A0'}</span>
+            </div>
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Country (நாடு)</span>
+              <span className="digi-addr-val">{ch.country || 'India'}</span>
+            </div>
+          </div>
+
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Telephone (தொலைபேசி எண்)</span>
+              <span className="digi-addr-val">{ch.telephone || '\u00A0'}</span>
+            </div>
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Mobile (கைப்பேசி எண்)</span>
+              <span className="digi-addr-val">{ch.mobileNumber || '\u00A0'}</span>
+            </div>
+          </div>
+
+          <div className="digi-addr-grid">
+            <div className="digi-addr-cell" style={{ flex: '1' }}>
+              <span className="digi-addr-lbl">Email ID (மின்னஞ்சல் முகவரி)</span>
+              <span className="digi-addr-val">{ch.emailId || '\u00A0'}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* V. Ministry Milestone Questions */}
+        <div className="digi-section-banner">
+          V. Ministry Milestones / ஆவிக்குரிய அனுபவங்கள்
+        </div>
+
+        <div className="digi-milestones-list">
+          <div className="digi-milestone-row">
+            <div className="digi-milestone-text">
+              1. When were you Born Again? எப்பொழுது மறுபிறப்பின் அனுபவத்தைப் பெற்றீர்கள்?
+            </div>
+            <DateBoxes8 dateStr={mh.bornAgainDate} />
+          </div>
+
+          <div className="digi-milestone-row">
+            <div className="digi-milestone-text">
+              2. When were you Baptized in full immersion? எப்பொழுது முழுக்கு ஞானஸ்நானம் பெற்றீர்கள்?
+            </div>
+            <DateBoxes8 dateStr={mh.waterBaptismDate} />
+          </div>
+
+          <div className="digi-milestone-row">
+            <div className="digi-milestone-text">
+              3. When were you filled with the Holy Spirit? எப்பொழுது பரிசுத்த ஆவியின் அபிஷேகத்தைப் பெற்றீர்கள்?
+            </div>
+            <DateBoxes8 dateStr={mh.holySpiritBaptismDate} />
+          </div>
+
+          <div className="digi-milestone-row">
+            <div className="digi-milestone-text">
+              4. When were you called for Ministry? எப்பொழுது ஊழிய அழைப்பைப் பெற்றீர்கள்?
+            </div>
+            <DateBoxes8 dateStr={mh.callingDate} />
+          </div>
+
+          <div className="digi-milestone-row">
+            <div className="digi-milestone-text">
+              5. When did you start active Ministry? எப்பொழுது ஊழியத்தைத் துவக்கினீர்கள்?
+            </div>
+            <DateBoxes8 dateStr={mh.ministryStartDate} />
+          </div>
+        </div>
+
+        <div className="digi-page-footer">
+          Apostolic Council of India Diocese, Membership Application Form, Page 2/4
         </div>
       </div>
 
       {/* ============================================================
-          PAGE 3 OF 4: QUALIFICATIONS, FAMILY & MOTIVATION
+          PAGE 3 OF 4: QUALIFICATIONS, FAMILY DETAILS & MOTIVATION
           ============================================================ */}
-      <div className="oaf-page-canvas" id="official-page-3">
-        <img
-          src="/official-forms/page_3.png"
-          alt="ACI Application Page 3 Template"
-          className="oaf-template-bg"
-        />
+      <div className="digi-a4-page" id="digi-page-3">
+        
+        {/* Ordination & Affiliation Questions */}
+        <div className="digi-intent-block">
+          <div className="digi-intent-row">
+            <span className="digi-intent-q">
+              6. Do you want to be ordained by ACI Diocese? இந்தப் பேராயத்தால் பிரதிஷ்டை பெற விரும்புகிறீர்களா?
+            </span>
+            <div className="digi-intent-opts">
+              <CheckboxBox checked={mh.wantOrdination === 'Yes'} labelEn="Yes" labelTa="ஆம்" />
+              <CheckboxBox checked={mh.wantOrdination === 'No'} labelEn="No" labelTa="இல்லை" />
+            </div>
+          </div>
 
-        <div className="oaf-dynamic-layer">
-          {/* Questions 6 & 7 Checkboxes */}
-          {renderCheck(mh.wantOrdination === 'Yes', PAGE_3_FIELDS.wantOrdinationYes.x, PAGE_3_FIELDS.wantOrdinationYes.y, PAGE_3_FIELDS.wantOrdinationYes.size)}
-          {renderCheck(mh.wantOrdination === 'No', PAGE_3_FIELDS.wantOrdinationNo.x, PAGE_3_FIELDS.wantOrdinationNo.y, PAGE_3_FIELDS.wantOrdinationNo.size)}
-          {renderCheck(mh.wantAffiliation === 'Yes', PAGE_3_FIELDS.wantAffiliationYes.x, PAGE_3_FIELDS.wantAffiliationYes.y, PAGE_3_FIELDS.wantAffiliationYes.size)}
-          {renderCheck(mh.wantAffiliation === 'No', PAGE_3_FIELDS.wantAffiliationNo.x, PAGE_3_FIELDS.wantAffiliationNo.y, PAGE_3_FIELDS.wantAffiliationNo.size)}
+          <div className="digi-intent-row">
+            <span className="digi-intent-q">
+              7. Do you want to be affiliated with ACI Diocese? இந்தப் பேராயத்தின் இணைப்பைப் பெற விரும்புகிறீர்களா?
+            </span>
+            <div className="digi-intent-opts">
+              <CheckboxBox checked={mh.wantAffiliation === 'Yes'} labelEn="Yes" labelTa="ஆம்" />
+              <CheckboxBox checked={mh.wantAffiliation === 'No'} labelEn="No" labelTa="இல்லை" />
+            </div>
+          </div>
+        </div>
 
-          {/* VI. Academic Table */}
-          {q.academic?.slice(0, 3).map((row, idx) => {
-            const coords = PAGE_3_FIELDS.academicRows[idx]
-            if (!coords) return null
-            return (
-              <React.Fragment key={row.id || idx}>
-                {renderLine(row.examinationPassed, coords.colExam, coords.y, 320)}
-                {renderLine(row.year, coords.colYear, coords.y, 200)}
-                {renderLine(row.institution, coords.colInst, coords.y, 380)}
-              </React.Fragment>
-            )
-          })}
+        {/* VI. Academic Qualification Table */}
+        <div className="digi-section-banner">
+          VI. Academic Qualification / பொதுக் கல்வித் தகுதி
+        </div>
 
-          {/* VII. Theological Table */}
-          {q.theological?.slice(0, 2).map((row, idx) => {
-            const coords = PAGE_3_FIELDS.theologicalRows[idx]
-            if (!coords) return null
-            return (
-              <React.Fragment key={row.id || idx}>
-                {renderLine(row.examinationPassed, coords.colExam, coords.y, 320)}
-                {renderLine(row.year, coords.colYear, coords.y, 200)}
-                {renderLine(row.institution, coords.colInst, coords.y, 380)}
-              </React.Fragment>
-            )
-          })}
+        <table className="digi-official-table">
+          <thead>
+            <tr>
+              <th style={{ width: '45px' }}>S.No</th>
+              <th>Examination Passed / தேர்ச்சி பெற்ற தேர்வு</th>
+              <th style={{ width: '90px' }}>Year / ஆண்டு</th>
+              <th>School / College / University பள்ளி / கல்லூரி / பல்கலைக் கழகம்</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1, 2].map((idx) => {
+              const row = q.academic?.[idx] || {}
+              return (
+                <tr key={idx}>
+                  <td className="center">{idx + 1}</td>
+                  <td>{row.examinationPassed || '\u00A0'}</td>
+                  <td className="center">{row.year || '\u00A0'}</td>
+                  <td>{row.institution || '\u00A0'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
 
-          {/* VIII. Family Table */}
-          {fam?.slice(0, 4).map((f, idx) => {
-            const coords = PAGE_3_FIELDS.familyRows[idx]
-            if (!coords) return null
-            return (
-              <React.Fragment key={f.id || idx}>
-                {renderLine(f.name, coords.colName, coords.y, 260)}
-                {renderLine(f.dob, coords.colDob, coords.y, 180)}
-                {renderLine(f.relationship, coords.colRel, coords.y, 200)}
-                {renderLine(f.professionEducation, coords.colProf, coords.y, 250)}
-              </React.Fragment>
-            )
-          })}
+        {/* VII. Theological Qualification Table */}
+        <div className="digi-section-banner">
+          VII. Theological Qualification / இறையியல் தகுதி
+        </div>
 
-          {/* IX. Motivation Box */}
-          {mot.reasonToJoin && (
-            <div
-              className="oaf-motivation-text"
-              style={{
-                left: toLeft(PAGE_3_FIELDS.motivation.x),
-                top: toTop(PAGE_3_FIELDS.motivation.y),
-                width: toWidth(PAGE_3_FIELDS.motivation.width),
-                height: toHeight(PAGE_3_FIELDS.motivation.height),
-              }}
-            >
-              {mot.reasonToJoin}
+        <table className="digi-official-table">
+          <thead>
+            <tr>
+              <th style={{ width: '45px' }}>S.No</th>
+              <th>Course Passed / தேர்ச்சி பெற்ற படிப்பு</th>
+              <th style={{ width: '90px' }}>Year / ஆண்டு</th>
+              <th>Seminary / Bible College வேத பள்ளி / கல்லூரி</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1].map((idx) => {
+              const row = q.theological?.[idx] || {}
+              return (
+                <tr key={idx}>
+                  <td className="center">{idx + 1}</td>
+                  <td>{row.examinationPassed || '\u00A0'}</td>
+                  <td className="center">{row.year || '\u00A0'}</td>
+                  <td>{row.institution || '\u00A0'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+
+        {/* VIII. Family Details Table */}
+        <div className="digi-section-banner">
+          VIII. Family Details / குடும்ப விவரங்கள்
+        </div>
+
+        <table className="digi-official-table">
+          <thead>
+            <tr>
+              <th style={{ width: '45px' }}>S.No</th>
+              <th>Name / பெயர்</th>
+              <th style={{ width: '110px' }}>DOB / பிறந்த தேதி</th>
+              <th style={{ width: '120px' }}>Relationship / உறவுமுறை</th>
+              <th>Profession & Education / தொழில் & படிப்பு</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1, 2, 3].map((idx) => {
+              const f = fam?.[idx] || {}
+              return (
+                <tr key={idx}>
+                  <td className="center">{idx + 1}</td>
+                  <td>{f.name || '\u00A0'}</td>
+                  <td className="center">{f.dob || '\u00A0'}</td>
+                  <td>{f.relationship || '\u00A0'}</td>
+                  <td>{f.professionEducation || '\u00A0'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+
+        {/* IX. Motivation */}
+        <div className="digi-section-banner">
+          IX. What prompts you to join APOSTOLIC COUNCIL OF INDIA DIOCESE? / பேராயத்தில் இணையக் காரணம்
+        </div>
+
+        <div className="digi-motivation-box">
+          {mot.reasonToJoin ? (
+            <p className="digi-motivation-text">{mot.reasonToJoin}</p>
+          ) : (
+            <div className="digi-empty-lines">
+              <div className="line"></div>
+              <div className="line"></div>
+              <div className="line"></div>
+              <div className="line"></div>
             </div>
           )}
         </div>
+
+        <div className="digi-page-footer">
+          Apostolic Council of India Diocese, Membership Application Form, Page 3/4
+        </div>
       </div>
 
       {/* ============================================================
-          PAGE 4 OF 4: REFERENCES & DECLARATION
+          PAGE 4 OF 4: REFERENCES, STATUTORY DECLARATION & SIGNATURE
           ============================================================ */}
-      <div className="oaf-page-canvas" id="official-page-4">
-        <img
-          src="/official-forms/page_4.png"
-          alt="ACI Application Page 4 Template"
-          className="oaf-template-bg"
-        />
+      <div className="digi-a4-page" id="digi-page-4">
+        
+        {/* X. References */}
+        <div className="digi-section-banner">
+          X. Details of Two References (Must) / இரண்டு பேராய அங்கத்தினர்களின் பரிந்துரை
+        </div>
 
-        <div className="oaf-dynamic-layer">
+        <div className="digi-references-grid">
           {/* Reference 1 */}
-          {renderLine(ref.ref1?.name, PAGE_4_FIELDS.ref1Name.x, PAGE_4_FIELDS.ref1Name.y, PAGE_4_FIELDS.ref1Name.width)}
-          {renderLine(ref.ref1?.diocesanId, PAGE_4_FIELDS.ref1Id.x, PAGE_4_FIELDS.ref1Id.y, PAGE_4_FIELDS.ref1Id.width)}
-          {renderLine(ref.ref1?.phone, PAGE_4_FIELDS.ref1Phone.x, PAGE_4_FIELDS.ref1Phone.y, PAGE_4_FIELDS.ref1Phone.width)}
-          {renderLine(ref.ref1?.knownSince, PAGE_4_FIELDS.ref1Since.x, PAGE_4_FIELDS.ref1Since.y, PAGE_4_FIELDS.ref1Since.width)}
-          {renderCheck(ref.ref1?.relationshipType === 'Personally' || !ref.ref1?.relationshipType, PAGE_4_FIELDS.ref1Personally.x, PAGE_4_FIELDS.ref1Personally.y, PAGE_4_FIELDS.ref1Personally.size)}
-          {renderCheck(ref.ref1?.relationshipType === 'Professionally', PAGE_4_FIELDS.ref1Professionally.x, PAGE_4_FIELDS.ref1Professionally.y, PAGE_4_FIELDS.ref1Professionally.size)}
+          <div className="digi-ref-card">
+            <div className="digi-ref-header">
+              1. District Overseer / பேராய உறுப்பினர்
+            </div>
+            <div className="digi-ref-body">
+              <div className="digi-ref-row">
+                <span className="lbl">Name:</span>
+                <span className="val">{ref.ref1?.name || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Diocese ID No:</span>
+                <span className="val">{ref.ref1?.diocesanId || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Telephone / Mobile:</span>
+                <span className="val">{ref.ref1?.phone || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Known Since:</span>
+                <span className="val">{ref.ref1?.knownSince || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Mode:</span>
+                <div className="digi-checkbox-group">
+                  <CheckboxBox checked={ref.ref1?.relationshipType === 'Personally' || !ref.ref1?.relationshipType} labelEn="Personally" labelTa="நேரில்" />
+                  <CheckboxBox checked={ref.ref1?.relationshipType === 'Professionally'} labelEn="Professionally" labelTa="ஊழியத்தில்" />
+                </div>
+              </div>
+              <div className="digi-ref-sig-row">
+                <span>Signature of the Referrer:</span>
+                <span className="sig-placeholder">[ Verified ]</span>
+              </div>
+            </div>
+          </div>
 
           {/* Reference 2 */}
-          {renderLine(ref.ref2?.name, PAGE_4_FIELDS.ref2Name.x, PAGE_4_FIELDS.ref2Name.y, PAGE_4_FIELDS.ref2Name.width)}
-          {renderLine(ref.ref2?.diocesanId, PAGE_4_FIELDS.ref2Id.x, PAGE_4_FIELDS.ref2Id.y, PAGE_4_FIELDS.ref2Id.width)}
-          {renderLine(ref.ref2?.phone, PAGE_4_FIELDS.ref2Phone.x, PAGE_4_FIELDS.ref2Phone.y, PAGE_4_FIELDS.ref2Phone.width)}
-          {renderLine(ref.ref2?.knownSince, PAGE_4_FIELDS.ref2Since.x, PAGE_4_FIELDS.ref2Since.y, PAGE_4_FIELDS.ref2Since.width)}
-          {renderCheck(ref.ref2?.relationshipType === 'Personally', PAGE_4_FIELDS.ref2Personally.x, PAGE_4_FIELDS.ref2Personally.y, PAGE_4_FIELDS.ref2Personally.size)}
-          {renderCheck(ref.ref2?.relationshipType === 'Professionally' || !ref.ref2?.relationshipType, PAGE_4_FIELDS.ref2Professionally.x, PAGE_4_FIELDS.ref2Professionally.y, PAGE_4_FIELDS.ref2Professionally.size)}
-
-          {/* Declaration Fields */}
-          {renderLine(dec.place || 'Dindigul', PAGE_4_FIELDS.decPlace.x, PAGE_4_FIELDS.decPlace.y, PAGE_4_FIELDS.decPlace.width)}
-          {renderLine(dec.date || p.applicationDate || '2026-08-26', PAGE_4_FIELDS.decDate.x, PAGE_4_FIELDS.decDate.y, PAGE_4_FIELDS.decDate.width)}
-
-          {/* Digital Signature */}
-          <div
-            className="oaf-signature-block"
-            style={{
-              left: toLeft(PAGE_4_FIELDS.decSignature.x),
-              top: toTop(PAGE_4_FIELDS.decSignature.y),
-              width: toWidth(PAGE_4_FIELDS.decSignature.width),
-            }}
-          >
-            <div className="oaf-signature-text">{p.name || 'S. JOHN SAMUEL'}</div>
-            <div className="oaf-signature-badge">[ Digitally Confirmed ]</div>
+          <div className="digi-ref-card">
+            <div className="digi-ref-header">
+              2. Taluk Co-ordinator / பேராய உறுப்பினர்
+            </div>
+            <div className="digi-ref-body">
+              <div className="digi-ref-row">
+                <span className="lbl">Name:</span>
+                <span className="val">{ref.ref2?.name || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Diocese ID No:</span>
+                <span className="val">{ref.ref2?.diocesanId || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Telephone / Mobile:</span>
+                <span className="val">{ref.ref2?.phone || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Known Since:</span>
+                <span className="val">{ref.ref2?.knownSince || '___________________________'}</span>
+              </div>
+              <div className="digi-ref-row">
+                <span className="lbl">Mode:</span>
+                <div className="digi-checkbox-group">
+                  <CheckboxBox checked={ref.ref2?.relationshipType === 'Personally'} labelEn="Personally" labelTa="நேரில்" />
+                  <CheckboxBox checked={ref.ref2?.relationshipType === 'Professionally' || !ref.ref2?.relationshipType} labelEn="Professionally" labelTa="ஊழியத்தில்" />
+                </div>
+              </div>
+              <div className="digi-ref-sig-row">
+                <span>Signature of the Referrer:</span>
+                <span className="sig-placeholder">[ Verified ]</span>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* XI. Statutory Declaration */}
+        <div className="digi-section-banner">
+          XI. Statutory Declaration / உறுதிமொழி மற்றும் கையெழுத்து
+        </div>
+
+        <div className="digi-declaration-box">
+          <p className="digi-dec-en">
+            &ldquo;I hereby declare that the information furnished above is true to the best of my knowledge. I am fully in agreement with the Faith Statement of ACI Diocese. I understand that this is the united Ministry and I shall give attention to this ministry apart from my church ministry. I shall abide by the terms and conditions of ACI Diocese, in force from time to time.&rdquo;
+          </p>
+          <p className="digi-dec-ta">
+            &ldquo;மேற்குறிப்பிட்ட விவரங்கள் அனைத்தும் உண்மை என்றும், ஏசிஐ பேராயத்தின் விசுவாச அறிக்கையை முழுமையாக ஏற்றுக்கொள்கிறேன் என்றும், சபை ஊழியத்தோடு இந்த ஐக்கிய ஊழியத்திலும் உற்சாகமாக செயல்படுவேன் என்றும், பேராயத்தின் சட்டதிட்டங்களுக்கு கீழ்ப்படிவேன் என்றும் உறுதியளிக்கிறேன்.&rdquo;
+          </p>
+
+          <div className="digi-dec-bottom-grid">
+            <div className="digi-dec-left">
+              <div className="digi-dec-line">
+                <strong>Place / இடம் :</strong> <span>{dec.place || 'Dindigul'}</span>
+              </div>
+              <div className="digi-dec-line">
+                <strong>Date / தேதி :</strong> <span>{dec.date || appDate}</span>
+              </div>
+            </div>
+
+            <div className="digi-dec-right">
+              <div className="digi-signature-container">
+                <span className="digi-sig-name">{p.name || 'S. JOHN SAMUEL'}</span>
+                <span className="digi-sig-badge">[ Digitally Confirmed by Applicant ]</span>
+              </div>
+              <span className="digi-sig-label">Signature of the Applicant / விண்ணப்பதாரரின் கையொப்பம்</span>
+            </div>
+          </div>
+        </div>
+
+        {/* XII. Required Enclosures Checklist */}
+        <div className="digi-section-banner">
+          XII. Checklist of Required Enclosures / இணைக்கப்பட வேண்டிய சான்றிதழ்கள்
+        </div>
+
+        <div className="digi-enclosures-grid">
+          <div className="digi-enc-item">☑ 1. Proof of Identity (Aadhaar / Passport / Voter ID)</div>
+          <div className="digi-enc-item">☑ 2. Proof of Address (Ration Card / Gas Bill / EB Bill)</div>
+          <div className="digi-enc-item">☑ 3. Proof of Date of Birth (Birth Certificate / 10th Marks / TC)</div>
+          <div className="digi-enc-item">☑ 4. Attested Recent Passport Size Photographs (3 copies)</div>
+          <div className="digi-enc-item">☑ 5. Academic & Theological Qualification Certificates</div>
+          <div className="digi-enc-item">☑ 6. Ministry Summary / Field Work Statement</div>
+          <div className="digi-enc-item">☑ 7. Church Ministry Photograph with Congregation</div>
+          <div className="digi-enc-item">☑ 8. Existing Ordination / Affiliation Certificate (if any)</div>
+        </div>
+
+        <div className="digi-page-footer">
+          Apostolic Council of India Diocese, Membership Application Form, Page 4/4
         </div>
       </div>
 
