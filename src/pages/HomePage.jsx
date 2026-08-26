@@ -6,6 +6,7 @@ import DirectoryCta from '../components/DirectoryCta/DirectoryCta'
 import MinistriesSection from '../components/MinistriesSection/MinistriesSection'
 import FeaturedSection from '../components/FeaturedSection/FeaturedSection'
 import TestimoniesSection from '../components/TestimoniesSection/TestimoniesSection'
+import EventsSection from '../components/EventsSection/EventsSection'
 import GetInvolvedCta from '../components/GetInvolvedCta/GetInvolvedCta'
 import Newsletter from '../components/Newsletter/Newsletter'
 
