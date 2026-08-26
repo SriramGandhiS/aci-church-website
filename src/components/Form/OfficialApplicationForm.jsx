@@ -93,8 +93,8 @@ export default function OfficialApplicationForm({ data }) {
     <div className="digi-form-canvas-container">
 
       {/* ============================================================
-          PAGE 1 OF 2: HEADER, ADMINISTRATIVE, PERSONAL, SPIRITUAL & CHURCH
-          ALL SECTIONS 100% INTACT — HIGH DENSITY — ZERO WHITE GAP
+          PAGE 1 OF 2: 100% NATURAL FULL-PAGE COVERAGE (NO SQUISHING, NO GAPS)
+          Header, Admin, Personal Details (1-6), Spiritual Info (II), Affiliation (III), Church Details (IV)
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-1">
         
@@ -206,29 +206,29 @@ export default function OfficialApplicationForm({ data }) {
         </div>
 
         <div className="digi-personal-details-section">
-          {/* 1. Name & 2. Baptismal Name */}
-          <div className="digi-two-column-split">
-            <div className="digi-split-col">
-              <div className="digi-entry-label">
-                <strong className="l-en">1. Name</strong> <span className="l-ta">பெயர்</span>
-              </div>
-              <div className="digi-entry-box-wrap">
-                <CharacterBoxRow text={fullName} count={24} />
-              </div>
+          {/* 1. Name (Full Row) */}
+          <div className="digi-form-entry-row">
+            <div className="digi-entry-label">
+              <strong className="l-en">1. Name</strong> <span className="l-ta">பெயர்</span>
+              <span className="l-hint">(Salutation - Mr., Mrs., Rev., Dr., Bro., Pastor)</span>
             </div>
-
-            <div className="digi-split-col">
-              <div className="digi-entry-label">
-                <strong className="l-en">2. Baptismal Name</strong> <span className="l-ta">ஞானஸ்நானப் பெயர்</span>
-              </div>
-              <div className="digi-entry-box-wrap">
-                <CharacterBoxRow text={p.baptismalName} count={24} />
-              </div>
+            <div className="digi-entry-box-wrap">
+              <CharacterBoxRow text={fullName} count={24} />
             </div>
           </div>
 
-          {/* 3. DOB, Nationality, Gender, Marital Status */}
-          <div className="digi-four-col-cluster">
+          {/* 2. Baptismal Name (Full Row) */}
+          <div className="digi-form-entry-row">
+            <div className="digi-entry-label">
+              <strong className="l-en">2. Baptismal Name</strong> <span className="l-ta">ஞானஸ்நானப் பெயர்</span>
+            </div>
+            <div className="digi-entry-box-wrap">
+              <CharacterBoxRow text={p.baptismalName} count={24} />
+            </div>
+          </div>
+
+          {/* 3. DOB & Nationality (Full Row Split) */}
+          <div className="digi-two-column-split">
             <div className="digi-split-col">
               <div className="digi-entry-label">
                 <strong className="l-en">3. Date of Birth</strong> <span className="l-ta">பிறந்த தேதி</span>
@@ -241,10 +241,13 @@ export default function OfficialApplicationForm({ data }) {
                 <strong className="l-en">Nationality</strong> <span className="l-ta">நாட்டுரிமை</span>
               </div>
               <div className="digi-entry-box-wrap">
-                <CharacterBoxRow text={p.nationality || 'INDIAN'} count={10} className="count-10" />
+                <CharacterBoxRow text={p.nationality || 'INDIAN'} count={12} className="count-12" />
               </div>
             </div>
+          </div>
 
+          {/* 4. Gender & Marital Status (Full Row Split) */}
+          <div className="digi-two-column-split">
             <div className="digi-split-col">
               <div className="digi-entry-label">
                 <strong className="l-en">4. Gender</strong> <span className="l-ta">பாலினம்</span>
@@ -268,131 +271,123 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          {/* 5. Permanent Address & 6. Contact Address Side-by-Side */}
-          <div className="digi-addresses-side-by-side-grid">
-            {/* Permanent Address */}
-            <div className="digi-address-structured-grid">
-              <div className="digi-address-grid-heading">
-                <strong>5. Permanent Address</strong> <span>நிரந்தர முகவரி</span>
+          {/* 5. Permanent Address (Full Width Structured Table) */}
+          <div className="digi-address-structured-grid">
+            <div className="digi-address-grid-heading">
+              <strong>5. Permanent Address</strong> <span>நிரந்தர முகவரி</span>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '28%' }}>
+                <span className="c-lbl">Door No (கதவு எண்)</span> <span className="c-val">{perm.doorNo || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '30%' }}>
-                  <span className="c-lbl">Door No</span> <span className="c-val">{perm.doorNo || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '70%' }}>
-                  <span className="c-lbl">Street Name</span> <span className="c-val">{perm.streetName || '\u00A0'}</span>
-                </div>
-              </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '60%' }}>
-                  <span className="c-lbl">City / Town</span> <span className="c-val">{perm.cityTown || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '40%' }}>
-                  <span className="c-lbl">Pincode</span> <CharacterBoxRow text={perm.pincode} count={6} className="count-6" />
-                </div>
-              </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">Taluk</span> <span className="c-val">{perm.taluk || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">District</span> <span className="c-val">{perm.district || '\u00A0'}</span>
-                </div>
-              </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">State</span> <span className="c-val">{perm.state || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">Country</span> <span className="c-val">{perm.country || 'India'}</span>
-                </div>
+              <div className="digi-grid-cell" style={{ width: '72%' }}>
+                <span className="c-lbl">Street Name (தெருப் பெயர்)</span> <span className="c-val">{perm.streetName || '\u00A0'}</span>
               </div>
             </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '64%' }}>
+                <span className="c-lbl">City / Town (நகரம் / ஊர்)</span> <span className="c-val">{perm.cityTown || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '36%' }}>
+                <span className="c-lbl">Pincode (பின்கோடு)</span> <CharacterBoxRow text={perm.pincode} count={6} className="count-6" />
+              </div>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">Taluk (தாலுகா)</span> <span className="c-val">{perm.taluk || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">District (மாவட்டம்)</span> <span className="c-val">{perm.district || '\u00A0'}</span>
+              </div>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">State (மாநிலம்)</span> <span className="c-val">{perm.state || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">Country (நாடு)</span> <span className="c-val">{perm.country || 'India'}</span>
+              </div>
+            </div>
+          </div>
 
-            {/* Contact Address */}
-            <div className="digi-address-structured-grid">
-              <div className="digi-address-grid-heading">
-                <strong>6. Contact Address</strong> <span>தொடர்பு முகவரி</span>
+          {/* 6. Contact Address (Full Width Structured Table) */}
+          <div className="digi-address-structured-grid">
+            <div className="digi-address-grid-heading">
+              <strong>6. Contact Address</strong> <span>தொடர்பு முகவரி</span>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '28%' }}>
+                <span className="c-lbl">Door No (கதவு எண்)</span> <span className="c-val">{contact.doorNo || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '30%' }}>
-                  <span className="c-lbl">Door No</span> <span className="c-val">{contact.doorNo || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '70%' }}>
-                  <span className="c-lbl">Street Name</span> <span className="c-val">{contact.streetName || '\u00A0'}</span>
-                </div>
+              <div className="digi-grid-cell" style={{ width: '72%' }}>
+                <span className="c-lbl">Street Name (தெருப் பெயர்)</span> <span className="c-val">{contact.streetName || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '60%' }}>
-                  <span className="c-lbl">City / Town</span> <span className="c-val">{contact.cityTown || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '40%' }}>
-                  <span className="c-lbl">Pincode</span> <CharacterBoxRow text={contact.pincode} count={6} className="count-6" />
-                </div>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '64%' }}>
+                <span className="c-lbl">City / Town (நகரம் / ஊர்)</span> <span className="c-val">{contact.cityTown || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">Taluk</span> <span className="c-val">{contact.taluk || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">District</span> <span className="c-val">{contact.district || '\u00A0'}</span>
-                </div>
+              <div className="digi-grid-cell" style={{ width: '36%' }}>
+                <span className="c-lbl">Pincode (பின்கோடு)</span> <CharacterBoxRow text={contact.pincode} count={6} className="count-6" />
               </div>
-              <div className="digi-grid-row">
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">State</span> <span className="c-val">{contact.state || '\u00A0'}</span>
-                </div>
-                <div className="digi-grid-cell" style={{ width: '50%' }}>
-                  <span className="c-lbl">Country</span> <span className="c-val">{contact.country || 'India'}</span>
-                </div>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">Taluk (தாலுகா)</span> <span className="c-val">{contact.taluk || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">District (மாவட்டம்)</span> <span className="c-val">{contact.district || '\u00A0'}</span>
+              </div>
+            </div>
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">State (மாநிலம்)</span> <span className="c-val">{contact.state || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">Country (நாடு)</span> <span className="c-val">{contact.country || 'India'}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* II. Spiritual Information & III. Affiliation Side-by-Side */}
-        <div className="digi-two-column-split" style={{ marginTop: '2px' }}>
-          {/* II. Spiritual Information */}
-          <div className="digi-split-col">
-            <div className="digi-full-black-banner">
-              II. Spiritual Information / ஆவிக்குரிய தகவல்கள்
-            </div>
-            <div className="digi-fivefold-compact-grid">
-              <FormCheckbox checked={sp.ministryFunction === 'Apostle'} labelEn="Apostle" labelTa="அப்போஸ்தலர்" />
-              <FormCheckbox checked={sp.ministryFunction === 'Prophet'} labelEn="Prophet" labelTa="தீர்க்கதரிசி" />
-              <FormCheckbox checked={sp.ministryFunction === 'Pastor'} labelEn="Pastor" labelTa="மேய்ப்பர்" />
-              <FormCheckbox checked={sp.ministryFunction === 'Teacher'} labelEn="Teacher" labelTa="போதகர்" />
-              <FormCheckbox checked={sp.ministryFunction === 'Evangelist'} labelEn="Evangelist" labelTa="சுவிசேஷகர்" />
-              <FormCheckbox checked={sp.ministryFunction === 'Associate Pastor'} labelEn="Associate Pastor" labelTa="உதவி மேய்ப்பர்" />
-            </div>
-            <div className="digi-other-spec-cluster" style={{ marginTop: '1px' }}>
-              <FormCheckbox checked={sp.ministryFunction === 'Other Ministry'} labelEn="Other Ministry" labelTa="மற்றவை" />
-              <span className="digi-text-underline-spec">Specify: <strong>{sp.otherMinistrySpecify || '________________'}</strong></span>
-            </div>
-          </div>
+        {/* II. Spiritual Information */}
+        <div className="digi-full-black-banner">
+          II. Spiritual Information / ஆவிக்குரிய தகவல்கள்
+        </div>
 
-          {/* III. Affiliation */}
-          <div className="digi-split-col">
-            <div className="digi-full-black-banner">
-              III. Affiliation / பேராயம் / ஐக்கிய இணைப்பு
-            </div>
-            <div className="digi-affiliation-cluster">
-              <div className="digi-aff-entry">
-                <FormCheckbox checked={aff.affiliationType === 'Independent Church'} labelEn="Independent Church" labelTa="சுயாட்சி" />
-                <span className="digi-text-underline-spec">Founder: <strong>{aff.founderName || '________________'}</strong></span>
-              </div>
-              <div className="digi-aff-entry">
-                <FormCheckbox checked={aff.affiliationType === 'Denomination'} labelEn="Denomination" labelTa="பிரிவு" />
-                <span className="digi-text-underline-spec">Spec: <strong>{aff.denominationSpecify || '________________'}</strong></span>
-              </div>
-              <div className="digi-aff-entry">
-                <FormCheckbox checked={aff.affiliationType === 'Associate / Assistant'} labelEn="Associate" labelTa="துணை" />
-                <span className="digi-text-underline-spec">Pastor: <strong>{aff.associateChiefPastorName || '________________'}</strong></span>
-              </div>
-              <div className="digi-aff-entry">
-                <span className="digi-text-underline-spec">Trust Name: <strong>{aff.trustName || 'Living Word Ministries Trust'}</strong></span>
-              </div>
-            </div>
+        <div className="digi-fivefold-full-grid">
+          <FormCheckbox checked={sp.ministryFunction === 'Apostle'} labelEn="Apostle" labelTa="அப்போஸ்தலர்" />
+          <FormCheckbox checked={sp.ministryFunction === 'Prophet'} labelEn="Prophet" labelTa="தீர்க்கதரிசி" />
+          <FormCheckbox checked={sp.ministryFunction === 'Pastor'} labelEn="Pastor" labelTa="மேய்ப்பர்" />
+          <FormCheckbox checked={sp.ministryFunction === 'Teacher'} labelEn="Teacher" labelTa="போதகர்" />
+          <FormCheckbox checked={sp.ministryFunction === 'Evangelist'} labelEn="Evangelist" labelTa="சுவிசேஷகர்" />
+          <FormCheckbox checked={sp.ministryFunction === 'Associate Pastor'} labelEn="Associate Pastor" labelTa="உதவி மேய்ப்பர்" />
+          <div className="digi-other-spec-cluster">
+            <FormCheckbox checked={sp.ministryFunction === 'Other Ministry'} labelEn="Other Ministry" labelTa="மற்றவை" />
+            <span className="digi-text-underline-spec">Specify: <strong>{sp.otherMinistrySpecify || '________________'}</strong></span>
+          </div>
+        </div>
+
+        {/* III. Affiliation */}
+        <div className="digi-full-black-banner">
+          III. Affiliation / பேராயம் / நிறுவனம் / ஐக்கிய இணைப்பு
+        </div>
+
+        <div className="digi-affiliation-full-list">
+          <div className="digi-aff-entry">
+            <FormCheckbox checked={aff.affiliationType === 'Independent Church'} labelEn="Independent Church" labelTa="ஸ்தல சுயாட்சி சபை" />
+            <span className="digi-text-underline-spec">Founder's Name (நிறுவனர் பெயர்): <strong>{aff.founderName || '___________________________'}</strong></span>
+          </div>
+          <div className="digi-aff-entry">
+            <FormCheckbox checked={aff.affiliationType === 'Denomination'} labelEn="Denomination" labelTa="சபைப் பிரிவு" />
+            <span className="digi-text-underline-spec">Specify: <strong>{aff.denominationSpecify || '___________________________'}</strong></span>
+          </div>
+          <div className="digi-aff-entry">
+            <FormCheckbox checked={aff.affiliationType === 'Associate / Assistant'} labelEn="Associate / Assistant" labelTa="துணை / உதவி" />
+            <span className="digi-text-underline-spec">Name of Chief Pastor: <strong>{aff.associateChiefPastorName || '___________________________'}</strong></span>
+          </div>
+          <div className="digi-aff-entry">
+            <span className="digi-text-underline-spec"><strong>Name of your Trust (உங்களது டிரஸ்டின் பெயர்):</strong> <strong>{aff.trustName || 'Living Word Ministries Trust'}</strong></span>
           </div>
         </div>
 
@@ -401,8 +396,9 @@ export default function OfficialApplicationForm({ data }) {
           IV. Church Details / சபையின் தகவல்கள்
         </div>
 
-        <div className="digi-church-dense-container">
-          <div className="digi-form-entry-row" style={{ marginBottom: '1.5px' }}>
+        <div className="digi-personal-details-section">
+          {/* Church Name */}
+          <div className="digi-form-entry-row">
             <div className="digi-entry-label">
               <strong className="l-en">Church Name</strong> <span className="l-ta">சபையின் பெயர்</span>
             </div>
@@ -411,31 +407,41 @@ export default function OfficialApplicationForm({ data }) {
             </div>
           </div>
 
-          <div className="digi-address-structured-grid">
+          {/* Church Address Grid */}
+          <div className="digi-address-structured-grid" style={{ marginTop: '2px' }}>
             <div className="digi-grid-row">
-              <div className="digi-grid-cell" style={{ width: '20%' }}>
+              <div className="digi-grid-cell" style={{ width: '28%' }}>
                 <span className="c-lbl">Door No (கதவு எண்)</span> <span className="c-val">{ch.doorNo || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-cell" style={{ width: '50%' }}>
+              <div className="digi-grid-cell" style={{ width: '72%' }}>
                 <span className="c-lbl">Street Name (தெருப் பெயர்)</span> <span className="c-val">{ch.streetName || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-cell" style={{ width: '30%' }}>
+            </div>
+
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '64%' }}>
+                <span className="c-lbl">City / Town (நகரம் / ஊர்)</span> <span className="c-val">{ch.cityTown || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '36%' }}>
                 <span className="c-lbl">Pincode (பின்கோடு)</span> <CharacterBoxRow text={ch.pincode} count={6} className="count-6" />
               </div>
             </div>
 
             <div className="digi-grid-row">
-              <div className="digi-grid-cell" style={{ width: '25%' }}>
-                <span className="c-lbl">City / Town</span> <span className="c-val">{ch.cityTown || '\u00A0'}</span>
-              </div>
-              <div className="digi-grid-cell" style={{ width: '25%' }}>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
                 <span className="c-lbl">Taluk (தாலுகா)</span> <span className="c-val">{ch.taluk || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-cell" style={{ width: '25%' }}>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
                 <span className="c-lbl">District (மாவட்டம்)</span> <span className="c-val">{ch.district || '\u00A0'}</span>
               </div>
-              <div className="digi-grid-cell" style={{ width: '25%' }}>
+            </div>
+
+            <div className="digi-grid-row">
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
                 <span className="c-lbl">State (மாநிலம்)</span> <span className="c-val">{ch.state || '\u00A0'}</span>
+              </div>
+              <div className="digi-grid-cell" style={{ width: '50%' }}>
+                <span className="c-lbl">Country (நாடு)</span> <span className="c-val">{ch.country || 'India'}</span>
               </div>
             </div>
 
@@ -459,8 +465,8 @@ export default function OfficialApplicationForm({ data }) {
       </div>
 
       {/* ============================================================
-          PAGE 2 OF 2: MILESTONES, ACADEMIC, THEOLOGICAL, FAMILY, MOTIVATION, REFERENCES, DECLARATION & ENCLOSURES
-          ALL SECTIONS 100% INTACT — HIGH DENSITY — ZERO WHITE GAP
+          PAGE 2 OF 2: 100% NATURAL FULL-PAGE COVERAGE (NO SQUISHING, NO GAPS)
+          Milestones (V), Academic (VI), Theological (VII), Family (VIII), Motivation (IX), References (X), Declaration (XI), Enclosures (XII)
           ============================================================ */}
       <div className="digi-a4-sheet" id="official-page-2">
         
@@ -469,35 +475,35 @@ export default function OfficialApplicationForm({ data }) {
           V. Ministry Milestones & Questions / ஆவிக்குரிய தேதிகள் & கேள்விகள்
         </div>
 
-        <div className="digi-milestones-two-col-grid">
+        <div className="digi-milestones-full-block">
           <div className="digi-milestone-entry">
-            <span className="m-text">1. Born Again மறுபிறப்பு :</span>
+            <span className="m-text">1. When were you Born Again? எப்பொழுது மறுபிறப்பின் அனுபவத்தைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.bornAgainDate} />
           </div>
           <div className="digi-milestone-entry">
-            <span className="m-text">2. Water Baptism முழுக்கு ஞானஸ்நானம் :</span>
+            <span className="m-text">2. When were you Baptized in full immersion? எப்பொழுது முழுக்கு ஞானஸ்நானம் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.waterBaptismDate} />
           </div>
           <div className="digi-milestone-entry">
-            <span className="m-text">3. Holy Spirit பரிசுத்த ஆவியின் அபிஷேகம் :</span>
+            <span className="m-text">3. When were you filled with the Holy Spirit? எப்பொழுது பரிசுத்த ஆவியின் அபிஷேகத்தைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.holySpiritBaptismDate} />
           </div>
           <div className="digi-milestone-entry">
-            <span className="m-text">4. Ministry Calling ஊழிய அழைப்பு :</span>
+            <span className="m-text">4. When were you called for Ministry? எப்பொழுது ஊழிய அழைப்பைப் பெற்றீர்கள்?</span>
             <Date8Boxes dateStr={mh.callingDate} />
           </div>
           <div className="digi-milestone-entry">
-            <span className="m-text">5. Started Ministry ஊழிய துவக்கம் :</span>
+            <span className="m-text">5. When did you start active Ministry? எப்பொழுது ஊழியத்தைத் துவக்கினீர்கள்?</span>
             <Date8Boxes dateStr={mh.ministryStartDate} />
           </div>
           <div className="digi-milestone-entry">
-            <span className="m-text">6. Want Ordination பிரதிஷ்டை?</span>
+            <span className="m-text">6. Do you want to be ordained by ACI Diocese? இந்தப் பேராயத்தால் பிரதிஷ்டை பெற விரும்புகிறீர்களா?</span>
             <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantOrdination === 'Yes'} labelEn="Yes ஆம்" />
               <FormCheckbox checked={mh.wantOrdination === 'No'} labelEn="No இல்லை" />
             </div>
           </div>
-          <div className="digi-milestone-entry" style={{ gridColumn: 'span 2' }}>
+          <div className="digi-milestone-entry">
             <span className="m-text">7. Do you want to be affiliated with ACI Diocese? இந்தப் பேராயத்தின் இணைப்பைப் பெற விரும்புகிறீர்களா?</span>
             <div className="digi-inline-chk-pair">
               <FormCheckbox checked={mh.wantAffiliation === 'Yes'} labelEn="Yes ஆம்" />
@@ -506,68 +512,63 @@ export default function OfficialApplicationForm({ data }) {
           </div>
         </div>
 
-        {/* VI & VII: Academic & Theological Qualifications Side-by-Side */}
-        <div className="digi-two-column-split" style={{ marginTop: '2px' }}>
-          {/* VI. Academic Qualification */}
-          <div className="digi-split-col">
-            <div className="digi-full-black-banner">
-              VI. Academic Qualification / பொதுக் கல்வித் தகுதி
-            </div>
-            <table className="digi-clean-form-table">
-              <thead>
-                <tr>
-                  <th style={{ width: '25px' }}>S.No</th>
-                  <th>Exam Passed</th>
-                  <th style={{ width: '45px' }}>Year</th>
-                  <th>School / College / University</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[0, 1, 2].map((idx) => {
-                  const row = q.academic?.[idx] || {}
-                  return (
-                    <tr key={idx}>
-                      <td className="center-cell">{idx + 1}</td>
-                      <td>{row.examinationPassed || '\u00A0'}</td>
-                      <td className="center-cell">{row.year || '\u00A0'}</td>
-                      <td>{row.institution || '\u00A0'}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* VII. Theological Qualification */}
-          <div className="digi-split-col">
-            <div className="digi-full-black-banner">
-              VII. Theological Qualification / இறையியல் தகுதி
-            </div>
-            <table className="digi-clean-form-table">
-              <thead>
-                <tr>
-                  <th style={{ width: '25px' }}>S.No</th>
-                  <th>Course Passed</th>
-                  <th style={{ width: '45px' }}>Year</th>
-                  <th>Seminary / Bible College</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[0, 1].map((idx) => {
-                  const row = q.theological?.[idx] || {}
-                  return (
-                    <tr key={idx}>
-                      <td className="center-cell">{idx + 1}</td>
-                      <td>{row.examinationPassed || '\u00A0'}</td>
-                      <td className="center-cell">{row.year || '\u00A0'}</td>
-                      <td>{row.institution || '\u00A0'}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+        {/* VI. Academic Qualification Table */}
+        <div className="digi-full-black-banner">
+          VI. Academic Qualification / பொதுக் கல்வித் தகுதி
         </div>
+
+        <table className="digi-clean-form-table">
+          <thead>
+            <tr>
+              <th style={{ width: '35px' }}>S.No</th>
+              <th>Examination Passed / தேர்ச்சி பெற்ற தேர்வு</th>
+              <th style={{ width: '70px' }}>Year / ஆண்டு</th>
+              <th>School / College / University பள்ளி / கல்லூரி / பல்கலைக் கழகம்</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1, 2].map((idx) => {
+              const row = q.academic?.[idx] || {}
+              return (
+                <tr key={idx}>
+                  <td className="center-cell">{idx + 1}</td>
+                  <td>{row.examinationPassed || '\u00A0'}</td>
+                  <td className="center-cell">{row.year || '\u00A0'}</td>
+                  <td>{row.institution || '\u00A0'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+
+        {/* VII. Theological Qualification Table */}
+        <div className="digi-full-black-banner">
+          VII. Theological Qualification / இறையியல் தகுதி
+        </div>
+
+        <table className="digi-clean-form-table">
+          <thead>
+            <tr>
+              <th style={{ width: '35px' }}>S.No</th>
+              <th>Course Passed / தேர்ச்சி பெற்ற படிப்பு</th>
+              <th style={{ width: '70px' }}>Year / ஆண்டு</th>
+              <th>Seminary / Bible College வேத பள்ளி / கல்லூரி</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1].map((idx) => {
+              const row = q.theological?.[idx] || {}
+              return (
+                <tr key={idx}>
+                  <td className="center-cell">{idx + 1}</td>
+                  <td>{row.examinationPassed || '\u00A0'}</td>
+                  <td className="center-cell">{row.year || '\u00A0'}</td>
+                  <td>{row.institution || '\u00A0'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
 
         {/* VIII. Family Details Table */}
         <div className="digi-full-black-banner">
@@ -577,10 +578,10 @@ export default function OfficialApplicationForm({ data }) {
         <table className="digi-clean-form-table">
           <thead>
             <tr>
-              <th style={{ width: '30px' }}>S.No</th>
+              <th style={{ width: '35px' }}>S.No</th>
               <th>Name / பெயர்</th>
               <th style={{ width: '85px' }}>DOB / பிறந்த தேதி</th>
-              <th style={{ width: '90px' }}>Relationship / உறவுமுறை</th>
+              <th style={{ width: '95px' }}>Relationship / உறவுமுறை</th>
               <th>Profession & Education / தொழில் & படிப்பு</th>
             </tr>
           </thead>
@@ -712,11 +713,11 @@ export default function OfficialApplicationForm({ data }) {
         </div>
 
         <div className="digi-checklist-enclosures-grid">
-          <div className="chk-cell">☑ 1. Proof of Identity (Aadhaar/Passport/Voter)</div>
-          <div className="chk-cell">☑ 2. Proof of Address (EB/Ration/Gas Bill)</div>
-          <div className="chk-cell">☑ 3. Proof of DOB (Birth Cert/10th Marks)</div>
+          <div className="chk-cell">☑ 1. Proof of Identity (Aadhaar/Passport)</div>
+          <div className="chk-cell">☑ 2. Proof of Address (EB/Ration Bill)</div>
+          <div className="chk-cell">☑ 3. Proof of DOB (Birth Cert/10th)</div>
           <div className="chk-cell">☑ 4. Passport Photos (3 copies)</div>
-          <div className="chk-cell">☑ 5. Academic & Theo. Certificates</div>
+          <div className="chk-cell">☑ 5. Academic & Theological Certs</div>
           <div className="chk-cell">☑ 6. Ministry Summary / Field Report</div>
           <div className="chk-cell">☑ 7. Church Ministry Photograph</div>
           <div className="chk-cell">☑ 8. Ordination / Affiliation Cert</div>
