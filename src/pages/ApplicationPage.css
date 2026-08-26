@@ -138,11 +138,65 @@
   }
 }
 
+/* Form Layout & Dual Pane */
+.clean-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 28px;
+  max-width: 1440px;
+  margin: 36px auto 80px;
+  padding: 0 24px;
+  align-items: flex-start;
+}
+
+@media (max-width: 1150px) {
+  .clean-form-layout {
+    grid-template-columns: 1fr;
+    max-width: 960px;
+  }
+  .clean-form-preview-sidebar {
+    display: none;
+  }
+}
+
+.clean-form-preview-sidebar {
+  position: sticky;
+  top: 90px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+.clean-preview-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.clean-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1d4ed8;
+  text-transform: uppercase;
+}
+
+.clean-preview-scroll-area {
+  overflow-x: hidden;
+}
+
 /* Form Container */
 .clean-form-container {
-  max-width: 960px;
-  margin: 36px auto 80px;
-  padding: 0 20px;
+  width: 100%;
 }
 
 .clean-form-card {
