@@ -1,6 +1,6 @@
 /* ============================================================
    DIGITAL OFFICIAL ACI DIOCESE FORM STYLES
-   Comfortable Official Spacing • Zero Text Compression • 2 Full Pages
+   Spacious Official Document Typography • Zero Trailing Gaps
    ============================================================ */
 
 .digi-form-canvas-container {
@@ -22,7 +22,7 @@
   color: #000000;
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
   margin: 0 auto;
-  padding: 8mm 12mm 6mm;
+  padding: 7mm 11mm 6mm;
   box-sizing: border-box;
   position: relative;
   page-break-after: always;
@@ -54,8 +54,8 @@
   align-items: center;
   gap: 12px;
   border-bottom: 2px solid #000000;
-  padding-bottom: 3px;
-  margin-bottom: 3px;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
 }
 
 .digi-crest-container {
@@ -63,8 +63,8 @@
 }
 
 .digi-crest-logo {
-  width: 64px;
-  height: 64px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
   display: block;
 }
@@ -76,7 +76,7 @@
 
 .digi-diocese-title {
   font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 800;
   color: #000000;
   margin: 0 0 1px;
@@ -84,7 +84,7 @@
 }
 
 .digi-trust-line-1 {
-  font-size: 8.2px;
+  font-size: 8px;
   font-weight: 700;
   margin: 0;
 }
@@ -93,8 +93,8 @@
 .digi-trust-line-3,
 .digi-office-address,
 .digi-contact-details {
-  font-size: 7.2px;
-  margin: 1px 0 0;
+  font-size: 7px;
+  margin: 0.8px 0 0;
 }
 
 /* Title Bar & Date of Issue */
@@ -112,7 +112,7 @@
 
 .digi-heading-en {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   margin: 0;
   text-decoration: underline;
@@ -121,50 +121,50 @@
 }
 
 .digi-heading-ta {
-  font-size: 9.8px;
+  font-size: 9.2px;
   font-weight: 700;
-  margin: 1px 0 0;
+  margin: 0.8px 0 0;
 }
 
 .digi-issue-date-card {
   border: 1.2px solid #000000;
-  padding: 2px 6px;
+  padding: 1.5px 5px;
   text-align: center;
-  font-size: 7.8px;
+  font-size: 7.5px;
   flex-shrink: 0;
-  min-width: 80px;
+  min-width: 75px;
 }
 
 .digi-issue-date-card .lbl {
-  font-size: 6.8px;
+  font-size: 6.5px;
   font-weight: 600;
 }
 
 .digi-issue-date-card .val {
   font-family: monospace;
   font-weight: 700;
-  font-size: 9.2px;
+  font-size: 9px;
 }
 
 /* Instruction Notice */
 .digi-instruction-notice {
-  font-size: 6.8px;
-  line-height: 1.15;
+  font-size: 6.5px;
+  line-height: 1.1;
   color: #333333;
   margin: 0 0 2px;
   text-align: justify;
 }
 
 /* ============================================================
-   TOP ADMINISTRATIVE BLOCK: Office (1fr) | Seal (140px) | Photo (115px)
+   TOP ADMINISTRATIVE BLOCK: Office (1fr) | Seal (135px) | Photo (110px)
    ============================================================ */
 .digi-top-admin-block {
   display: grid;
-  grid-template-columns: 1fr 140px 115px;
-  gap: 8px;
+  grid-template-columns: 1fr 135px 110px;
+  gap: 7px;
   margin-bottom: 2px;
   align-items: stretch;
-  height: 122px;
+  height: 118px;
 }
 
 /* Column 1: Office Use */
@@ -178,9 +178,9 @@
   background: #000000;
   color: #ffffff;
   font-weight: 700;
-  font-size: 7.8px;
+  font-size: 7.5px;
   text-align: center;
-  padding: 1.5px;
+  padding: 1.2px;
   letter-spacing: 0.04em;
 }
 
@@ -190,7 +190,7 @@
   flex-direction: column;
   justify-content: space-around;
   flex: 1;
-  gap: 1.5px;
+  gap: 1.2px;
 }
 
 .digi-admin-field-row {
@@ -198,25 +198,25 @@
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  font-size: 8px;
+  font-size: 7.8px;
   font-weight: 600;
 }
 
 .admin-lbl {
-  width: 125px;
+  width: 120px;
   flex-shrink: 0;
 }
 
 .admin-appno-val {
   font-family: monospace;
   font-weight: 800;
-  font-size: 9.8px;
+  font-size: 9.5px;
 }
 
 .admin-approval-tag {
   border: 1px solid #000000;
-  padding: 1px 4px;
-  font-size: 7px;
+  padding: 1px 3.5px;
+  font-size: 6.8px;
   font-weight: 700;
   font-family: sans-serif;
 }
@@ -243,8 +243,8 @@
 .digi-large-seal-circle {
   border: 1.5px dashed #334155;
   border-radius: 50%;
-  width: 86px;
-  height: 86px;
+  width: 82px;
+  height: 82px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -256,26 +256,26 @@
 }
 
 .seal-txt-top {
-  font-size: 8px;
+  font-size: 7.8px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
 
 .seal-emblem {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
   margin: 0.5px 0;
   color: #1e293b;
 }
 
 .seal-txt-bot {
-  font-size: 8px;
+  font-size: 7.8px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
 
 .seal-tag-text {
-  font-size: 5.8px;
+  font-size: 5.5px;
   font-weight: 700;
   color: #64748b;
   letter-spacing: 0.06em;
@@ -312,10 +312,10 @@
   height: 100%;
 }
 
-.p-l1 { font-size: 6.8px; font-weight: 700; line-height: 1.12; }
-.p-l2 { font-size: 6.4px; font-weight: 700; line-height: 1.12; }
-.p-l3 { font-size: 6.8px; font-weight: 800; line-height: 1.12; }
-.p-l4 { font-size: 5.8px; }
+.p-l1 { font-size: 6.6px; font-weight: 700; line-height: 1.12; }
+.p-l2 { font-size: 6.2px; font-weight: 700; line-height: 1.12; }
+.p-l3 { font-size: 6.6px; font-weight: 800; line-height: 1.12; }
+.p-l4 { font-size: 5.5px; }
 
 /* ============================================================
    BANNERS & SECTION TITLES
@@ -323,10 +323,10 @@
 .digi-full-black-banner {
   background: #000000;
   color: #ffffff;
-  font-size: 7.8px;
+  font-size: 8px;
   font-weight: 700;
-  padding: 1.8px 6px;
-  margin: 2px 0 2.5px;
+  padding: 2.2px 6px;
+  margin: 2.5px 0 3px;
   letter-spacing: 0.03em;
 }
 
@@ -342,7 +342,7 @@
 .digi-form-entry-row {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0.8px;
   margin-bottom: 1px;
   width: fit-content;
 }
@@ -351,7 +351,7 @@
   display: flex;
   align-items: baseline;
   gap: 4px;
-  font-size: 7.8px;
+  font-size: 7.6px;
 }
 
 .l-en { font-weight: 700; }
@@ -368,20 +368,20 @@
   border-top: 1px solid #000000;
   border-left: 1px solid #000000;
   border-bottom: 1px solid #000000;
-  height: 16.5px;
+  height: 16px;
   width: fit-content;
   vertical-align: middle;
 }
 
 .digi-char-box {
-  width: 14.5px;
+  width: 14px;
   height: 100%;
   border-right: 1px solid #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9.2px;
+  font-size: 9px;
   font-weight: 800;
   color: #001a4e;
   background: #ffffff;
@@ -408,7 +408,7 @@
 }
 
 .digi-date-sublabel {
-  font-size: 6.8px;
+  font-size: 6.6px;
   font-weight: 600;
 }
 
@@ -416,40 +416,40 @@
 .digi-two-column-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 7px;
   margin-bottom: 1px;
 }
 
 .digi-split-col {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0.8px;
 }
 
 /* Checkboxes */
 .digi-checkbox-cluster {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  min-height: 16.5px;
+  min-height: 16px;
 }
 
 .digi-checkbox-wrapper {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  font-size: 7.8px;
+  gap: 2.8px;
+  font-size: 7.6px;
 }
 
 .digi-checkbox-box {
-  width: 10.5px;
-  height: 10.5px;
+  width: 10px;
+  height: 10px;
   border: 1px solid #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 900;
   color: #000000;
   line-height: 1;
@@ -458,12 +458,12 @@
 .digi-checkbox-text {
   display: inline-flex;
   align-items: baseline;
-  gap: 2px;
+  gap: 1.8px;
 }
 
 .digi-inline-chk-pair {
   display: inline-flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* Structured Address Tables */
@@ -471,14 +471,14 @@
   border: 1px solid #000000;
   width: 100%;
   box-sizing: border-box;
-  margin: 1.5px 0;
+  margin: 1.2px 0;
 }
 
 .digi-address-grid-heading {
   background: #f1f5f9;
   border-bottom: 1px solid #000000;
-  padding: 1.5px 4px;
-  font-size: 7.4px;
+  padding: 1.2px 4px;
+  font-size: 7.2px;
   display: flex;
   gap: 4px;
 }
@@ -495,11 +495,11 @@
 
 .digi-grid-cell {
   border-right: 1px solid #000000;
-  padding: 1.5px 3.5px;
+  padding: 1.2px 3px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 20px;
+  min-height: 18px;
   box-sizing: border-box;
 }
 
@@ -508,30 +508,30 @@
 }
 
 .c-lbl {
-  font-size: 6.2px;
+  font-size: 6px;
   color: #444444;
   font-weight: 600;
 }
 
 .c-val {
   font-family: "Courier New", Courier, monospace;
-  font-size: 8.2px;
+  font-size: 8px;
   font-weight: 700;
   color: #001a4e;
 }
 
-/* II. Spiritual Information Box */
+/* Spiritual Information Box */
 .digi-spiritual-content-box {
-  padding: 2px 0 3px;
+  padding: 2px 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2.5px;
 }
 
 .digi-fivefold-full-grid {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -548,32 +548,32 @@
   gap: 4px;
 }
 
-/* III. Affiliation List */
+/* Affiliation List */
 .digi-affiliation-full-list {
   display: flex;
   flex-direction: column;
-  gap: 2.5px;
-  padding: 2px 0 3px;
+  gap: 2px;
+  padding: 1.5px 0;
 }
 
 .digi-aff-entry {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .digi-text-underline-spec {
-  font-size: 7.6px;
+  font-size: 7.4px;
   font-family: "Courier New", monospace;
   color: #001a4e;
 }
 
-/* V. Milestones Block */
+/* Milestones Block */
 .digi-milestones-full-block {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2px 10px;
-  padding: 1.5px 0;
+  gap: 2px 8px;
+  padding: 1px 0;
 }
 
 .digi-milestone-entry {
@@ -581,40 +581,41 @@
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-  padding: 1px 0;
+  padding: 0.8px 0;
   border-bottom: 1px dashed #e2e8f0;
 }
 
 .m-text {
-  font-size: 7.4px;
+  font-size: 7.2px;
   font-weight: 600;
 }
 
 /* ============================================================
-   PAGE 2: CLEAN FORM TABLES & DECLARATION
+   PAGE 2: BEAUTIFULLY PROPORTIONED, GENEROUS & FILLING 100%
    ============================================================ */
 .digi-clean-form-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #000000;
-  margin-bottom: 2.5px;
-  font-size: 7.4px;
+  border: 1.2px solid #000000;
+  margin-bottom: 4px;
+  font-size: 8px;
 }
 
 .digi-clean-form-table th {
   border: 1px solid #000000;
   background: #f8fafc;
-  padding: 1.5px 3px;
+  padding: 3px 5px;
   text-align: left;
   font-weight: 700;
+  font-size: 7.8px;
 }
 
 .digi-clean-form-table td {
   border: 1px solid #000000;
-  padding: 1px 3px;
-  height: 16px;
+  padding: 3.5px 5px;
+  height: 24px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 8.2px;
+  font-size: 9.2px;
   font-weight: 700;
   color: #001a4e;
 }
@@ -624,60 +625,62 @@
   text-align: center;
 }
 
-/* Motivation Compact Box */
+/* Motivation Generous Box */
 .digi-motivation-content-box {
-  border: 1px solid #000000;
-  padding: 3px 6px;
-  margin-bottom: 2.5px;
+  border: 1.2px solid #000000;
+  padding: 6px 10px;
+  margin-bottom: 4px;
   background: #ffffff;
-  min-height: 24px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
 
 .digi-motivation-text-content {
   font-family: "Courier New", Courier, monospace;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 600;
   color: #001a4e;
-  line-height: 1.22;
+  line-height: 1.35;
   margin: 0;
 }
 
-/* Two References */
+/* Two References Cards */
 .digi-references-two-col-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-bottom: 2.5px;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .digi-ref-box-card {
-  border: 1px solid #000000;
+  border: 1.2px solid #000000;
 }
 
 .digi-ref-card-header {
   background: #f1f5f9;
   border-bottom: 1px solid #000000;
-  padding: 1.5px 4px;
+  padding: 2.5px 6px;
   font-weight: 700;
-  font-size: 7.4px;
+  font-size: 8px;
 }
 
 .digi-ref-card-content {
-  padding: 2px 4px;
+  padding: 4px 6px;
   display: flex;
   flex-direction: column;
-  gap: 1.5px;
-  font-size: 7.2px;
+  gap: 2.5px;
+  font-size: 7.8px;
 }
 
 .digi-ref-line {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .digi-ref-line .r-lbl {
-  width: 76px;
+  width: 90px;
   flex-shrink: 0;
   font-weight: 600;
 }
@@ -686,41 +689,42 @@
   font-family: "Courier New", monospace;
   font-weight: 700;
   color: #001a4e;
+  font-size: 8.8px;
 }
 
 .digi-ref-attestation-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1px;
-  padding-top: 1px;
+  margin-top: 3px;
+  padding-top: 2px;
   border-top: 1px dashed #cbd5e1;
 }
 
 .digi-attest-seal {
   font-weight: 700;
   color: #059669;
-  font-size: 7px;
+  font-size: 7.6px;
 }
 
 /* Statutory Declaration & Signature */
 .digi-declaration-enclosing-card {
-  border: 1px solid #000000;
-  padding: 3px 5px;
-  margin-bottom: 2px;
+  border: 1.2px solid #000000;
+  padding: 5px 8px;
+  margin-bottom: 4px;
 }
 
 .digi-declaration-english {
-  font-size: 7.2px;
-  line-height: 1.18;
-  margin: 0 0 1px;
+  font-size: 7.6px;
+  line-height: 1.24;
+  margin: 0 0 2px;
   font-weight: 500;
 }
 
 .digi-declaration-tamil {
-  font-size: 6.6px;
-  line-height: 1.18;
-  margin: 0 0 2px;
+  font-size: 7px;
+  line-height: 1.24;
+  margin: 0 0 4px;
   color: #333333;
 }
 
@@ -729,21 +733,22 @@
   justify-content: space-between;
   align-items: flex-end;
   border-top: 1px solid #000000;
-  padding-top: 2px;
-  margin-top: 1px;
+  padding-top: 4px;
+  margin-top: 3px;
 }
 
 .digi-declaration-meta-side {
   display: flex;
   flex-direction: column;
-  gap: 1.5px;
-  font-size: 7.4px;
+  gap: 2px;
+  font-size: 8px;
 }
 
 .digi-meta-item .val {
   font-family: "Courier New", monospace;
   font-weight: 700;
   color: #001a4e;
+  font-size: 9px;
   margin-left: 2px;
 }
 
@@ -752,34 +757,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 180px;
+  min-width: 200px;
 }
 
 .digi-handwritten-signature {
   font-family: "Caveat", "Dancing Script", "Brush Script MT", "Segoe Script", cursive;
-  font-size: 19px;
+  font-size: 24px;
   font-weight: 700;
   color: #0c2461;
   letter-spacing: 0.04em;
   transform: rotate(-2deg);
-  margin-bottom: 0.5px;
+  margin-bottom: 1px;
   line-height: 1;
 }
 
 .digi-sig-underline-bar {
-  width: 150px;
-  border-bottom: 1px solid #000000;
-  margin-bottom: 1px;
+  width: 170px;
+  border-bottom: 1.2px solid #000000;
+  margin-bottom: 2px;
 }
 
 .digi-sig-title-label {
-  font-size: 6.6px;
+  font-size: 7px;
   color: #333333;
   font-weight: 600;
 }
 
 .digi-sig-verified-tag {
-  font-size: 6px;
+  font-size: 6.6px;
   font-weight: 700;
   color: #059669;
   letter-spacing: 0.05em;
@@ -789,22 +794,22 @@
 .digi-checklist-enclosures-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5px 6px;
-  font-size: 6.6px;
-  padding: 1px 0;
+  gap: 3px 10px;
+  font-size: 7.4px;
+  padding: 3px 0 2px;
 }
 
 .chk-cell {
-  line-height: 1.12;
+  line-height: 1.2;
 }
 
 /* Sheet Footer */
 .digi-sheet-footer {
   margin-top: auto;
-  padding-top: 1.5px;
+  padding-top: 2px;
   border-top: 1px solid #cbd5e1;
   text-align: right;
-  font-size: 6.2px;
+  font-size: 6.6px;
   color: #64748b;
 }
 
@@ -857,7 +862,7 @@
     page-break-after: always !important;
     break-after: page !important;
     box-sizing: border-box !important;
-    padding: 8mm 12mm 6mm !important;
+    padding: 7mm 11mm 6mm !important;
     overflow: hidden !important;
   }
 }
