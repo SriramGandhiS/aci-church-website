@@ -297,9 +297,10 @@
   display: grid;
   grid-template-columns: 1fr 135px 110px;
   gap: 6px;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
   align-items: stretch;
-  height: 112px;
+  min-height: 112px;
+  height: auto;
   position: relative;
   z-index: 1;
 }
