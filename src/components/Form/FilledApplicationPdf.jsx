@@ -1,5 +1,5 @@
 import React from 'react'
-import { PrintIcon, ArrowLeftIcon } from '../Icons/SvgIcons'
+import { PrintIcon, ArrowLeftIcon, DocumentIcon } from '../Icons/SvgIcons'
 import OfficialApplicationForm from './OfficialApplicationForm'
 import './FilledApplicationPdf.css'
 
@@ -14,8 +14,9 @@ export default function FilledApplicationPdf({ data, onEdit, isTa = false }) {
       {/* Action Toolbar */}
       <div className="pdf-toolbar">
         <div>
-          <h3 className="pdf-toolbar-title">
-            📄 {isTa ? 'அதிகாரப்பூர்வ பேராய விண்ணப்பப் படிவம் (முழுமையாக நிரப்பப்பட்டது)' : 'Official Diocesan Membership Application (Digitally Completed Form)'}
+          <h3 className="pdf-toolbar-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <DocumentIcon size={18} color="#1e40af" />
+            <span>{isTa ? 'அதிகாரப்பூர்வ பேராய விண்ணப்பப் படிவம் (நிரப்பப்பட்டது)' : 'Official Diocesan Membership Application (Completed Form)'}</span>
           </h3>
           <p style={{ fontSize: '12.5px', color: '#64748b', margin: '2px 0 0' }}>
             {isTa ? 'அதிகாரப்பூர்வ 4 பக்க வடிவத்தில் நிரப்பப்பட்ட படிவம். அச்சு / PDF ஆக சேமிக்கலாம்.' : 'Exact 4-page replica of the official ACI Diocese paper form with your data placed into corresponding fields.'}
