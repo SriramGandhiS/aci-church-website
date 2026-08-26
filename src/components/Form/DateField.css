@@ -1,0 +1,40 @@
+/* DateField Component Styles */
+
+.date-field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.date-field-inputs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.date-select-group {
+  flex: 1;
+}
+
+.date-select-group.month-group {
+  flex: 1.8;
+}
+
+.date-part-select {
+  width: 100%;
+  padding: 10px 8px;
+  font-size: 13.5px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #1e293b;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.date-part-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
