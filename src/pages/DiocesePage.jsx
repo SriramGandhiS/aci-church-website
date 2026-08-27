@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
-import { ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
+import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
 import { diocesesList } from '../data/diocesesData'
 
 export default function DiocesePage() {
@@ -82,27 +82,9 @@ export default function DiocesePage() {
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
                   </span>
                 </div>
-                <div style={{
-                  width: '68px',
-                  height: '68px',
-                  borderRadius: '50%',
-                  border: '2px solid #c8a96e',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                  flexShrink: 0,
-                  background: '#1c1c1c'
-                }}>
-                  <img
-                    src={d.image}
-                    alt={isTa ? d.pastorNameTa : d.pastorName}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center top',
-                      display: 'block'
-                    }}
-                  />
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(200, 169, 110, 0.1)', border: '1px solid rgba(200, 169, 110, 0.3)', color: '#c8a96e', padding: '6px 14px', fontSize: '12px', fontWeight: 600, borderRadius: '4px' }}>
+                  <LocationIcon size={13} color="#c8a96e" />
+                  <span>{isTa ? d.headquartersTa : d.headquarters}</span>
                 </div>
               </div>
 
@@ -143,16 +125,32 @@ export default function DiocesePage() {
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px', marginBottom: '18px' }}>
                     {/* Minister / Pastor Info */}
-                    <div>
-                      <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                        {isTa ? 'பொறுப்பு பேராயர் / தலைவர்' : 'Presiding Bishop / Leader'}
-                      </span>
-                      <p style={{ fontSize: '14.5px', fontWeight: 600, color: '#ffffff', margin: '0 0 2px 0' }}>
-                        {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
-                      </p>
-                      <span style={{ fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
-                        {isTa ? (d.pastorDesignationTa || d.pastorDesignation) : d.pastorDesignation}
-                      </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <img
+                        src={d.image}
+                        alt={isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
+                        style={{
+                          width: '64px',
+                          height: '64px',
+                          borderRadius: '50%',
+                          border: '2.5px solid #c8a96e',
+                          objectFit: 'cover',
+                          objectPosition: 'center top',
+                          flexShrink: 0,
+                          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.4)'
+                        }}
+                      />
+                      <div>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
+                          {isTa ? 'பொறுப்பு பேராயர் / தலைவர்' : 'Presiding Bishop / Leader'}
+                        </span>
+                        <p style={{ fontSize: '14.5px', fontWeight: 600, color: '#ffffff', margin: '0 0 2px 0' }}>
+                          {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
+                        </p>
+                        <span style={{ fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
+                          {isTa ? (d.pastorDesignationTa || d.pastorDesignation) : d.pastorDesignation}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Church Address */}
