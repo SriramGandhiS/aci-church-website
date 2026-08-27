@@ -58,6 +58,48 @@ const CLEAN_STEPS = [
   { num: 5, key: 'review', labelEn: 'Review & Declaration', labelTa: 'சரிபார்த்தல் & உறுதிமொழி' },
 ]
 
+function safeMergeFormData(base, incoming) {
+  if (!incoming || typeof incoming !== 'object') return base
+
+  const safeArray = (val, defaultVal) => {
+    if (Array.isArray(val)) return val
+    if (val && typeof val === 'object') return Object.values(val)
+    return defaultVal
+  }
+
+  return {
+    ...base,
+    ...incoming,
+    personal: {
+      ...(base.personal || {}),
+      ...(incoming.personal || {}),
+      permanentAddress: { ...(base.personal?.permanentAddress || {}), ...(incoming.personal?.permanentAddress || {}) },
+      contactAddress: { ...(base.personal?.contactAddress || {}), ...(incoming.personal?.contactAddress || {}) }
+    },
+    spiritual: { ...(base.spiritual || {}), ...(incoming.spiritual || {}) },
+    affiliation: { ...(base.affiliation || {}), ...(incoming.affiliation || {}) },
+    church: {
+      ...(base.church || {}),
+      ...(incoming.church || {}),
+      churchAddress: { ...(base.church?.churchAddress || {}), ...(incoming.church?.churchAddress || {}) }
+    },
+    ministryHistory: { ...(base.ministryHistory || {}), ...(incoming.ministryHistory || {}) },
+    milestones: { ...(base.milestones || {}), ...(incoming.milestones || {}) },
+    qualifications: {
+      academic: safeArray(incoming.qualifications?.academic, base.qualifications?.academic || []),
+      theological: safeArray(incoming.qualifications?.theological, base.qualifications?.theological || [])
+    },
+    family: safeArray(incoming.family, base.family || []),
+    motivation: { ...(base.motivation || {}), ...(incoming.motivation || {}) },
+    references: {
+      ref1: { ...(base.references?.ref1 || {}), ...(incoming.references?.ref1 || {}) },
+      ref2: { ...(base.references?.ref2 || {}), ...(incoming.references?.ref2 || {}) }
+    },
+    enclosures: { ...(base.enclosures || {}), ...(incoming.enclosures || {}) },
+    declaration: { ...(base.declaration || {}), ...(incoming.declaration || {}) }
+  }
+}
+
 export default function ApplicationPage() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
@@ -88,9 +130,9 @@ export default function ApplicationPage() {
     async function initDraft() {
       if (user?.email) {
         try {
-          const res = await api.getMyApplication(user.email)
+          const res = await api.getMyApplication(user.email, user.googleSub)
           if (res && res.success && res.application?.data) {
-            setFormData(res.application.data)
+            setFormData(safeMergeFormData(initialApplicationData, res.application.data))
             if (res.application.status === 'SUBMITTED' || res.application.status === 'ACCEPTED' || res.application.status === 'UNDER_REVIEW') {
               setSubmittedAppId(res.application.applicationId)
               setIsCompleted(true)
@@ -136,7 +178,7 @@ export default function ApplicationPage() {
 
         // Save to Google Backend if authenticated
         if (user?.email) {
-          await api.saveDraft(user.email, user.userId, formData)
+          await api.saveDraft(user.email, user.userId, user.googleSub, formData)
         }
         setSaveStatus('saved')
       } catch (e) {
@@ -158,7 +200,7 @@ export default function ApplicationPage() {
       const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
         const parsed = JSON.parse(saved)
-        if (parsed.formData) setFormData(parsed.formData)
+        if (parsed.formData) setFormData(safeMergeFormData(initialApplicationData, parsed.formData))
         if (parsed.currentStep) setCurrentStep(parsed.currentStep)
       }
     } catch (e) {}
@@ -431,6 +473,53 @@ export default function ApplicationPage() {
   const handleRemovePhoto = () => {
     updateNested('personal', 'photoUrl', '')
     if (photoInputRef.current) photoInputRef.current.value = ''
+  }
+
+  // Handle Document Enclosure Uploads
+  const handleEnclosureUpload = (field, e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert(isTa ? 'ஆவணம் 10MB அளவுக்குள் இருக்க வேண்டும்.' : 'Document file size must be under 10MB.')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = async (evt) => {
+      const base64 = evt.target.result
+      setFormData(prev => ({
+        ...prev,
+        enclosures: {
+          ...prev.enclosures,
+          [field]: file.name
+        }
+      }))
+
+      if (user?.email) {
+        try {
+          await api.uploadDocument({
+            email: user.email,
+            userId: user.userId,
+            documentType: field,
+            fileName: file.name,
+            base64Data: base64,
+            applicationId: submittedAppId || 'DRAFT'
+          })
+        } catch (err) {}
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemoveEnclosure = (field) => {
+    setFormData(prev => ({
+      ...prev,
+      enclosures: {
+        ...prev.enclosures,
+        [field]: ''
+      }
+    }))
   }
 
   // Dynamic Qualifications
@@ -765,6 +854,7 @@ export default function ApplicationPage() {
         const res = await api.submitApplication(
           authenticatedUser.email,
           authenticatedUser.userId,
+          authenticatedUser.googleSub,
           formData
         )
 
@@ -803,40 +893,44 @@ export default function ApplicationPage() {
     return (
       <FilledApplicationPdf
         data={formData}
+        applicationId={submittedAppId}
         onEdit={() => setIsCompleted(false)}
         isTa={isTa}
       />
     )
   }
 
-  // If user is not authenticated, show Authentication & Verification Gate
+  // STRICT RULE: No Sign In = No Apply
   if (!user) {
     return (
-      <div className="clean-app-page" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '100px 20px 80px' }}>
-        <div style={{ background: '#ffffff', border: '1.5px solid #cbd5e1', borderRadius: '12px', padding: '40px 32px', maxWidth: '520px', width: '100%', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.06)' }}>
-          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#eff6ff', color: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <ShieldIcon size={30} />
+      <div className="clean-app-page" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 20px 80px' }}>
+        <div style={{ background: '#ffffff', border: '1.5px solid #cbd5e1', borderRadius: '16px', padding: '44px 32px', maxWidth: '480px', width: '100%', textAlign: 'center', boxShadow: '0 12px 32px rgba(15,23,42,0.08)' }}>
+          <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#eff6ff', border: '1.5px solid #bfdbfe', color: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px' }}>
+            <ShieldIcon size={32} color="#1e40af" />
           </div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', margin: '0 0 8px' }}>
-            {isTa ? 'அதிகாரப்பூர்வ உறுப்பினர் விண்ணப்பப் பதிவு' : 'ACI Membership Application Portal'}
+          <span style={{ display: 'inline-block', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '3px 12px', fontSize: '11px', fontWeight: 700, color: '#475569', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '12px' }}>
+            {isTa ? 'உறுப்பினர் சேர்க்கை போர்ட்டல்' : 'Membership Portal'}
+          </span>
+          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', margin: '0 0 10px', letterSpacing: '-0.02em' }}>
+            {isTa ? 'விண்ணப்பிக்க உள்நுழைவு தேவை' : 'Sign In Required to Apply'}
           </h2>
-          <p style={{ fontSize: '13.5px', color: '#64748b', margin: '0 0 24px', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '14px', color: '#64748b', margin: '0 0 26px', lineHeight: 1.55 }}>
             {isTa
-              ? 'விண்ணப்பத்தை தொடங்க மற்றும் தொடர உங்கள் கூகுள் மின்னஞ்சல் மூலம் சரிபார்க்கவும்.'
-              : 'Sign in with your Google account to receive a single-use verification code, auto-save drafts, and track your application.'}
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தில் இணைய உங்கள் கூகுள் கணக்கு மூலம் உள்நுழையவும்.'
+              : 'Please sign in with your Google account or email to open your official application, auto-save drafts, and track progress.'}
           </p>
           <button
             type="button"
             className="btn btn-primary"
-            style={{ width: '100%', padding: '12px 24px', fontSize: '14px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            style={{ width: '100%', padding: '14px 24px', fontSize: '14.5px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', borderRadius: '10px', background: '#1e40af', color: '#ffffff', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(30,64,175,0.25)' }}
             onClick={() => requireAuth()}
           >
-            <span>{isTa ? 'கூகுள் கணக்கு மூலம் தொடரவும்' : 'Continue with Google Account'}</span>
-            <ArrowRightIcon size={16} />
+            <span>{isTa ? 'உள்நுழைய கூகுள் கணக்கை தேர்ந்தெடுக்கவும்' : 'Sign In with Google / Email'}</span>
+            <ArrowRightIcon size={15} color="#ffffff" />
           </button>
-          <p style={{ fontSize: '11.5px', color: '#94a3b8', marginTop: '16px', marginBottom: 0 }}>
-            🔒 {isTa ? '₹0 இலவச போர்ட்டல் • உங்கள் ஆவணங்கள் பாதுகாப்பாக வைக்கப்படும்' : 'Zero-fee diocesan portal • Your documents are privately secured'}
-          </p>
+          <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #f1f5f9', fontSize: '12px', color: '#94a3b8' }}>
+            🔒 {isTa ? 'அதிகாரப்பூர்வ பேராய முறைமை • ஆவணங்கள் பாதுகாப்பாக வைக்கப்படும்' : 'Official Diocesan Portal • Secured & Private'}
+          </div>
         </div>
       </div>
     )
@@ -2012,6 +2106,137 @@ export default function ApplicationPage() {
                   + {isTa ? 'குடும்ப உறுப்பினரை சேர்' : 'Add Family Member'}
                 </button>
               </div>
+
+              {/* IX. Enclosures & Required Document Uploads */}
+              <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '14.5px', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
+                  {isTa ? 'IX. இணைக்கப்பட வேண்டிய சான்றிதழ்கள் & ஆவணங்கள்' : 'IX. Required Document Uploads & Enclosures'}
+                </h3>
+                <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '14px' }}>
+                  {isTa ? 'விண்ணப்பத்துடன் தேவையான அனைத்து சான்றிதழ்களையும் பதிவேற்றவும் (PDF, JPG, PNG).' : 'Upload all supporting proof documents (PDF, JPG, PNG up to 10MB each).'}
+                </p>
+
+                <div className="clean-grid-2" style={{ gap: '14px' }}>
+                  {/* 1. Proof of Identity */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      1. {isTa ? 'அடையாளச் சான்று (Aadhaar / Voter ID / Passport)' : 'Proof of Identity (Aadhaar / Voter ID)'}
+                    </span>
+                    {formData.enclosures.proofIdentity ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.proofIdentity}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('proofIdentity')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('proofIdentity', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 2. Proof of Address */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      2. {isTa ? 'முகவரி சான்று (Ration Card / EB Bill / Gas Bill)' : 'Proof of Address (Ration Card / Utility Bill)'}
+                    </span>
+                    {formData.enclosures.proofAddress ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.proofAddress}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('proofAddress')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('proofAddress', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 3. Proof of DOB */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      3. {isTa ? 'பிறந்த தேதி சான்று (10th TC / Birth Certificate)' : 'Proof of DOB (Birth Certificate / 10th TC)'}
+                    </span>
+                    {formData.enclosures.proofDob ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.proofDob}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('proofDob')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('proofDob', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 4. Proof of Name Change (Optional) */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      4. {isTa ? 'பெயர் மாற்ற சான்று (அரசிதழ் / விருப்பத்தேர்வு)' : 'Proof of Name Change (Gazette / Optional)'}
+                    </span>
+                    {formData.enclosures.proofNameChange ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.proofNameChange}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('proofNameChange')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('proofNameChange', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 5. Ministry Statement */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      5. {isTa ? 'ஊழிய அறிக்கை (1-பக்க சுருக்க அறிக்கை)' : 'Ministry Statement (1-Page Summary Report)'}
+                    </span>
+                    {formData.enclosures.ministryStatement ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.ministryStatement}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('ministryStatement')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onChange={(e) => handleEnclosureUpload('ministryStatement', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 6. Church & Congregation Photo */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      6. {isTa ? 'சபை & ஆராதனை புகைப்படங்கள்' : 'Church Building & Congregation Photo'}
+                    </span>
+                    {formData.enclosures.churchPhoto ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📷 {formData.enclosures.churchPhoto}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('churchPhoto')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('churchPhoto', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+
+                  {/* 7. Ordination / Theological Degree */}
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', display: 'block', marginBottom: '4px' }}>
+                      7. {isTa ? 'பட்டமளிப்பு / வேதாகம கல்லூரி சான்றிதழ்' : 'Ordination Certificate / Seminary Degree'}
+                    </span>
+                    {formData.enclosures.ordinationCertificate ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+                          📄 {formData.enclosures.ordinationCertificate}
+                        </span>
+                        <button type="button" onClick={() => handleRemoveEnclosure('ordinationCertificate')} style={{ color: '#dc2626', fontSize: '11px', border: 'none', background: 'none', cursor: 'pointer' }}>Remove</button>
+                      </div>
+                    ) : (
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleEnclosureUpload('ordinationCertificate', e)} className="clean-input" style={{ fontSize: '11.5px', padding: '4px' }} />
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -2115,6 +2340,7 @@ export default function ApplicationPage() {
                   </div>
 
                   {/* Card 4: Milestones & Qualifications */}
+                  {/* Card 4: Milestones & Qualifications */}
                   <div className="app-review-card">
                     <div className="app-review-card-header">
                       <span className="app-review-card-title">{isTa ? '4. கல்வி & மைல்கற்கள்' : '4. Milestones & Qualifications'}</span>
@@ -2134,6 +2360,45 @@ export default function ApplicationPage() {
                     <div className="app-review-row">
                       <span className="app-review-lbl">Theological Entries:</span>
                       <span className="app-review-val">{formData.qualifications.theological.length} recorded</span>
+                    </div>
+                  </div>
+
+                  {/* Card 5: Attached Proof Documents & Enclosures */}
+                  <div className="app-review-card">
+                    <div className="app-review-card-header">
+                      <span className="app-review-card-title">{isTa ? '5. இணைக்கப்பட்ட சான்றிதழ்கள் & ஆவணங்கள்' : '5. Attached Proofs & Documents'}</span>
+                      <button type="button" onClick={() => setCurrentStep(4)} className="app-review-edit-btn">
+                        <EditIcon size={12} />
+                        <span>{isTa ? 'திருத்து' : 'Edit'}</span>
+                      </button>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">ID Proof:</span>
+                      <span className="app-review-val">{formData.enclosures.proofIdentity || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">Address Proof:</span>
+                      <span className="app-review-val">{formData.enclosures.proofAddress || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">DOB Proof:</span>
+                      <span className="app-review-val">{formData.enclosures.proofDob || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">Passport Photo:</span>
+                      <span className="app-review-val">{formData.enclosures.passportPhoto || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">Ministry Statement:</span>
+                      <span className="app-review-val">{formData.enclosures.ministryStatement || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">Church Photo:</span>
+                      <span className="app-review-val">{formData.enclosures.churchPhoto || '—'}</span>
+                    </div>
+                    <div className="app-review-row">
+                      <span className="app-review-lbl">Ordination Cert:</span>
+                      <span className="app-review-val">{formData.enclosures.ordinationCertificate || '—'}</span>
                     </div>
                   </div>
                 </div>

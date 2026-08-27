@@ -25,15 +25,19 @@ export default function ApplicantDashboardPage() {
   const [viewingForm, setViewingForm] = useState(false)
 
   useEffect(() => {
-    requireAuth((loggedUser) => {
-      loadApplication(loggedUser.email)
-    })
-  }, [])
+    if (user?.email) {
+      loadApplication(user.email, user.googleSub)
+    } else {
+      requireAuth((loggedUser) => {
+        loadApplication(loggedUser.email, loggedUser.googleSub)
+      })
+    }
+  }, [user])
 
-  const loadApplication = async (email) => {
+  const loadApplication = async (email, googleSub) => {
     setLoading(true)
     try {
-      const res = await api.getMyApplication(email)
+      const res = await api.getMyApplication(email, googleSub)
       if (res && res.success && res.application) {
         setApplication(res.application)
       } else {

@@ -33,9 +33,9 @@ export default function AuthModal() {
       setLoading(true)
       setErrorMsg('')
 
-      const payload = decodeGoogleJwt(response.credential)
+      const payload = decodeGoogleJwt(response.credential, GOOGLE_CLIENT_ID)
       if (!payload || !payload.email) {
-        setErrorMsg(isTa ? 'கூகுள் கணக்கு தகவலை பெற முடியவில்லை.' : 'Unable to decode Google identity token.')
+        setErrorMsg(isTa ? 'கூகுள் கணக்கு தகவலை பெற முடியவில்லை அல்லது காலாவதியானது.' : 'Unable to verify Google identity token.')
         setLoading(false)
         return
       }
