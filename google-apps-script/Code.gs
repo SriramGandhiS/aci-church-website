@@ -68,6 +68,14 @@ function handleRequest(e, method) {
         result = handleAuthGoogle(data);
         break;
         
+      case 'request_email_otp':
+        result = handleRequestEmailOtp(data);
+        break;
+        
+      case 'verify_email_otp':
+        result = handleVerifyEmailOtp(data);
+        break;
+        
       case 'get_my_application':
         result = handleGetMyApplication(data);
         break;
@@ -284,6 +292,136 @@ function handleAuthGoogle(data) {
     user: existingUser,
     isAdmin: role === 'ADMIN'
   };
+}
+
+/**
+ * Request 6-Digit Email OTP
+ */
+function handleRequestEmailOtp(data) {
+  var email = (data.email || '').toLowerCase().trim();
+  if (!email || email.indexOf('@') === -1) {
+    return { success: false, error: 'INVALID_EMAIL', message: 'Valid Google email address is required.' };
+  }
+
+  // Generate 6-digit random code
+  var otp = Math.floor(100000 + Math.random() * 900000).toString();
+  var now = new Date();
+  var expiresAt = new Date(now.getTime() + 10 * 60 * 1000).toISOString(); // 10 minutes
+
+  var db = getDb();
+  var otpSheet = db.getSheetByName('OtpStore');
+  if (!otpSheet) {
+    otpSheet = db.insertSheet('OtpStore');
+    otpSheet.appendRow(['email', 'otp', 'expiresAt', 'attempts', 'createdAt']);
+  }
+
+  var rows = otpSheet.getDataRange().getValues();
+  var rowIndex = -1;
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] && rows[i][0].toString().toLowerCase().trim() === email) {
+      rowIndex = i + 1;
+      break;
+    }
+  }
+
+  if (rowIndex !== -1) {
+    otpSheet.getRange(rowIndex, 2).setValue(otp);
+    otpSheet.getRange(rowIndex, 3).setValue(expiresAt);
+    otpSheet.getRange(rowIndex, 4).setValue(0);
+    otpSheet.getRange(rowIndex, 5).setValue(now.toISOString());
+  } else {
+    otpSheet.appendRow([email, otp, expiresAt, 0, now.toISOString()]);
+  }
+
+  // Send OTP Email via GmailApp
+  try {
+    var subject = 'ACI Diocese Application Verification Code: ' + otp;
+    var body = 'Dear Applicant,\n\n' +
+      'Your single-use verification code for the Apostolic Council of India Diocese Membership Portal is:\n\n' +
+      '  =====================\n' +
+      '        ' + otp + '\n' +
+      '  =====================\n\n' +
+      'This code is valid for 10 minutes. Please enter it in the website verification prompt to proceed to your application.\n\n' +
+      'If you did not initiate this request, you can safely ignore this email.\n\n' +
+      'Blessings,\nApostolic Council of India Diocese';
+
+    MailApp.sendEmail(email, subject, body);
+  } catch (err) {
+    // Non-blocking mail fallback
+  }
+
+  return {
+    success: true,
+    message: 'Verification code sent to ' + email
+  };
+}
+
+/**
+ * Verify 6-Digit Email OTP and issue Authenticated Session
+ */
+function handleVerifyEmailOtp(data) {
+  var email = (data.email || '').toLowerCase().trim();
+  var inputOtp = (data.otp || '').toString().trim();
+  var name = data.name || '';
+
+  if (!email || !inputOtp) {
+    return { success: false, error: 'MISSING_DATA', message: 'Email and verification code are required.' };
+  }
+
+  var db = getDb();
+  var otpSheet = db.getSheetByName('OtpStore');
+  if (!otpSheet) {
+    return { success: false, error: 'NO_OTP_RECORD', message: 'No verification code requested.' };
+  }
+
+  var rows = otpSheet.getDataRange().getValues();
+  var record = null;
+  var rowIndex = -1;
+
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] && rows[i][0].toString().toLowerCase().trim() === email) {
+      record = {
+        email: rows[i][0],
+        otp: rows[i][1].toString().trim(),
+        expiresAt: rows[i][2],
+        attempts: Number(rows[i][3]) || 0
+      };
+      rowIndex = i + 1;
+      break;
+    }
+  }
+
+  if (!record) {
+    return { success: false, error: 'INVALID_REQUEST', message: 'Please request a verification code first.' };
+  }
+
+  // Check Expiry
+  var now = new Date();
+  var expTime = new Date(record.expiresAt);
+  if (now > expTime) {
+    return { success: false, error: 'OTP_EXPIRED', message: 'Verification code has expired. Please request a new one.' };
+  }
+
+  // Check Attempts
+  if (record.attempts >= 5) {
+    return { success: false, error: 'TOO_MANY_ATTEMPTS', message: 'Too many incorrect attempts. Please request a new code.' };
+  }
+
+  // Verify Code
+  if (record.otp !== inputOtp) {
+    otpSheet.getRange(rowIndex, 4).setValue(record.attempts + 1);
+    return { success: false, error: 'WRONG_OTP', message: 'Invalid verification code. Please check and re-enter.' };
+  }
+
+  // Valid OTP -> Clear OTP & Authenticate User
+  otpSheet.deleteRow(rowIndex);
+
+  return handleAuthGoogle({
+    email: email,
+    name: name,
+    avatar: '',
+    googleSub: 'google-otp-' + Utilities.getUuid().substring(0, 8)
+  });
 }
 
 /**

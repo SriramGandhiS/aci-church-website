@@ -65,6 +65,28 @@ function handleLocalFallback(action, data) {
   const email = (data.email || data.adminEmail || '').toLowerCase().trim()
 
   switch (action) {
+    case 'request_email_otp': {
+      const otp = Math.floor(100000 + Math.random() * 900000).toString()
+      sessionStorage.setItem('aci_otp_cache_' + email, JSON.stringify({
+        otp,
+        expiresAt: Date.now() + 10 * 60 * 1000
+      }))
+      console.log(`%c[ACI OTP SYSTEM] Verification Code for ${email}: ${otp}`, 'background: #1e40af; color: white; font-size: 14px; font-weight: bold; padding: 4px 8px; border-radius: 4px;')
+      return { success: true, message: `Verification code dispatched to ${email}` }
+    }
+
+    case 'verify_email_otp': {
+      const cache = JSON.parse(sessionStorage.getItem('aci_otp_cache_' + email) || '{}')
+      const inputOtp = (data.otp || '').trim()
+
+      if (cache.otp && cache.otp !== inputOtp) {
+        return { success: false, error: 'WRONG_OTP', message: 'Invalid verification code. Please check and re-enter.' }
+      }
+
+      sessionStorage.removeItem('aci_otp_cache_' + email)
+      return handleLocalFallback('auth_google', data)
+    }
+
     case 'auth_google': {
       const users = getUsers()
       let user = users.find(u => u.email === email)
@@ -253,6 +275,8 @@ function handleLocalFallback(action, data) {
 
 export const api = {
   authGoogle: (payload) => callApi('auth_google', payload),
+  requestEmailOtp: (email) => callApi('request_email_otp', { email }),
+  verifyEmailOtp: (email, otp, name) => callApi('verify_email_otp', { email, otp, name }),
   getMyApplication: (email) => callApi('get_my_application', { email }),
   saveDraft: (email, userId, formData) => callApi('save_draft', { email, userId, formData }),
   uploadDocument: (payload) => callApi('upload_document', payload),

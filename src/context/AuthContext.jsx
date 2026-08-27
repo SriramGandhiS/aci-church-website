@@ -27,7 +27,47 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  // 2. Login via Google payload
+  // 2. Request OTP
+  const requestOtp = async (email) => {
+    try {
+      const res = await api.requestEmailOtp(email)
+      return res
+    } catch (err) {
+      return { success: false, error: err.message }
+    }
+  }
+
+  // 3. Verify OTP & Authenticate
+  const verifyOtp = async (email, otp, name) => {
+    setLoading(true)
+    try {
+      const res = await api.verifyEmailOtp(email, otp, name)
+      if (res && res.success && res.user) {
+        const loggedUser = {
+          ...res.user,
+          isAdmin: res.isAdmin || res.user.role === 'ADMIN'
+        }
+        setUser(loggedUser)
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+        localStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+
+        setIsAuthModalOpen(false)
+        if (authCallback) {
+          authCallback(loggedUser)
+          setAuthCallback(null)
+        }
+        return { success: true, user: loggedUser }
+      } else {
+        return { success: false, error: res?.message || 'Invalid verification code.' }
+      }
+    } catch (err) {
+      return { success: false, error: err.message }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 4. Direct Google Login fallback
   const loginWithGoogle = async (googlePayload) => {
     setLoading(true)
     try {
@@ -86,6 +126,8 @@ export function AuthProvider({ children }) {
         user,
         loading,
         isAdmin: !!user?.isAdmin,
+        requestOtp,
+        verifyOtp,
         loginWithGoogle,
         logout,
         requireAuth,

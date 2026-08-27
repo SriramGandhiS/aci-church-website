@@ -798,7 +798,7 @@ export default function ApplicationPage() {
     }
   }
 
-  // If completed, show printable 4-page filled official form
+  // If completed, show printable 2-page filled official form
   if (isCompleted) {
     return (
       <FilledApplicationPdf
@@ -806,6 +806,39 @@ export default function ApplicationPage() {
         onEdit={() => setIsCompleted(false)}
         isTa={isTa}
       />
+    )
+  }
+
+  // If user is not authenticated, show Authentication & Verification Gate
+  if (!user) {
+    return (
+      <div className="clean-app-page" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '100px 20px 80px' }}>
+        <div style={{ background: '#ffffff', border: '1.5px solid #cbd5e1', borderRadius: '12px', padding: '40px 32px', maxWidth: '520px', width: '100%', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.06)' }}>
+          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#eff6ff', color: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <ShieldIcon size={30} />
+          </div>
+          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', margin: '0 0 8px' }}>
+            {isTa ? 'அதிகாரப்பூர்வ உறுப்பினர் விண்ணப்பப் பதிவு' : 'ACI Membership Application Portal'}
+          </h2>
+          <p style={{ fontSize: '13.5px', color: '#64748b', margin: '0 0 24px', lineHeight: 1.5 }}>
+            {isTa
+              ? 'விண்ணப்பத்தை தொடங்க மற்றும் தொடர உங்கள் கூகுள் மின்னஞ்சல் மூலம் சரிபார்க்கவும்.'
+              : 'Sign in with your Google account to receive a single-use verification code, auto-save drafts, and track your application.'}
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '12px 24px', fontSize: '14px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            onClick={() => requireAuth()}
+          >
+            <span>{isTa ? 'கூகுள் கணக்கு மூலம் தொடரவும்' : 'Continue with Google Account'}</span>
+            <ArrowRightIcon size={16} />
+          </button>
+          <p style={{ fontSize: '11.5px', color: '#94a3b8', marginTop: '16px', marginBottom: 0 }}>
+            🔒 {isTa ? '₹0 இலவச போர்ட்டல் • உங்கள் ஆவணங்கள் பாதுகாப்பாக வைக்கப்படும்' : 'Zero-fee diocesan portal • Your documents are privately secured'}
+          </p>
+        </div>
+      </div>
     )
   }
 
