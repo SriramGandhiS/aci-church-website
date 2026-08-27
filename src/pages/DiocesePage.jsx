@@ -69,8 +69,30 @@ export default function DiocesePage() {
                 position: 'relative'
               }}
             >
+              {/* Bishop image – top right corner, like homepage */}
+              {d.image && (
+                <div style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '24px',
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  border: '2.5px solid #c8a96e',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                  flexShrink: 0
+                }}>
+                  <img
+                    src={d.image}
+                    alt={d.pastorName}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                  />
+                </div>
+              )}
+
               {/* Header Info */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px', paddingRight: d.image ? '100px' : '0' }}>
                 <div>
                   <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
                     DIOCESE · {d.num}
@@ -124,25 +146,11 @@ export default function DiocesePage() {
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px', marginBottom: '18px' }}>
-                    {/* Minister / Pastor Info */}
+                    {/* Bishop Info */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      <img
-                        src={d.image}
-                        alt={isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
-                        style={{
-                          width: '64px',
-                          height: '64px',
-                          borderRadius: '50%',
-                          border: '2.5px solid #c8a96e',
-                          objectFit: 'cover',
-                          objectPosition: 'center top',
-                          flexShrink: 0,
-                          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.4)'
-                        }}
-                      />
                       <div>
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                          {isTa ? 'பொறுப்பு பேராயர் / தலைவர்' : 'Presiding Bishop / Leader'}
+                          {isTa ? 'பேராயர்' : 'Bishop'}
                         </span>
                         <p style={{ fontSize: '14.5px', fontWeight: 600, color: '#ffffff', margin: '0 0 2px 0' }}>
                           {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}

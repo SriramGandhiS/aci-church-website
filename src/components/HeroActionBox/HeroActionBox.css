@@ -1,0 +1,107 @@
+/* ============================================================
+   HERO ACTION BUTTON BAR (Between Banner & Interactive Spotlight)
+   ============================================================ */
+
+.hero-action-section {
+  background: #0d0d0d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 0;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-action-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+}
+
+/* Small, Compact Action Buttons */
+.hero-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.action-arrow {
+  font-size: 13px;
+  transition: transform 0.2s ease;
+}
+
+.hero-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.hero-action-btn:hover .action-arrow {
+  transform: translateX(3px);
+}
+
+/* 1. About Us Button */
+.btn-action-about {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+.btn-action-about:hover {
+  background: #f0ede6;
+  border-color: #f0ede6;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+}
+
+/* 2. Get Involved Button */
+.btn-action-involved {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-action-involved:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+}
+
+/* 3. Sow Button (Gold Accent) */
+.btn-action-sow {
+  background: #c8a96e;
+  color: #000000;
+  border: 1px solid #c8a96e;
+}
+
+.btn-action-sow:hover {
+  background: #e0c58e;
+  border-color: #e0c58e;
+  box-shadow: 0 4px 14px rgba(200, 169, 110, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-action-section {
+    padding: 12px 0;
+  }
+
+  .hero-action-row {
+    gap: 8px;
+  }
+
+  .hero-action-btn {
+    padding: 7px 14px;
+    font-size: 11.5px;
+  }
+}
