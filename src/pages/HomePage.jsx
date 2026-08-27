@@ -1,4 +1,5 @@
 import Hero from '../components/Hero/Hero'
+import HeroActionBox from '../components/HeroActionBox/HeroActionBox'
 import InteractiveShowcase from '../components/InteractiveShowcase/InteractiveShowcase'
 import AboutSection from '../components/AboutSection/AboutSection'
 import DioceseSection from '../components/DioceseSection/DioceseSection'
@@ -13,10 +14,13 @@ import Newsletter from '../components/Newsletter/Newsletter'
 export default function HomePage() {
   return (
     <>
-      {/* 1. Original Classic Hero with original background image & typography */}
+      {/* 1. Original Classic Hero with rotating 4-image background banner */}
       <Hero />
 
-      {/* 2. Interactive Sliding Gallery Spotlight right under the Hero */}
+      {/* 2. Medium Size Action Box: About Us & Get Involved */}
+      <HeroActionBox />
+
+      {/* 3. Interactive Sliding Gallery Spotlight */}
       <InteractiveShowcase />
 
       {/* 3. About Section with Statement of Faith & Vision */}

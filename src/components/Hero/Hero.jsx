@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import './Hero.css'
 
@@ -97,15 +96,6 @@ export default function Hero() {
               </>
             )}
           </p>
-
-          <div className="hero-buttons">
-            <Link to="/about" className="btn btn-light">
-              {isTa ? 'பேராயம் பற்றி' : 'About ACI'} <span className="arrow">→</span>
-            </Link>
-            <Link to="/activities" className="btn btn-outline-white">
-              {isTa ? 'செயல்பாடுகள்' : 'Get Involved'} <span className="arrow">→</span>
-            </Link>
-          </div>
         </div>
 
         {/* Slide Indicators */}
