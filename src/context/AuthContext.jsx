@@ -68,14 +68,74 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // 3. Logout
+  // 3. Login with Email & Password
+  const loginWithPassword = async (email, password) => {
+    setLoading(true)
+    try {
+      const res = await api.loginWithPassword(email.toLowerCase().trim(), password)
+      if (res && res.success && res.user) {
+        const loggedUser = {
+          ...res.user,
+          isAdmin: res.isAdmin || res.user.role === 'ADMIN',
+        }
+        setUser(loggedUser)
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+        localStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+
+        setIsAuthModalOpen(false)
+        if (authCallback) {
+          authCallback(loggedUser)
+          setAuthCallback(null)
+        }
+        return { success: true, user: loggedUser }
+      } else {
+        return { success: false, error: res?.message || 'Invalid email or password.' }
+      }
+    } catch (err) {
+      return { success: false, error: err.message }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 4. Register with Email & Password
+  const registerWithPassword = async (email, password, name) => {
+    setLoading(true)
+    try {
+      const res = await api.registerWithPassword(email.toLowerCase().trim(), password, name)
+      if (res && res.success && res.user) {
+        const loggedUser = {
+          ...res.user,
+          isAdmin: res.isAdmin || res.user.role === 'ADMIN',
+        }
+        setUser(loggedUser)
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+        localStorage.setItem(SESSION_KEY, JSON.stringify(loggedUser))
+
+        setIsAuthModalOpen(false)
+        if (authCallback) {
+          authCallback(loggedUser)
+          setAuthCallback(null)
+        }
+        return { success: true, user: loggedUser }
+      } else {
+        return { success: false, error: res?.message || 'Registration failed.' }
+      }
+    } catch (err) {
+      return { success: false, error: err.message }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 5. Logout
   const logout = () => {
     setUser(null)
     sessionStorage.removeItem(SESSION_KEY)
     localStorage.removeItem(SESSION_KEY)
   }
 
-  // 4. Trigger Auth Modal with optional callback
+  // 6. Trigger Auth Modal with optional callback
   const requireAuth = (callback) => {
     if (user) {
       if (callback) callback(user)
@@ -98,6 +158,8 @@ export function AuthProvider({ children }) {
         loading,
         isAdmin: !!user?.isAdmin,
         loginWithGoogleCredential,
+        loginWithPassword,
+        registerWithPassword,
         logout,
         requireAuth,
         isAuthModalOpen,

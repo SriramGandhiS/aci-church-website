@@ -87,6 +87,67 @@ function handleLocalFallback(action, data) {
       return handleLocalFallback('auth_google', data)
     }
 
+    case 'auth_password_login': {
+      const users = getUsers()
+      const user = users.find(u => u.email === email)
+      const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+
+      if (!user) {
+        // Auto-register new applicant if not found, or return error
+        const newUser = {
+          userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
+          googleSub: 'email-' + Math.random().toString(36).substring(2, 9),
+          email,
+          name: data.name || email.split('@')[0],
+          avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(email)}`,
+          password: data.password || '',
+          createdAt: now,
+          lastLoginAt: now,
+          role
+        }
+        users.push(newUser)
+        saveUsers(users)
+        return { success: true, user: newUser, isAdmin: role === 'ADMIN' }
+      }
+
+      // Check password if set
+      if (user.password && data.password && user.password !== data.password) {
+        return { success: false, error: 'INVALID_PASSWORD', message: 'Incorrect password. Please try again.' }
+      }
+
+      user.lastLoginAt = now
+      user.role = role
+      saveUsers(users)
+      return { success: true, user, isAdmin: role === 'ADMIN' }
+    }
+
+    case 'auth_password_register': {
+      const users = getUsers()
+      let user = users.find(u => u.email === email)
+      const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+
+      if (user) {
+        user.password = data.password || user.password
+        user.name = data.name || user.name
+        user.lastLoginAt = now
+      } else {
+        user = {
+          userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
+          googleSub: 'email-' + Math.random().toString(36).substring(2, 9),
+          email,
+          name: data.name || email.split('@')[0],
+          avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(data.name || email)}`,
+          password: data.password || '',
+          createdAt: now,
+          lastLoginAt: now,
+          role
+        }
+        users.push(user)
+      }
+      saveUsers(users)
+      return { success: true, user, isAdmin: role === 'ADMIN' }
+    }
+
     case 'auth_google': {
       const users = getUsers()
       let user = users.find(u => u.email === email)
@@ -275,6 +336,8 @@ function handleLocalFallback(action, data) {
 
 export const api = {
   authGoogle: (payload) => callApi('auth_google', payload),
+  loginWithPassword: (email, password) => callApi('auth_password_login', { email, password }),
+  registerWithPassword: (email, password, name) => callApi('auth_password_register', { email, password, name }),
   requestEmailOtp: (email) => callApi('request_email_otp', { email }),
   verifyEmailOtp: (email, otp, name) => callApi('verify_email_otp', { email, otp, name }),
   getMyApplication: (email) => callApi('get_my_application', { email }),

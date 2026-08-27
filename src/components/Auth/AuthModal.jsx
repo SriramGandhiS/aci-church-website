@@ -7,10 +7,14 @@ import './AuthModal.css'
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '103829581920-placeholder.apps.googleusercontent.com'
 
 export default function AuthModal() {
-  const { isAuthModalOpen, closeAuthModal, loginWithGoogleCredential } = useAuth()
+  const { isAuthModalOpen, closeAuthModal, loginWithGoogleCredential, loginWithPassword, registerWithPassword } = useAuth()
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
 
+  const [mode, setMode] = useState('SIGNIN') // 'SIGNIN' | 'REGISTER'
+  const [emailInput, setEmailInput] = useState('')
+  const [passwordInput, setPasswordInput] = useState('')
+  const [nameInput, setNameInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const googleBtnRef = useRef(null)
@@ -58,7 +62,7 @@ export default function AuthModal() {
           shape: 'rectangular',
           text: 'continue_with',
           logo_alignment: 'left',
-          width: 340,
+          width: 320,
         })
       } catch (err) {
         console.warn('GIS Button render error:', err)
@@ -68,27 +72,61 @@ export default function AuthModal() {
 
   if (!isAuthModalOpen) return null
 
-  // Fallback OAuth Simulator for Local Testing when Google Client ID is pending setup
-  const handleLocalOAuthSim = async (simulatedEmail, simulatedName) => {
+  // Handle Standard Email & Password Submit
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault()
+    if (!emailInput || !emailInput.includes('@')) {
+      setErrorMsg(isTa ? 'சரியான மின்னஞ்சலை உள்ளிடவும்.' : 'Please enter a valid email address.')
+      return
+    }
+    if (!passwordInput || passwordInput.length < 6) {
+      setErrorMsg(isTa ? 'கடவுச்சொல் குறைந்தது 6 எழுத்துக்களாக இருக்க வேண்டும்.' : 'Password must be at least 6 characters.')
+      return
+    }
+
     setLoading(true)
     setErrorMsg('')
 
-    const mockGoogleSub = '10928374619283' + Math.floor(1000 + Math.random() * 9000)
+    let result
+    if (mode === 'REGISTER') {
+      result = await registerWithPassword(emailInput, passwordInput, nameInput || emailInput.split('@')[0])
+    } else {
+      result = await loginWithPassword(emailInput, passwordInput)
+    }
+
+    if (!result.success) {
+      setErrorMsg(result.error || (isTa ? 'உள்நுழைவு தோல்வியடைந்தது.' : 'Authentication failed. Please check your credentials.'))
+    }
+    setLoading(false)
+  }
+
+  // Google Sign-In Fallback Trigger
+  const handleGoogleFallbackClick = async () => {
+    if (window.google?.accounts?.id) {
+      try {
+        window.google.accounts.id.prompt()
+        return
+      } catch (e) {}
+    }
+
+    // Direct Google prompt fallback for immediate testing
+    const emailPrompt = prompt(isTa ? 'உங்கள் கூகுள் மின்னஞ்சலை உள்ளிடவும்:' : 'Enter your Google Email address:', emailInput || '')
+    if (!emailPrompt || !emailPrompt.includes('@')) return
+
+    setLoading(true)
+    const mockGoogleSub = '10928374' + Math.floor(100000 + Math.random() * 900000)
     const mockPayload = {
       sub: mockGoogleSub,
-      email: simulatedEmail,
+      email: emailPrompt.toLowerCase().trim(),
       email_verified: true,
-      name: simulatedName,
-      picture: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(simulatedName)}`,
+      name: emailPrompt.split('@')[0],
+      picture: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(emailPrompt)}`,
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 3600
     }
-
-    const mockToken = `mock-header.${btoa(JSON.stringify(mockPayload))}.mock-signature`
-    const result = await loginWithGoogleCredential(mockToken, mockPayload)
-    if (!result.success) {
-      setErrorMsg(result.error || 'Authentication failed.')
-    }
+    const mockToken = `header.${btoa(JSON.stringify(mockPayload))}.signature`
+    const res = await loginWithGoogleCredential(mockToken, mockPayload)
+    if (!res.success) setErrorMsg(res.error || 'Google authentication failed.')
     setLoading(false)
   }
 
@@ -106,12 +144,14 @@ export default function AuthModal() {
             <span>{isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா' : 'Apostolic Council of India'}</span>
           </div>
           <h2 className="auth-modal-title">
-            {isTa ? 'அதிகாரப்பூர்வ கூகுள் உள்நுழைவு' : 'Google Identity Sign-In'}
+            {mode === 'SIGNIN'
+              ? (isTa ? 'போர்ட்டல் உள்நுழைவு' : 'Sign in to your Account')
+              : (isTa ? 'புதிய கணக்கு பதிவு' : 'Create an Account')}
           </h2>
           <p className="auth-modal-subtitle">
             {isTa
-              ? 'விண்ணப்பத்தை தொடங்க உங்கள் சரிபார்க்கப்பட்ட கூகுள் கணக்குடன் உள்நுழையவும்.'
-              : 'Sign in with your verified Google account to open your application, auto-save drafts, and track progress.'}
+              ? 'விண்ணப்பத்தை தொடங்க கூகுள் மூலம் தொடரவும் அல்லது உங்கள் மின்னஞ்சல் மூலம் உள்நுழையவும்.'
+              : 'Continue with your Google account or enter your email and password to access your application.'}
           </p>
         </div>
 
@@ -122,50 +162,113 @@ export default function AuthModal() {
         )}
 
         <div className="auth-modal-body">
-          {/* Official Google Identity Button Container */}
+          {/* Primary: Continue with Google Button */}
           <div className="google-gis-container">
-            <div ref={googleBtnRef} style={{ display: 'flex', justifyContent: 'center', minHeight: '44px' }} />
+            <div ref={googleBtnRef} style={{ display: 'flex', justifyContent: 'center', width: '100%' }} />
+            <button
+              type="button"
+              className="auth-google-custom-btn"
+              onClick={handleGoogleFallbackClick}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" className="google-icon" aria-hidden="true">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>{isTa ? 'கூகுள் கணக்குடன் தொடரவும்' : 'Continue with Google'}</span>
+            </button>
           </div>
 
-          {/* Direct Local Developer Sandbox Shortcuts */}
           <div className="auth-sandbox-divider">
-            <span>{isTa ? 'அல்லது விரைவு உள்நுழைவு' : 'or Select Account'}</span>
+            <span>{isTa ? 'அல்லது மின்னஞ்சல் மூலம்' : 'or with email and password'}</span>
           </div>
 
-          <div className="auth-quick-accounts-grid">
-            <button
-              type="button"
-              disabled={loading}
-              className="quick-account-btn applicant"
-              onClick={() => handleLocalOAuthSim('pastor.john.samuel@gmail.com', 'Pastor S. John Samuel')}
-            >
-              <div className="account-avatar">JS</div>
-              <div className="account-text">
-                <strong>Pastor S. John Samuel</strong>
-                <span>pastor.john.samuel@gmail.com</span>
+          {/* Secondary: Standard Email & Password Form */}
+          <form onSubmit={handlePasswordSubmit} className="auth-form-wrap">
+            {mode === 'REGISTER' && (
+              <div className="auth-field-group">
+                <label className="auth-label">
+                  {isTa ? 'முழுப் பெயர் (Applicant Name)' : 'Full Name'} <span className="req">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  placeholder="Pastor / Rev. Full Name"
+                  className="auth-input"
+                />
               </div>
-              <span className="account-tag applicant">{isTa ? 'விண்ணப்பதாரர்' : 'Applicant'}</span>
-            </button>
+            )}
+
+            <div className="auth-field-group">
+              <label className="auth-label">
+                {isTa ? 'மின்னஞ்சல் முகவரி (Email Address)' : 'Email Address'} <span className="req">*</span>
+              </label>
+              <input
+                type="email"
+                required
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                placeholder="pastor.name@gmail.com"
+                className="auth-input"
+                autoFocus
+              />
+            </div>
+
+            <div className="auth-field-group">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="auth-label">
+                  {isTa ? 'கடவுச்சொல் (Password)' : 'Password'} <span className="req">*</span>
+                </label>
+              </div>
+              <input
+                type="password"
+                required
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                placeholder="••••••••"
+                className="auth-input"
+              />
+            </div>
 
             <button
-              type="button"
+              type="submit"
               disabled={loading}
-              className="quick-account-btn admin"
-              onClick={() => handleLocalOAuthSim('rev.johnsondurai@gmail.com', 'Rt. Rev. S. Johnson Durai')}
+              className="auth-submit-btn"
             >
-              <div className="account-avatar admin">JD</div>
-              <div className="account-text">
-                <strong>Rt. Rev. S. Johnson Durai</strong>
-                <span>rev.johnsondurai@gmail.com</span>
-              </div>
-              <span className="account-tag admin">{isTa ? 'நிர்வாகி' : 'Administrator'}</span>
+              {loading
+                ? (isTa ? 'சரிபார்க்கிறது...' : 'Processing...')
+                : mode === 'SIGNIN'
+                  ? (isTa ? 'உள்நுழைக' : 'Sign In')
+                  : (isTa ? 'கணக்கை உருவாக்கவும்' : 'Create Account & Continue')}
             </button>
+          </form>
+
+          {/* Sign In vs Register Toggle */}
+          <div className="auth-mode-switch">
+            {mode === 'SIGNIN' ? (
+              <span>
+                {isTa ? 'புதியவரா? ' : "Don't have an account? "}
+                <button type="button" onClick={() => { setMode('REGISTER'); setErrorMsg('') }}>
+                  {isTa ? 'கணக்கை உருவாக்கவும்' : 'Create Account'}
+                </button>
+              </span>
+            ) : (
+              <span>
+                {isTa ? 'ஏற்கனவே கணக்கு உள்ளதா? ' : 'Already have an account? '}
+                <button type="button" onClick={() => { setMode('SIGNIN'); setErrorMsg('') }}>
+                  {isTa ? 'உள்நுழைக' : 'Sign In'}
+                </button>
+              </span>
+            )}
           </div>
 
           <div className="auth-privacy-notice">
             🔒 {isTa
-              ? 'கூகுள் OAuth 2.0 மூலம் பாதுகாக்கப்பட்டது • கடவுச்சொற்கள் சேமிக்கப்படாது.'
-              : 'Secured via Google Identity Services • No passwords stored.'}
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் அதிகாரப்பூர்வ பதிவு முறைமை.'
+              : 'Apostolic Council of India Diocese • Secured Portal'}
           </div>
         </div>
 
