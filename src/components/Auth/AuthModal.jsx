@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import { decodeGoogleJwt } from '../../utils/jwtDecode'
 import './AuthModal.css'
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '103829581920-placeholder.apps.googleusercontent.com'
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '224150240249-0hallddrmq9ps9evs40n6ue098k5jr7o.apps.googleusercontent.com'
 
 export default function AuthModal() {
   const { isAuthModalOpen, closeAuthModal, loginWithGoogleCredential, loginWithPassword, registerWithPassword } = useAuth()
