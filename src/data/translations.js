@@ -77,8 +77,8 @@ export const translations = {
       slides: [
         {
           eyebrow: "WELCOME TO APOSTOLIC COUNCIL OF INDIA DIOCESE",
-          title: "Equipping. Empowering. Expanding.",
-          subtitle: "Dedicated to shepherding the shepherds, establishing biblical foundation, and equipping church leaders across nations.",
+          title: "Shepherding the Shepherds",
+          subtitle: "Equipping. Empowering. Expanding. Dedicated to establishing biblical foundation and equipping church leaders across nations.",
           btnPrimary: "About ACI Diocese",
           btnSecondary: "Explore Ministries",
           linkPrimary: "/about",
@@ -198,8 +198,8 @@ export const translations = {
       slides: [
         {
           eyebrow: "அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்",
-          title: "ஆயத்தப்படுத்துதல். பலப்படுத்துதல். விரிவுபடுத்துதல்.",
-          subtitle: "மேய்ப்பர்களுக்கு மெய்யான மேய்ச்சலளித்து, வேத அஸ்திபாரத்தை உறுதிப்படுத்தி, திருச்சபை ஊழியர்களை முழுமையாக தகுதிப்படுத்துகிறது.",
+          title: "மேய்ப்பர்களுக்கு மேய்ச்சல்",
+          subtitle: "ஆயத்தப்படுத்துதல். பலப்படுத்துதல். விரிவுபடுத்துதல். மேய்ப்பர்களுக்கு மெய்யான மேய்ச்சலளித்து, வேத அஸ்திபாரத்தை உறுதிப்படுத்தி, திருச்சபை ஊழியர்களை முழுமையாக தகுதிப்படுத்துகிறது.",
           btnPrimary: "பேராயம் பற்றி",
           btnSecondary: "ஊழியங்களை காண்க",
           linkPrimary: "/about",

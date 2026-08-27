@@ -1,36 +1,57 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import './Hero.css'
 
-export default function Hero() {
-  const { lang, t } = useLanguage()
-  const isTa = lang === 'ta'
-  const parallaxRef = useRef(null)
+const BANNER_SLIDES = [
+  {
+    src: '/crowd.jpeg',
+    alt: 'ACI Diocese Christian fellowship and worship gathering',
+  },
+  {
+    src: '/banner-1.jpg',
+    alt: 'ACI Diocese Christian worship gathering and congregation in prayer',
+  },
+  {
+    src: '/banner-2.jpg',
+    alt: 'The Most Rev. Archbishop delivering the Word of God at the pulpit',
+  },
+  {
+    src: '/banner-3.jpg',
+    alt: 'ACI Diocese Episcopal Ordination and consecrated bishops',
+  },
+]
 
-  /* Subtle image parallax on scroll */
+export default function Hero() {
+  const { lang } = useLanguage()
+  const isTa = lang === 'ta'
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  /* Automatically advance background banner slides every 3.5 seconds */
   useEffect(() => {
-    const el = parallaxRef.current
-    if (!el) return
-    const handleScroll = () => {
-      const y = window.scrollY
-      el.style.transform = `translateY(${y * 0.22}px)`
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % BANNER_SLIDES.length)
+    }, 3500)
+    return () => clearInterval(timer)
   }, [])
 
   return (
     <section className="hero" aria-label="Welcome to ACI Diocese">
-      {/* Background image */}
+      {/* Background Banner Slides moving one after another */}
       <div className="hero-bg">
-        <img
-          ref={parallaxRef}
-          src="/crowd.jpeg"
-          alt="ACI Diocese Christian worship gathering"
-          className="hero-img"
-          fetchpriority="high"
-        />
+        {BANNER_SLIDES.map((slide, index) => (
+          <div
+            key={index}
+            className={`hero-slide-item ${index === currentSlide ? 'active' : ''}`}
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className="hero-img"
+              fetchpriority={index === 0 ? 'high' : 'auto'}
+            />
+          </div>
+        ))}
         <div className="hero-overlay" aria-hidden="true" />
       </div>
 
@@ -46,18 +67,36 @@ export default function Hero() {
           <h1 className="hero-headline t-hero">
             {isTa ? (
               <>
-                ஆயத்தப்படுத்துதல்.<br />
-                பலப்படுத்துதல்.<br />
-                விரிவுபடுத்துதல்.
+                மேய்ப்பர்களுக்கு<br />
+                மேய்ச்சல்
               </>
             ) : (
               <>
-                Equipping.<br />
-                Empowering.<br />
-                Expanding.
+                Shepherding<br />
+                the Shepherds
               </>
             )}
           </h1>
+
+          <p className="hero-subtagline">
+            {isTa ? (
+              <>
+                <span>ஆயத்தப்படுத்துதல்</span>
+                <span className="hero-subtagline-dot" aria-hidden="true">•</span>
+                <span>பலப்படுத்துதல்</span>
+                <span className="hero-subtagline-dot" aria-hidden="true">•</span>
+                <span>விரிவுபடுத்துதல்</span>
+              </>
+            ) : (
+              <>
+                <span>Equipping</span>
+                <span className="hero-subtagline-dot" aria-hidden="true">•</span>
+                <span>Empowering</span>
+                <span className="hero-subtagline-dot" aria-hidden="true">•</span>
+                <span>Expanding</span>
+              </>
+            )}
+          </p>
 
           <div className="hero-buttons">
             <Link to="/about" className="btn btn-light">
@@ -67,6 +106,19 @@ export default function Hero() {
               {isTa ? 'செயல்பாடுகள்' : 'Get Involved'} <span className="arrow">→</span>
             </Link>
           </div>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="hero-indicators" aria-label="Banner slide indicators">
+          {BANNER_SLIDES.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={`hero-dot ${idx === currentSlide ? 'active' : ''}`}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
