@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
-import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
+import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon, StarIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
 import { diocesesList } from '../data/diocesesData'
 
 export default function DiocesePage() {
