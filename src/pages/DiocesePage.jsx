@@ -75,12 +75,12 @@ export default function DiocesePage() {
                   position: 'absolute',
                   top: '24px',
                   right: '24px',
-                  width: '80px',
-                  height: '80px',
+                  width: '100px',
+                  height: '100px',
                   borderRadius: '50%',
-                  border: '2.5px solid #c8a96e',
+                  border: '3px solid #c8a96e',
                   overflow: 'hidden',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.6)',
                   flexShrink: 0
                 }}>
                   <img
@@ -92,7 +92,7 @@ export default function DiocesePage() {
               )}
 
               {/* Header Info */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px', paddingRight: d.image ? '100px' : '0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px', paddingRight: d.image ? '120px' : '0' }}>
                 <div>
                   <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
                     DIOCESE · {d.num}

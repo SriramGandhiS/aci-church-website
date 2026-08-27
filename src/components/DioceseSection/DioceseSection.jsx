@@ -161,33 +161,33 @@ export default function DioceseSection() {
                 transition: 'all var(--transition-fast)'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                 <span style={{ fontSize: '11px', fontWeight: 700, color: '#c8a96e', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   DIOCESE · {d.num}
                 </span>
-                <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <LocationIcon size={12} color="#c8a96e" />
-                  <span>{isTa ? d.zoneTa : d.zoneEn}</span>
-                </span>
+                {d.image && (
+                  <img
+                    src={d.image}
+                    alt={isTa ? d.bishopNameTa : d.bishopNameEn}
+                    style={{
+                      width: '56px',
+                      height: '56px',
+                      borderRadius: '50%',
+                      border: '2px solid #c8a96e',
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                      flexShrink: 0
+                    }}
+                  />
+                )}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                <img
-                  src={d.image}
-                  alt={isTa ? d.bishopNameTa : d.bishopNameEn}
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '50%',
-                    border: '1.5px solid #c8a96e',
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                    flexShrink: 0
-                  }}
-                />
-                <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, color: '#ffffff', margin: 0 }}>
-                  {isTa ? d.nameTa : d.nameEn}
-                </h3>
-              </div>
+              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, color: '#ffffff', margin: '0 0 4px 0' }}>
+                {isTa ? d.nameTa : d.nameEn}
+              </h3>
+              <p style={{ fontSize: '12px', color: '#c8a96e', margin: '0 0 10px 0', fontWeight: 500 }}>
+                {isTa ? d.bishopNameTa : d.bishopNameEn}
+              </p>
               <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.7)' }}>
                 {isTa ? d.descTa : d.descEn}
               </p>
