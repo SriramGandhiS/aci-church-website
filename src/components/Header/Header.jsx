@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAuth } from '../../context/AuthContext'
 import { SearchIcon } from '../Icons/SvgIcons'
 import './Header.css'
 
 export default function Header({ onMenuOpen }) {
   const { lang, setLang, t } = useLanguage()
+  const { user, isAdmin, openAuthModal } = useAuth()
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const headerRef = useRef(null)
@@ -265,6 +267,74 @@ export default function Header({ onMenuOpen }) {
               தமிழ்
             </button>
           </div>
+
+          {/* User Auth & Portal Button */}
+          {user ? (
+            <div className="header-auth-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {isAdmin && (
+                <Link
+                  to="/admin/applications"
+                  className="header-admin-pill"
+                  style={{
+                    background: '#991b1b',
+                    color: '#ffffff',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    padding: '3px 8px',
+                    borderRadius: '4px',
+                    textDecoration: 'none',
+                    letterSpacing: '0.04em'
+                  }}
+                  title="Admin Dashboard"
+                >
+                  ADMIN
+                </Link>
+              )}
+              <Link
+                to="/get-involved/status"
+                className="header-user-btn"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'rgba(255,255,255,0.08)',
+                  color: '#ffffff',
+                  padding: '4px 10px',
+                  borderRadius: '20px',
+                  textDecoration: 'none',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  border: '1px solid rgba(255,255,255,0.15)'
+                }}
+                title={user.email}
+              >
+                <span style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>
+                  {user.name?.charAt(0).toUpperCase() || 'U'}
+                </span>
+                <span className="header-user-name" style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {user.name?.split(' ')[0] || 'Portal'}
+                </span>
+              </Link>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={openAuthModal}
+              className="header-signin-btn"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                color: '#ffffff',
+                border: '1px solid rgba(255,255,255,0.15)',
+                padding: '4px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              {lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
+            </button>
+          )}
 
           {/* Search Button -> Redirects directly to Member Directory Search */}
           <Link

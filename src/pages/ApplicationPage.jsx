@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { useAuth } from '../context/AuthContext'
+import { api } from '../services/api'
 import {
   ShieldIcon,
   CheckIcon,
@@ -60,6 +62,7 @@ export default function ApplicationPage() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
   const navigate = useNavigate()
+  const { user, requireAuth } = useAuth()
 
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState(initialApplicationData)
@@ -68,6 +71,8 @@ export default function ApplicationPage() {
   const [showResumeBanner, setShowResumeBanner] = useState(false)
   const [showClearModal, setShowClearModal] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
+  const [submittedAppId, setSubmittedAppId] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [reviewTab, setReviewTab] = useState('summary') // 'summary' | 'official'
 
   const [permPostalInfo, setPermPostalInfo] = useState({ loading: false, msg: '', results: [] })
@@ -78,22 +83,39 @@ export default function ApplicationPage() {
   const photoInputRef = useRef(null)
   const isInitialMount = useRef(true)
 
-  // 1. Initial Load: Check for saved draft in localStorage
+  // 1. Initial Load: Check remote database if logged in, or local draft
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) {
-        const parsed = JSON.parse(saved)
-        if (parsed && parsed.formData && (parsed.formData.personal?.name || parsed.currentStep > 1)) {
-          setShowResumeBanner(true)
-        }
+    async function initDraft() {
+      if (user?.email) {
+        try {
+          const res = await api.getMyApplication(user.email)
+          if (res && res.success && res.application?.data) {
+            setFormData(res.application.data)
+            if (res.application.status === 'SUBMITTED' || res.application.status === 'ACCEPTED' || res.application.status === 'UNDER_REVIEW') {
+              setSubmittedAppId(res.application.applicationId)
+              setIsCompleted(true)
+              return
+            }
+          }
+        } catch (e) {}
       }
-    } catch (e) {
-      // Ignore storage errors
-    }
-  }, [])
 
-  // 2. Debounced Auto-Save to localStorage
+      // Check localStorage draft
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY)
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          if (parsed && parsed.formData && (parsed.formData.personal?.name || parsed.currentStep > 1)) {
+            setShowResumeBanner(true)
+          }
+        }
+      } catch (e) {}
+    }
+
+    initDraft()
+  }, [user])
+
+  // 2. Debounced Auto-Save to localStorage and Backend
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
@@ -101,7 +123,7 @@ export default function ApplicationPage() {
     }
 
     setSaveStatus('saving')
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       try {
         localStorage.setItem(
           STORAGE_KEY,
@@ -111,14 +133,19 @@ export default function ApplicationPage() {
             savedAt: new Date().toISOString(),
           })
         )
+
+        // Save to Google Backend if authenticated
+        if (user?.email) {
+          await api.saveDraft(user.email, user.userId, formData)
+        }
         setSaveStatus('saved')
       } catch (e) {
         setSaveStatus('saved')
       }
-    }, 600)
+    }, 800)
 
     return () => clearTimeout(timer)
-  }, [formData, currentStep])
+  }, [formData, currentStep, user])
 
   // Scroll to top on step change
   useEffect(() => {
@@ -370,7 +397,7 @@ export default function ApplicationPage() {
   }
 
   // Photo Upload
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     const file = e.target.files[0]
     if (!file) return
 
@@ -381,8 +408,22 @@ export default function ApplicationPage() {
     }
 
     const reader = new FileReader()
-    reader.onload = (evt) => {
-      updateNested('personal', 'photoUrl', evt.target.result)
+    reader.onload = async (evt) => {
+      const base64 = evt.target.result
+      updateNested('personal', 'photoUrl', base64)
+
+      if (user?.email) {
+        try {
+          await api.uploadDocument({
+            email: user.email,
+            userId: user.userId,
+            documentType: 'Passport Photo',
+            fileName: file.name,
+            base64Data: base64,
+            applicationId: submittedAppId || 'DRAFT'
+          })
+        } catch (err) {}
+      }
     }
     reader.readAsDataURL(file)
   }
@@ -490,17 +531,40 @@ export default function ApplicationPage() {
     }))
   }
 
-  // Enclosure document simulation
+  // Enclosure document upload
   const handleDocumentUpload = (enclosureId, e) => {
     const file = e.target.files[0]
     if (!file) return
-    setFormData((prev) => ({
-      ...prev,
-      enclosures: {
-        ...prev.enclosures,
-        [enclosureId]: file.name,
-      },
-    }))
+
+    const encInfo = REQUIRED_ENCLOSURES.find(enc => enc.id === enclosureId)
+    const docTitle = encInfo ? encInfo.titleEn : enclosureId
+
+    const reader = new FileReader()
+    reader.onload = async (evt) => {
+      const base64 = evt.target.result
+
+      setFormData((prev) => ({
+        ...prev,
+        enclosures: {
+          ...prev.enclosures,
+          [enclosureId]: file.name,
+        },
+      }))
+
+      if (user?.email) {
+        try {
+          await api.uploadDocument({
+            email: user.email,
+            userId: user.userId,
+            documentType: docTitle,
+            fileName: file.name,
+            base64Data: base64,
+            applicationId: submittedAppId || 'DRAFT'
+          })
+        } catch (err) {}
+      }
+    }
+    reader.readAsDataURL(file)
   }
 
   const handleRemoveDocument = (enclosureId) => {
@@ -686,14 +750,43 @@ export default function ApplicationPage() {
     return true
   }
 
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      if (currentStep < 5) {
-        setCurrentStep((s) => s + 1)
-      } else {
-        // Step 5 completed -> Switch to full Official Print View
-        setIsCompleted(true)
+  const handleNext = async () => {
+    if (!validateStep(currentStep)) return
+
+    if (currentStep < 5) {
+      setCurrentStep((s) => s + 1)
+      return
+    }
+
+    // Step 5 Completed -> Submit Application
+    const submitWithUser = async (authenticatedUser) => {
+      setIsSubmitting(true)
+      try {
+        const res = await api.submitApplication(
+          authenticatedUser.email,
+          authenticatedUser.userId,
+          formData
+        )
+
+        if (res && res.success) {
+          setSubmittedAppId(res.applicationId)
+          setIsCompleted(true)
+        } else {
+          alert(res?.message || 'Submission failed. Please try again.')
+        }
+      } catch (err) {
+        alert('Network error during submission. Your draft is safely saved locally.')
+      } finally {
+        setIsSubmitting(false)
       }
+    }
+
+    if (!user) {
+      requireAuth((loggedUser) => {
+        submitWithUser(loggedUser)
+      })
+    } else {
+      await submitWithUser(user)
     }
   }
 

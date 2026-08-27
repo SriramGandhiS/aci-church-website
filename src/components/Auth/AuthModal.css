@@ -1,0 +1,198 @@
+/* ============================================================
+   AUTHENTICATION MODAL STYLES (Google Sign-In & Secure Portal)
+   ============================================================ */
+
+.auth-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: authFadeIn 0.2s ease-out;
+}
+
+@keyframes authFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.auth-modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  max-width: 460px;
+  width: 100%;
+  padding: 32px 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  box-sizing: border-box;
+  animation: authSlideUp 0.25s ease-out;
+}
+
+@keyframes authSlideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.auth-modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.auth-modal-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.auth-modal-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.auth-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.auth-diocese-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.auth-modal-title {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+
+.auth-modal-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.auth-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.auth-form-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.auth-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.auth-label .req {
+  color: #dc2626;
+}
+
+.auth-input {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+}
+
+.auth-google-btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #1e40af;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+  transition: all 0.18s ease;
+  margin-top: 6px;
+  min-height: 46px;
+}
+
+.auth-google-btn-submit:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.35);
+}
+
+.auth-google-btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.google-icon {
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.auth-privacy-notice {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.4;
+}
