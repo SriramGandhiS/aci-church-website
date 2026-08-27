@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
-import { LocationIcon, StarIcon, ArrowRightIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
+import { ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon } from '../components/Icons/SvgIcons'
 import { diocesesList } from '../data/diocesesData'
 
 export default function DiocesePage() {
@@ -82,9 +82,27 @@ export default function DiocesePage() {
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
                   </span>
                 </div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(200, 169, 110, 0.1)', border: '1px solid rgba(200, 169, 110, 0.3)', color: '#c8a96e', padding: '6px 14px', fontSize: '12px', fontWeight: 600, borderRadius: '4px' }}>
-                  <LocationIcon size={13} color="#c8a96e" />
-                  <span>{isTa ? d.headquartersTa : d.headquarters}</span>
+                <div style={{
+                  width: '68px',
+                  height: '68px',
+                  borderRadius: '50%',
+                  border: '2px solid #c8a96e',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                  flexShrink: 0,
+                  background: '#1c1c1c'
+                }}>
+                  <img
+                    src={d.image}
+                    alt={isTa ? d.pastorNameTa : d.pastorName}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
+                      display: 'block'
+                    }}
+                  />
                 </div>
               </div>
 
