@@ -281,12 +281,12 @@ export default function AboutSection() {
             {isTa ? 'பேராய அறங்காவலர் குழு' : 'DIOCESAN BOARD OF TRUSTEES'}
           </p>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', marginBottom: '12px', color: 'var(--color-text-dark)' }}>
-            {isTa ? 'ஏழு அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள் & ஆவிக்குரிய மேற்பார்வையாளர்கள்' : 'Seven Committed Trustees & Spiritual Overseers'}
+            {isTa ? 'பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள் மற்றும் ஏழு மாவட்ட பேராயர்கள் & ஆவிக்குரிய மேற்பார்வையாளர்கள்' : 'Ten Committed Trustees and Seven District Bishops and Spiritual Overseers'}
           </h3>
           <p className="t-body" style={{ fontSize: '14px', lineHeight: '1.7', color: 'var(--color-text-mid)' }}>
             {isTa
-              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, நிர்வாக, சட்ட மற்றும் மிஷனெரி பணிகளை வழிநடத்தும் ஏழு அர்ப்பணிக்கப்பட்ட அறங்காவலர்களைக் கொண்டு இக்குழு இயங்குகிறது.'
-              : 'The Diocesan Board comprises seven dedicated trustees who guide the spiritual, administrative, legal, and missionary functions of the Apostolic Council of India Diocese across Tamil Nadu and India.'}
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, நிர்வாக, சட்ட மற்றும் மிஷனெரி பணிகளை வழிநடத்தும் பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள் மற்றும் ஏழு மாவட்ட பேராயர்கள் & ஆவிக்குரிய மேற்பார்வையாளர்களைக் கொண்டு இக்குழு இயங்குகிறது.'
+              : 'The Diocesan Board comprises ten committed trustees and seven District Bishops and Spiritual Overseers who guide the spiritual, administrative, legal, and missionary functions of the Apostolic Council of India Diocese across Tamil Nadu and India.'}
           </p>
         </div>
 

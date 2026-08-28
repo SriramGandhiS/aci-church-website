@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import { LocationIcon, ArrowRightIcon } from '../Icons/SvgIcons'
@@ -101,7 +101,6 @@ const regionalDioceses = [
 export default function DioceseSection() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
-  const [selectedDiocese, setSelectedDiocese] = useState(regionalDioceses[0])
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -146,17 +145,15 @@ export default function DioceseSection() {
           </p>
         </div>
 
-        {/* 7 Regional Dioceses Interactive Selection Grid */}
-        <div className="diocese-regions-grid reveal reveal-delay-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+        {/* 7 Regional Dioceses Grid */}
+        <div className="diocese-regions-grid reveal reveal-delay-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
           {regionalDioceses.map((d) => (
             <div
               key={d.id}
-              onClick={() => setSelectedDiocese(d)}
               style={{
-                cursor: 'pointer',
                 padding: '24px 20px',
-                background: selectedDiocese.id === d.id ? 'rgba(200, 169, 110, 0.08)' : '#111111',
-                border: selectedDiocese.id === d.id ? '1.5px solid #c8a96e' : '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#111111',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '6px',
                 transition: 'all var(--transition-fast)'
               }}
@@ -205,49 +202,6 @@ export default function DioceseSection() {
             </div>
           ))}
         </div>
-
-        {/* Selected Diocese Highlight Box */}
-        {selectedDiocese && (
-          <div className="reveal reveal-delay-2" style={{ background: '#111111', border: '1px solid rgba(200, 169, 110, 0.3)', borderRadius: '6px', padding: '28px', marginBottom: '40px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                <img
-                  src={selectedDiocese.image}
-                  alt={isTa ? selectedDiocese.bishopNameTa : selectedDiocese.bishopNameEn}
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: '50%',
-                    border: '2px solid #c8a96e',
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.5)',
-                    flexShrink: 0
-                  }}
-                />
-                <div>
-                  <span style={{ color: '#c8a96e', fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-                    FEATURED DIOCESE · {selectedDiocese.num}
-                  </span>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '26px', color: '#ffffff', marginTop: '4px', marginBottom: '6px' }}>
-                    {isTa ? selectedDiocese.nameTa : selectedDiocese.nameEn}
-                  </h3>
-                  <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.85)', maxWidth: '750px', lineHeight: '1.7', margin: 0 }}>
-                    {isTa ? selectedDiocese.descTa : selectedDiocese.descEn}
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <Link to={`/diocese#${selectedDiocese.id}`} className="btn btn-white" style={{ background: '#ffffff', color: '#000000', padding: '10px 20px', fontSize: '13px', fontWeight: 700, textDecoration: 'none', borderRadius: '4px' }}>
-                  {isTa ? 'மண்டல விபரம்' : 'Diocese Details'} <span className="arrow">→</span>
-                </Link>
-                <Link to="/contact" className="btn btn-outline" style={{ border: '1px solid rgba(255, 255, 255, 0.3)', color: '#ffffff', padding: '10px 20px', fontSize: '13px', textDecoration: 'none', borderRadius: '4px' }}>
-                  {isTa ? 'தொடர்பு கொள்ள' : 'Contact Diocese'}
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
 
       </div>
     </section>

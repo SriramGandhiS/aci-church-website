@@ -173,7 +173,7 @@ export default function OfficialApplicationForm({ data, onEdit, showActions = tr
               Central Office: Melapatty, Hanumantharayankottai - 624 054, Dindigul, Tamil Nadu, India
             </p>
             <p className="digi-contact-details">
-              Phone: 0451 2490100 • E-mail: info@acidiocese.org / rev.johnsondurai@gmail.com
+              Phone: +91 93457 12307 • E-mail: info@acidiocese.org / rev.johnsondurai@gmail.com
             </p>
           </div>
         </div>

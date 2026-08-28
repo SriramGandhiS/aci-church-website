@@ -251,7 +251,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           <p className="mm-contact-label">{t('common.officialDiocese')}</p>
           <p className="mm-contact-text">Batlagundu & Dindigul, Tamil Nadu, India</p>
           <p className="mm-contact-text">Email: rev.johnsondurai@gmail.com</p>
-          <p className="mm-contact-text">Mobile: +91 94864 85810</p>
+          <p className="mm-contact-text">Mobile: +91 93457 12307</p>
         </div>
       </div>
     </div>

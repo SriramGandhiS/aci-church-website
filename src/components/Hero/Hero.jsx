@@ -84,7 +84,7 @@ export default function Hero() {
                 <span className="hero-subtagline-dot" aria-hidden="true">•</span>
                 <span>பலப்படுத்துதல்</span>
                 <span className="hero-subtagline-dot" aria-hidden="true">•</span>
-                <span>விரிவுபடுத்துதல்</span>
+                <span>ராஜ்யத்தை விரிவுபடுத்துதல்</span>
               </>
             ) : (
               <>
@@ -92,7 +92,7 @@ export default function Hero() {
                 <span className="hero-subtagline-dot" aria-hidden="true">•</span>
                 <span>Empowering</span>
                 <span className="hero-subtagline-dot" aria-hidden="true">•</span>
-                <span>Expanding</span>
+                <span>Expanding the Kingdom</span>
               </>
             )}
           </p>

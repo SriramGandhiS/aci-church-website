@@ -66,7 +66,7 @@ export default function ContactPage() {
           </div>
           <span className="card-tag">{isTa ? 'தொலைபேசி & அலுவலக நேரம்' : 'OFFICE PHONE & HOURS'}</span>
           <h3 className="card-heading">
-            <a href="tel:04512480100" className="card-highlight-link">0451-2480100</a>
+            <a href="tel:9345712307" className="card-highlight-link">+91 93457 12307</a>
           </h3>
           <p className="card-text">
             {isTa ? 'திங்கள் – சனி: 9:30 மு.ப – 1:30 பி.ப & 2:30 பி.ப – 6:30 பி.ப' : 'Mon – Sat: 9:30 AM – 1:30 PM & 2:30 PM – 6:30 PM'}<br />

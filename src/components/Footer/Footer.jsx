@@ -39,7 +39,7 @@ export default function Footer() {
               <strong>{isTa ? 'மத்திய மறைமாவட்ட அலுவலகம்:' : 'Central Diocesan Office:'}</strong><br />
               6/110, {isTa ? 'மேலப்பட்டி, ஹனுமந்தராயன்கோட்டை' : 'Melapatty, Hanumantharayan Kottai'},<br />
               {isTa ? 'திண்டுக்கல் மாவட்டம், தமிழ்நாடு, இந்தியா – 624002' : 'Dindigul District, Tamil Nadu, India – 624002'}<br /><br />
-              <strong>{isTa ? 'அலுவலக தொலைபேசி:' : 'Office Phone:'}</strong> 0451-2480100<br />
+              <strong>{isTa ? 'அலுவலக தொலைபேசி:' : 'Office Phone:'}</strong> +91 93457 12307<br />
               <strong>{isTa ? 'வேலை நேரம்:' : 'Working Hours:'}</strong> {isTa ? 'திங்கள் – சனி: 9:30 மு.ப – 1:30 பி.ப & 2:30 பி.ப – 6:30 பி.ப' : 'Mon – Sat: 9:30 AM – 1:30 PM & 2:30 PM – 6:30 PM'}
             </address>
           </div>
