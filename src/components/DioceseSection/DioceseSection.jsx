@@ -51,8 +51,8 @@ const regionalDioceses = [
     nameTa: 'ஏசிஐ மதுரை பேராயம்',
     zoneEn: 'Madurai Zone',
     zoneTa: 'மதுரை மண்டலம்',
-    bishopNameEn: 'Rt. Rev. L. Suresh Daniel',
-    bishopNameTa: 'Rt. Rev. L. சுரேஷ் டேனியல்',
+    bishopNameEn: 'Rt. Rev. Dr. L. Suresh Daniel',
+    bishopNameTa: 'Rt. Rev. Dr. L. சுரேஷ் டேனியல்',
     image: '/dioceses/bishop-4.jpg',
     descEn: 'Fostering deep doctrinal clarity, apostolic church visitations, and regional conventions in the southern belt.',
     descTa: 'தென் தமிழகத்தில் அப்போஸ்தல சபை சந்திப்புகள், மண்டல மாநாடுகள் மற்றும் ஆழமான வேத உபதேசங்களை முன்னெடுக்கிறது.'

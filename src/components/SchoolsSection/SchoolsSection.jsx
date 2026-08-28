@@ -15,7 +15,7 @@ const synodMembersList = [
   {
     sno: '2',
     tnNo: 'TN 0005',
-    name: 'Rev. R. John Durai',
+    name: 'Rev. Dr. R. John Durai',
     role: 'Trustee & Prophet',
     email: 'rjdwonder@gmail.com',
     ministry: 'Wonder Word Ministry',
