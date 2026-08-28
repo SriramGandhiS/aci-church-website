@@ -84,19 +84,30 @@ export default function OfficialApplicationForm({ data, onEdit, showActions = tr
   const ch = data?.church || {}
   const mh = data?.ministryHistory || {}
   const q = data?.qualifications || { academic: [], theological: [] }
-  const fam = data?.family || []
   const mot = data?.motivation || {}
   const ref = data?.references || {}
   const dec = data?.declaration || {}
 
-  const fullName = [p.salutation, p.name].filter(Boolean).join(' ').toUpperCase()
+  const cleanSalutation = (p.salutation || '').trim()
+  const rawName = (p.name || '').trim()
+  let computedFullName = rawName
+  if (cleanSalutation && !rawName.toUpperCase().startsWith(cleanSalutation.toUpperCase())) {
+    computedFullName = cleanSalutation + ' ' + rawName
+  }
+  // Strip any accidental double salutations (e.g., "PASTOR PASTOR", "REV. REV.")
+  computedFullName = computedFullName.replace(/^(PASTOR|REV\.?|MR\.?|MRS\.?|DR\.?|BRO\.?)\s+(PASTOR|REV\.?|MR\.?|MRS\.?|DR\.?|BRO\.?)\b/gi, '$1')
+  const fullName = computedFullName.toUpperCase()
   const appDate = p.applicationDate || new Date().toISOString().split('T')[0]
-  const sigName = p.name || 'Pastor S. John Samuel'
+  const sigName = rawName || 'Pastor S. John Samuel'
+
+  const academicList = Array.isArray(q?.academic) ? q.academic : (Array.isArray(data?.academics) ? data.academics : [])
+  const theologicalList = Array.isArray(q?.theological) ? q.theological : (Array.isArray(data?.theological) ? data.theological : [])
+  const famList = Array.isArray(data?.family) ? data.family : (data?.family && typeof data.family === 'object' ? Object.values(data.family) : [])
 
   // Filter out blank rows dynamically
-  const validAcademic = (q.academic || []).filter(r => r.examinationPassed || r.year || r.institution)
-  const validTheological = (q.theological || []).filter(r => r.examinationPassed || r.year || r.institution)
-  const validFamily = (fam || []).filter(f => f.name || f.dob || f.relationship || f.professionEducation)
+  const validAcademic = academicList.filter(r => r && (r.examinationPassed || r.year || r.institution || r.course))
+  const validTheological = theologicalList.filter(r => r && (r.examinationPassed || r.year || r.institution || r.degree))
+  const validFamily = famList.filter(f => f && (f.name || f.dob || f.relationship || f.professionEducation))
 
   return (
     <div className="digi-form-canvas-container">

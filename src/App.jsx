@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
+import { AuthProvider } from './context/AuthContext'
+import AuthModal from './components/Auth/AuthModal'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import MobileMenu from './components/MobileMenu/MobileMenu'
@@ -17,6 +19,9 @@ import ContactPage from './pages/ContactPage'
 import DirectoryPage from './pages/DirectoryPage'
 import GetInvolvedPage from './pages/GetInvolvedPage'
 import ApplicationPage from './pages/ApplicationPage'
+import ApplicantDashboardPage from './pages/ApplicantDashboardPage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
+import AdminApplicationDetailPage from './pages/AdminApplicationDetailPage'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
@@ -32,34 +37,41 @@ function App() {
 
   return (
     <LanguageProvider>
-      <Router>
-        <Header onMenuOpen={handleOpenMenu} />
+      <AuthProvider>
+        <Router>
+          <Header onMenuOpen={handleOpenMenu} />
 
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/diocese" element={<DiocesePage />} />
-            <Route path="/activities" element={<ActivitiesPage />} />
-            <Route path="/partnership" element={<PartnershipPage />} />
-            <Route path="/synod" element={<SynodPage />} />
-            <Route path="/directory" element={<DirectoryPage />} />
-            <Route path="/get-involved" element={<GetInvolvedPage />} />
-            <Route path="/get-involved/application" element={<ApplicationPage />} />
-            <Route path="/media" element={<MediaPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/gallery/album/:uniq" element={<AlbumPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/diocese" element={<DiocesePage />} />
+              <Route path="/activities" element={<ActivitiesPage />} />
+              <Route path="/partnership" element={<PartnershipPage />} />
+              <Route path="/synod" element={<SynodPage />} />
+              <Route path="/directory" element={<DirectoryPage />} />
+              <Route path="/get-involved" element={<GetInvolvedPage />} />
+              <Route path="/get-involved/application" element={<ApplicationPage />} />
+              <Route path="/get-involved/status" element={<ApplicantDashboardPage />} />
+              <Route path="/admin/applications" element={<AdminDashboardPage />} />
+              <Route path="/admin/application/:id" element={<AdminApplicationDetailPage />} />
+              <Route path="/media" element={<MediaPage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/gallery/album/:uniq" element={<AlbumPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </main>
 
-        <Footer />
+          <Footer />
 
-        <MobileMenu
-          isOpen={mobileMenuOpen}
-          onClose={handleCloseMenu}
-        />
-      </Router>
+          <MobileMenu
+            isOpen={mobileMenuOpen}
+            onClose={handleCloseMenu}
+          />
+
+          <AuthModal />
+        </Router>
+      </AuthProvider>
     </LanguageProvider>
   )
 }
