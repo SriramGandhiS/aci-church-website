@@ -45,7 +45,7 @@ const synodMembersList = [
   {
     sno: '5',
     tnNo: 'TN 0244',
-    name: 'Rev. John Samuel',
+    name: 'Rt. Rev. John Samuel',
     role: 'Trustee & Pastor',
     email: 'john.samuelaft@gmail.com',
     ministry: 'AFT Ministry',

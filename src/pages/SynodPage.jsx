@@ -137,13 +137,13 @@ export default function SynodPage() {
     {
       sno: 5,
       regNo: 'TN 0058',
-      name: 'Rev. John Samuel',
+      name: 'Rt. Rev. John Samuel',
       role: isTa ? 'பேராயர் ஆணையாளர் & அறங்காவலர்' : 'Archbishop Commissary / Trustee',
       excelDesignation: 'Archbishop Commissary / Trustee',
     },
   ]
 
-  // 2. Academic Council: 8 Members (General Council members + Regional Bishops)
+  // 2. Academic Council: 19 Members (General Council members + Regional Bishops + Council Leaders)
   const academicCouncilMembers = [
     ...generalCouncilMembers,
     {
@@ -166,7 +166,84 @@ export default function SynodPage() {
       name: 'Rt. Rev. G. Edwin Joseph Selvaraj',
       role: isTa ? 'பேராயர் ஏசிஐ திருச்சி பேராயம் & சினோட் அறங்காவலர்' : 'Bishop ACI Trichy Diocese & Synod Trustee',
       excelDesignation: 'Bishop & Trustee & Synod Member',
-    }
+    },
+    {
+      sno: 9,
+      regNo: 'TN 0518',
+      name: 'Rt. Rev. B. Simson',
+      role: isTa ? 'பேராயர் ஏசிஐ திருப்பத்தூர் பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Tirupattur Diocese & Synod Member',
+      excelDesignation: 'Bishop & Synod Member',
+    },
+    {
+      sno: 10,
+      regNo: 'TN 0048',
+      name: 'Rt. Rev. A. Chinnappadoss',
+      role: isTa ? 'பேராயர் ஏசிஐ விருதுநகர் பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Virudhunagar Diocese & Synod Member',
+      excelDesignation: 'Bishop & Synod Member',
+    },
+    {
+      sno: 11,
+      regNo: 'TN 0514',
+      name: 'Rt. Rev. J. Sujin',
+      role: isTa ? 'பேராயர் ஏசிஐ கன்னியாகுமரி பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Kanniyakumari Diocese & Synod Member',
+      excelDesignation: 'Bishop & Synod Member',
+    },
+    {
+      sno: 12,
+      regNo: 'TN 0587',
+      name: 'Rev. D. V. Isaac Timothy',
+      role: isTa ? 'அறங்காவலர் & D.O.S & சினோட் உறுப்பினர்' : 'Trustee & D.O.S & Synod Member',
+      excelDesignation: 'Trustee / D.O.S / Synod Member',
+    },
+    {
+      sno: 13,
+      regNo: 'TN 0607',
+      name: 'Rev. J. Xavier Paulraj',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
+    },
+    {
+      sno: 14,
+      regNo: 'TN 0012',
+      name: 'Rev. R. Gnana Inbavanan',
+      role: isTa ? 'D.O.S & சினோட் உறுப்பினர்' : 'D.O.S & Synod Member',
+      excelDesignation: 'D.O.S & Synod Member',
+    },
+    {
+      sno: 15,
+      regNo: 'TN 0853',
+      name: 'Rev. Sathees Kumar',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
+    },
+    {
+      sno: 16,
+      regNo: 'TN 0397',
+      name: 'Rev. A. Joseph DuraiRaj',
+      role: isTa ? 'D.O.S & சினோட் உறுப்பினர்' : 'D.O.S & Synod Member',
+      excelDesignation: 'D.O.S & Synod Member',
+    },
+    {
+      sno: 17,
+      regNo: 'TN 0661',
+      name: 'Rev. J. Shyam Raj',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
+    },
+    {
+      sno: 18,
+      regNo: 'TN 0714',
+      name: 'Rev. S. Moses Prawin paul',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
+    },
+    {
+      sno: 19,
+      regNo: 'TN 0203',
+      name: 'Rev. M. Rajendran',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
+    },
   ]
 
   // Helper to fetch details from pastorsData.json (the Excel sheet dataset)
@@ -179,16 +256,16 @@ export default function SynodPage() {
       name: member.name || fromExcel.name || '',
       role: member.role || '',
       designation: member.excelDesignation || fromExcel.designation || member.role || 'Synod Member',
-      office: fromExcel.office || 'Pastor',
-      church: fromExcel.church || '',
-      dob: fromExcel.dob || '',
-      ordinationDate: fromExcel.ordinationDate || '',
-      phone: fromExcel.phone || '',
-      email: fromExcel.email || '',
-      address: fromExcel.address || '',
-      district: fromExcel.district || '',
-      state: fromExcel.state || 'Tamil Nadu',
-      status: fromExcel.status || 'Active'
+      office: member.office || fromExcel.office || 'Pastor',
+      church: member.church || fromExcel.church || '',
+      dob: member.dob || fromExcel.dob || '',
+      ordinationDate: member.ordinationDate || fromExcel.ordinationDate || '',
+      phone: member.phone || fromExcel.phone || '',
+      email: member.email || fromExcel.email || '',
+      address: member.address || fromExcel.address || '',
+      district: member.district || fromExcel.district || '',
+      state: member.state || fromExcel.state || 'Tamil Nadu',
+      status: member.status || fromExcel.status || 'Active'
     }
   }
 
@@ -341,7 +418,7 @@ export default function SynodPage() {
         </div>
       </section>
 
-      {/* 5. SYNOD ACADEMIC COUNCIL & MEMBERS (8 MEMBERS) */}
+      {/* 5. SYNOD ACADEMIC COUNCIL & MEMBERS (19 MEMBERS) */}
       <section id="synodacademiccouncil" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'சினோட் · 05' : 'Synod · 05'}</p>
@@ -353,7 +430,7 @@ export default function SynodPage() {
                 : 'The Synod Academic Council operates under The Most Reverend Archbishop S. Johnson Durai, comprising dedicated council members, regional diocesan bishops, and theological overseers:'}
             </p>
 
-            {/* Academic Council Members (8 Members) */}
+            {/* Academic Council Members (19 Members) */}
             {renderMemberCards(academicCouncilMembers)}
 
             <div style={S.divider} />

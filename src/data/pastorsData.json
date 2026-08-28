@@ -16738,5 +16738,25 @@
     "dob": "",
     "gender": "M",
     "spouse": ""
+  },
+  {
+    "id": "tn0853",
+    "sno": 838,
+    "regNo": "TN 0853",
+    "name": "Rev. Sathees Kumar",
+    "designation": "Synod Member",
+    "office": "Pastor",
+    "church": "Apostolic Council of India Ministry",
+    "district": "Madurai",
+    "state": "Tamil Nadu",
+    "phone": "9345712307",
+    "email": "info@acidiocese.org",
+    "address": "Apostolic Council of India Diocese, Tamil Nadu.",
+    "ordinationDate": "11.06.2015 O1",
+    "status": "Active",
+    "qualification": "B.Th / M.Div",
+    "dob": "",
+    "gender": "M",
+    "spouse": ""
   }
 ]
