@@ -199,8 +199,8 @@ export default function SynodPage() {
       sno: 13,
       regNo: 'TN 0607',
       name: 'Rev. J. Xavier Paulraj',
-      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
-      excelDesignation: 'Synod Member',
+      role: isTa ? 'சினோட் அறங்காவலர் & சினோட் உறுப்பினர்' : 'Trustee & Synod Member',
+      excelDesignation: 'Trustee & Synod Member',
     },
     {
       sno: 14,
