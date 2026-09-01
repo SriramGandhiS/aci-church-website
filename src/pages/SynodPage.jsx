@@ -218,10 +218,10 @@ export default function SynodPage() {
     },
     {
       sno: 16,
-      regNo: 'TN 0397',
-      name: 'Rev. A. Joseph DuraiRaj',
-      role: isTa ? 'D.O.S & சினோட் உறுப்பினர்' : 'D.O.S & Synod Member',
-      excelDesignation: 'D.O.S & Synod Member',
+      regNo: 'TN 0667',
+      name: 'Rev. J. Joseph',
+      role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
+      excelDesignation: 'Synod Member',
     },
     {
       sno: 17,
