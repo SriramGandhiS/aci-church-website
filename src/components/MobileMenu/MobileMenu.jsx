@@ -155,22 +155,34 @@ export default function MobileMenu({ isOpen, onClose }) {
         </Link>
 
         {/* Mobile Language Switcher */}
-        <div className="lang-switcher-pill" style={{ marginLeft: 'auto', marginRight: '12px' }}>
-          <button
-            type="button"
-            onClick={() => setLang('en')}
-            className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-          >
-            EN
-          </button>
-          <span className="lang-sep">|</span>
-          <button
-            type="button"
-            onClick={() => setLang('ta')}
-            className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
-          >
-            தமிழ்
-          </button>
+        <div className="header-lang-wrapper mm-lang-wrapper" style={{ marginLeft: 'auto', marginRight: '10px' }}>
+          <div className="lang-converter-pill" role="group" aria-label="Language Selector">
+            <span className="lang-globe-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </span>
+            <div className="lang-toggle-track">
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+                aria-pressed={lang === 'en'}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('ta')}
+                className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+                aria-pressed={lang === 'ta'}
+              >
+                தமிழ்
+              </button>
+            </div>
+          </div>
         </div>
 
         <button

@@ -29,7 +29,7 @@ export const translations = {
     },
     nav: {
       home: "Home",
-      aboutUs: "About Us",
+      aboutUs: "About",
       aboutDiocese: "ABOUT DIOCESE",
       founder: "FOUNDER",
       visionMission: "VISION & MISSION",
@@ -71,7 +71,7 @@ export const translations = {
       literature: "LITERATURE",
       gallery: "Gallery",
       getInvolved: "Get Involved",
-      contact: "Contact Us",
+      contact: "Contact",
     },
     hero: {
       slides: [
@@ -150,7 +150,7 @@ export const translations = {
     },
     nav: {
       home: "முகப்பு",
-      aboutUs: "எங்களை பற்றி",
+      aboutUs: "அறிமுகம்",
       aboutDiocese: "பேராயம் பற்றி",
       founder: "நிறுவனர்",
       visionMission: "தரிசனம் & நோக்கம்",
@@ -178,21 +178,21 @@ export const translations = {
       contributions: "பங்களிப்பு",
       donation: "நன்கொடை",
       opportunityToSow: "விதைப்பதற்கான வாய்ப்புகள்",
-      synod: "சினோட் (மன்றம்)",
+      synod: "சினோட்",
       aboutSynod: "சினோட் பற்றி",
       synodFunctions: "சினோட் செயல்பாடுகள்",
       synodPublications: "சினோட் வெளியீடுகள்",
       synodAcademicCouncil: "சினோட் கல்வி ஆலோசனை மன்றம்",
       synodGeneralCouncil: "சினோட் பொது ஆலோசனைப் பேரவை",
-      directory: "உறுப்பினர் தேடல்",
+      directory: "அங்கத்தினர்",
       media: "ஊடகம்",
       magazines: "இதழ்கள் (Magazines)",
       audio: "பாடல்கள் (Audio)",
       video: "வீடியோக்கள் (Video)",
       literature: "புத்தகங்கள் (Literature)",
-      gallery: "புகைப்படங்கள்",
-      getInvolved: "இணையுங்கள்",
-      contact: "தொடர்பு கொள்ள",
+      gallery: "படங்கள்",
+      getInvolved: "இணைப்பு",
+      contact: "தொடர்பு",
     },
     hero: {
       slides: [

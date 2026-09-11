@@ -245,122 +245,104 @@ export default function Header({ onMenuOpen }) {
         </nav>
 
         {/* ---- Right Controls: Language Switcher + Member Search Button + Hamburger ---- */}
+        {/* ---- Right Controls: Language Converter + User Auth + Search Button + Hamburger ---- */}
         <div className="header-controls">
 
-          {/* Bilingual Language Switcher Pill */}
-          <div className="lang-switcher-pill" role="group" aria-label="Language Selector">
-            <button
-              type="button"
-              onClick={() => setLang('en')}
-              className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-              aria-pressed={lang === 'en'}
-            >
-              EN
-            </button>
-            <span className="lang-sep">|</span>
-            <button
-              type="button"
-              onClick={() => setLang('ta')}
-              className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
-              aria-pressed={lang === 'ta'}
-            >
-              தமிழ்
-            </button>
+          {/* ---- Distinct Separated Language Converter ---- */}
+          <div className="header-lang-wrapper" aria-label="Language Converter">
+            <div className="lang-converter-pill" role="group" aria-label="Choose Language / மொழியைத் தேர்வு செய்க">
+              <span className="lang-globe-icon" aria-hidden="true" title="Language Converter / மொழி மாற்றி">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </span>
+              <div className="lang-toggle-track">
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+                  aria-pressed={lang === 'en'}
+                  title="English"
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('ta')}
+                  className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+                  aria-pressed={lang === 'ta'}
+                  title="தமிழ் (Tamil)"
+                >
+                  தமிழ்
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* User Auth & Portal Button */}
-          {user ? (
-            <div className="header-auth-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {isAdmin && (
+          <div className="header-actions-group">
+            {/* User Auth & Portal Button */}
+            {user ? (
+              <div className="header-auth-group">
+                {isAdmin && (
+                  <Link
+                    to="/admin/applications"
+                    className="header-admin-pill"
+                    title="Admin Dashboard"
+                  >
+                    ADMIN
+                  </Link>
+                )}
                 <Link
-                  to="/admin/applications"
-                  className="header-admin-pill"
-                  style={{
-                    background: '#991b1b',
-                    color: '#ffffff',
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                    textDecoration: 'none',
-                    letterSpacing: '0.04em'
-                  }}
-                  title="Admin Dashboard"
+                  to="/get-involved/status"
+                  className="header-user-btn"
+                  title={user.email}
                 >
-                  ADMIN
+                  <span className="header-user-avatar">
+                    {user.name?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                  <span className="header-user-name">
+                    {user.name?.split(' ')[0] || 'Portal'}
+                  </span>
                 </Link>
-              )}
-              <Link
-                to="/get-involved/status"
-                className="header-user-btn"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(255,255,255,0.08)',
-                  color: '#ffffff',
-                  padding: '4px 10px',
-                  borderRadius: '20px',
-                  textDecoration: 'none',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  border: '1px solid rgba(255,255,255,0.15)'
-                }}
-                title={user.email}
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={openAuthModal}
+                className="header-signin-btn"
               >
-                <span style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>
-                  {user.name?.charAt(0).toUpperCase() || 'U'}
-                </span>
-                <span className="header-user-name" style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {user.name?.split(' ')[0] || 'Portal'}
-                </span>
-              </Link>
-            </div>
-          ) : (
+                {lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
+              </button>
+            )}
+
+            {/* Search Button -> Redirects directly to Member Directory Search */}
+            <Link
+              to="/directory"
+              className="icon-btn search-btn"
+              aria-label={t('nav.directory')}
+              title={lang === 'ta' ? 'அங்கத்தினர் தேடல் (Member Directory)' : 'Search Member Directory'}
+            >
+              <SearchIcon size={17} />
+            </Link>
+
+            {/* Mobile hamburger */}
             <button
               type="button"
-              onClick={openAuthModal}
-              className="header-signin-btn"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                color: '#ffffff',
-                border: '1px solid rgba(255,255,255,0.15)',
-                padding: '4px 12px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer'
+              className="icon-btn hamburger"
+              aria-label="Open navigation menu"
+              aria-expanded={false}
+              onClick={(e) => {
+                e.stopPropagation()
+                onMenuOpen?.()
               }}
             >
-              {lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
+              <span className="ham-line" />
+              <span className="ham-line" />
+              <span className="ham-line" />
             </button>
-          )}
-
-          {/* Search Button -> Redirects directly to Member Directory Search */}
-          <Link
-            to="/directory"
-            className="icon-btn search-btn"
-            aria-label={t('nav.directory')}
-            title={lang === 'ta' ? 'உறுப்பினர் தேடல் (Member Directory)' : 'Search Member Directory'}
-          >
-            <SearchIcon size={17} />
-          </Link>
-
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="icon-btn hamburger"
-            aria-label="Open navigation menu"
-            aria-expanded={false}
-            onClick={(e) => {
-              e.stopPropagation()
-              onMenuOpen?.()
-            }}
-          >
-            <span className="ham-line" />
-            <span className="ham-line" />
-            <span className="ham-line" />
-          </button>
+          </div>
         </div>
 
       </div>

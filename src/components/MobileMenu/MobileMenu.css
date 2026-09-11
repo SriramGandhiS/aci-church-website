@@ -139,3 +139,16 @@
   width: 100%;
   justify-content: center;
 }
+
+/* Tamil Typography in Mobile Menu */
+html[lang="ta"] .mm-link,
+html[lang="ta"] .mm-sub-link,
+html[lang="ta"] .mm-logo-name,
+html[lang="ta"] .mm-contact-label {
+  font-family: var(--font-tamil);
+  letter-spacing: 0;
+}
+
+html[lang="ta"] .mm-link {
+  font-size: clamp(17px, 3.5vw, 22px);
+}
