@@ -48,6 +48,8 @@ export default function Hero() {
               alt={slide.alt}
               className="hero-img"
               fetchpriority={index === 0 ? 'high' : 'auto'}
+              decoding={index === 0 ? 'sync' : 'async'}
+              loading={index === 0 ? 'eager' : 'lazy'}
             />
           </div>
         ))}

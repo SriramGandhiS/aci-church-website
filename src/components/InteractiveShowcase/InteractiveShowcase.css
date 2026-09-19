@@ -127,17 +127,25 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  image-rendering: crisp-edges;
+  filter: contrast(1.05) saturate(1.06) brightness(1.02);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s ease;
 }
 
 .showcase-card:hover .showcase-img {
-  transform: scale(1.06);
+  transform: translateZ(0) scale(1.07);
+  filter: contrast(1.08) saturate(1.08) brightness(1.04);
 }
 
 .showcase-img-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 60%);
 }
 
 .showcase-count-pill {

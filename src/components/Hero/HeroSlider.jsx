@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { getMediaUrl } from '../../utils/imageUrl'
 import './HeroSlider.css'
 
 const SLIDE_IMAGES = [
-  'http://acidiocese.org/gallery/23rd%20Ordination%2010.04.2024/4498769c2b5924c919c9336e04979875.jpg',
-  'http://acidiocese.org/gallery/Madurai%20Zonal%20Office%20Dedication%20Service/7cc60a065180716a1dd0a3fe4db93be3.jpg',
-  'http://acidiocese.org/gallery/YOUTH%20DAY%202022/ecb0b4a539fb2fa8e455481c94fc593c.jpg',
-  'http://acidiocese.org/gallery/5th%20Church%20Visit/c50ad7cfc01b9dfaf710f5bf102b1851.jpg',
-  'http://acidiocese.org/gallery/Church%20Dedication%20/f79744d5293e7c9c16935e976bffa844.jpg',
+  getMediaUrl('gallery/23rd Ordination 10.04.2024/4498769c2b5924c919c9336e04979875.jpg'),
+  getMediaUrl('gallery/Madurai Zonal Office Dedication Service/7cc60a065180716a1dd0a3fe4db93be3.jpg'),
+  getMediaUrl('gallery/YOUTH DAY 2022/ecb0b4a539fb2fa8e455481c94fc593c.jpg'),
+  getMediaUrl('gallery/5th Church Visit/c50ad7cfc01b9dfaf710f5bf102b1851.jpg'),
+  getMediaUrl('gallery/Church Dedication /f79744d5293e7c9c16935e976bffa844.jpg'),
 ]
 
 export default function HeroSlider() {

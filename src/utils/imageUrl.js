@@ -5,7 +5,7 @@
    This prevents Mixed Content blocking on HTTPS production hosts like Netlify.
    ============================================================ */
 
-export function getMediaUrl(path) {
+export function getMediaUrl(path, options = {}) {
   if (!path) return '/placeholder.jpg'
 
   // Return local assets directly
@@ -20,6 +20,15 @@ export function getMediaUrl(path) {
   // Encode each segment of path to preserve directory structure and handle spaces
   const encodedPath = cleanPath.split('/').map(segment => encodeURIComponent(segment)).join('/')
 
-  // Return secure HTTPS image URL
-  return `https://wsrv.nl/?url=http://acidiocese.org/${encodedPath}`
+  // High-resolution parameters for wsrv.nl CDN edge proxy
+  const { width = 1600, quality = 95, format = 'webp' } = options
+  const params = []
+  if (width) params.push(`w=${width}`)
+  if (quality) params.push(`q=${quality}`)
+  if (format) params.push(`output=${format}`)
+
+  const queryString = params.length > 0 ? `&${params.join('&')}` : ''
+
+  // Return secure HTTPS high-resolution image URL
+  return `https://wsrv.nl/?url=http://acidiocese.org/${encodedPath}${queryString}`
 }
