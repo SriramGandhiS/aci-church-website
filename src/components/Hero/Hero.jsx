@@ -57,7 +57,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="hero-content container">
+      <div className="hero-content">
         <div className="hero-body">
           <p className="hero-eyebrow">
             {isTa
