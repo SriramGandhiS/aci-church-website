@@ -146,8 +146,8 @@ export default function AboutSection() {
           </p>
           <h2 className="about-headline t-headline" style={{ marginBottom: '24px', color: 'var(--color-text-dark)' }}>
             {isTa
-              ? 'இந்தியா முழுவதும் தேவ ஊழியங்களை தாங்கி நடத்தும் சட்டப்பூர்வ எபிஸ்கோபல் பேராயம்'
-              : 'A Christ-Centered Episcopal Council Registered for Kingdom Service Across India'}
+              ? 'உலகம் முழுவதும் தேவ ஊழியங்களை தாங்கி நடத்தும் சட்டப்பூர்வ எபிஸ்கோபல் பேராயம்'
+              : 'A Christ-Centered Episcopal Council Registered for Kingdom Service Across the World'}
           </h2>
           <div style={{ background: 'var(--color-soft-gray)', padding: '28px', borderLeft: '4px solid var(--color-black)' }}>
             <p className="t-body" style={{ fontSize: '16px', lineHeight: '1.75', color: 'var(--color-text-dark)', marginBottom: '16px' }}>
