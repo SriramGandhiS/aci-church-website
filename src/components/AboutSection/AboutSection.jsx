@@ -175,8 +175,18 @@ export default function AboutSection() {
             <p className="t-label" style={{ color: 'var(--color-text-muted)', marginBottom: '8px', letterSpacing: '0.15em' }}>
               {isTa ? 'பேராயத்தின் ஸ்தாபகர்' : 'THE FOUNDER'}
             </p>
-            <h2 className="t-headline" style={{ fontSize: '30px', marginBottom: '20px', color: 'var(--color-text-dark)', lineHeight: '1.25' }}>
-              {isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'Archbishop The Most Rev. S. JOHNSON DURAI'}
+            <h2 className="t-headline" style={{ fontSize: '32px', marginBottom: '20px', color: 'var(--color-text-dark)', lineHeight: '1.3' }}>
+              {isTa ? (
+                <>
+                  பேராயர் பேரருட்திரு<br />
+                  ச. ஜான்சன் துரை
+                </>
+              ) : (
+                <>
+                  The Most Reverend<br />
+                  Archbishop S. JOHNSON DURAI
+                </>
+              )}
             </h2>
 
             {isTa ? (
@@ -197,10 +207,10 @@ export default function AboutSection() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', color: 'var(--color-text-mid)', lineHeight: '1.8', fontSize: '15px' }}>
                 <p>
-                  <strong>Archbishop The Most Rev. S. JOHNSON DURAI</strong>, Founder, Chosen vessel of God is an ordained minister, Apostle, and Bible teacher having ministered to the almighty God for <strong>more than thirty-five years</strong>.
+                  <strong>The Most Reverend Archbishop S. JOHNSON DURAI</strong>, Founder, Chosen vessel of God is an ordained minister, Apostle, and Bible teacher having ministered to the almighty God for <strong>more than thirty-five years</strong>.
                 </p>
                 <p>
-                  Born into a Christian family, he accepted Jesus as his personal Savior during his youth. On the call of God for the ministry, he and his wife left their Government jobs and stepped into church ministry believing none but the faithful Lord, who has called them. They then established the ministries in the name of <strong>“POWER IN THE WORD MINISTRIES.”</strong> At present, <strong>Archbishop The Most Rev. S. JOHNSON DURAI</strong> is the senior pastor of the above Church.
+                  Born into a Christian family, he accepted Jesus as his personal Savior during his youth. On the call of God for the ministry, he and his wife left their Government jobs and stepped into church ministry believing none but the faithful Lord, who has called them. They then established the ministries in the name of <strong>“POWER IN THE WORD MINISTRIES.”</strong> At present, <strong>The Most Reverend Archbishop S. JOHNSON DURAI</strong> is the senior pastor of the above Church.
                 </p>
                 <p>
                   He was stirred by the Spirit of God and had a deep conviction of the need for a setup to shepherd the needy shepherds who toil alone against the kingdom of darkness. The Spirit of God envisaged the founder about Noah who built the ark in order to shelter not just for his family, but species of every creature of the earth. God has confirmed His purpose through many servants of God.
@@ -212,9 +222,9 @@ export default function AboutSection() {
             )}
           </div>
           <div className="about-photo-wrap">
-            <img src="/archbishop_new.jpg" alt="Archbishop The Most Rev. S. JOHNSON DURAI" className="about-photo" />
+            <img src="/archbishop_new.jpg" alt="The Most Reverend Archbishop S. JOHNSON DURAI" className="about-photo" />
             <div style={{ padding: '12px', background: 'var(--color-near-black)', color: 'var(--color-white)', fontSize: '13px', textAlign: 'center' }}>
-              <strong>{isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'The Most Rev. S. JOHNSON DURAI'}</strong> — {isTa ? 'ஸ்தாபகர் & தலைமைப் பேராயர்' : 'Founder & Archbishop'}
+              <strong>{isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'The Most Reverend S. JOHNSON DURAI'}</strong> — {isTa ? 'ஸ்தாபகர் & தலைமைப் பேராயர்' : 'Founder & Archbishop'}
             </div>
           </div>
         </div>
