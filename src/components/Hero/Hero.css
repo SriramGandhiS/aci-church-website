@@ -81,22 +81,24 @@
   z-index: 4;
   flex: 1;
   display: flex;
-  align-items: center;
-  padding-top: 60px;
-  padding-bottom: 80px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 32px;
+  padding-bottom: 40px;
 }
 
 .hero-body {
-  max-width: 720px;
+  max-width: 760px;
+  text-align: left;
 }
 
 .hero-eyebrow {
   color: #e4caa0;
-  font-size: clamp(15px, 1.8vw, 21px);
+  font-size: clamp(14px, 1.6vw, 19px);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
   line-height: 1.4;
   animation: fadeUp 0.8s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -104,6 +106,7 @@
 .hero-headline {
   color: var(--color-white);
   margin-bottom: 18px;
+  line-height: 1.12;
   animation: fadeUp 0.9s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -113,11 +116,11 @@
   flex-wrap: wrap;
   gap: 12px;
   color: #eeddbf;
-  font-size: clamp(14px, 1.4vw, 19px);
+  font-size: clamp(14px, 1.4vw, 18px);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 36px;
+  margin-bottom: 24px;
   line-height: 1.4;
   animation: fadeUp 0.9s 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
