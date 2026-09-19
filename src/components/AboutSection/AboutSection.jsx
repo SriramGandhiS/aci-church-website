@@ -175,15 +175,9 @@ export default function AboutSection() {
             <p className="t-label" style={{ color: 'var(--color-text-muted)', marginBottom: '8px', letterSpacing: '0.15em' }}>
               {isTa ? 'பேராயத்தின் ஸ்தாபகர்' : 'THE FOUNDER'}
             </p>
-            <h2 className="t-headline" style={{ fontSize: '30px', marginBottom: '16px', color: 'var(--color-text-dark)', lineHeight: '1.25' }}>
+            <h2 className="t-headline" style={{ fontSize: '30px', marginBottom: '20px', color: 'var(--color-text-dark)', lineHeight: '1.25' }}>
               {isTa ? 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை' : 'Archbishop The Most Rev. S. Johnson Durai'}
             </h2>
-
-            <div style={{ borderLeft: '3px solid var(--color-black)', paddingLeft: '16px', margin: '16px 0 20px 0', color: 'var(--color-text-mid)', fontStyle: 'italic', fontSize: '15px', lineHeight: '1.7' }}>
-              {isTa
-                ? '“அவர்களை மேய்க்கும்படி என் தாசனாகிய தாவீது என்னும் ஒரே மேய்ப்பனை அவர்கள்மேல் ஏற்படுத்துவேன்; இவர் அவர்களை மேய்த்து, இவர் அவர்களுக்கு மேய்ப்பனாயிருப்பார்.” — எசேக்கியேல் 34:23'
-                : '“And I will set up one shepherd over them, and he shall feed them, even my servant David; he shall feed them, and he shall be their shepherd.” — Ezekiel 34:23'}
-            </div>
 
             {isTa ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', color: 'var(--color-text-mid)', lineHeight: '1.8', fontSize: '15px' }}>
@@ -194,7 +188,7 @@ export default function AboutSection() {
                   கிறிஸ்தவக் குடும்பத்தில் பிறந்து, இளமையிலேயே இயேசுவைத் தனது சொந்த இரட்சகராக ஏற்றுக்கொண்டார். தேவ ஊழியத்தின் அழைப்பிற்கு கீழ்ப்படிந்து, அவரும் அவரது மனைவியும் அரசுப் பணிகளை உதறிவிட்டு, தங்களை அழைத்த உண்மையுள்ள கர்த்தரை மட்டுமே விசுவாசித்து திருச்சபை ஊழியத்திற்குள் அடியெடுத்து வைத்தனர். பின்னர் <strong>“வார்த்தையின் வல்லமை ஊழியங்கள்” (POWER IN THE WORD MINISTRIES)</strong> என்ற நாமத்தில் ஊழியங்களை நிறுவினர். தற்போது பேராயர் பேரருட்திரு ச. ஜான்சன் துரை அவர்கள் இச்சபையின் தலைமைப் போதகராகப் பணியாற்றி வருகிறார்.
                 </p>
                 <p>
-                  அந்தகாரத்தின் ராஜ்யத்திற்கு எதிராக தனிமையில் போராடும் மேய்ப்பர்களைத் தாங்கி மேய்க்கும் ஓர் அமைப்பு தேவை என்ற ஆழமான தரிசனத்தை தேவ ஆவியானவர் அவருக்குள் உண்டாக்கினார். நோவா தனது குடும்பத்திற்கு மட்டுமல்லாது, பூமியின் சகல ஜீவராசிகளையும் காக்கும்படி பேழையைக் கட்டியது போல தேவ ஆவியானவர் ஸ்தாபகருக்கு தரிசனத்தை அருளினார். அநேக தேவ ஊழியர்கள் மூலமாகவும், எசேக்கியேல் 34:23 வார்த்தையின் மூலமாகவும் தேவன் தமது நோக்கத்தை உறுதிப்படுத்தினார்.
+                  அந்தகாரத்தின் ராஜ்யத்திற்கு எதிராக தனிமையில் போராடும் மேய்ப்பர்களைத் தாங்கி மேய்க்கும் ஓர் அமைப்பு தேவை என்ற ஆழமான தரிசனத்தை தேவ ஆவியானவர் அவருக்குள் உண்டாக்கினார். நோவா தனது குடும்பத்திற்கு மட்டுமல்லாது, பூமியின் சகல ஜீவராசிகளையும் காக்கும்படி பேழையைக் கட்டியது போல தேவ ஆவியானவர் ஸ்தாபகருக்கு தரிசனத்தை அருளினார். அநேக தேவ ஊழியர்கள் மூலமாகவும் தேவன் தமது நோக்கத்தை உறுதிப்படுத்தினார்.
                 </p>
                 <p>
                   இந்த உறுதியான அழைப்பின் அடிப்படையில், தேவனுக்குக் கீழ்ப்படிந்து, அவரை மட்டுமே விசுவாசித்து, பேராயத்தை நிறுவும் இத்தகைய மகத்தான பொறுப்பைச் சுமக்க தேவன் அவருக்குக் கிருபை அருளியுள்ளார்.
@@ -209,7 +203,7 @@ export default function AboutSection() {
                   Born into a Christian family, he accepted Jesus as his personal Savior during his youth. On the call of God for the ministry, he and his wife left their Government jobs and stepped into church ministry believing none but the faithful Lord, who has called them. They then established the ministries in the name of <strong>“POWER IN THE WORD MINISTRIES.”</strong> At present, Archbishop The Most Rev. S. Johnson Durai is the senior pastor of the above Church.
                 </p>
                 <p>
-                  He was stirred by the Spirit of God and had a deep conviction of the need for a setup to shepherd the needy shepherds who toil alone against the kingdom of darkness. The Spirit of God envisaged the founder about Noah who built the ark in order to shelter not just for his family, but species of every creature of the earth. God has confirmed His purpose through many servants of God, along with His Word: <em>“And I will set up one shepherd over them, and he shall feed them, even my servant David; he shall feed them, and he shall be their shepherd”</em> (Ezekiel 34:23).
+                  He was stirred by the Spirit of God and had a deep conviction of the need for a setup to shepherd the needy shepherds who toil alone against the kingdom of darkness. The Spirit of God envisaged the founder about Noah who built the ark in order to shelter not just for his family, but species of every creature of the earth. God has confirmed His purpose through many servants of God.
                 </p>
                 <p>
                   Based on this firm calling, God has enabled him to shoulder such a great responsibility of founding the Diocese in obedience to Him, Believing Him and none but Him.
