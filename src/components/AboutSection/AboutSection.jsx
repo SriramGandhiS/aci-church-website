@@ -157,14 +157,14 @@ export default function AboutSection() {
                 </>
               ) : (
                 <>
-                  <strong>Apostolic Council of India Diocese</strong> is a registered public religious trust comprising ordained Episcopal ministers from various parts of the world, registered under the <strong>Indian Trust Act 1882 (Reg. No 62/B.k.4/2013)</strong>, under Part I sec 5(1), Part IV sec 32-34, 37 &amp; Part VI sec 64 of the <strong>Indian Christian Marriage Act 1872</strong>, constituted under Christian Clergy Rites and Traditions.
+                  <strong>Apostolic Council of India Diocese</strong> is the registered body comprising of ordained Episcopal ministers from various part of the world and is been registered in India, as public religious trust under <strong>Indian trust act 1882, Reg. No 62/B.k.4/2013</strong> Under Part I, section 5(1) Part IV sections 32-34 ,37 and Part VI section 64 of the <strong>Indian Christian Marriage Act 1872</strong>, and is constituted under the Christian Clergy Rites and Traditions.
                 </>
               )}
             </p>
             <p className="t-body" style={{ fontSize: '14px', color: 'var(--color-text-muted)' }}>
               {isTa
-                ? 'புதன்கிழமை, 16 அக்டோபர் 2013 அன்று தேவ மகிமைக்காக பிரதிஷ்டை செய்யப்பட்டது. மத்திய பேராய அலுவலகம்: 6/110, மேலப்பட்டி, ஹனுமந்தராயன்கோட்டை, திண்டுக்கல் மாவட்டம், தமிழ்நாடு – 624002.'
-                : 'Dedicated for the Glory of God on Wednesday, 16th October 2013. Central Diocesan Office: 6/110, Melapatty, Hanumantharayan Kottai, Dindigul District, Tamil Nadu – 624002.'}
+                ? 'புதன்கிழமை - 16 அக்டோபர் 2013 அன்று தேவ மகிமைக்காக பேராயம் அறிவிக்கப்பட்டு பிரதிஷ்டை செய்யப்பட்டது. மத்திய பேராய அலுவலகம்: 6/110, மேலப்பட்டி, ஹனுமந்தராயன்கோட்டை, திண்டுக்கல் மாவட்டம், தமிழ்நாடு – 624002.'
+                : 'The diocese has been declared and dedicated for the Glory of God on Wednesday - 16th October 2013. Central Diocesan Office: 6/110, Melapatty, Hanumantharayan Kottai, Dindigul District, Tamil Nadu – 624002.'}
             </p>
           </div>
         </div>
