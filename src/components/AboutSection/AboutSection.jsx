@@ -248,12 +248,12 @@ export default function AboutSection() {
                   </>
                 ) : (
                   <>
-                    <li>Ensure contemporary generations live a victorious life believing the Word of God.</li>
-                    <li>Teach ordained ministers the power and authority vested in Scripture to save perishing souls.</li>
-                    <li>Demonstrate God&apos;s love in daily life to ministers and believers.</li>
-                    <li>Raise worshipers and prayer warriors to stand in the gap for the Nation.</li>
-                    <li>Preach the Gospel through media and personal outreach to dispel darkness.</li>
-                    <li>Send missionaries to reach unreached communities.</li>
+                    <li>To ensure that the contemporary generation live a worth’s and victories life knowing and believing the word of God that is in work.</li>
+                    <li>To teach ordained ministers the power and authority vested on them by the word of God to save the perishing souls in sin, toil, sickness and poverty and to unleash the blessing upon the people that has been earned through the death of Jesus on the cross of Calvary and by His resurrection.</li>
+                    <li>To make know the goodness of God to ministers and believers by demonstrating the love of God in day today life.</li>
+                    <li>To raise worshipers, prayer warier to stand in the gape before the lord for their nation and churches.</li>
+                    <li>To preach the gospel through persons and Medias to save the nation from the power of darkness.</li>
+                    <li>To send missionaries to reach the unreached folk to preach the gospel and establish the kingdom of God.</li>
                   </>
                 )}
               </ul>
@@ -272,10 +272,10 @@ export default function AboutSection() {
                   </>
                 ) : (
                   <>
-                    <li>Bring independent ministers under a centralized setup, offering upgrading training and Biblical ordination.</li>
-                    <li>Teach ministers to enrich in Word knowledge through regular Word Sharing Meets.</li>
-                    <li>Conduct Zonal Meets to encourage member and non-member churches.</li>
-                    <li>Visit member churches to equip, advise, and build the Kingdom of God.</li>
+                    <li>Bringing the independent ministers of God under a centralized setup by recognizing their calling, upgrade them through the up gradation training and ordain according to the &ldquo;Word Of God&rdquo; and the law of the land enabling them to perform Christian Episcopal rights.</li>
+                    <li>Teaching the minister to enrich in the knowledge of word of god and faith by the means of regular word sharing meet.</li>
+                    <li>Conducting zonal meet to teach and reach the members and non members of the Diocese, so that they can be encouraged and enriched in the word of God and work in their calling.</li>
+                    <li>Visiting the Diocesan member’s churches as apostle Paul did in order to encourage both ministers and believers to move forward in building the kingdom of God.</li>
                   </>
                 )}
               </ul>
