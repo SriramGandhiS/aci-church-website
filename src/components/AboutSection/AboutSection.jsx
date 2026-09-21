@@ -107,6 +107,79 @@ const faithArticles = [
   },
 ]
 
+const trusteesData = [
+  {
+    sno: 1,
+    nameEn: 'The Most Rev. S. Johnson Durai',
+    nameTa: 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை',
+    roleEn: 'Archbishop / Chairman & Managing Trustee',
+    roleTa: 'தலைமைப் பேராயர் / தலைவர் & நிர்வாக அறங்காவலர்',
+  },
+  {
+    sno: 2,
+    nameEn: 'Rev. Dr. R. John Durai',
+    nameTa: 'அருட்திரு முனைவர் R. ஜான் துரை',
+    roleEn: 'Vice Chairman & Trustee',
+    roleTa: 'துணைத் தலைவர் & அறங்காவலர்',
+  },
+  {
+    sno: 3,
+    nameEn: 'Rev. J.A.D. Samuel',
+    nameTa: 'அருட்திரு J.A.D. சாமுவேல்',
+    roleEn: 'General Secretary & Trustee',
+    roleTa: 'பொதுச் செயலாளர் & அறங்காவலர்',
+  },
+  {
+    sno: 4,
+    nameEn: 'Rt. Rev. Dr. L. Suresh Daniel',
+    nameTa: 'பேரருட்திரு முனைவர் L. சுரேஷ் டேனியல்',
+    roleEn: 'Bishop & Financial Trustee',
+    roleTa: 'பேராயர் & நிதி அறங்காவலர்',
+  },
+  {
+    sno: 5,
+    nameEn: 'Rt. Rev. John Samuel',
+    nameTa: 'பேரருட்திரு ஜான் சாமுவேல்',
+    roleEn: 'Archbishop Commissary & Trustee',
+    roleTa: 'பேராயர் ஆணையாளர் & அறங்காவலர்',
+  },
+  {
+    sno: 6,
+    nameEn: 'Rt. Rev. S. Anand',
+    nameTa: 'பேரருட்திரு S. ஆனந்த்',
+    roleEn: 'Bishop & Trustee',
+    roleTa: 'பேராயர் & அறங்காவலர்',
+  },
+  {
+    sno: 7,
+    nameEn: 'Rt. Rev. A. Pounraj',
+    nameTa: 'பேரருட்திரு A. பவுன்ராஜ்',
+    roleEn: 'Bishop & Trustee',
+    roleTa: 'பேராயர் & அறங்காவலர்',
+  },
+  {
+    sno: 8,
+    nameEn: 'Rt. Rev. G. Edwin Joseph Selvaraj',
+    nameTa: 'பேரருட்திரு G. எட்வின் ஜோசப் செல்வராஜ்',
+    roleEn: 'Bishop & Trustee',
+    roleTa: 'பேராயர் & அறங்காவலர்',
+  },
+  {
+    sno: 9,
+    nameEn: 'Rev. D. V. Isaac Timothy',
+    nameTa: 'அருட்திரு D. V. ஐசக் திமோதி',
+    roleEn: 'Trustee',
+    roleTa: 'அறங்காவலர்',
+  },
+  {
+    sno: 10,
+    nameEn: 'Rev. J. Xavier Paulraj',
+    nameTa: 'அருட்திரு J. சேவியர் பால்ராஜ்',
+    roleEn: 'Trustee',
+    roleTa: 'அறங்காவலர்',
+  },
+]
+
 export default function AboutSection() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
@@ -337,19 +410,89 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* 5. About Board */}
-        <div id="about-board" className="reveal" style={{ background: 'var(--color-soft-gray)', padding: '32px', borderLeft: '4px solid var(--color-black)' }}>
-          <p className="t-label" style={{ color: 'var(--color-text-muted)', marginBottom: '8px', letterSpacing: '0.15em' }}>
-            {isTa ? 'பேராய அறங்காவலர் குழு' : 'DIOCESAN BOARD OF TRUSTEES'}
-          </p>
-          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', marginBottom: '12px', color: 'var(--color-text-dark)' }}>
-            {isTa ? 'பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள் மற்றும் ஏழு மாவட்ட பேராயர்கள் & ஆவிக்குரிய மேற்பார்வையாளர்கள்' : 'Ten Committed Trustees and Seven District Bishops and Spiritual Overseers'}
-          </h3>
-          <p className="t-body" style={{ fontSize: '14px', lineHeight: '1.7', color: 'var(--color-text-mid)' }}>
-            {isTa
-              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, நிர்வாக, சட்ட மற்றும் மிஷனெரி பணிகளை வழிநடத்தும் பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள் மற்றும் ஏழு மாவட்ட பேராயர்கள் & ஆவிக்குரிய மேற்பார்வையாளர்களைக் கொண்டு இக்குழு இயங்குகிறது.'
-              : 'The Diocesan Board comprises ten committed trustees and seven District Bishops and Spiritual Overseers who guide the spiritual, administrative, legal, and missionary functions of the Apostolic Council of India Diocese across Tamil Nadu and India.'}
-          </p>
+        {/* 5. About Board - Ten Committed Trustees */}
+        <div id="about-board" className="reveal" style={{ marginBottom: '64px' }}>
+          <div style={{ marginBottom: '28px' }}>
+            <p className="t-label" style={{ color: 'var(--color-text-muted)', marginBottom: '8px', letterSpacing: '0.15em' }}>
+              {isTa ? 'பேராய அறங்காவலர் குழு' : 'DIOCESAN BOARD OF TRUSTEES'}
+            </p>
+            <h2 className="t-headline" style={{ fontSize: '30px', marginBottom: '14px', color: 'var(--color-text-dark)' }}>
+              {isTa ? 'பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள்' : 'Ten Committed Trustees'}
+            </h2>
+            <p className="t-body" style={{ fontSize: '15px', lineHeight: '1.75', color: 'var(--color-text-mid)', maxWidth: '900px' }}>
+              {isTa
+                ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் ஆவிக்குரிய, நிர்வாக, சட்ட மற்றும் மிஷனெரி பணிகளை வழிநடத்தும் பத்து அர்ப்பணிக்கப்பட்ட அறங்காவலர்கள்.'
+                : 'The Diocesan Board comprises ten committed trustees who guide the spiritual, administrative, legal, and missionary functions of the Apostolic Council of India Diocese across Tamil Nadu and India.'}
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '18px',
+          }}>
+            {trusteesData.map((member) => (
+              <div
+                key={member.sno}
+                style={{
+                  background: 'var(--color-white)',
+                  border: '1px solid var(--color-divider-light)',
+                  borderLeft: '4px solid #111111',
+                  borderRadius: '4px',
+                  padding: '20px 22px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: 'var(--color-soft-gray)',
+                    color: 'var(--color-text-dark)',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                  }}>
+                    {member.sno}
+                  </span>
+                  <span style={{
+                    fontSize: '11px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    color: '#c8a96e',
+                    fontWeight: 700,
+                  }}>
+                    {isTa ? 'அறங்காவலர்' : 'Trustee'}
+                  </span>
+                </div>
+                <div>
+                  <h4 style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: 'var(--color-text-dark)',
+                    marginBottom: '6px',
+                    lineHeight: '1.4',
+                  }}>
+                    {isTa ? member.nameTa : member.nameEn}
+                  </h4>
+                  <p style={{
+                    fontSize: '13px',
+                    color: 'var(--color-text-mid)',
+                    fontWeight: 500,
+                    lineHeight: '1.5',
+                  }}>
+                    {isTa ? member.roleTa : member.roleEn}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
