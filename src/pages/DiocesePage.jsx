@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
-import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon, StarIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
+import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
 import { diocesesList } from '../data/diocesesData'
 
 export default function DiocesePage() {
@@ -264,94 +264,58 @@ export default function DiocesePage() {
                   </div>
 
                   {/* Direct Contact Links */}
-                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                    {d.phone && (
-                      <a
-                        href={`tel:${d.phone.replace(/[^0-9+]/g, '')}`}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          background: 'rgba(200, 169, 110, 0.12)',
-                          border: '1px solid rgba(200, 169, 110, 0.25)',
-                          color: '#e4caa0',
-                          padding: '6px 14px',
-                          borderRadius: '4px',
-                          fontSize: '12.5px',
-                          fontWeight: 600,
-                          textDecoration: 'none',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <PhoneIcon size={13} color="#c8a96e" />
-                        <span>{d.phone}</span>
-                      </a>
-                    )}
-                    {d.email && (
-                      <a
-                        href={`mailto:${d.email}`}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.12)',
-                          color: 'rgba(255, 255, 255, 0.85)',
-                          padding: '6px 14px',
-                          borderRadius: '4px',
-                          fontSize: '12.5px',
-                          textDecoration: 'none',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <EmailIcon size={13} color="#c8a96e" />
-                        <span>{d.email}</span>
-                      </a>
-                    )}
-                    <a
-                      href={d.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((d.churchName || '') + ' ' + (d.address || ''))}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        background: 'rgba(200, 169, 110, 0.15)',
-                        border: '1px solid rgba(200, 169, 110, 0.35)',
-                        color: '#e4caa0',
-                        padding: '6px 14px',
-                        borderRadius: '4px',
-                        fontSize: '12.5px',
-                        fontWeight: 600,
-                        textDecoration: 'none',
-                        marginLeft: 'auto',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      <LocationIcon size={13} color="#c8a96e" />
-                      <span>{isTa ? 'கூகிள் வரைபடத்தில் அமைவிடம் ↗' : 'View on Google Maps ↗'}</span>
-                    </a>
-                  </div>
+                  {(d.phone || d.email) && (
+                    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                      {d.phone && (
+                        <a
+                          href={`tel:${d.phone.replace(/[^0-9+]/g, '')}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: 'rgba(200, 169, 110, 0.12)',
+                            border: '1px solid rgba(200, 169, 110, 0.25)',
+                            color: '#e4caa0',
+                            padding: '6px 14px',
+                            borderRadius: '4px',
+                            fontSize: '12.5px',
+                            fontWeight: 600,
+                            textDecoration: 'none',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          <PhoneIcon size={13} color="#c8a96e" />
+                          <span>{d.phone}</span>
+                        </a>
+                      )}
+                      {d.email && (
+                        <a
+                          href={`mailto:${d.email}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            border: '1px solid rgba(255, 255, 255, 0.12)',
+                            color: 'rgba(255, 255, 255, 0.85)',
+                            padding: '6px 14px',
+                            borderRadius: '4px',
+                            fontSize: '12.5px',
+                            textDecoration: 'none',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          <EmailIcon size={13} color="#c8a96e" />
+                          <span>{d.email}</span>
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 
-              {/* Highlights */}
-              <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '20px 24px', marginBottom: '24px' }}>
-                <h4 style={{ fontSize: '11.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#c8a96e', marginBottom: '14px', fontWeight: 700 }}>
-                  {isTa ? 'முக்கிய அமைப்புகள் & செயல்பாடுகள்' : 'Key Pillars & Active Ministries'}
-                </h4>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
-                  {d.highlights.map((h, hi) => (
-                    <div key={hi} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13.5px', color: '#ffffff' }}>
-                      <StarIcon size={9} color="#c8a96e" />
-                      <span>{isTa ? h.ta : h.en}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: d.address ? '0' : '20px' }}>
                 <Link to="/contact" style={{ background: '#ffffff', color: '#000000', padding: '10px 22px', fontSize: '13px', fontWeight: 700, textDecoration: 'none', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <span>{isTa ? 'தொடர்பு கொள்ள' : 'Contact Diocese'}</span>
                   <ArrowRightIcon size={12} color="#000000" />
