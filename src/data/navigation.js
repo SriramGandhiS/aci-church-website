@@ -66,11 +66,11 @@ export const navItems = [
     hasDropdown: true,
     href: '/synod',
     items: [
+      { label: 'SYNOD GENERAL COUNCIL', href: '/synod#synodgeneralcouncil' },
+      { label: 'SYNOD ACADEMIC COUNCIL', href: '/synod#synodacademiccouncil' },
       { label: 'ABOUT SYNOD', href: '/synod#aboutsynod' },
       { label: 'SYNOD FUNCTIONS', href: '/synod#synodfunctions' },
       { label: 'SYNOD PUBLICATIONS', href: '/synod#synodpublications' },
-      { label: 'SYNOD GENERAL COUNCIL', href: '/synod#synodgeneralcouncil' },
-      { label: 'SYNOD ACADEMIC COUNCIL', href: '/synod#synodacademiccouncil' },
     ],
   },
   {

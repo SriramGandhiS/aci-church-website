@@ -93,11 +93,11 @@ export default function MobileMenu({ isOpen, onClose }) {
       hasDropdown: true,
       href: '/synod',
       items: [
+        { label: t('nav.synodGeneralCouncil'), href: '/synod#synodgeneralcouncil' },
+        { label: t('nav.synodAcademicCouncil'), href: '/synod#synodacademiccouncil' },
         { label: t('nav.aboutSynod'), href: '/synod#aboutsynod' },
         { label: t('nav.synodFunctions'), href: '/synod#synodfunctions' },
         { label: t('nav.synodPublications'), href: '/synod#synodpublications' },
-        { label: t('nav.synodGeneralCouncil'), href: '/synod#synodgeneralcouncil' },
-        { label: t('nav.synodAcademicCouncil'), href: '/synod#synodacademiccouncil' },
       ],
     },
     {
