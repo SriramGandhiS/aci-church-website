@@ -443,7 +443,7 @@ export default function SynodPage() {
 
             <div style={{ display: 'flex', gap: '14px', marginTop: '28px', flexWrap: 'wrap' }}>
               <Link to="/diocese" className="btn btn-light" style={{ padding: '12px 24px', fontSize: '14px' }}>
-                {isTa ? '7 மண்டல பேராயங்கள் பார்க்க' : 'Explore 7 Regional Dioceses'} <span className="arrow">→</span>
+                {isTa ? '7 மாவட்ட பேராயங்கள் பார்க்க' : 'Explore Seven District Dioceses'} <span className="arrow">→</span>
               </Link>
               <Link to="/about#about-diocese" className="btn btn-outline-white" style={{ padding: '12px 24px', fontSize: '14px' }}>
                 {isTa ? 'பேராய அறக்கட்டளை விபரம்' : 'Central Trust Details'} <span className="arrow">→</span>

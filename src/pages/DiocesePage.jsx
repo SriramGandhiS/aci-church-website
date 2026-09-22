@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { LocationIcon, ChurchIcon, PhoneIcon, EmailIcon, IdCardIcon, StarIcon, ArrowRightIcon } from '../components/Icons/SvgIcons'
@@ -8,6 +8,7 @@ export default function DiocesePage() {
   const { lang } = useLanguage()
   const isTa = lang === 'ta'
   const { hash } = useLocation()
+  const [activeModalBishop, setActiveModalBishop] = useState(null)
 
   useEffect(() => {
     if (hash) {
@@ -27,15 +28,15 @@ export default function DiocesePage() {
       <div style={{ background: '#111111', padding: '64px 0 48px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div className="container">
           <p className="t-label" style={{ color: '#c8a96e', marginBottom: '8px', letterSpacing: '0.16em', fontSize: '11px', textTransform: 'uppercase', fontWeight: 700 }}>
-            {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயங்கள்' : 'APOSTOLIC COUNCIL OF INDIA DIOCESES'}
+            {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா மாவட்ட பேராயங்கள்' : 'APOSTOLIC COUNCIL OF INDIA DISTRICT DIOCESES'}
           </p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 400, marginBottom: '16px', color: '#ffffff' }}>
-            {isTa ? 'ஏசிஐ மண்டல பேராயங்களின் கூட்டமைப்பு' : '7 Regional Dioceses of ACI'}
+            {isTa ? 'ஏசிஐ ஏழு மாவட்ட பேராயங்கள்' : 'Seven District Dioceses of ACI'}
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '820px', fontSize: '15px', lineHeight: '1.7' }}>
             {isTa
-              ? 'தமிழ்நாடு முழுவதும் பரந்து விரிந்து தேவ ஊழியங்களை தாங்கி நடத்தும் 7 அதிகாரப்பூர்வ மண்டல பேராயங்களின் சபைகள் மற்றும் தலைமை விபரம்.'
-              : 'Discover the seven regional diocesan networks operating across Tamil Nadu under the Apostolic Council of India, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
+              ? 'தமிழ்நாடு முழுவதும் பரந்து விரிந்து தேவ ஊழியங்களை தாங்கி நடத்தும் 7 அதிகாரப்பூர்வ மாவட்ட பேராயங்களின் சபைகள் மற்றும் தலைமை விபரம்.'
+              : 'Discover the seven district diocesan networks operating across Tamil Nadu under the Apostolic Council of India, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
           </p>
         </div>
       </div>
@@ -45,12 +46,12 @@ export default function DiocesePage() {
         {/* Overview Banner */}
         <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #c8a96e', padding: '28px 32px', marginBottom: '56px', borderRadius: '6px' }}>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', color: '#ffffff', marginBottom: '8px', fontWeight: 400 }}>
-            {isTa ? 'மண்டல பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across 7 Regional Dioceses'}
+            {isTa ? 'ஏழு மாவட்ட பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across Seven District Dioceses'}
           </h3>
           <p style={{ fontSize: '14.5px', lineHeight: '1.7', color: 'rgba(255,255,255,0.75)', margin: 0 }}>
             {isTa
-              ? 'ஒவ்வொரு மண்டல பேராயமும் மத்திய பேராய தலைமை மற்றும் சினோட் ஆலோசனை மன்றத்தின் கீழ் இயங்கி, அந்தந்த மாவட்டங்களில் உள்ள சபைகளுக்கும் ஊழியர்களுக்கும் ஆவிக்குரிய, சட்டப்பூர்வ மற்றும் மிஷனெரி உதவிகளை வழங்கி வருகிறது.'
-              : 'Each regional diocese operates under central apostolic episcopal oversight and the Synod Advisory Council, providing biblical ordination, pastoral shelter, legal accreditation, and missionary backing to local congregations.'}
+              ? 'ஒவ்வொரு மாவட்ட பேராயமும் மத்திய பேராய தலைமை மற்றும் சினோட் ஆலோசனை மன்றத்தின் கீழ் இயங்கி, அந்தந்த மாவட்டங்களில் உள்ள சபைகளுக்கும் ஊழியர்களுக்கும் ஆவிக்குரிய, சட்டப்பூர்வ மற்றும் மிஷனெரி உதவிகளை வழங்கி வருகிறது.'
+              : 'Each district diocese operates under central apostolic episcopal oversight and the Synod Advisory Council, providing biblical ordination, pastoral shelter, legal accreditation, and missionary backing to local congregations.'}
           </p>
         </div>
 
@@ -69,50 +70,139 @@ export default function DiocesePage() {
                 position: 'relative'
               }}
             >
-              {/* Bishop image – top right corner, like homepage */}
-              {d.image && (
-                <div style={{
-                  position: 'absolute',
-                  top: '24px',
-                  right: '24px',
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '50%',
-                  border: '3px solid #c8a96e',
-                  overflow: 'hidden',
-                  boxShadow: '0 6px 20px rgba(0,0,0,0.6)',
-                  flexShrink: 0
-                }}>
-                  <img
-                    src={d.image}
-                    alt={d.pastorName}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
-                  />
-                </div>
-              )}
+              {/* Card Top Area: Info & Enlarged Bishop Portrait */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                gap: '24px',
+                flexWrap: 'wrap-reverse',
+                marginBottom: '24px'
+              }}>
+                {/* Left: Titles, Minimized Zone Box with Google Location, Description */}
+                <div style={{ flex: '1 1 500px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
+                      DIOCESE · {d.num}
+                    </span>
 
-              {/* Header Info */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '18px', paddingRight: d.image ? '120px' : '0' }}>
-                <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', color: '#c8a96e', textTransform: 'uppercase' }}>
-                    DIOCESE · {d.num}
-                  </span>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.5vw, 34px)', color: '#ffffff', marginTop: '6px', marginBottom: '4px', fontWeight: 400 }}>
+                    {/* Minimized Zone Box with Google Location Link */}
+                    <a
+                      href={d.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((d.churchName || '') + ' ' + (d.address || ''))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={isTa ? 'கூகிள் வரைபடத்தில் அமைவிடம் பார்க்க' : 'Open Google Location'}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        background: 'rgba(200, 169, 110, 0.1)',
+                        border: '1px solid rgba(200, 169, 110, 0.35)',
+                        color: '#e4caa0',
+                        padding: '3px 10px',
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        borderRadius: '16px',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s ease',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(200, 169, 110, 0.25)'
+                        e.currentTarget.style.borderColor = '#c8a96e'
+                        e.currentTarget.style.transform = 'translateY(-1px)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(200, 169, 110, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(200, 169, 110, 0.35)'
+                        e.currentTarget.style.transform = 'translateY(0)'
+                      }}
+                    >
+                      <LocationIcon size={11} color="#c8a96e" />
+                      <span>{isTa ? d.headquartersTa : d.headquarters}</span>
+                      <span style={{ fontSize: '10px', color: '#c8a96e', fontWeight: 700, marginLeft: '2px' }}>📍 Google Location ↗</span>
+                    </a>
+                  </div>
+
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.5vw, 34px)', color: '#ffffff', marginTop: '4px', marginBottom: '6px', fontWeight: 400 }}>
                     {isTa ? d.nameTa : d.nameEn}
                   </h2>
-                  <span style={{ fontSize: '13.5px', color: 'rgba(255,255,255,0.55)', fontWeight: 500 }}>
+                  <div style={{ fontSize: '13.5px', color: 'rgba(255,255,255,0.6)', fontWeight: 500, marginBottom: '16px' }}>
                     {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
-                  </span>
-                </div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(200, 169, 110, 0.1)', border: '1px solid rgba(200, 169, 110, 0.3)', color: '#c8a96e', padding: '6px 14px', fontSize: '12px', fontWeight: 600, borderRadius: '4px' }}>
-                  <LocationIcon size={13} color="#c8a96e" />
-                  <span>{isTa ? d.headquartersTa : d.headquarters}</span>
-                </div>
-              </div>
+                  </div>
 
-              <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.8)', marginBottom: '28px' }}>
-                {isTa ? d.descriptionTa : d.descriptionEn}
-              </p>
+                  <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                    {isTa ? d.descriptionTa : d.descriptionEn}
+                  </p>
+                </div>
+
+                {/* Right: Enlarged Bishop Photo Showcase with Click-to-View Modal */}
+                {d.image && (
+                  <div
+                    onClick={() => setActiveModalBishop(d)}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                      flexShrink: 0
+                    }}
+                    title={isTa ? 'பெரிதாகப் பார்க்க கிளிக் செய்யவும்' : 'Click to enlarge photo'}
+                  >
+                    <div style={{
+                      width: '150px',
+                      height: '170px',
+                      borderRadius: '12px',
+                      border: '2.5px solid #c8a96e',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(200, 169, 110, 0.2)',
+                      background: '#1c1c1c',
+                      position: 'relative',
+                      transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.03)'
+                      e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.8), 0 0 22px rgba(200, 169, 110, 0.4)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)'
+                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(200, 169, 110, 0.2)'
+                    }}
+                    >
+                      <img
+                        src={d.image}
+                        alt={isTa ? d.pastorNameTa : d.pastorName}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)',
+                        padding: '6px 4px 4px',
+                        textAlign: 'center',
+                        fontSize: '10px',
+                        color: '#e4caa0',
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '4px'
+                      }}>
+                        <span>🔍 {isTa ? 'பெரிதாக்குக' : 'Enlarge'}</span>
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: '#c8a96e', marginTop: '6px', textAlign: 'center' }}>
+                      {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
+                    </span>
+                    <span style={{ fontSize: '10.5px', color: 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
+                      {isTa ? d.pastorDesignationTa : d.pastorDesignation}
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {/* Church Address & Presiding Pastor Card */}
               {d.address && (
@@ -133,7 +223,7 @@ export default function DiocesePage() {
                           {isTa ? (d.churchNameTa || d.churchName) : d.churchName}
                         </h3>
                         <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                          {isTa ? 'முதன்மை மண்டல சபை மையம்' : 'Diocesan Church Center & Pastoral Office'}
+                          {isTa ? 'முதன்மை மாவட்ட சபை மையம்' : 'Diocesan District Church Center & Pastoral Office'}
                         </span>
                       </div>
                     </div>
@@ -219,21 +309,27 @@ export default function DiocesePage() {
                       </a>
                     )}
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((d.churchName || '') + ' ' + (d.address || ''))}`}
+                      href={d.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((d.churchName || '') + ' ' + (d.address || ''))}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
-                        color: 'rgba(255, 255, 255, 0.65)',
-                        padding: '6px 10px',
-                        fontSize: '12px',
-                        textDecoration: 'underline',
-                        marginLeft: 'auto'
+                        background: 'rgba(200, 169, 110, 0.15)',
+                        border: '1px solid rgba(200, 169, 110, 0.35)',
+                        color: '#e4caa0',
+                        padding: '6px 14px',
+                        borderRadius: '4px',
+                        fontSize: '12.5px',
+                        fontWeight: 600,
+                        textDecoration: 'none',
+                        marginLeft: 'auto',
+                        transition: 'all 0.2s ease'
                       }}
                     >
-                      <span>{isTa ? 'வரைபடத்தில் பார்க்க ↗' : 'View on Google Maps ↗'}</span>
+                      <LocationIcon size={13} color="#c8a96e" />
+                      <span>{isTa ? 'கூகிள் வரைபடத்தில் அமைவிடம் ↗' : 'View on Google Maps ↗'}</span>
                     </a>
                   </div>
                 </div>
@@ -288,6 +384,95 @@ export default function DiocesePage() {
         </div>
 
       </div>
+
+      {/* Bishop Photo Lightbox Modal */}
+      {activeModalBishop && (
+        <div
+          onClick={() => setActiveModalBishop(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.88)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#161616',
+              border: '2px solid #c8a96e',
+              borderRadius: '12px',
+              padding: '24px',
+              maxWidth: '460px',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(200, 169, 110, 0.3)',
+              position: 'relative'
+            }}
+          >
+            <button
+              onClick={() => setActiveModalBishop(null)}
+              aria-label="Close"
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                color: '#ffffff',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                fontSize: '18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+
+            <div style={{
+              width: '240px',
+              height: '280px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              border: '2px solid rgba(200, 169, 110, 0.5)',
+              marginBottom: '16px',
+              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.7)'
+            }}>
+              <img
+                src={activeModalBishop.image}
+                alt={isTa ? activeModalBishop.pastorNameTa : activeModalBishop.pastorName}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+              />
+            </div>
+
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#ffffff', margin: '0 0 4px 0', textAlign: 'center', fontFamily: 'var(--font-serif)' }}>
+              {isTa ? (activeModalBishop.pastorNameTa || activeModalBishop.pastorName) : activeModalBishop.pastorName}
+            </h3>
+            <p style={{ fontSize: '13px', color: '#c8a96e', margin: '0 0 8px 0', fontWeight: 500, textAlign: 'center' }}>
+              {isTa ? activeModalBishop.pastorDesignationTa : activeModalBishop.pastorDesignation}
+            </p>
+            <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.65)', margin: 0, textAlign: 'center' }}>
+              {isTa ? activeModalBishop.nameTa : activeModalBishop.nameEn} • {isTa ? activeModalBishop.headquartersTa : activeModalBishop.headquarters}
+            </p>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
+
