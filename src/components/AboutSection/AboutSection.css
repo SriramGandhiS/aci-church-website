@@ -187,38 +187,61 @@
 
 @media (max-width: 768px) {
   .trustees-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
   
   .trustee-photo-wrap {
     aspect-ratio: 3 / 4;
-    min-height: 290px;
+    min-height: 440px;
+  }
+  
+  .trustee-photo {
+    object-position: center top !important;
   }
   
   .trustee-info {
-    padding: 14px 16px 18px;
+    padding: 18px 20px 22px;
   }
   
   .trustee-name {
-    font-size: 14.5px;
+    font-size: 16.5px;
   }
   
   .trustee-role {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
   .trustees-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 24px;
   }
 
   .trustee-photo-wrap {
     aspect-ratio: 3 / 4;
-    min-height: 380px;
+    min-height: 460px;
+  }
+
+  .trustee-photo {
+    object-position: center top !important;
+  }
+
+  .trustee-sno-badge {
+    top: 14px;
+    left: 14px;
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .trustee-role-tag {
+    top: 14px;
+    right: 14px;
+    font-size: 11px;
+    padding: 4px 10px;
   }
 }
+
 
 

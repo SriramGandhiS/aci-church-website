@@ -115,7 +115,7 @@ const trusteesData = [
     roleEn: 'Archbishop / Chairman & Managing Trustee',
     roleTa: 'தலைமைப் பேராயர் / தலைவர் & நிர்வாக அறங்காவலர்',
     image: '/trustees/trustee-1-johnson-durai.jpg',
-    imagePosition: 'center 2%',
+    imagePosition: 'center top',
   },
   {
     sno: 2,
@@ -124,7 +124,7 @@ const trusteesData = [
     roleEn: 'Vice Chairman & Trustee',
     roleTa: 'துணைத் தலைவர் & அறங்காவலர்',
     image: '/trustees/trustee-2-john-durai.jpg',
-    imagePosition: 'center 10%',
+    imagePosition: 'center top',
   },
   {
     sno: 3,
@@ -133,7 +133,7 @@ const trusteesData = [
     roleEn: 'General Secretary & Trustee',
     roleTa: 'பொதுச் செயலாளர் & அறங்காவலர்',
     image: '/trustees/trustee-3-jad-samuel.jpg',
-    imagePosition: 'center 10%',
+    imagePosition: 'center top',
   },
   {
     sno: 4,
@@ -142,7 +142,7 @@ const trusteesData = [
     roleEn: 'Bishop & Financial Trustee',
     roleTa: 'பேராயர் & நிதி அறங்காவலர்',
     image: '/trustees/trustee-4-suresh-daniel.jpg',
-    imagePosition: 'center 3%',
+    imagePosition: 'center top',
   },
   {
     sno: 5,
@@ -151,7 +151,7 @@ const trusteesData = [
     roleEn: 'Archbishop Commissary & Trustee',
     roleTa: 'பேராயர் ஆணையாளர் & அறங்காவலர்',
     image: '/trustees/trustee-5-john-samuel.jpg',
-    imagePosition: 'center 3%',
+    imagePosition: 'center top',
   },
   {
     sno: 6,
@@ -160,7 +160,7 @@ const trusteesData = [
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
     image: '/trustees/trustee-6-s-anand.jpg',
-    imagePosition: 'center 4%',
+    imagePosition: 'center top',
   },
   {
     sno: 7,
@@ -169,7 +169,7 @@ const trusteesData = [
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
     image: '/trustees/trustee-7-a-pounraj.jpg',
-    imagePosition: 'center 3%',
+    imagePosition: 'center top',
   },
   {
     sno: 8,
@@ -178,7 +178,7 @@ const trusteesData = [
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
     image: '/trustees/trustee-8-edwin-joseph.jpg',
-    imagePosition: 'center 3%',
+    imagePosition: 'center top',
   },
   {
     sno: 9,
@@ -187,7 +187,7 @@ const trusteesData = [
     roleEn: 'Trustee',
     roleTa: 'அறங்காவலர்',
     image: '/trustees/trustee-9-isaac-timothy.jpg',
-    imagePosition: 'center 8%',
+    imagePosition: 'center top',
   },
   {
     sno: 10,
@@ -196,7 +196,7 @@ const trusteesData = [
     roleEn: 'Trustee',
     roleTa: 'அறங்காவலர்',
     image: '/trustees/trustee-10-xavier-paulraj.jpg',
-    imagePosition: 'center 10%',
+    imagePosition: 'center top',
   },
 ]
 
