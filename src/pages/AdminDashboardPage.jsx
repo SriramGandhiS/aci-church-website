@@ -89,7 +89,7 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="admin-user-ctrl">
-          <span className="admin-user-email">Admin: <strong>{user.email}</strong></span>
+          <span className="admin-user-email">Admin: <strong>{user?.email || 'Administrator'}</strong></span>
           <button type="button" className="admin-logout-btn" onClick={logout}>
             {isTa ? 'வெளியேறு' : 'Sign Out'}
           </button>

@@ -368,7 +368,8 @@ export default function AdminApplicationDetailPage() {
     setActionLoading(true)
     setActionError('')
     try {
-      const res = await api.adminUpdateStatus(user.email, id, newStatus, reason)
+      const adminEmail = user?.email || 'iamramm8@gmail.com'
+      const res = await api.adminUpdateStatus(adminEmail, id, newStatus, reason)
       if (res && res.success) {
         setShowAcceptModal(false)
         setShowRejectModal(false)

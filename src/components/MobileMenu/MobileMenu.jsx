@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAuth } from '../../context/AuthContext'
 import './MobileMenu.css'
 
 export default function MobileMenu({ isOpen, onClose }) {
   const { lang, setLang, t } = useLanguage()
+  const { user, isAdmin, openAuthModal, logout } = useAuth()
   const [openSubmenu, setOpenSubmenu] = useState(null)
   const location = useLocation()
   const prevPathnameRef = useRef(location.pathname)
@@ -155,7 +157,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         </Link>
 
         {/* Mobile Language Switcher */}
-        <div className="header-lang-wrapper mm-lang-wrapper" style={{ marginLeft: 'auto', marginRight: '10px' }}>
+        <div className="mm-lang-wrapper" style={{ marginLeft: 'auto', marginRight: '10px' }}>
           <div className="lang-converter-pill" role="group" aria-label="Language Selector">
             <span className="lang-globe-icon" aria-hidden="true">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -256,6 +258,47 @@ export default function MobileMenu({ isOpen, onClose }) {
             </li>
           ))}
         </ul>
+
+        {/* Member Portal / Sign In CTA in Mobile Menu */}
+        <div style={{ padding: '16px 20px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          {user ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <Link
+                to="/get-involved/status"
+                onClick={onClose}
+                className="btn btn-primary"
+                style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
+              >
+                {lang === 'ta' ? 'விண்ணப்ப நிலை / பயனர் பக்கம்' : 'My Application & Portal'}
+              </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/applications"
+                  onClick={onClose}
+                  style={{ width: '100%', textAlign: 'center', background: '#991b1b', color: '#fff', padding: '8px 12px', borderRadius: '4px', fontSize: '12.5px', fontWeight: 700, textDecoration: 'none' }}
+                >
+                  {lang === 'ta' ? 'நிர்வாகக் குழு (ADMIN DASHBOARD)' : 'ADMIN DASHBOARD'}
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => { logout(); onClose(); }}
+                style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '12px', cursor: 'pointer', paddingTop: '4px' }}
+              >
+                {lang === 'ta' ? 'வெளியேறு (Sign Out)' : 'Sign Out'}
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => { onClose(); openAuthModal(); }}
+              className="btn btn-primary"
+              style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
+            >
+              {lang === 'ta' ? 'உள்நுழைக / உறுப்பினர் பக்கம்' : 'Sign In to Portal'}
+            </button>
+          )}
+        </div>
       </nav>
 
       <div className="mm-footer">

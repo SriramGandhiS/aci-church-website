@@ -458,13 +458,31 @@ html[lang="ta"] .lang-btn {
   .header-lang-wrapper { border-left: none; border-right: none; padding: 0; margin: 0; }
 }
 
-@media (max-width: 640px) {
-  .site-header { height: 66px; }
-  .logo-tagline { font-size: 11px; }
-  .logo-img { height: 36px; padding: 2px 4px; }
+@media (max-width: 768px) {
+  /* On mobile screens, hide desktop lang widget and auth pill from top bar
+     (both are cleanly available inside the mobile menu drawer) */
+  .header-lang-wrapper { display: none !important; }
+  .header-auth-group { display: none !important; }
+  
+  .site-header { height: 64px; }
+  .header-inner { padding: 0 12px; gap: 6px; }
+  .logo-img { height: 38px; padding: 2px; }
+  .logo-name { font-size: 13.5px; }
+  .logo-tagline { font-size: 10.5px; }
+  
+  .header-actions-group { gap: 6px; }
+  .icon-btn, .hamburger { 
+    width: 36px; 
+    height: 36px; 
+    display: flex !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header { height: 60px; }
+  .logo-tagline { display: none; }
   .logo-name { font-size: 13px; }
-  .lang-btn { padding: 2px 6px; font-size: 10px; }
-  .icon-btn, .hamburger { width: 32px; height: 32px; }
-  .header-controls { gap: 4px; }
-  .header-inner { padding: 0 10px; }
+  .logo-img { height: 34px; }
+  .icon-btn, .hamburger { width: 34px; height: 34px; }
+  .header-inner { padding: 0 8px; }
 }
