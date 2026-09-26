@@ -185,6 +185,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. B. Simson',
       role: isTa ? 'பேராயர் ஏசிஐ திருப்பத்தூர் பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Tirupattur Diocese & Synod Member',
       excelDesignation: 'Bishop & Synod Member',
+      image: '/dioceses/bishop-1.jpg',
     },
     {
       sno: 10,
@@ -192,6 +193,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. A. Chinnappadoss',
       role: isTa ? 'பேராயர் ஏசிஐ விருதுநகர் பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Virudhunagar Diocese & Synod Member',
       excelDesignation: 'Bishop & Synod Member',
+      image: '/dioceses/bishop-6.jpg',
     },
     {
       sno: 11,
@@ -199,6 +201,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. J. Sujin',
       role: isTa ? 'பேராயர் ஏசிஐ கன்னியாகுமரி பேராயம் & சினோட் உறுப்பினர்' : 'Bishop ACI Kanniyakumari Diocese & Synod Member',
       excelDesignation: 'Bishop & Synod Member',
+      image: '/dioceses/bishop-7.jpg',
     },
     {
       sno: 12,
@@ -222,6 +225,7 @@ export default function SynodPage() {
       name: 'Rev. R. Gnana Inbavanan',
       role: isTa ? 'D.O.S & சினோட் உறுப்பினர்' : 'D.O.S & Synod Member',
       excelDesignation: 'D.O.S & Synod Member',
+      image: '/aci-logo.png',
     },
     {
       sno: 15,
@@ -229,6 +233,7 @@ export default function SynodPage() {
       name: 'Rev. Sathees Kumar',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
+      image: '/aci-logo.png',
     },
     {
       sno: 16,
@@ -236,6 +241,7 @@ export default function SynodPage() {
       name: 'Rev. J. Joseph',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
+      image: '/aci-logo.png',
     },
     {
       sno: 17,
@@ -243,6 +249,7 @@ export default function SynodPage() {
       name: 'Rev. J. Shyam Raj',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
+      image: '/aci-logo.png',
     },
     {
       sno: 18,
@@ -250,6 +257,7 @@ export default function SynodPage() {
       name: 'Rev. S. Moses Prawin paul',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
+      image: '/aci-logo.png',
     },
     {
       sno: 19,
@@ -257,6 +265,7 @@ export default function SynodPage() {
       name: 'Rev. M. Rajendran',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
+      image: '/aci-logo.png',
     },
   ]
 
@@ -266,7 +275,7 @@ export default function SynodPage() {
     return {
       ...fromExcel,
       sno: member.sno,
-      image: member.image || '',
+      image: member.image || fromExcel.image || '/aci-logo.png',
       regNo: member.regNo || fromExcel.regNo || '',
       name: member.name || fromExcel.name || '',
       role: member.role || '',
@@ -501,31 +510,31 @@ export default function SynodPage() {
 
             {/* Member Hero / Top Banner */}
             <div className="synod-modal-hero">
-              {selectedMember.image && (
-                <div style={{ marginBottom: '14px', display: 'flex', justifyContent: 'center' }}>
+              <div className="synod-modal-hero-content">
+                <div className="synod-modal-hero-text">
+                  <h2 className="synod-hero-name">{selectedMember.name}</h2>
+                  <p className="synod-hero-role">{selectedMember.designation}</p>
+                  <div className="synod-hero-badges">
+                    {selectedMember.regNo && (
+                      <span className="synod-pill synod-pill-gold">Reg: {selectedMember.regNo}</span>
+                    )}
+                    {selectedMember.status && (
+                      <span className="synod-pill synod-pill-green">{selectedMember.status}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="synod-modal-hero-photo-wrap">
                   <img
-                    src={selectedMember.image}
+                    src={selectedMember.image || '/aci-logo.png'}
                     alt={selectedMember.name}
-                    style={{
-                      width: '90px',
-                      height: '90px',
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                      border: '3px solid #c8a96e',
-                      boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
+                    className="synod-modal-hero-photo"
+                    onError={(e) => {
+                      e.target.onerror = null
+                      e.target.src = '/aci-logo.png'
                     }}
                   />
                 </div>
-              )}
-              <h2 className="synod-hero-name">{selectedMember.name}</h2>
-              <p className="synod-hero-role">{selectedMember.designation}</p>
-              <div className="synod-hero-badges">
-                {selectedMember.regNo && (
-                  <span className="synod-pill synod-pill-gold">Reg: {selectedMember.regNo}</span>
-                )}
-                {selectedMember.status && (
-                  <span className="synod-pill synod-pill-green">{selectedMember.status}</span>
-                )}
               </div>
             </div>
 
