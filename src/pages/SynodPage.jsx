@@ -129,6 +129,10 @@ export default function SynodPage() {
       role: isTa ? 'சினோட் பொதுச் செயலாளர் & அறங்காவலர்' : 'General Secretary / Synod Member & Trustee',
       excelDesignation: 'General Secretary / Synod Member',
       image: '/trustees/trustee-3-jad-samuel.jpg',
+      ministry: 'VBS Ministries',
+      church: 'VBS Ministries',
+      district: 'Bangalore',
+      state: 'Karnataka',
     },
     {
       sno: 4,
@@ -268,7 +272,8 @@ export default function SynodPage() {
       role: member.role || '',
       designation: member.excelDesignation || fromExcel.designation || member.role || 'Synod Member',
       office: member.office || fromExcel.office || 'Pastor',
-      church: member.church || fromExcel.church || '',
+      ministry: member.ministry || member.church || fromExcel.church || '',
+      church: member.church || member.ministry || fromExcel.church || '',
       dob: member.dob || fromExcel.dob || '',
       ordinationDate: member.ordinationDate || fromExcel.ordinationDate || '',
       phone: member.phone || fromExcel.phone || '',
@@ -284,6 +289,7 @@ export default function SynodPage() {
     <div style={S.memberGrid}>
       {list.map((m, i) => {
         const fullData = getMemberData(m)
+        const ministryText = fullData.ministry || fullData.church
         return (
           <div
             key={i}
@@ -302,9 +308,9 @@ export default function SynodPage() {
             {/* Designation Directly Below the Name */}
             <p style={S.memberDesignation}>{fullData.role}</p>
 
-            {fullData.church && (
+            {ministryText && (
               <div style={S.memberDetail}>
-                <span style={S.detailLabel}>{isTa ? 'சபை / ஊழியம்:' : 'Church:'}</span> {fullData.church}
+                <span style={S.detailLabel}>{isTa ? 'ஊழியம்:' : 'Ministry:'}</span> {ministryText}
               </div>
             )}
             {fullData.district && (
@@ -536,15 +542,15 @@ export default function SynodPage() {
                 </div>
               )}
 
-              {/* 2. Church */}
-              {selectedMember.church && (
+              {/* 2. Ministry */}
+              {(selectedMember.ministry || selectedMember.church) && (
                 <div className="synod-detail-row">
                   <div className="synod-icon-box">
                     <ChurchIcon size={18} color="#c8a96e" />
                   </div>
                   <div className="synod-detail-content">
-                    <div className="synod-detail-label">Church</div>
-                    <div className="synod-detail-val">{selectedMember.church}</div>
+                    <div className="synod-detail-label">{isTa ? 'ஊழியம்' : 'Ministry'}</div>
+                    <div className="synod-detail-val">{selectedMember.ministry || selectedMember.church}</div>
                   </div>
                 </div>
               )}

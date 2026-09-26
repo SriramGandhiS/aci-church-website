@@ -28,7 +28,7 @@ const synodMembersList = [
     name: 'Rev. J.A.D. Samuel',
     role: 'Trustee & Evangelist',
     email: 'jadsamuel@gmail.com',
-    ministry: 'Petra Service Mission',
+    ministry: 'VBS Ministries',
     exp: '19 Years',
     ordained: '11/06/2015',
   },
