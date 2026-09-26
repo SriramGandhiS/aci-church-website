@@ -112,6 +112,7 @@ export default function SynodPage() {
       name: 'The Most Rev. S. Johnson Durai',
       role: isTa ? 'தலைமைப் பேராயர் & தலைவர் & நிர்வாக அறங்காவலர்' : 'Archbishop & Chairman & Managing Trustee',
       excelDesignation: 'Bishop & Chairman / Synod Member',
+      image: '/trustees/trustee-1-johnson-durai.jpg',
     },
     {
       sno: 2,
@@ -119,6 +120,7 @@ export default function SynodPage() {
       name: 'Rev. Dr. R. John Durai',
       role: isTa ? 'சினோட் துணைத் தலைவர் & அறங்காவலர்' : 'Vice Chairman / Synod Member & Trustee',
       excelDesignation: 'Vice Chairman / Synod Member',
+      image: '/trustees/trustee-2-john-durai.jpg',
     },
     {
       sno: 3,
@@ -126,6 +128,7 @@ export default function SynodPage() {
       name: 'Rev. J.A.D. Samuel',
       role: isTa ? 'சினோட் பொதுச் செயலாளர் & அறங்காவலர்' : 'General Secretary / Synod Member & Trustee',
       excelDesignation: 'General Secretary / Synod Member',
+      image: '/trustees/trustee-3-jad-samuel.jpg',
     },
     {
       sno: 4,
@@ -133,6 +136,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. Dr. L. Suresh Daniel',
       role: isTa ? 'பேராயர் & நிதி அறங்காவலர் & சினோட் உறுப்பினர்' : 'Bishop & Financial Trustee / Synod Member',
       excelDesignation: 'Bishop & Finance Trustee / Synod Member',
+      image: '/trustees/trustee-4-suresh-daniel.jpg',
     },
     {
       sno: 5,
@@ -140,6 +144,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. John Samuel',
       role: isTa ? 'பேராயர் ஆணையாளர் & அறங்காவலர்' : 'Archbishop Commissary / Trustee',
       excelDesignation: 'Archbishop Commissary / Trustee',
+      image: '/trustees/trustee-5-john-samuel.jpg',
     },
   ]
 
@@ -152,6 +157,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. S. Anand',
       role: isTa ? 'பேராயர் ஏசிஐ செங்கல்பட்டு பேராயம் & சினோட் செயலாளர்' : 'Bishop ACI Chengalpattu Diocese & Synod Secretary',
       excelDesignation: 'Bishop & Synod Secretary / Synod Member',
+      image: '/trustees/trustee-6-s-anand.jpg',
     },
     {
       sno: 7,
@@ -159,6 +165,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. A. Pounraj',
       role: isTa ? 'பேராயர் ஏசிஐ விழுப்புரம் பேராயம் & சினோட் அறங்காவலர்' : 'Bishop ACI Villupuram Diocese & Synod Trustee',
       excelDesignation: 'Bishop & Trustee / Synod Member',
+      image: '/trustees/trustee-7-a-pounraj.jpg',
     },
     {
       sno: 8,
@@ -166,6 +173,7 @@ export default function SynodPage() {
       name: 'Rt. Rev. G. Edwin Joseph Selvaraj',
       role: isTa ? 'பேராயர் ஏசிஐ திருச்சி பேராயம் & சினோட் அறங்காவலர்' : 'Bishop ACI Trichy Diocese & Synod Trustee',
       excelDesignation: 'Bishop & Trustee & Synod Member',
+      image: '/trustees/trustee-8-edwin-joseph.jpg',
     },
     {
       sno: 9,
@@ -194,6 +202,7 @@ export default function SynodPage() {
       name: 'Rev. D. V. Isaac Timothy',
       role: isTa ? 'அறங்காவலர் & D.O.S & சினோட் உறுப்பினர்' : 'Trustee & D.O.S & Synod Member',
       excelDesignation: 'Trustee / D.O.S / Synod Member',
+      image: '/trustees/trustee-9-isaac-timothy.jpg',
     },
     {
       sno: 13,
@@ -201,6 +210,7 @@ export default function SynodPage() {
       name: 'Rev. J. Xavier Paulraj',
       role: isTa ? 'சினோட் அறங்காவலர் & சினோட் உறுப்பினர்' : 'Trustee & Synod Member',
       excelDesignation: 'Trustee & Synod Member',
+      image: '/trustees/trustee-10-xavier-paulraj.jpg',
     },
     {
       sno: 14,
@@ -252,6 +262,7 @@ export default function SynodPage() {
     return {
       ...fromExcel,
       sno: member.sno,
+      image: member.image || '',
       regNo: member.regNo || fromExcel.regNo || '',
       name: member.name || fromExcel.name || '',
       role: member.role || '',
@@ -484,6 +495,22 @@ export default function SynodPage() {
 
             {/* Member Hero / Top Banner */}
             <div className="synod-modal-hero">
+              {selectedMember.image && (
+                <div style={{ marginBottom: '14px', display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    src={selectedMember.image}
+                    alt={selectedMember.name}
+                    style={{
+                      width: '90px',
+                      height: '90px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      border: '3px solid #c8a96e',
+                      boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
+                    }}
+                  />
+                </div>
+              )}
               <h2 className="synod-hero-name">{selectedMember.name}</h2>
               <p className="synod-hero-role">{selectedMember.designation}</p>
               <div className="synod-hero-badges">

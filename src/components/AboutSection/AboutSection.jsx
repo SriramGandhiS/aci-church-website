@@ -114,6 +114,8 @@ const trusteesData = [
     nameTa: 'பேராயர் பேரருட்திரு ச. ஜான்சன் துரை',
     roleEn: 'Archbishop / Chairman & Managing Trustee',
     roleTa: 'தலைமைப் பேராயர் / தலைவர் & நிர்வாக அறங்காவலர்',
+    image: '/trustees/trustee-1-johnson-durai.jpg',
+    imagePosition: 'center 10%',
   },
   {
     sno: 2,
@@ -121,6 +123,8 @@ const trusteesData = [
     nameTa: 'அருட்திரு முனைவர் R. ஜான் துரை',
     roleEn: 'Vice Chairman & Trustee',
     roleTa: 'துணைத் தலைவர் & அறங்காவலர்',
+    image: '/trustees/trustee-2-john-durai.jpg',
+    imagePosition: 'center 15%',
   },
   {
     sno: 3,
@@ -128,6 +132,8 @@ const trusteesData = [
     nameTa: 'அருட்திரு J.A.D. சாமுவேல்',
     roleEn: 'General Secretary & Trustee',
     roleTa: 'பொதுச் செயலாளர் & அறங்காவலர்',
+    image: '/trustees/trustee-3-jad-samuel.jpg',
+    imagePosition: 'center 15%',
   },
   {
     sno: 4,
@@ -135,6 +141,8 @@ const trusteesData = [
     nameTa: 'பேரருட்திரு முனைவர் L. சுரேஷ் டேனியல்',
     roleEn: 'Bishop & Financial Trustee',
     roleTa: 'பேராயர் & நிதி அறங்காவலர்',
+    image: '/trustees/trustee-4-suresh-daniel.jpg',
+    imagePosition: 'center 30%',
   },
   {
     sno: 5,
@@ -142,6 +150,8 @@ const trusteesData = [
     nameTa: 'பேரருட்திரு ஜான் சாமுவேல்',
     roleEn: 'Archbishop Commissary & Trustee',
     roleTa: 'பேராயர் ஆணையாளர் & அறங்காவலர்',
+    image: '/trustees/trustee-5-john-samuel.jpg',
+    imagePosition: 'center 10%',
   },
   {
     sno: 6,
@@ -149,6 +159,8 @@ const trusteesData = [
     nameTa: 'பேரருட்திரு S. ஆனந்த்',
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
+    image: '/trustees/trustee-6-s-anand.jpg',
+    imagePosition: 'center 30%',
   },
   {
     sno: 7,
@@ -156,6 +168,8 @@ const trusteesData = [
     nameTa: 'பேரருட்திரு A. பவுன்ராஜ்',
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
+    image: '/trustees/trustee-7-a-pounraj.jpg',
+    imagePosition: 'center 30%',
   },
   {
     sno: 8,
@@ -163,6 +177,8 @@ const trusteesData = [
     nameTa: 'பேரருட்திரு G. எட்வின் ஜோசப் செல்வராஜ்',
     roleEn: 'Bishop & Trustee',
     roleTa: 'பேராயர் & அறங்காவலர்',
+    image: '/trustees/trustee-8-edwin-joseph.jpg',
+    imagePosition: 'center 30%',
   },
   {
     sno: 9,
@@ -170,6 +186,8 @@ const trusteesData = [
     nameTa: 'அருட்திரு D. V. ஐசக் திமோதி',
     roleEn: 'Trustee',
     roleTa: 'அறங்காவலர்',
+    image: '/trustees/trustee-9-isaac-timothy.jpg',
+    imagePosition: 'center 15%',
   },
   {
     sno: 10,
@@ -177,6 +195,8 @@ const trusteesData = [
     nameTa: 'அருட்திரு J. சேவியர் பால்ராஜ்',
     roleEn: 'Trustee',
     roleTa: 'அறங்காவலர்',
+    image: '/trustees/trustee-10-xavier-paulraj.jpg',
+    imagePosition: 'center 15%',
   },
 ]
 
@@ -426,67 +446,33 @@ export default function AboutSection() {
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '18px',
-          }}>
+          <div className="trustees-grid">
             {trusteesData.map((member) => (
-              <div
-                key={member.sno}
-                style={{
-                  background: 'var(--color-white)',
-                  border: '1px solid var(--color-divider-light)',
-                  borderLeft: '4px solid #111111',
-                  borderRadius: '4px',
-                  padding: '20px 22px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    background: 'var(--color-soft-gray)',
-                    color: 'var(--color-text-dark)',
-                    fontSize: '12px',
-                    fontWeight: 700,
-                  }}>
-                    {member.sno}
-                  </span>
-                  <span style={{
-                    fontSize: '11px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: '#c8a96e',
-                    fontWeight: 700,
-                  }}>
+              <div key={member.sno} className="trustee-card">
+                <div className="trustee-photo-wrap">
+                  <img
+                    src={member.image}
+                    alt={member.nameEn}
+                    className="trustee-photo"
+                    style={{ objectPosition: member.imagePosition || 'center top' }}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null
+                      e.target.src = '/archbishop_new.jpg'
+                    }}
+                  />
+                  <div className="trustee-sno-badge">
+                    #{String(member.sno).padStart(2, '0')}
+                  </div>
+                  <div className="trustee-role-tag">
                     {isTa ? 'அறங்காவலர்' : 'Trustee'}
-                  </span>
+                  </div>
                 </div>
-                <div>
-                  <h4 style={{
-                    fontSize: '16px',
-                    fontWeight: 700,
-                    color: 'var(--color-text-dark)',
-                    marginBottom: '6px',
-                    lineHeight: '1.4',
-                  }}>
+                <div className="trustee-info">
+                  <h4 className="trustee-name">
                     {isTa ? member.nameTa : member.nameEn}
                   </h4>
-                  <p style={{
-                    fontSize: '13px',
-                    color: 'var(--color-text-mid)',
-                    fontWeight: 500,
-                    lineHeight: '1.5',
-                  }}>
+                  <p className="trustee-role">
                     {isTa ? member.roleTa : member.roleEn}
                   </p>
                 </div>
