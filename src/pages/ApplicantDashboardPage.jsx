@@ -134,10 +134,10 @@ export default function ApplicantDashboardPage() {
                   <span>{isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected'}</span>
                 </div>
               )}
-              {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW') && (
+              {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' || application.status === 'ATTESTED_BY_REFEREE') && (
                 <div className="status-pill-lg pending">
                   <UserCheckIcon size={20} />
-                  <span>{isTa ? 'பரிசீலனையில் உள்ளது' : 'Under Committee Review'}</span>
+                  <span>{application.status === 'ATTESTED_BY_REFEREE' ? (isTa ? 'பரிந்துரைக்கப்பட்டது' : 'Referees Attested') : (isTa ? 'பரிசீலனையில் உள்ளது' : 'Under Review')}</span>
                 </div>
               )}
               {application.status === 'DRAFT' && (
@@ -148,6 +148,101 @@ export default function ApplicantDashboardPage() {
               )}
             </div>
           </div>
+
+          {/* Referee Attestation Sharing Block */}
+          {application.status !== 'DRAFT' && (
+            <div style={{ background: '#1e293b', border: '1.5px solid #3b82f6', borderRadius: '12px', padding: '16px 20px', color: '#ffffff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '8px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '18px' }}>📲</span>
+                  <h3 style={{ fontSize: '14.5px', fontWeight: 800, margin: 0, color: '#93c5fd' }}>
+                    {isTa ? 'பேராய பரிந்துரையாளர் உறுதிப்படுத்தல் (Referee Attestations)' : 'Referee Endorsements & WhatsApp Links'}
+                  </h3>
+                </div>
+                <span style={{ fontSize: '11px', background: '#2563eb', padding: '2px 8px', borderRadius: '10px', fontWeight: 700 }}>
+                  {isTa ? 'உறுதிப்படுத்துக' : '1-CLICK WHATSAPP'}
+                </span>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+                {/* Ref 1: DOS */}
+                <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <strong style={{ fontSize: '12.5px', color: '#f8fafc' }}>
+                        {application.data?.references?.ref1?.name || 'Rev. R. John Durai'}
+                      </strong>
+                      <div style={{ fontSize: '10.5px', color: '#94a3b8' }}>
+                        {isTa ? 'மாவட்ட மேற்பார்வையாளர் (DOS)' : 'District Overseer (Ref 1)'}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '10px', background: 'rgba(234, 179, 8, 0.2)', color: '#facc15', border: '1px solid rgba(234, 179, 8, 0.4)', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
+                      {application.data?.references?.ref1?.status === 'ATTESTED' ? '✅ ATTESTED' : '⏳ PENDING'}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '6px', marginTop: '2px' }}>
+                    <a
+                      href={`https://wa.me/?text=${encodeURIComponent(`Dear ${application.data?.references?.ref1?.name || 'District Overseer'},\n\nI have submitted my ACI Diocesan Membership Application (ID: ${application.applicationId}) and listed you as my District Overseer reference.\n\nPlease verify and attest my application by tapping this official link:\n${window.location.origin}/attest?appId=${application.applicationId}&ref=ref1`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', background: '#16a34a', color: '#ffffff', padding: '6px 8px', borderRadius: '6px', textDecoration: 'none', fontSize: '11px', fontWeight: 700 }}
+                    >
+                      <span>🟢 WhatsApp</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/attest?appId=${application.applicationId}&ref=ref1`)
+                        alert('District Overseer link copied!')
+                      }}
+                      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '6px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                      📋 Copy
+                    </button>
+                  </div>
+                </div>
+
+                {/* Ref 2: Taluk */}
+                <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <strong style={{ fontSize: '12.5px', color: '#f8fafc' }}>
+                        {application.data?.references?.ref2?.name || 'Rev. D. Antony Raj'}
+                      </strong>
+                      <div style={{ fontSize: '10.5px', color: '#94a3b8' }}>
+                        {isTa ? 'தாலுகா ஒருங்கிணைப்பாளர்' : 'Taluk Co-ordinator (Ref 2)'}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '10px', background: 'rgba(234, 179, 8, 0.2)', color: '#facc15', border: '1px solid rgba(234, 179, 8, 0.4)', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
+                      {application.data?.references?.ref2?.status === 'ATTESTED' ? '✅ ATTESTED' : '⏳ PENDING'}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '6px', marginTop: '2px' }}>
+                    <a
+                      href={`https://wa.me/?text=${encodeURIComponent(`Dear ${application.data?.references?.ref2?.name || 'Taluk Co-ordinator'},\n\nI have submitted my ACI Diocesan Membership Application (ID: ${application.applicationId}) and listed you as my Taluk Co-ordinator reference.\n\nPlease verify and attest my application by tapping this official link:\n${window.location.origin}/attest?appId=${application.applicationId}&ref=ref2`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', background: '#16a34a', color: '#ffffff', padding: '6px 8px', borderRadius: '6px', textDecoration: 'none', fontSize: '11px', fontWeight: 700 }}
+                    >
+                      <span>🟢 WhatsApp</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/attest?appId=${application.applicationId}&ref=ref2`)
+                        alert('Taluk Co-ordinator link copied!')
+                      }}
+                      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', padding: '6px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                      📋 Copy
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Rejection Notice Banner */}
           {application.status === 'REJECTED' && application.rejectionReason && (
@@ -169,14 +264,14 @@ export default function ApplicantDashboardPage() {
           <div className="app-dash-actions-grid">
             <div className="app-dash-action-card">
               <h3>{isTa ? 'அதிகாரப்பூர்வ விண்ணப்பப் படிவம்' : 'Official Application Form'}</h3>
-              <p>{isTa ? 'உங்கள் 2-பக்க அதிகாரப்பூர்வ விண்ணப்பத்தை பார்வையிடவும் மற்றும் அச்சிடவும்.' : 'View and print your complete 2-page digital membership form.'}</p>
+              <p>{isTa ? 'உங்கள் 4-பக்க அதிகாரப்பூர்வ விண்ணப்பத்தை பார்வையிடவும் மற்றும் அச்சிடவும்.' : 'View and print your complete 4-page digital membership form.'}</p>
               <button
                 type="button"
                 className="app-dash-btn-view-pdf"
                 onClick={() => setViewingForm(true)}
               >
                 <PrintIcon size={16} />
-                <span>{isTa ? 'படிவத்தை காண்க / அச்சிடு' : 'View / Print Official Form'}</span>
+                <span>{isTa ? 'படிவத்தை காண்க / அச்சிடு' : 'View / Print Official 4-Page Form'}</span>
               </button>
             </div>
 

@@ -22,6 +22,7 @@ import ApplicationPage from './pages/ApplicationPage'
 import ApplicantDashboardPage from './pages/ApplicantDashboardPage'
 import AdminDashboardPage from './pages/AdminDashboardPage'
 import AdminApplicationDetailPage from './pages/AdminApplicationDetailPage'
+import AttestApplicationPage from './pages/AttestApplicationPage'
 import AlbumPage from './components/AlbumPage/AlbumPage'
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
               <Route path="/get-involved" element={<GetInvolvedPage />} />
               <Route path="/get-involved/application" element={<ApplicationPage />} />
               <Route path="/get-involved/status" element={<ApplicantDashboardPage />} />
+              <Route path="/attest" element={<AttestApplicationPage />} />
               <Route path="/admin/applications" element={<AdminDashboardPage />} />
               <Route path="/admin/application/:id" element={<AdminApplicationDetailPage />} />
               <Route path="/media" element={<MediaPage />} />
