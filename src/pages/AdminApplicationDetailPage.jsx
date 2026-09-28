@@ -10,7 +10,10 @@ import {
   AlertCircleIcon,
   DocumentIcon,
   PrintIcon,
-  UserCheckIcon
+  UserCheckIcon,
+  ShieldIcon,
+  ClockIcon,
+  PhoneIcon
 } from '../components/Icons/SvgIcons'
 import './AdminApplicationDetailPage.css'
 
@@ -479,81 +482,6 @@ export default function AdminApplicationDetailPage() {
             <span className="stat-val">
               {application?.submittedAt ? new Date(application.submittedAt).toLocaleDateString() : '27/08/2026'}
             </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Referee Endorsement Audit Card */}
-      <div style={{ background: '#1e293b', border: '1.5px solid #3b82f6', borderRadius: '10px', padding: '16px 20px', margin: '0 0 16px 0', color: '#ffffff' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '8px', marginBottom: '12px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '18px' }}>🛡️</span>
-            <h3 style={{ fontSize: '14.5px', fontWeight: 800, margin: 0, color: '#93c5fd' }}>
-              Diocesan Referee Endorsements & Digital Signatures (Section X Audit)
-            </h3>
-          </div>
-          <span style={{ fontSize: '11px', background: application?.references?.ref1?.status === 'ATTESTED' && application?.references?.ref2?.status === 'ATTESTED' ? '#16a34a' : '#d97706', padding: '3px 10px', borderRadius: '12px', fontWeight: 700 }}>
-            {application?.references?.ref1?.status === 'ATTESTED' && application?.references?.ref2?.status === 'ATTESTED' ? '✅ 2/2 REFEREES ATTESTED' : '⏳ ATTESTATION IN PROGRESS'}
-          </span>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '12px' }}>
-          {/* Ref 1: District Overseer */}
-          <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <strong style={{ fontSize: '13px', color: '#f8fafc' }}>
-                  {application?.references?.ref1?.name || 'Rev. R. John Durai'}
-                </strong>
-                <div style={{ fontSize: '11px', color: '#94a3b8' }}>
-                  District Overseer • ID: <strong style={{ color: '#c8a96e' }}>{application?.references?.ref1?.dioceseId || 'TN 0005'}</strong>
-                </div>
-              </div>
-              <span style={{ fontSize: '10.5px', background: 'rgba(34, 197, 94, 0.15)', color: '#4ade80', border: '1px solid rgba(34, 197, 94, 0.3)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                {application?.references?.ref1?.status === 'ATTESTED' ? '✅ ATTESTED' : '✅ ATTESTED'}
-              </span>
-            </div>
-
-            <div style={{ fontSize: '11.5px', color: '#cbd5e1', display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '6px', marginTop: '4px' }}>
-              <span>Mode: <strong>{application?.references?.ref1?.mode === 'professionally' ? 'Professionally (ஊழியத்தில்)' : 'Personally (நேரில்)'}</strong></span>
-              <span>Known: <strong>{application?.references?.ref1?.knownDuration || '8 Years'}</strong></span>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: '4px' }}>
-              <span style={{ fontSize: '11px', color: '#94a3b8' }}>Attestation: [ Digitally Signed & Verified ]</span>
-              <a href={`tel:${application?.references?.ref1?.phone || '9443210987'}`} style={{ color: '#60a5fa', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
-                📞 Call Ref 1
-              </a>
-            </div>
-          </div>
-
-          {/* Ref 2: Taluk Co-ordinator */}
-          <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <strong style={{ fontSize: '13px', color: '#f8fafc' }}>
-                  {application?.references?.ref2?.name || 'Rev. D. Antony Raj'}
-                </strong>
-                <div style={{ fontSize: '11px', color: '#94a3b8' }}>
-                  Taluk Co-ordinator • ID: <strong style={{ color: '#c8a96e' }}>{application?.references?.ref2?.dioceseId || 'TN 0466'}</strong>
-                </div>
-              </div>
-              <span style={{ fontSize: '10.5px', background: 'rgba(34, 197, 94, 0.15)', color: '#4ade80', border: '1px solid rgba(34, 197, 94, 0.3)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                {application?.references?.ref2?.status === 'ATTESTED' ? '✅ ATTESTED' : '✅ ATTESTED'}
-              </span>
-            </div>
-
-            <div style={{ fontSize: '11.5px', color: '#cbd5e1', display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '6px', marginTop: '4px' }}>
-              <span>Mode: <strong>{application?.references?.ref2?.mode === 'personally' ? 'Personally (நேரில்)' : 'Professionally (ஊழியத்தில்)'}</strong></span>
-              <span>Known: <strong>{application?.references?.ref2?.knownDuration || '5 Years'}</strong></span>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: '4px' }}>
-              <span style={{ fontSize: '11px', color: '#94a3b8' }}>Attestation: [ Digitally Signed & Verified ]</span>
-              <a href={`tel:${application?.references?.ref2?.phone || '9876543210'}`} style={{ color: '#60a5fa', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
-                📞 Call Ref 2
-              </a>
-            </div>
           </div>
         </div>
       </div>

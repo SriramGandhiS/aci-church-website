@@ -91,11 +91,24 @@
 }
 
 @media (max-width: 600px) {
+  .gallery-filter-bar {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  .gallery-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
   }
-  .gallery-item { height: 150px; }
+  .gallery-item {
+    height: 150px;
+    -webkit-tap-highlight-color: transparent;
+  }
   .gallery-overlay { padding: 12px; }
   .gallery-title { font-size: 12px; }
 }

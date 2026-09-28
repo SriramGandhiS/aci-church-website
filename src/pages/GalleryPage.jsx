@@ -27,7 +27,7 @@ export default function GalleryPage() {
             {cat ? `Gallery — ${cat}` : 'Visual Journey Across ACI Diocese'}
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', marginTop: '10px' }}>
-            65 albums · 1,500+ photos from all diocesan ministries
+            111 albums · 2,100+ photos from all diocesan ministries
           </p>
         </div>
       </div>

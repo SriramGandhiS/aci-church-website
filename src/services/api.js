@@ -22,6 +22,9 @@ async function callApi(action, payload = {}) {
   }
 
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 3500)
+
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
@@ -29,7 +32,9 @@ async function callApi(action, payload = {}) {
       },
       body: JSON.stringify(requestData),
       redirect: 'follow',
+      signal: controller.signal
     })
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       throw new Error(`Server returned status ${response.status}`)
