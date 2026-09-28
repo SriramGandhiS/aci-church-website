@@ -70,7 +70,7 @@ export const translations = {
       video: "VIDEO",
       literature: "LITERATURE",
       gallery: "Gallery",
-      getInvolved: "Get Involved",
+      getInvolved: "Join Us",
       contact: "Contact",
     },
     hero: {

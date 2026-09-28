@@ -20,7 +20,7 @@ export default function GetInvolvedCta() {
             <h2 className="gi-cta-heading">
               {isTa
                 ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தில் இணையுங்கள்'
-                : 'Get Involved & Apply for Diocesan Membership'}
+                : 'Join Us & Apply for Diocesan Membership'}
             </h2>
 
             <p className="gi-cta-para">
@@ -32,7 +32,7 @@ export default function GetInvolvedCta() {
 
           <div className="gi-cta-btn-wrap">
             <Link to="/get-involved" className="gi-cta-action-btn">
-              <span>{isTa ? 'இணையுங்கள் (Get Involved)' : 'Get Involved'}</span>
+              <span>{isTa ? 'இணையுங்கள் (Join Us)' : 'Join Us'}</span>
               <ArrowRightIcon size={14} color="#000000" />
             </Link>
             <Link to="/get-involved/application" className="gi-cta-sub-link">

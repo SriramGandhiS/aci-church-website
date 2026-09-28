@@ -16,9 +16,9 @@ export default function HeroActionBox() {
             <span className="action-arrow">→</span>
           </Link>
 
-          {/* 2. Get Involved */}
-          <Link to="/activities" className="hero-action-btn btn-action-involved">
-            <span>{isTa ? 'செயல்பாடுகள் (Get Involved)' : 'Get Involved'}</span>
+          {/* 2. Join Us */}
+          <Link to="/get-involved" className="hero-action-btn btn-action-involved">
+            <span>{isTa ? 'இணையுங்கள் (Join Us)' : 'Join Us'}</span>
             <span className="action-arrow">→</span>
           </Link>
 

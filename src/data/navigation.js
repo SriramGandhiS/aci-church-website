@@ -105,7 +105,7 @@ export const navItems = [
     ],
   },
   {
-    label: 'Get Involved',
+    label: 'Join Us',
     hasDropdown: false,
     href: '/get-involved',
   },
