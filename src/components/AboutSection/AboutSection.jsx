@@ -327,7 +327,7 @@ export default function AboutSection() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '36px' }}>
             <div>
               <p className="t-label" style={{ color: '#c8a96e', marginBottom: '14px', letterSpacing: '0.15em' }}>
-                {isTa ? 'நமது தரிசனம் (OUR VISION)' : 'OUR VISION (தரிசனம்)'}
+                {isTa ? 'நமது தரிசனம்' : 'OUR VISION'}
               </p>
               <ul style={{ listStyle: 'square', paddingLeft: '20px', lineHeight: '1.9', fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
                 {isTa ? (
@@ -353,7 +353,7 @@ export default function AboutSection() {
             </div>
             <div>
               <p className="t-label" style={{ color: '#c8a96e', marginBottom: '14px', letterSpacing: '0.15em' }}>
-                {isTa ? 'நமது செயலாக்கம் (OUR MISSION)' : 'OUR MISSION (செயலாக்கம்)'}
+                {isTa ? 'நமது செயலாக்கம்' : 'OUR MISSION'}
               </p>
               <ul style={{ listStyle: 'circle', paddingLeft: '20px', lineHeight: '1.9', fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
                 {isTa ? (
@@ -417,11 +417,8 @@ export default function AboutSection() {
                 </button>
                 {openFaithIndex === idx && (
                   <div style={{ padding: '0 20px 20px 20px', borderTop: '1px solid var(--color-divider-light)' }}>
-                    <p style={{ fontSize: '14px', lineHeight: '1.75', color: 'var(--color-text-dark)', marginTop: '12px' }}>
+                    <p style={{ fontSize: '14.5px', lineHeight: '1.8', color: 'var(--color-text-dark)', marginTop: '12px' }}>
                       {isTa ? art.tamil : art.english}
-                    </p>
-                    <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'var(--color-text-muted)', marginTop: '8px' }}>
-                      <strong>{isTa ? 'ஆங்கில மூலம்:' : 'Tamil:'}</strong> {isTa ? art.english : art.tamil}
                     </p>
                   </div>
                 )}

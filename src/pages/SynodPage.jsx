@@ -377,15 +377,15 @@ export default function SynodPage() {
             <p style={S.p}>
               {isTa
                 ? 'சினோட் பொது ஆலோசனைப் பேரவையானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக மற்றும் தலைமை அறங்காவலர் குழு உறுப்பினர்களைக் கொண்டுள்ளது. (விபரங்களை அறிய உறுப்பினரை கிளிக் செய்யவும்):'
-                : 'The Synod General Council serves as the apex administrative and central trustee leadership council of the ACI Diocese across India. (Click on any member card to view complete Excel record details):'}
+                : 'The Synod General Council serves as the apex administrative and central trustee leadership council of the ACI Diocese across India. (Click on any member card to view complete record details):'}
             </p>
 
             {/* General Council Members */}
             {renderMemberCards(generalCouncilMembers)}
 
             <div style={S.divider} />
-            <p style={S.subH}>{isTa ? 'பொது ஆலோசனைப் பேரவையின் கூட்டங்கள்:' : 'General Council Meetings & Objectives:'}</p>
-            <p style={S.pTa}>
+            <p style={S.subH}>{isTa ? 'பொது ஆலோசனைப் பேரவையின் கூட்டங்கள் மற்றும் நோக்கங்கள்:' : 'General Council Meetings & Objectives:'}</p>
+            <p style={isTa ? S.pTa : S.p}>
               {isTa
                 ? 'சினோட் பொது ஆலோசனைப் பேரவையானது குறிப்பிட்ட கால இடைவெளிகளில் கூடி, திருச்சபைகளின் பாதுகாப்பு, மேய்ப்பர்களின் வாழ்வாதார உதவிகள், சபை சந்திப்புப் பணிகள் மற்றும் சுவிசேஷப் புறசந்திப்பு பணிகளை திட்டமிட்டு முன்னெடுக்கிறது.'
                 : 'The Synod General Council convenes at regular intervals to plan church protection, pastoral livelihood assistance, fellowship visits, and evangelistic outreaches across all diocesan territories.'}
@@ -394,26 +394,26 @@ export default function SynodPage() {
         </div>
       </section>
 
-      {/* 2. ABOUT */}
+      {/* 2. ABOUT SYNOD */}
       <section id="aboutsynod" style={S.sec}>
         <div style={S.con}>
-          <h2 style={S.h2}>{isTa ? 'சினோட் பற்றி' : 'About'}</h2>
+          <h2 style={S.h2}>{isTa ? 'சினோட் பற்றி' : 'About the Synod'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <p style={S.p}>The Synod shall comprise of all the Trustees of the Board and Apostles, Prophets, Evangelists, Pastors, Teachers, and Clergy and/or Laity, who fulfill any or all of the Ministerial Callings. They will look after the Spiritual needs and welfare of various Committees of Apostolic Council of India Diocese.</p>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.1, listStyle: 'disc', marginBottom: '14px' }}>
-              <li style={{ marginBottom: '8px' }}>The Most Reverend Archbishop S. Johnson Durai, the Author of the Trust, shall be the Chairman of the Synod for life and shall name the successor who will take his place on his resignation or death.</li>
-              <li style={{ marginBottom: '8px' }}>The Chairman of the Synod shall nominate and appoint the members to the synod in consultation with the Board of Trustees. This shall be the first Synod and shall be responsible for all the committees and their responsibilities.</li>
-              <li style={{ marginBottom: '8px' }}>The Synod comprises of not more than TWENTY members and not less than NINE.</li>
-            </ul>
-
-            <div style={S.divider} />
-            <p style={S.subH}>{isTa ? 'சபை ஆலோசனை மன்றம் (தமிழ் விளக்கம்):' : 'Synod Advisory Council (Tamil Summary):'}</p>
-            <p style={S.pTa}>சபை ஆலோசனை மன்றமானது அனைத்து அறங்காவலர்களையும் மற்றும் பேராயத்தின் அப்போஸ்தலர்கள், தீர்க்கதரிசிகள், சுவிசேஷகர்கள், மேய்ப்பர்கள், போதகர்கள் ஆகியோரை தன்னகத்தே கொண்டுள்ளது.</p>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.8)', lineHeight: 2.1, listStyle: 'disc' }}>
-              <li style={{ marginBottom: '8px' }}>இந்த அறக்கட்டளையின் நிறுவனரும், தலைமைப் பேராயருமான (Archbishop) பேரருட்திரு ச. ஜான்சன்துரை அவர்கள் இந்த சபை ஆலோசனை மன்றத்தின் தலைவராக, தனது வாழ்நாள் முழுவதும் தொடர்ந்து இருப்பார்.</li>
-              <li style={{ marginBottom: '8px' }}>சபை ஆலோசனை மன்றத்தின் தலைவர் அறங்காவலர்களுடன் கலந்தாலோசித்து சபை ஆலோசனை மன்றத்திற்கான உறுப்பினர்களை நியமிப்பார்.</li>
-              <li style={{ marginBottom: '8px' }}>இந்த சபை ஆலோசனை மன்றமானது அதிகபட்சமாக இருபது உறுப்பினர்களையும் குறைந்தபட்சமாக ஒன்பது உறுப்பினர்களையும் கொண்டதாயிருக்கிறது.</li>
-            </ul>
+            {isTa ? (
+              <>
+                <p style={S.pTa}>சபை ஆலோசனை மன்றமானது அனைத்து அறங்காவலர்களையும் மற்றும் பேராயத்தின் அப்போஸ்தலர்கள், தீர்க்கதரிசிகள், சுவிசேஷகர்கள், மேய்ப்பர்கள், போதகர்கள் ஆகியோரை தன்னகத்தே கொண்டுள்ளது.</p>
+                <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>அ.</strong> இந்த அறக்கட்டளையின் நிறுவனரும், தலைமைப் பேராயருமான (Archbishop) பேரருட்திரு ச. ஜான்சன்துரை அவர்கள் இந்த சபை ஆலோசனை மன்றத்தின் தலைவராக, தனது வாழ்நாள் முழுவதும் தொடர்ந்து இருப்பார்.</p>
+                <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>ஆ.</strong> சபை ஆலோசனை மன்றத்தின் தலைவர் அறங்காவலர்களுடன் கலந்தாலோசித்து சபை ஆலோசனை மன்றத்திற்கான உறுப்பினர்களை நியமிப்பார்.</p>
+                <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>இ.</strong> இந்த சபை ஆலோசனை மன்றமானது அதிகபட்சமாக இருபது உறுப்பினர்களையும் குறைந்தபட்சமாக ஒன்பது உறுப்பினர்களையும் கொண்டதாயிருக்கிறது.</p>
+              </>
+            ) : (
+              <>
+                <p style={S.p}>The Synod shall comprise of all the Trustees of the Board and Apostles, Prophets, Evangelists, Pastors, Teachers, and Clergy and/or Laity, who fulfill any or all of the Ministerial Callings. They will look after the Spiritual needs and welfare of various Committees of Apostolic Council of India Diocese.</p>
+                <p style={S.p}><strong style={{ color: '#c8a96e' }}>a)</strong> The Most Reverend Archbishop S. Johnson Durai, the Author of the Trust, shall be the Chairman of the Synod for life and shall name the successor who will take his place on his resignation or death.</p>
+                <p style={S.p}><strong style={{ color: '#c8a96e' }}>b)</strong> The Chairman of the Synod shall nominate and appoint the members to the synod in consultation with the Board of Trustees. This shall be the first Synod and shall be responsible for all the committees and their responsibilities.</p>
+                <p style={S.p}><strong style={{ color: '#c8a96e' }}>c)</strong> The Synod comprises of not more than TWENTY members and not less than NINE.</p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -421,20 +421,21 @@ export default function SynodPage() {
       {/* 3. FUNCTIONS OF SYNOD */}
       <section id="synodfunctions" style={S.sec}>
         <div style={S.con}>
-          <h2 style={S.h2}>{isTa ? 'சினோட் செயல்பாடுகள் (Functions Of Synod)' : 'Functions Of Synod'}</h2>
+          <h2 style={S.h2}>{isTa ? 'சினோட் செயல்பாடுகள்' : 'Synod Functions'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
-              <li>Synod members meet together once in two months to research the Word of God and scriptural doctrines.</li>
-              <li>Documenting the right doctrinal revelations and historical facts established by the research.</li>
-              <li>Advising diocesan leadership on pastoral welfare, regional development, and ministry standardisation.</li>
-            </ul>
-            <div style={S.divider} />
-            <p style={S.subH}>{isTa ? 'சபை ஆலோசனை மன்ற செயல்பாடுகள் (தமிழ் விளக்கம்):' : 'Functions of Synod (Tamil Summary):'}</p>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
-              <li>சபை ஆலோசனை மன்ற அங்கத்தினர்கள் இரண்டு மாதத்திற்கு ஒருமுறை கூடி தேவ வசனத்தை ஆராய்தல்.</li>
-              <li>ஆராய்ந்து தெளிவு பெற்ற சரியான வேத உபதேச கருத்துக்களை ஆவணப்படுத்துதல்.</li>
-              <li>பேராய நிர்வாகம், மண்டல வளர்ச்சி மற்றும் மேய்ப்பர்கள் நலப்பணிகளுக்கு ஆலோசனைகளை வழங்குதல்.</li>
-            </ul>
+            {isTa ? (
+              <ol style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2 }}>
+                <li>1. சபை ஆலோசனை மன்ற அங்கத்தினர்கள் இரண்டு மாதத்திற்கு ஒருமுறை கூடி தேவ வசனத்தை ஆராய்தல்.</li>
+                <li>2. ஆராய்ந்து தெளிவு பெற்ற சரியான வேத உபதேச கருத்துக்களை ஆவணப்படுத்துதல்.</li>
+                <li>3. பேராய நிர்வாகம், மண்டல வளர்ச்சி மற்றும் மேய்ப்பர்கள் நலப்பணிகளுக்கு ஆலோசனைகளை வழங்குதல்.</li>
+              </ol>
+            ) : (
+              <ol style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2 }}>
+                <li>1. Synod members meet together once in two months to research the Word of God and scriptural doctrines.</li>
+                <li>2. Documenting the right doctrinal revelations and historical facts established by the research.</li>
+                <li>3. Advising diocesan leadership on pastoral welfare, regional development, and ministry standardisation.</li>
+              </ol>
+            )}
           </div>
         </div>
       </section>
@@ -446,7 +447,7 @@ export default function SynodPage() {
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
               {isTa
-                ? 'சினோட் கல்வி ஆலோசனை மன்றமானது தலைமைப் பேராயர் (Archbishop) பேரருட்திரு ச. ஜான்சன் துரை அவர்களின் தலைமையில், இறையியல் ஆராய்ச்சி, மண்டல பேராயர்கள் மற்றும் உபதேச வழிகாட்டுதல்களை வழங்கும் அர்ப்பணிக்கப்பட்ட உறுப்பினர்களைக் கொண்டுள்ளது:'
+                ? 'சினோட் கல்வி ஆலோசனை மன்றமானது தலைமைப் பேராயர் பேரருட்திரு ச. ஜான்சன் துரை அவர்களின் தலைமையில், இறையியல் ஆராய்ச்சி, மண்டல பேராயர்கள் மற்றும் உபதேச வழிகாட்டுதல்களை வழங்கும் அர்ப்பணிக்கப்பட்ட உறுப்பினர்களைக் கொண்டுள்ளது:'
                 : 'The Synod Academic Council operates under The Most Reverend Archbishop S. Johnson Durai, comprising dedicated council members, regional diocesan bishops, and theological overseers:'}
             </p>
 
@@ -457,28 +458,29 @@ export default function SynodPage() {
             <p style={S.subH}>{isTa ? 'கல்வி ஆலோசனை மன்ற முக்கிய நோக்கங்கள்:' : 'Academic Council Core Objectives:'}</p>
             <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.1, listStyle: 'disc' }}>
               <li>{isTa ? 'வேத கலாசாலைகளின் பாடத்திட்டங்களை எபிஸ்கோபல் பாரம்பரியத்தின்படி ஒழுங்குபடுத்துதல்.' : 'Standardizing theological curricula for Bible colleges across Tamil Nadu and India.'}</li>
-              <li>{isTa ? 'போதகர்கள் மற்றும் சுவிசேஷகர்களுக்கு தொடர் வேத ஆராய்ச்சி கருத்தரங்குகளை (Word Sharing Seminars) நடத்துதல்.' : 'Conducting bi-monthly Word Sharing meets and deep biblical research seminars.'}</li>
+              <li>{isTa ? 'போதகர்கள் மற்றும் சுவிசேஷகர்களுக்கு தொடர் வேத ஆராய்ச்சி கருத்தரங்குகளை (Word Sharing Seminars) நடத்துதல்.' : 'Conducting regular Word Sharing meets and deep biblical research seminars.'}</li>
               <li>{isTa ? 'எபிஸ்கோபல் பிரதிஷ்டை பெற விண்ணப்பிக்கும் ஊழியர்களின் விசுவாசம் மற்றும் இறையியல் தகுதிகளை பரிசோதித்து அங்கீகரித்தல்.' : 'Vetting and evaluating candidates for ministerial ordination and episcopal recognition.'}</li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* 5. PUBLICATIONS OF SYNOD */}
+      {/* 5. SYNOD PUBLICATIONS */}
       <section id="synodpublications" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
-          <h2 style={S.h2}>{isTa ? 'சினோட் வெளியீடுகள் (Publications Of Synod)' : 'Publications Of Synod'}</h2>
+          <h2 style={S.h2}>{isTa ? 'சினோட் வெளியீடுகள்' : 'Synod Publications'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
-              <li>Uploading the documented information in the Diocesan digital portal for the benefit of churches and believers worldwide.</li>
-              <li>Publishing the documented research as books, study manuals, and reference guides for future studies in Bible Schools.</li>
-            </ul>
-            <div style={S.divider} />
-            <p style={S.subH}>{isTa ? 'சபை ஆலோசனை மன்ற வெளியீடுகள் (தமிழ் விளக்கம்):' : 'Publications of Synod (Tamil Summary):'}</p>
-            <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
-              <li>ஆவணப்படுத்தப்பட்ட சத்தியங்களை உலகெங்கிலும் உள்ள மக்கள் அறிந்து கொள்ளும்படியாக பேராய வலைதளத்தில் வெளியிடுதல்.</li>
-              <li>வருங்காலங்களில் வேத கலாசாலைகளில் பயன்படுத்தப்படும்படியாக புத்தகங்கள் மற்றும் ஆய்வு நூல்களாக வெளியிடுதல்.</li>
-            </ul>
+            {isTa ? (
+              <ol style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2 }}>
+                <li>1. ஆவணப்படுத்தப்பட்ட சத்தியங்களை உலகெங்கிலும் உள்ள மக்கள் அறிந்து கொள்ளும்படியாக பேராய வலைதளத்தில் வெளியிடுதல்.</li>
+                <li>2. வருங்காலங்களில் வேத கலாசாலைகளில் பயன்படுத்தப்படும்படியாக புத்தகங்கள் மற்றும் ஆய்வு நூல்களாக வெளியிடுதல்.</li>
+              </ol>
+            ) : (
+              <ol style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2 }}>
+                <li>1. Uploading documented biblical insights to the Diocesan digital portal for churches and believers worldwide.</li>
+                <li>2. Publishing theological research as study manuals, books, and reference guides for Bible schools and seminaries.</li>
+              </ol>
+            )}
 
             <div style={{ display: 'flex', gap: '14px', marginTop: '28px', flexWrap: 'wrap' }}>
               <Link to="/diocese" className="btn btn-light" style={{ padding: '12px 24px', fontSize: '14px' }}>

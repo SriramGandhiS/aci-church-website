@@ -25,11 +25,11 @@ const S = {
 function BankDetails({ isTa }) {
   return (
     <div style={S.bank}>
-      <p style={S.bankTitle}>{isTa ? 'ஏசிஐ பேராய வங்கி விபரங்கள் (Bank Details)' : 'ACI Diocese Bank Details'}</p>
-      <p style={S.bankRow}>{isTa ? 'வங்கி கணக்கு எண் (Account No.):' : 'Account No.:'} <span style={S.bankVal}>1567201000059</span></p>
-      <p style={S.bankRow}>{isTa ? 'IFSC குறியீடு (IFSC Code):' : 'IFSC Code:'} <span style={S.bankVal}>CNRB0001567</span></p>
-      <p style={S.bankRow}>{isTa ? 'வங்கி பெயர் (Bank Name):' : 'Bank:'} <span style={S.bankVal}>Canara Bank (கனரா வங்கி)</span></p>
-      <p style={S.bankRow}>{isTa ? 'கிளை (Branch):' : 'Branch:'} <span style={S.bankVal}>Hanumantharayankottai (ஹனுமந்தராயன்கோட்டை)</span></p>
+      <p style={S.bankTitle}>{isTa ? 'ஏசிஐ பேராய வங்கி விபரங்கள்' : 'ACI Diocese Bank Details'}</p>
+      <p style={S.bankRow}>{isTa ? 'வங்கி கணக்கு எண்:' : 'Account No.:'} <span style={S.bankVal}>1567201000059</span></p>
+      <p style={S.bankRow}>{isTa ? 'IFSC குறியீடு:' : 'IFSC Code:'} <span style={S.bankVal}>CNRB0001567</span></p>
+      <p style={S.bankRow}>{isTa ? 'வங்கி பெயர்:' : 'Bank:'} <span style={S.bankVal}>{isTa ? 'கனரா வங்கி' : 'Canara Bank'}</span></p>
+      <p style={S.bankRow}>{isTa ? 'கிளை:' : 'Branch:'} <span style={S.bankVal}>{isTa ? 'ஹனுமந்தராயன்கோட்டை' : 'Hanumantharayankottai'}</span></p>
     </div>
   )
 }
@@ -62,23 +62,23 @@ export default function PartnershipPage() {
       <section id="prayer" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 01' : 'Partnership · 01'}</p>
-          <h2 style={S.h2}>{isTa ? 'ஜெபம் (Prayer)' : 'Prayer'}</h2>
+          <h2 style={S.h2}>{isTa ? 'ஜெபம்' : 'Prayer'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <ul style={S.ul}>
-              <li>Praying daily for the Bishop and his visions by forming prayer groups.</li>
-              <li>Praying for the prayer requests sent to the Diocese and the members of this Diocese and their ministries.</li>
-              <li>Praying for our Nation and its blessings and the proclamation of the Gospel in our Nation.</li>
-              <li>Praying for the people those who are sowing for the development of the Diocese and the supporters of our Diocese.</li>
-            </ul>
-
-            <div style={S.divider} />
-            <p style={S.subH}>ஜெபம் (தமிழ் விளக்கம்):</p>
-            <ul style={{ ...S.ul, color: 'rgba(255,255,255,0.85)' }}>
-              <li>1. பேராயருக்காக, அவருடைய தரிசனங்களுக்காக ஜெபக்குழுக்களை ஏற்படுத்தி தினமும் ஜெபித்தல்.</li>
-              <li>2. பேராயத்திற்கு வரும் ஜெப விண்ணப்பங்களுக்காகவும், பேராய அங்கத்தினர்களுக்காவும், அவர்களுடைய ஊழியங்களுக்காகவும் ஜெபித்தல்.</li>
-              <li>3. தேசத்திற்காக அதின் ஆசீர்வாதத்திற்காக மற்றும் தேசமெங்கும் சுவிசேஷம் அறிவிப்பதற்காக ஜெபித்தல்.</li>
-              <li>4. பேராய வளர்ச்சிக்காக விதைப்பவர்கள் மற்றும் தோள் கொடுப்பவர்களுக்காக ஜெபித்தல்.</li>
-            </ul>
+            {isTa ? (
+              <ul style={S.ul}>
+                <li>1. பேராயருக்காக, அவருடைய தரிசனங்களுக்காக ஜெபக்குழுக்களை ஏற்படுத்தி தினமும் ஜெபித்தல்.</li>
+                <li>2. பேராயத்திற்கு வரும் ஜெப விண்ணப்பங்களுக்காகவும், பேராய அங்கத்தினர்களுக்காவும், அவர்களுடைய ஊழியங்களுக்காகவும் ஜெபித்தல்.</li>
+                <li>3. தேசத்திற்காக அதின் ஆசீர்வாதத்திற்காக மற்றும் தேசமெங்கும் சுவிசேஷம் அறிவிப்பதற்காக ஜெபித்தல்.</li>
+                <li>4. பேராய வளர்ச்சிக்காக விதைப்பவர்கள் மற்றும் தோள் கொடுப்பவர்களுக்காக ஜெபித்தல்.</li>
+              </ul>
+            ) : (
+              <ul style={S.ul}>
+                <li>Praying daily for the Bishop and his visions by forming prayer groups.</li>
+                <li>Praying for the prayer requests sent to the Diocese and the members of this Diocese and their ministries.</li>
+                <li>Praying for our Nation and its blessings and the proclamation of the Gospel in our Nation.</li>
+                <li>Praying for the people those who are sowing for the development of the Diocese and the supporters of our Diocese.</li>
+              </ul>
+            )}
           </div>
         </div>
       </section>
@@ -87,53 +87,77 @@ export default function PartnershipPage() {
       <section id="partnertestimony" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 02' : 'Partnership · 02'}</p>
-          <h2 style={S.h2}>{isTa ? 'பங்காளர் சாட்சி (Partner Testimony)' : 'Partner Testimony'}</h2>
+          <h2 style={S.h2}>{isTa ? 'பங்காளர் சாட்சி' : 'Partner Testimony'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '4px' }}>Good Shepherd Revival Churches</p>
-            <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '4px' }}>PARAVAI &amp; VILANGUDI</p>
-            <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '20px' }}>Madurai</p>
+            {isTa ? (
+              <>
+                <p style={{ ...S.pTa, textAlign: 'right', color: 'rgba(255,255,255,0.55)', fontSize: '13px', marginBottom: '16px' }}>
+                  நல்ல மேய்ப்பன் எழுப்புதல் சபைகள், பரவை &amp; விளாங்குடி, மதுரை.
+                </p>
 
-            <div style={S.quoteBlock}>
-              <p>Glory to be the Holy name of our Lord, we are very proud to praise the Lord to stand as witness for his blessings to our churches through Apostolic Council of India Diocese. Since 2014, the day we affiliated with Apostolic Council of India Diocese, we are being blessed in different ways in our ministries and Churches. And also our Church is lifted up in the City of Madurai by believing, teaching and also strengthening through the real shepherding through word by the diocese.</p>
-            </div>
-            <div style={S.quoteBlock}>
-              <p>God has blessed us with a new own land in the centre place of the city and also to construct a building by His grace, while we were worshipping in a temporary place. All these things happened because of we affiliated with the diocese. Our two Churches are blessed abundantly by Means of attending the meetings conducted in the diocese and hearing the real spiritual words from the Bishop and the Vice Chairman and believing their words and testimony.</p>
-            </div>
-            <div style={S.quoteBlock}>
-              <p>Further I have to know discipline, punctuality, orderly conducting meetings and also operate the faith and teach about the blessings through the power in the word. Thus the diocese is the role model for the developing young churches affiliated with the diocese.</p>
-            </div>
-            <div style={S.quoteBlock}>
-              <p>The Diocese is very helpful to our Church and our believers by its various activities like Children ministry training, Village ministry – VBS, Church visit to encourage the local churches affiliated with the diocese and also the valuable counselling of the Bishop.</p>
-            </div>
-            <div style={S.quoteBlock}>
-              <p>Now we and our Churches are the witness and also identified by many people as precious ministry by getting the real spiritual food and believing the same through the vision of our diocese "Shepherding the shepherd". As we believe the Booklet named as "The Church the body of Christ" written by The Most Rev. S. Johnson Durai, we received a wonderful building for our Church.</p>
-            </div>
-            <div style={S.quoteBlock}>
-              <p><em>All these above blessings are possible to us; because of the affiliation with the vision of the diocese thus we are the witnesses.</em></p>
-            </div>
-            <p style={{ ...S.p, textAlign: 'center', marginTop: '12px', color: '#c8a96e', fontWeight: 700 }}>" Glory be to God."</p>
-            <p style={{ ...S.p, fontWeight: 600, marginTop: '8px' }}>Rev. Helen Daniel M.Th., Ph.D.</p>
-            <p style={S.byline}>Episcopal Pastor, Good Shepherd Revival Churches, Paravai and Vilangudi, Madurai.</p>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    கர்த்தருடைய பரிசுத்த நாமத்திற்கு மகிமை உண்டாவதாக. இந்த நாளிலும் நல்ல மேய்ப்பன் எழுப்புதல் சபைகளின் போதகர் (விளாங்குடி, மதுரை) என்ற அடிப்படையில்; அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் மூலமாக, எங்கள் சபைக்கு கர்த்தர் செய்த நன்மைகளின் ஆசீர்வாதத்திற்கு சாட்சியாக இருப்பதில் பெருமையுடன் கர்த்தரைத் துதிக்கிறேன்.
+                  </p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    கடந்த 2014 ஆம் ஆண்டிலே, தேவசித்தத்தின்படி பேராயத்திலே அங்கத்தினராக இணைந்த நாள் முதலாகவே; எங்கள் ஊழியமும், சபையும் வித்தியாசமான விதத்தில் ஆசீர்வதிக்கப்பட்டுக் கொண்டு வருகிறது. இப்பேராயத்தின் மூலமாக அளிக்கப்பட்டு வரும் மெய்யான மேய்ச்சலாகிய வார்த்தையினை விசுவாசிக்கவும் போதிக்கவும், அதிலே பெருகவும் பயிற்றுவிக்கப்பட்டு; அதின்படியே அநேக நன்மைகளுக்குப் பாத்திரமான சாட்சியாய் மதுரைப் பட்டணத்திலே எங்கள் சபை உயர்த்தப்பட்டுள்ளது.
+                  </p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    நிரந்தர இடமில்லாமல் தற்காலியமாய் இயங்கி வந்த சபைக்கு விசுவாசத்தின் மூலமாக, மாநகரின் முக்கியப் பகுதியில் கர்த்தர் ஆலயங்கட்டும்படியாக ஏழு சென்ட் இடத்தினைக் கொடுத்து, சொந்தமாக செணட்ரிங் கட்டிடத்தைக் கட்டி முடிக்க கிருபை செய்தார். இந்தப் பேராயத்தில் இணைந்ததின் வாயிலாகவே இந்த நல்ல மேய்ச்சலைக் கண்டடைய கர்த்தர் கிருபை செய்தார்.
+                  </p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    மட்டுமல்லாது, சரியான சபை ஒழுங்கினை கற்றுக் கொள்ளவும், நேரம் தவறாமை, கிரமமாய்-நேர்த்தியாய் வெற்றிகரமாய் கூட்டங்களை ஒழுங்கு செய்து நடத்துதல், வார்த்தையின் வல்லமையைப் போதிக்கவும், பிரயோகிக்கவும் இப்பேராயம் நல்ல வழிகாட்டியாய் இருப்பது, இதில் இணைந்துள்ள எம் போன்ற ஆரம்ப சபைகளுக்கு மிகுந்த வழிகாட்டுதலாய் இருக்கிறது.
+                  </p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    இப்பேராயத்தின் மூலமாக நடைபெறும் சிறுவர் ஊழியப் பயிற்சி, கிராம ஊழியங்கள் — விபிஎஸ் (VBS), சபை சந்திப்புப் பணிகள் மற்றும் பேராயரின் ஆலோசனைகள் எங்கள் சபைக்கும் விசுவாசிகளுக்கும் பெரிதும் பயனுள்ளதாக அமைந்துள்ளது.
+                  </p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    இப்பேராயத்தின் &ldquo;மேய்ப்பர்களுக்கு மேய்ச்சல்&rdquo; என்ற தரிசனத்தின் மூலம் நாங்கள் மெய்யான ஆவிக்குரிய உணவைப் பெற்றுக்கொண்டு சாட்சிகளாய் விளங்குகிறோம். பேராயர் பேரருட்திரு ச. ஜான்சன் துரை அவர்கள் எழுதிய &ldquo;திருச்சபை கிறிஸ்துவின் சரீரம்&rdquo; என்ற புத்தகத்தை விசுவாசித்ததின் மூலம் நாங்கள் எங்கள் சபைக்கான அற்புத ஆலயத்தைப் பெற்றுக்கொண்டோம்.
+                  </p>
+                </div>
+                <p style={{ ...S.pTa, textAlign: 'center', color: '#c8a96e', fontWeight: 700, marginTop: '16px' }}>தேவனுக்கே மகிமை உண்டாவதாக!</p>
+                <p style={{ ...S.pTa, fontWeight: 600, marginTop: '8px' }}>Rev. முனைவர் ஹெலன் டேனியேல், M.Th., Ph.D.</p>
+                <p style={S.byline}>எபிஸ்கோபல் போதகர், நல்ல மேய்ப்பன் எழுப்புதல் சபைகள், பரவை மற்றும் விளாங்குடி, மதுரை.</p>
+              </>
+            ) : (
+              <>
+                <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '4px' }}>Good Shepherd Revival Churches</p>
+                <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '4px' }}>PARAVAI &amp; VILANGUDI</p>
+                <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '20px' }}>Madurai</p>
 
-            <div style={S.divider} />
-            <p style={S.subH}>பங்காளர் சாட்சி (தமிழ் முழு உரை):</p>
-            <p style={{ ...S.p, textAlign: 'right', color: 'rgba(255,255,255,0.55)', fontSize: '13px', marginBottom: '4px' }}>நல்ல மேய்ப்பன் எழுப்புதல் சபைகள், பரவை - விளாங்குடி, மதுரை.</p>
-
-            <p style={S.pTa}>
-              கர்த்தருடைய பரிசுத்த நாமத்திற்கு மகிமை உண்டாவதாக. இந்த நாளிலும் நல்ல மேய்ப்பன் எழுப்புதல் சபைகளின் போதகர் (விளாங்குடி, மதுரை) என்ற அடிப்படையில்; அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் மூலமாக, எங்கள் சபைக்கு கர்த்தர் செய்த நன்மைகளின் ஆசீர்வாதத்திற்கு சாட்சியாக இருப்பதில் பெருமையுடன் கர்த்தரைத் துதிக்கிறேன்.
-            </p>
-            <p style={S.pTa}>
-              கடந்த 2014 ஆம் ஆண்டிலே, தேவசித்தத்தின்படி பேராயத்திலே அங்கத்தினராக இணைந்த நாள் முதலாகவே; எங்கள் ஊழியமும், சபையும் வித்தியாசமான விதத்தில் ஆசீர்வதிக்கப்பட்டுக் கொண்டு வருகிறது. இப்பேராயத்தின் மூலமாக அளிக்கப்பட்டு வரும் மெய்யான மேய்ச்சலாகிய வார்த்தையினை விசுவாசிக்கவும் போதிக்கவும், அதிலே பெருகவும் பயிற்றுவிக்கப்பட்டு; அதின்படியே அநேக நன்மைகளுக்குப் பாத்திரமான சாட்சியாய் மதுரைப் பட்டணத்திலே எங்கள் சபை உயர்த்தப்பட்டுள்ளது.
-            </p>
-            <p style={S.pTa}>
-              நிரந்தர இடமில்லாமல் தற்காலியமாய் இயங்கி வந்த சபைக்கு விசுவாசத்தின் மூலமாக, மாநகரின் முக்கியப் பகுதியில் கர்த்தர் ஆலயங்கட்டும்படியாக ஏழு சென்ட் இடத்தினைக் கொடுத்து, சொந்தமாக செணட்ரிங் கட்டிடத்தைக் கட்டி முடிக்க கிருபை செய்தார். இந்தப் பேராயத்தில் இணைந்ததின் வாயிலாகவே இந்த நல்ல மேய்ச்சலைக் கண்டடைய கர்த்தர் கிருபை செய்தார்.
-            </p>
-            <p style={S.pTa}>
-              மட்டுமல்லாது, சரியான சபை ஒழுங்கினை கற்றுக் கொள்ளவும், நேரம் தவறாமை, கிரமமாய்-நேர்த்தியாய் வெற்றிகரமாய் கூட்டங்களை ஒழுங்கு செய்து நடத்துதல், வார்த்தையின் வல்லமையைப் போதிக்கவும், பிரயோகிக்கவும் இப்பேராயம் நல்ல வழிகாட்டியாய் இருப்பது, இதில் இணைந்துள்ள எம் போன்ற ஆரம்ப சபைகளுக்கு மிகுந்த வழிகாட்டுதலாய் இருக்கிறது.
-            </p>
-            <p style={{ ...S.pTa, textAlign: 'center', color: '#c8a96e', fontWeight: 700 }}>தேவனுக்கே மகிமை உண்டாவதாக!!!!</p>
-            <p style={{ ...S.pTa, fontWeight: 600 }}>Rev. ஹெலன் டேனியேல், M.Th. Ph.D.</p>
-            <p style={{ ...S.pTa, color: 'rgba(255,255,255,0.55)', fontSize: '13px' }}>நல்ல மேய்ப்பன் எழுப்புதல் சபைகள், பரவை - விளாங்குடி, மதுரை.</p>
+                <div style={S.quoteBlock}>
+                  <p>Glory to be the Holy name of our Lord, we are very proud to praise the Lord to stand as witness for his blessings to our churches through Apostolic Council of India Diocese. Since 2014, the day we affiliated with Apostolic Council of India Diocese, we are being blessed in different ways in our ministries and Churches. And also our Church is lifted up in the City of Madurai by believing, teaching and also strengthening through the real shepherding through word by the diocese.</p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p>God has blessed us with a new own land in the centre place of the city and also to construct a building by His grace, while we were worshipping in a temporary place. All these things happened because of we affiliated with the diocese. Our two Churches are blessed abundantly by Means of attending the meetings conducted in the diocese and hearing the real spiritual words from the Bishop and the Vice Chairman and believing their words and testimony.</p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p>Further I have to know discipline, punctuality, orderly conducting meetings and also operate the faith and teach about the blessings through the power in the word. Thus the diocese is the role model for the developing young churches affiliated with the diocese.</p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p>The Diocese is very helpful to our Church and our believers by its various activities like Children ministry training, Village ministry – VBS, Church visit to encourage the local churches affiliated with the diocese and also the valuable counselling of the Bishop.</p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p>Now we and our Churches are the witness and also identified by many people as precious ministry by getting the real spiritual food and believing the same through the vision of our diocese &ldquo;Shepherding the shepherd&rdquo;. As we believe the Booklet named as &ldquo;The Church the body of Christ&rdquo; written by The Most Rev. S. Johnson Durai, we received a wonderful building for our Church.</p>
+                </div>
+                <div style={S.quoteBlock}>
+                  <p><em>All these above blessings are possible to us; because of the affiliation with the vision of the diocese thus we are the witnesses.</em></p>
+                </div>
+                <p style={{ ...S.p, textAlign: 'center', marginTop: '12px', color: '#c8a96e', fontWeight: 700 }}>&ldquo;Glory be to God.&rdquo;</p>
+                <p style={{ ...S.p, fontWeight: 600, marginTop: '8px' }}>Rev. Helen Daniel M.Th., Ph.D.</p>
+                <p style={S.byline}>Episcopal Pastor, Good Shepherd Revival Churches, Paravai and Vilangudi, Madurai.</p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -142,14 +166,20 @@ export default function PartnershipPage() {
       <section id="contributions" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 03' : 'Partnership · 03'}</p>
-          <h2 style={S.h2}>{isTa ? 'பங்களிப்பு (Contributions)' : 'Contributions'}</h2>
+          <h2 style={S.h2}>{isTa ? 'பங்களிப்பு' : 'Contributions'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <p style={S.p}>Voluntarily fixing an amount of money for the development of our Diocese as monthly contribution.</p>
-            <p style={S.p}>Those who are contributing a promised amount in every month shall become a partner in this diocese.</p>
+            {isTa ? (
+              <>
+                <p style={S.pTa}>பேராயத்தின் வளர்ச்சிக்காக நிர்ணயித்துக்கொண்ட ஒரு தொகையை மாதந்தோறும் தன்னார்வமாக தங்களது பங்களிப்பை தொடர்ந்து செலுத்துவது.</p>
+                <p style={S.pTa}>பொருத்தனையோடு கூட மாதந்தோறும் தனது பங்களிப்பை நல்குபவர்கள் பேராயத்தின் பங்காளர்கள் ஆகலாம்.</p>
+              </>
+            ) : (
+              <>
+                <p style={S.p}>Voluntarily fixing an amount of money for the development of our Diocese as monthly contribution.</p>
+                <p style={S.p}>Those who are contributing a promised amount in every month shall become a partner in this diocese.</p>
+              </>
+            )}
             <BankDetails isTa={isTa} />
-            <div style={S.divider} />
-            <p style={S.subH}>பங்களிப்பு (தமிழ் விளக்கம்):</p>
-            <p style={S.pTa}>பேராயத்தின் வளர்ச்சிக்காக நிர்ணயித்துக்கொண்ட ஒரு தொகையை மாதந்தோறும் தன்னார்வமாக தங்களது பங்களிப்பை தொடர்ந்து செலுத்தவது. பொருத்தனையோடு கூட மாதந்தோறும் தனது பங்களிப்பை நல்குபவர்கள் பேராயத்தின் பங்காளர்கள் ஆகலாம்.</p>
           </div>
         </div>
       </section>
@@ -158,13 +188,18 @@ export default function PartnershipPage() {
       <section id="donation" style={S.sec}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 04' : 'Partnership · 04'}</p>
-          <h2 style={S.h2}>{isTa ? 'நன்கொடை (Donation)' : 'Donation'}</h2>
+          <h2 style={S.h2}>{isTa ? 'நன்கொடை' : 'Donation'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <p style={S.p}>Those who are blessed by this Diocese can send their generous offering to the diocese to support the ministries of this diocese.</p>
+            {isTa ? (
+              <p style={S.pTa}>
+                இப்பேராயத்தின் மூலமாக தேவனிடமிருந்து ஆசீர்வாதங்களைப் பெற்றுக்கொண்டவர்கள் தங்களது உதாரத்துவமான காணிக்கைகளை நன்கொடையாக பேராயத்திற்கு அளித்து பேராயத்தின் மூலம் நடைபெறும் ஊழியங்களைத் தாங்கலாம்.
+              </p>
+            ) : (
+              <p style={S.p}>
+                Those who are blessed by this Diocese can send their generous offering to the diocese to support the ministries of this diocese.
+              </p>
+            )}
             <BankDetails isTa={isTa} />
-            <div style={S.divider} />
-            <p style={S.subH}>நன்கொடை (தமிழ் விளக்கம்):</p>
-            <p style={S.pTa}>இப்பேராயத்தின் மூலமாக தேவனிடமிருந்து ஆசீர்வாதங்களைப் பெற்றுக்கொண்டவர்கள் தங்களது உதாரத்துவமான காணிக்கைகளை நன்கொடையாக பேராயத்திற்கு அளித்து பேராயத்தின் மூலம் நடைபெறும் ஊழியங்களைத் தாங்கலாம்.</p>
           </div>
         </div>
       </section>
@@ -173,22 +208,36 @@ export default function PartnershipPage() {
       <section id="opportunitytosow" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
           <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 05' : 'Partnership · 05'}</p>
-          <h2 style={S.h2}>{isTa ? 'விதைப்பதற்கான வாய்ப்புகள் (Opportunity to Sow)' : 'Opportunity to Sow'}</h2>
+          <h2 style={S.h2}>{isTa ? 'விதைப்பதற்கான வாய்ப்புகள்' : 'Opportunity to Sow'}</h2>
           <div style={{ marginTop: '28px' }}>
-            <div style={S.quoteBlock}>
-              <p>As the Bible says in 2 Corinthians 9:9, 10 — "He has scattered abroad his gifts to the poor: his righteousness endures forever". Now he who supplies seed to the sower and bread for food will also supply and increase your store of seed and will enlarge the harvest of your righteousness. God bless you always.</p>
-            </div>
-            <p style={S.p}>Along with the vision of this Diocese God has given us many kinds of ministries to fulfill His purpose.</p>
-            <p style={S.p}>Those who are not able to do these ministries directly can join with us by sending your offerings and do the same ministries.</p>
-            <p style={S.p}>This is a great chance for everyone by God through this Diocese.</p>
-            <div style={S.quoteBlock}>
-              <p>"He who goes out weeping, carrying seed to sow, will return with songs of joy, carrying sheaves with him." — Psalm 126:6</p>
-            </div>
+            {isTa ? (
+              <>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>
+                    2 கொரிந்தியர் 9:9, 10 — &ldquo;வாரியிறைத்தான், ஏழைகளுக்குக் கொடுத்தான்; அவனுடைய நீதி என்றென்றைக்கும் நிற்கும். விதைக்கிறவனுக்கு விதையும் புசிக்கிறவனுக்கு ஆகாரமும் கொடுக்கிறவர், உங்கள் விதையை பெருகப்பண்ணி, உங்கள் நீதியின் கனிகளை வர்த்திக்கப்பண்ணுவார்.&rdquo; தேவன் உங்களை எப்பொழுதும் ஆசீர்வதிப்பாராக.
+                  </p>
+                </div>
+                <p style={S.pTa}>இப்பேராயத்தின் தரிசனத்துடன் சேர்ந்து தேவன் தமது சித்தத்தை நிறைவேற்ற அநேக வகையான ஊழியங்களை நமக்கு அளித்திருக்கிறார்.</p>
+                <p style={S.pTa}>இந்த ஊழியங்களை நேரடியாக செய்யமுடியாதவர்கள் தங்கள் காணிக்கைகளை அனுப்பி அதே ஊழியங்களில் பங்கு பெறலாம்.</p>
+                <p style={S.pTa}>இப்பேராயத்தின் வாயிலாக தேவன் அனைவருக்கும் வழங்கியிருக்கும் மகத்தான வாய்ப்பு இதுவாகும்.</p>
+                <div style={S.quoteBlock}>
+                  <p style={S.pTa}>&ldquo;கண்ணீரோடே விதைக்கிறவர்கள் கெம்பீரத்தோடே அறுப்பார்கள். அள்ளித்தூவும் விதையைச் சுமந்து, அழுதுகொண்டு போகிறவன், தன் சூடிகளைச் சுமந்துகொண்டு, கெம்பீரத்தோடே திரும்பி வருவான்.&rdquo; — சங்கீதம் 126:5, 6</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={S.quoteBlock}>
+                  <p>As the Bible says in 2 Corinthians 9:9, 10 — &ldquo;He has scattered abroad his gifts to the poor: his righteousness endures forever. Now he who supplies seed to the sower and bread for food will also supply and increase your store of seed and will enlarge the harvest of your righteousness.&rdquo; God bless you always.</p>
+                </div>
+                <p style={S.p}>Along with the vision of this Diocese God has given us many kinds of ministries to fulfill His purpose.</p>
+                <p style={S.p}>Those who are not able to do these ministries directly can join with us by sending your offerings and do the same ministries.</p>
+                <p style={S.p}>This is a great chance for everyone by God through this Diocese.</p>
+                <div style={S.quoteBlock}>
+                  <p>&ldquo;He who goes out weeping, carrying seed to sow, will return with songs of joy, carrying sheaves with him.&rdquo; — Psalm 126:6</p>
+                </div>
+              </>
+            )}
             <BankDetails isTa={isTa} />
-            <div style={S.divider} />
-            <p style={S.subH}>விதைப்பதற்கான வாய்ப்புகள் (தமிழ் விளக்கம்):</p>
-            <p style={S.pTa}>2 கொரி 9:9,10 — வாரியிறைத்தான், ஏழைகளுக்குக் கொடுத்தான்; அவனுடைய நீதி என்றென்றைக்கும் நிற்கும். விதைக்கிறவனுக்கு விதையும் புசிக்கிறவனுக்கு ஆகாரமும் கொடுக்கிறவர், உங்கள் விதையை பெருகப்பண்ணி, உங்கள் நீதியின் கனிகளை வர்த்திக்கப்பண்ணுவார்.</p>
-            <p style={S.pTa}>இப்பேராயத்தின் தரிசனத்துடன் சேர்ந்து தேவன் தமது சித்தத்தை நிறைவேற்ற அநேக வகையான ஊழியங்களை நமக்கு அளித்திருக்கிறார். இந்த ஊழியங்களை நேரடியாக செய்யமுடியாதவர்கள் தங்கள் காணிக்கைகளை அனுப்பி அதே ஊழியங்களில் பங்கு பெறலாம்.</p>
           </div>
         </div>
       </section>
