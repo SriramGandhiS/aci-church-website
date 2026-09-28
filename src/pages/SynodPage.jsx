@@ -233,7 +233,7 @@ export default function SynodPage() {
       name: 'Rev. Sathees Kumar',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
-      image: '/aci-logo.png',
+      image: '/synod/council-sathees.jpg',
     },
     {
       sno: 16,
@@ -241,7 +241,7 @@ export default function SynodPage() {
       name: 'Rev. J. Joseph',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
-      image: '/aci-logo.png',
+      image: '/synod/council-joseph.jpg',
     },
     {
       sno: 17,
@@ -249,7 +249,7 @@ export default function SynodPage() {
       name: 'Rev. J. Shyam Raj',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
-      image: '/aci-logo.png',
+      image: '/synod/council-shyam.jpg',
     },
     {
       sno: 18,
@@ -257,7 +257,7 @@ export default function SynodPage() {
       name: 'Rev. S. Moses Prawin paul',
       role: isTa ? 'சினோட் உறுப்பினர்' : 'Synod Member',
       excelDesignation: 'Synod Member',
-      image: '/aci-logo.png',
+      image: '/synod/council-moses.jpg',
     },
     {
       sno: 19,
@@ -306,7 +306,23 @@ export default function SynodPage() {
             onClick={() => setSelectedMember(fullData)}
             title="Click to view full Synod Council profile"
           >
-            <div style={{ ...S.memberHeader, justifyContent: fullData.regNo ? 'flex-end' : 'space-between' }}>
+            <div style={{ ...S.memberHeader, justifyContent: 'space-between', alignItems: 'center' }}>
+              <img
+                src={fullData.image || '/aci-logo.png'}
+                alt={fullData.name}
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid rgba(200, 169, 110, 0.45)',
+                  background: '#1a1a1a',
+                }}
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.src = '/aci-logo.png'
+                }}
+              />
               {fullData.regNo && <span style={S.memberBadge}>{fullData.regNo}</span>}
             </div>
 
@@ -342,7 +358,6 @@ export default function SynodPage() {
       {/* HERO SECTION */}
       <div style={S.hero}>
         <div style={S.con}>
-          <p style={{ ...S.lbl, marginBottom: '16px' }}>{isTa ? 'சினோட் பக்கம்' : 'SYNOD PAGE'}</p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(30px,5vw,48px)', fontWeight: 400, marginBottom: '12px', color: '#fff' }}>
             {isTa ? 'சினோட் சபை ஆலோசனை மன்றம்' : 'Synod Advisory Council'}
           </h1>
@@ -357,7 +372,6 @@ export default function SynodPage() {
       {/* 1. SYNOD GENERAL COUNCIL & MEMBERS */}
       <section id="synodgeneralcouncil" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட்' : 'SYNOD'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் பொது ஆலோசனைப் பேரவை & உறுப்பினர்கள்' : 'Synod General Council & Members'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
@@ -383,7 +397,6 @@ export default function SynodPage() {
       {/* 2. ABOUT */}
       <section id="aboutsynod" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட்' : 'SYNOD'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் பற்றி' : 'About'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>The Synod shall comprise of all the Trustees of the Board and Apostles, Prophets, Evangelists, Pastors, Teachers, and Clergy and/or Laity, who fulfill any or all of the Ministerial Callings. They will look after the Spiritual needs and welfare of various Committees of Apostolic Council of India Diocese.</p>
@@ -408,7 +421,6 @@ export default function SynodPage() {
       {/* 3. FUNCTIONS OF SYNOD */}
       <section id="synodfunctions" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட்' : 'SYNOD'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் செயல்பாடுகள் (Functions Of Synod)' : 'Functions Of Synod'}</h2>
           <div style={{ marginTop: '28px' }}>
             <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
@@ -430,7 +442,6 @@ export default function SynodPage() {
       {/* 4. SYNOD (ACADEMIC COUNCIL) & MEMBERS */}
       <section id="synodacademiccouncil" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட்' : 'SYNOD'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் கல்வி ஆலோசனை மன்றம் & உறுப்பினர்கள்' : 'Synod (Academic Council) & Members'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
@@ -456,7 +467,6 @@ export default function SynodPage() {
       {/* 5. PUBLICATIONS OF SYNOD */}
       <section id="synodpublications" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'சினோட்' : 'SYNOD'}</p>
           <h2 style={S.h2}>{isTa ? 'சினோட் வெளியீடுகள் (Publications Of Synod)' : 'Publications Of Synod'}</h2>
           <div style={{ marginTop: '28px' }}>
             <ul style={{ paddingLeft: '22px', color: 'rgba(255,255,255,0.85)', lineHeight: 2.2, listStyle: 'disc' }}>
