@@ -10,7 +10,10 @@ import {
   AlertCircleIcon,
   DocumentIcon,
   PrintIcon,
-  UserCheckIcon
+  UserCheckIcon,
+  ShieldIcon,
+  ClockIcon,
+  PhoneIcon
 } from '../components/Icons/SvgIcons'
 import './AdminApplicationDetailPage.css'
 
@@ -490,7 +493,7 @@ export default function AdminApplicationDetailPage() {
           className={`detail-tab-btn ${activeTab === 'official_form' ? 'active' : ''}`}
           onClick={() => setActiveTab('official_form')}
         >
-          Official 2-Page Form & PDF
+          Official 4-Page Form & PDF
         </button>
         <button
           type="button"
@@ -508,11 +511,11 @@ export default function AdminApplicationDetailPage() {
         </button>
       </div>
 
-      {/* TAB 1: Official 2-Page Form */}
+      {/* TAB 1: Official 4-Page Form */}
       {activeTab === 'official_form' && (
         <div className="admin-official-preview-pane">
           <div className="admin-preview-instructions">
-            <span>Canonical 2-page digital ACI Diocese form populated from submitted applicant data.</span>
+            <span>Canonical 4-page digital ACI Diocese form matching official paper application.</span>
             <button
               type="button"
               className="admin-print-btn"

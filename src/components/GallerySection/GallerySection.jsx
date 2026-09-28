@@ -68,7 +68,7 @@ export default function GallerySection() {
           </p>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(20px, 4vw, 36px)', fontWeight: 400, color: '#fff', marginBottom: '4px' }}>
             {activeCat === 'All'
-              ? `${galleryAlbumsData.length} Albums · 1,500+ Photos`
+              ? `${galleryAlbumsData.length} Albums · 2,100+ Photos`
               : `${filteredAlbums.length} Albums — ${activeCat}`}
           </h2>
           {activeCat !== 'All' && (
@@ -82,7 +82,7 @@ export default function GallerySection() {
         </div>
 
         {/* Filter Pills */}
-        <div className="reveal reveal-delay-1" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '32px' }}>
+        <div className="reveal reveal-delay-1 gallery-filter-bar" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '32px' }}>
           {FILTER_CATEGORIES.map((cat, i) => {
             const isActive = cat.value === 'All'
               ? activeCat === 'All'

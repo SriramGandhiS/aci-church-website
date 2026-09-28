@@ -22,6 +22,9 @@ async function callApi(action, payload = {}) {
   }
 
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 3500)
+
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
@@ -29,7 +32,9 @@ async function callApi(action, payload = {}) {
       },
       body: JSON.stringify(requestData),
       redirect: 'follow',
+      signal: controller.signal
     })
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       throw new Error(`Server returned status ${response.status}`)
@@ -329,6 +334,68 @@ function handleLocalFallback(action, data) {
       return { success: false, error: 'DOCUMENT_NOT_FOUND' }
     }
 
+    case 'get_application_for_attestation': {
+      const apps = getApps()
+      const app = apps.find(a => a.applicationId === data.appId || a.applicationId === data.applicationId)
+      if (app) {
+        return {
+          success: true,
+          application: {
+            applicationId: app.applicationId,
+            applicantName: app.applicantName,
+            email: app.email,
+            mobileNumber: app.mobileNumber,
+            personal: app.data?.personal || { name: app.applicantName },
+            church: app.data?.church || {},
+            spiritual: app.data?.spiritual || { ministryCalling: app.ministryFunction },
+            references: app.data?.references || {
+              ref1: { name: 'Rev. R. John Durai', dioceseId: 'TN 0005', phone: '9443210987', knownDuration: '8 Years' },
+              ref2: { name: 'Rev. D. Antony Raj', dioceseId: 'TN 0466', phone: '9876543210', knownDuration: '5 Years' }
+            }
+          }
+        }
+      }
+      return {
+        success: true,
+        application: {
+          applicationId: data.appId || 'ACI-2026-000004',
+          applicantName: 'Pastor David Paul',
+          personal: { name: 'Pastor David Paul', city: 'Chennai' },
+          church: { name: 'Calvary Gospel Mission' },
+          spiritual: { ministryCalling: 'pastor' },
+          references: {
+            ref1: { name: 'Rev. R. John Durai', dioceseId: 'TN 0005', phone: '9443210987', knownDuration: '8 Years' },
+            ref2: { name: 'Rev. D. Antony Raj', dioceseId: 'TN 0466', phone: '9876543210', knownDuration: '5 Years' }
+          }
+        }
+      }
+    }
+
+    case 'attest_application': {
+      const apps = getApps()
+      const app = apps.find(a => a.applicationId === data.appId)
+      if (app) {
+        if (!app.data) app.data = {}
+        if (!app.data.references) app.data.references = {}
+        const refKey = data.refKey || 'ref1'
+        app.data.references[refKey] = {
+          ...(app.data.references[refKey] || {}),
+          name: data.refereeName,
+          dioceseId: data.dioceseId,
+          knownDuration: data.knownDuration,
+          mode: data.mode,
+          phone: data.phone,
+          signature: data.signature,
+          attestedAt: data.attestedAt || now,
+          status: 'ATTESTED'
+        }
+        app.status = 'ATTESTED_BY_REFEREE'
+        saveApps(apps)
+        return { success: true, applicationId: data.appId, refKey, attestedAt: now }
+      }
+      return { success: true, applicationId: data.appId, refKey: data.refKey, attestedAt: now }
+    }
+
     default:
       return { success: false, error: 'UNKNOWN_ACTION' }
   }
@@ -346,6 +413,9 @@ export const api = {
   uploadDocument: (payload) => callApi('upload_document', payload),
   submitApplication: (email, userId, googleSub, formData) => callApi('submit_application', { email, userId, googleSub, formData }),
   getDocumentData: (email, driveFileId, documentId) => callApi('get_document_data', { email, driveFileId, documentId }),
+  getApplicationForAttestation: (appId) => callApi('get_application_for_attestation', { appId }),
+  attestApplication: (payload) => callApi('attest_application', payload),
+  sendRefereeEmail: (payload) => callApi('send_referee_email', payload),
   adminListApplications: (adminEmail) => callApi('admin_list_applications', { adminEmail }),
   adminGetApplication: (adminEmail, applicationId) => callApi('admin_get_application', { adminEmail, applicationId }),
   adminUpdateStatus: (adminEmail, applicationId, status, rejectionReason, adminNotes) => callApi('admin_update_status', { adminEmail, applicationId, status, rejectionReason, adminNotes }),

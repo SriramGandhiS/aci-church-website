@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -137,7 +137,7 @@ export default function ApplicantDashboardPage() {
               {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW') && (
                 <div className="status-pill-lg pending">
                   <UserCheckIcon size={20} />
-                  <span>{isTa ? 'பரிசீலனையில் உள்ளது' : 'Under Committee Review'}</span>
+                  <span>{isTa ? 'பரிசீலனையில் உள்ளது' : 'Under Review'}</span>
                 </div>
               )}
               {application.status === 'DRAFT' && (
@@ -169,14 +169,14 @@ export default function ApplicantDashboardPage() {
           <div className="app-dash-actions-grid">
             <div className="app-dash-action-card">
               <h3>{isTa ? 'அதிகாரப்பூர்வ விண்ணப்பப் படிவம்' : 'Official Application Form'}</h3>
-              <p>{isTa ? 'உங்கள் 2-பக்க அதிகாரப்பூர்வ விண்ணப்பத்தை பார்வையிடவும் மற்றும் அச்சிடவும்.' : 'View and print your complete 2-page digital membership form.'}</p>
+              <p>{isTa ? 'உங்கள் 4-பக்க அதிகாரப்பூர்வ விண்ணப்பத்தை பார்வையிடவும் மற்றும் அச்சிடவும்.' : 'View and print your complete 4-page digital membership form.'}</p>
               <button
                 type="button"
                 className="app-dash-btn-view-pdf"
                 onClick={() => setViewingForm(true)}
               >
                 <PrintIcon size={16} />
-                <span>{isTa ? 'படிவத்தை காண்க / அச்சிடு' : 'View / Print Official Form'}</span>
+                <span>{isTa ? 'படிவத்தை காண்க / அச்சிடு' : 'View / Print Official 4-Page Form'}</span>
               </button>
             </div>
 

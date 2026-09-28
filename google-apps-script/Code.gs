@@ -74,6 +74,15 @@ function handleRequest(e, method) {
       case 'admin_update_status':
         result = handleAdminUpdateStatus(data);
         break;
+      case 'attest_application':
+        result = handleAttestApplication(data);
+        break;
+      case 'get_application_for_attestation':
+        result = handleGetApplicationForAttestation(data);
+        break;
+      case 'send_referee_email':
+        result = handleSendRefereeEmail(data);
+        break;
       default:
         result = { success: false, error: 'INVALID_ACTION' };
     }
@@ -579,4 +588,140 @@ function handleAdminUpdateStatus(data) {
   }
   
   return { success: true, applicationId: applicationId, status: newStatus, reviewedAt: now };
+}
+
+function handleGetApplicationForAttestation(data) {
+  var applicationId = (data.applicationId || data.appId || '').trim();
+  if (!applicationId) return { success: false, error: 'MISSING_APP_ID' };
+  
+  var db = getDb();
+  var appDataSheet = db.getSheetByName(SHEETS.APPLICATION_DATA);
+  if (!appDataSheet) return { success: false, error: 'SHEET_NOT_FOUND' };
+  
+  var rows = appDataSheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] && rows[i][0].toString().trim() === applicationId) {
+      var rawJson = rows[i][rows[i].length - 2];
+      var parsedData = {};
+      try { parsedData = JSON.parse(rawJson); } catch (e) {}
+      
+      return {
+        success: true,
+        application: {
+          applicationId: applicationId,
+          applicantName: rows[i][2],
+          email: rows[i][3],
+          mobileNumber: rows[i][4],
+          personal: parsedData.personal || { name: rows[i][2] },
+          church: parsedData.church || { name: rows[i][17] },
+          spiritual: parsedData.spiritual || { ministryCalling: rows[i][13] },
+          references: parsedData.references || {}
+        }
+      };
+    }
+  }
+  return { success: false, error: 'NOT_FOUND' };
+}
+
+function handleAttestApplication(data) {
+  var applicationId = (data.applicationId || data.appId || '').trim();
+  var refKey = (data.refKey || 'ref1').trim();
+  var refereeName = (data.refereeName || '').trim();
+  var dioceseId = (data.dioceseId || '').trim();
+  var knownDuration = (data.knownDuration || '').trim();
+  var mode = (data.mode || 'personally').trim();
+  var phone = (data.phone || '').trim();
+  var signature = (data.signature || '').trim();
+  var now = new Date().toISOString();
+  
+  if (!applicationId || !refereeName) {
+    return { success: false, error: 'MISSING_REQUIRED_FIELDS' };
+  }
+  
+  var db = getDb();
+  var appSheet = db.getSheetByName(SHEETS.APPLICATIONS);
+  var appDataSheet = db.getSheetByName(SHEETS.APPLICATION_DATA);
+  var auditSheet = db.getSheetByName(SHEETS.ADMIN_ACTIONS);
+  
+  // 1. Update ApplicationData raw JSON & summary
+  if (appDataSheet) {
+    var dRows = appDataSheet.getDataRange().getValues();
+    for (var j = 1; j < dRows.length; j++) {
+      if (dRows[j][0] && dRows[j][0].toString().trim() === applicationId) {
+        var rawJson = dRows[j][dRows[j].length - 2];
+        var parsed = {};
+        try { parsed = JSON.parse(rawJson); } catch (e) {}
+        if (!parsed.references) parsed.references = {};
+        parsed.references[refKey] = {
+          name: refereeName,
+          dioceseId: dioceseId,
+          knownDuration: knownDuration,
+          mode: mode,
+          phone: phone,
+          signature: signature,
+          attestedAt: now,
+          status: 'ATTESTED'
+        };
+        
+        // Save back JSON
+        appDataSheet.getRange(j + 1, dRows[j].length - 1).setValue(JSON.stringify(parsed));
+        appDataSheet.getRange(j + 1, dRows[j].length).setValue(now);
+        break;
+      }
+    }
+  }
+  
+  // 2. Update overall status in Applications sheet
+  if (appSheet) {
+    var aRows = appSheet.getDataRange().getValues();
+    for (var k = 1; k < aRows.length; k++) {
+      if (aRows[k][0] && aRows[k][0].toString().trim() === applicationId) {
+        appSheet.getRange(k + 1, 6).setValue('ATTESTED_BY_REFEREE');
+        appSheet.getRange(k + 1, 8).setValue(now);
+        break;
+      }
+    }
+  }
+  
+  // 3. Log audit event
+  if (auditSheet) {
+    auditSheet.appendRow([
+      'AUD-' + Utilities.getUuid().substring(0, 8).toUpperCase(),
+      now, 'REFEREE', '', refereeName + ' (' + dioceseId + ')', 'REFEREE_ATTESTED', applicationId,
+      refKey.toUpperCase() + ' attested application in mode: ' + mode
+    ]);
+  }
+  
+  return { success: true, applicationId: applicationId, refKey: refKey, attestedAt: now };
+}
+
+function handleSendRefereeEmail(data) {
+  var refereeEmail = (data.refereeEmail || '').trim();
+  var refereeName = (data.refereeName || '').trim();
+  var applicantName = (data.applicantName || '').trim();
+  var applicationId = (data.applicationId || '').trim();
+  var refKey = (data.refKey || 'ref1').trim();
+  var attestationUrl = 'https://acidiocese.org/attest?appId=' + encodeURIComponent(applicationId) + '&ref=' + encodeURIComponent(refKey);
+  
+  if (!refereeEmail || !applicationId) {
+    return { success: false, error: 'MISSING_EMAIL_OR_APP_ID' };
+  }
+  
+  try {
+    var subject = 'Action Required: Official Diocesan Attestation for ' + applicantName + ' (' + applicationId + ')';
+    var body = 'Dear ' + (refereeName || 'Reverend Minister') + ',\n\n' +
+      applicantName + ' has submitted an official membership application (Application ID: ' + applicationId + ') to the Apostolic Council of India Diocese and named you as their official Diocesan Reference.\n\n' +
+      'Please review and complete your digital attestation by clicking the secure link below:\n\n' +
+      attestationUrl + '\n\n' +
+      'You can verify the applicant and endorse their application directly on your phone or computer.\n\n' +
+      'Blessings,\n' +
+      'Central Diocesan Office\n' +
+      'Apostolic Council of India Diocese\n' +
+      'Melapatty, Dindigul - 624 054, Tamil Nadu';
+      
+    MailApp.sendEmail(refereeEmail, subject, body);
+    return { success: true, refereeEmail: refereeEmail, applicationId: applicationId };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
 }
