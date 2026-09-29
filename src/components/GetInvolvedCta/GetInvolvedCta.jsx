@@ -32,7 +32,7 @@ export default function GetInvolvedCta() {
 
           <div className="gi-cta-btn-wrap">
             <Link to="/get-involved" className="gi-cta-action-btn">
-              <span>{isTa ? 'இணையுங்கள் (Join Us)' : 'Join Us'}</span>
+              <span>{isTa ? 'இணையுங்கள்' : 'Get Involved'}</span>
               <ArrowRightIcon size={14} color="#000000" />
             </Link>
             <Link to="/get-involved/application" className="gi-cta-sub-link">

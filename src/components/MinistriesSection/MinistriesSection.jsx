@@ -6,57 +6,79 @@ import { CameraIcon, ArrowRightIcon } from '../Icons/SvgIcons'
 const activitiesList = [
   {
     id: 'ordination',
-    title: 'ORDINATION (பிரதிஷ்டை ஊழியம்)',
-    summary: 'Bi-annual Episcopal Ordination of fivefold ministers (Apostles, Prophets, Pastors, Teachers, Evangelists) actively laboring in God’s vineyard for at least 5 years.',
-    details: 'Ordination takes place twice a year at the Central Diocesan Office upon confession of faith and confirmation of calling as per the Word of God and Indian law to exercise Christian Episcopal rights.',
+    titleEn: 'ORDINATION',
+    titleTa: 'பிரதிஷ்டை ஊழியம்',
+    summaryEn: 'Bi-annual Episcopal Ordination of fivefold ministers (Apostles, Prophets, Pastors, Teachers, Evangelists) actively laboring in God’s vineyard for at least 5 years.',
+    summaryTa: 'தேவனின் திராட்சைத் தோட்டத்தில் குறைந்தது 5 ஆண்டுகள் உண்மையாய் பணியாற்றிய ஐவகை ஊழியர்களுக்கு வழங்கப்படும் எபிஸ்கோபல் பிரதிஷ்டை.',
+    detailsEn: 'Ordination takes place twice a year at the Central Diocesan Office upon confession of faith and confirmation of calling as per the Word of God and Indian law to exercise Christian Episcopal rights.',
+    detailsTa: 'விசுவாச அறிக்கை மற்றும் வேத அழைப்பின் உறுதிப்பாட்டின்படி மத்திய பேராய அலுவலகத்தில் ஆண்டுக்கு இருமுறை எபிஸ்கோபல் பிரதிஷ்டை ஆராதனை நடைபெறுகிறது.',
     cat: 'Ordination',
   },
   {
     id: 'wordsharingmeet',
-    title: 'WORD SHARING MEET (வார்த்தைப் பகிர்வு)',
-    summary: 'Diocesan members gather at regular intervals to search, learn, and enrich themselves in the Word of God under key theological titles.',
-    details: 'Equipping pastors and leaders with deep scriptural foundation, doctrinal clarity, and practical ministry tools.',
+    titleEn: 'WORD SHARING MEET',
+    titleTa: 'வார்த்தைப் பகிர்வு கூட்டம்',
+    summaryEn: 'Diocesan members gather at regular intervals to search, learn, and enrich themselves in the Word of God under key theological titles.',
+    summaryTa: 'பேராய அங்கத்தினர்கள் தேவ வார்த்தையை தேடி கற்றுக்கொள்ளவும், வேத அறிவில் ஆழமாய் வளரவும் ஒழுங்கு செய்யப்படும் ஐக்கியக் கூட்டங்கள்.',
+    detailsEn: 'Equipping pastors and leaders with deep scriptural foundation, doctrinal clarity, and practical ministry tools.',
+    detailsTa: 'போதகர்களுக்கும் தலைவர்களுக்கும் ஆழமான வேத அஸ்திபாரம், உபதேச தெளிவு மற்றும் ஊழிய திறன்களை வழங்குகிறது.',
     cat: 'Word Sharing Meet',
   },
   {
     id: 'zonalmeet',
-    title: 'ZONAL MEET (மண்டலக் கூட்டங்கள்)',
-    summary: 'Regional fellowship gatherings of existing and prospective members of ACI Diocese across zones in Tamil Nadu and India.',
-    details: 'Includes praise, worship, word teaching, and detailed synopsis of diocesan activities to encourage local church ministers.',
+    titleEn: 'ZONAL MEET',
+    titleTa: 'மண்டலக் கூட்டங்கள்',
+    summaryEn: 'Regional fellowship gatherings of existing and prospective members of ACI Diocese across zones in Tamil Nadu and India.',
+    summaryTa: 'மண்டல அளவில் பேராயத்தின் தற்போதைய மற்றும் வருங்கால உறுப்பினர்களை ஒன்றிணைக்கும் எழுப்புதல் ஐக்கியக் கூட்டங்கள்.',
+    detailsEn: 'Includes praise, worship, word teaching, and detailed synopsis of diocesan activities to encourage local church ministers.',
+    detailsTa: 'துதி, ஆராதனை மற்றும் தேவ செய்தி மூலம் மண்டல திருச்சபைகளும் போதகர்களும் ஆவியிலே உற்சாகப்படுத்தப்படுகின்றனர்.',
     cat: 'Zonal Meet',
   },
   {
     id: 'churchvisit',
-    title: 'CHURCH VISIT (சபை சந்திப்பு)',
-    summary: 'Trustees of the board accompanied by District Overseers (DOS) visit member churches as Apostle Paul did.',
-    details: 'Visiting local congregations to advise, equip, counsel, and pray with pastors and believers to strengthen their ministries.',
+    titleEn: 'CHURCH VISIT',
+    titleTa: 'சபை சந்திப்பு',
+    summaryEn: 'Trustees of the board accompanied by District Overseers (DOS) visit member churches as Apostle Paul did.',
+    summaryTa: 'அப்போஸ்தல பவுலைப் போல வாரிய அறங்காவலர்கள் மற்றும் மாவட்ட மேற்பார்வையாளர்கள் அங்கத்துவ சபைகளை நேரில் சந்திக்கின்றனர்.',
+    detailsEn: 'Visiting local congregations to advise, equip, counsel, and pray with pastors and believers to strengthen their ministries.',
+    detailsTa: 'ஸ்தல சபைகளை நேரில் சந்தித்து ஆலோசனைகள் வழங்கி, மேய்ப்பர்களையும் விசுவாசிகளையும் தேவ சமுகத்தில் தாங்கி ஜெபிக்கின்றனர்.',
     cat: 'Church Visit',
   },
   {
     id: 'childrenministry',
-    title: 'CHILDREN MINISTRY & VBS (சிறுவர் ஊழியம்)',
-    summary: 'Training Sunday School teachers, Children’s Clubs, VBS directors & teacher training, and equipping children’s ministers.',
-    details: 'Conducting comprehensive Vacation Bible School (VBS) training camps and equipping leaders to reach the next generation.',
+    titleEn: 'CHILDREN MINISTRY & VBS',
+    titleTa: 'சிறுவர் ஊழியம் & VBS',
+    summaryEn: 'Training Sunday School teachers, Children’s Clubs, VBS directors & teacher training, and equipping children’s ministers.',
+    summaryTa: 'ஞாயிறு பள்ளி ஆசிரியர் பயிற்சி, சிறுவர் மன்றங்கள், விபிஎஸ் (VBS) இயக்குனர் பயிற்சி மற்றும் சிறுவர் ஊழியர்களை உருவாக்குதல்.',
+    detailsEn: 'Conducting comprehensive Vacation Bible School (VBS) training camps and equipping leaders to reach the next generation.',
+    detailsTa: 'அடுத்த தலைமுறையை கிறிஸ்துவுக்குள் வழிநடத்த விரிவான விபிஎஸ் (VBS) பயிற்சி முகாம்கள் மற்றும் கருத்தரங்குகள் நடத்தப்படுகின்றன.',
     cat: 'Children Ministry',
   },
   {
     id: 'youthministry',
-    title: 'YOUTH MINISTRY (வாலிபர் ஊழியம்)',
-    summary: '4-Pillar development training for youth leaders and young believers.',
-    details: '1) Leadership Training, 2) Discipleship Training, 3) Personality Development, 4) Evangelism Skills.',
+    titleEn: 'YOUTH MINISTRY',
+    titleTa: 'வாலிபர் ஊழியம்',
+    summaryEn: '4-Pillar development training for youth leaders and young believers.',
+    summaryTa: 'இளைஞர்கள் மற்றும் வாலிப தலைவர்களுக்கான 4 தூண்கள் கொண்ட ஆவிக்குரிய ஆளுமை வளர்ச்சிப் பயிற்சி.',
+    detailsEn: '1) Leadership Training, 2) Discipleship Training, 3) Personality Development, 4) Evangelism Skills.',
+    detailsTa: '1) தலைமைத்துவப் பயிற்சி, 2) சீஷத்துவப் பயிற்சி, 3) ஆளுமை மேம்பாடு, 4) சுவிசேஷப் பகிர்வு திறன்கள்.',
     cat: 'Youth Ministry',
   },
   {
     id: 'outreach',
-    title: 'OUTREACH & MISSIONS (புறசந்திப்பு)',
-    summary: 'Forming 7-member Gospel teams from Diocese members to reach unreached areas alongside local churches.',
-    details: 'Reaching communities through children ministry, film shows, street preaching, tract distribution, and gospel crusades.',
+    titleEn: 'OUTREACH & MISSIONS',
+    titleTa: 'புறசந்திப்பு & சுவிசேஷ ஊழியம்',
+    summaryEn: 'Forming 7-member Gospel teams from Diocese members to reach unreached areas alongside local churches.',
+    summaryTa: 'பேராய உறுப்பினர்களில் 7 பேர் கொண்ட சுவிசேஷக் குழுக்களை உருவாக்கி சுவிசேஷம் சென்றடையாத பகுதிகளை சென்றடைதல்.',
+    detailsEn: 'Reaching communities through children ministry, film shows, street preaching, tract distribution, and gospel crusades.',
+    detailsTa: 'சிறுவர் ஊழியம், படக்காட்சிகள், தெருமுனைப் பிரசங்கங்கள், கைப்பிரதிகள் மற்றும் நற்செய்தி பெருங்கூட்டங்கள் மூலம் சுவிசேஷம் அறிவித்தல்.',
     cat: 'Others',
   },
 ]
 
 export default function MinistriesSection() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
+  const isTa = lang === 'ta'
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -122,16 +144,16 @@ export default function MinistriesSection() {
               }}
             >
               <span className="t-label" style={{ color: '#c8a96e', fontSize: '10.5px', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700 }}>
-                ACI DIOCESE ACTIVITY
+                {isTa ? 'ஏசிஐ பேராய செயல்பாடு' : 'ACI DIOCESE ACTIVITY'}
               </span>
               <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 600, marginTop: '10px', marginBottom: '14px', color: '#ffffff', lineHeight: 1.3 }}>
-                {act.title}
+                {isTa ? act.titleTa : act.titleEn}
               </h3>
               <p className="t-body" style={{ fontSize: '14px', lineHeight: '1.65', color: 'rgba(255,255,255,0.85)', marginBottom: '14px' }}>
-                {act.summary}
+                {isTa ? act.summaryTa : act.summaryEn}
               </p>
               <p className="t-body" style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>
-                {act.details}
+                {isTa ? act.detailsTa : act.detailsEn}
               </p>
 
               {/* View Photo Album Link */}
@@ -153,7 +175,7 @@ export default function MinistriesSection() {
                   onMouseLeave={(e) => { e.currentTarget.style.color = '#ffffff' }}
                 >
                   <CameraIcon size={14} color="#c8a96e" />
-                  <span>View {act.cat} Photos &amp; Albums</span>
+                  <span>{isTa ? 'புகைப்பட ஆல்பங்களைக் காண்க' : `View ${act.cat} Photos & Albums`}</span>
                   <ArrowRightIcon size={12} color="#c8a96e" />
                 </Link>
               </div>

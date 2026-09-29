@@ -128,8 +128,8 @@ export default function DiocesePage() {
                   <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.5vw, 34px)', color: '#ffffff', marginTop: '4px', marginBottom: '6px', fontWeight: 400 }}>
                     {isTa ? d.nameTa : d.nameEn}
                   </h2>
-                  <div style={{ fontSize: '13.5px', color: 'rgba(255,255,255,0.6)', fontWeight: 500, marginBottom: '16px' }}>
-                    {isTa ? d.nameEn : d.nameTa} • {isTa ? d.regionTa : d.region}
+                  <div style={{ fontSize: '13.5px', color: '#c8a96e', fontWeight: 500, marginBottom: '16px' }}>
+                    {isTa ? d.regionTa : d.region}
                   </div>
 
                   <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
