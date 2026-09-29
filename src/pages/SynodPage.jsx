@@ -146,8 +146,8 @@ export default function SynodPage() {
       sno: 5,
       regNo: 'TN 0058',
       name: 'Rt. Rev. John Samuel',
-      role: isTa ? 'பேராயர் ஆணையாளர் & அறங்காவலர்' : 'Archbishop Commissary / Trustee',
-      excelDesignation: 'Archbishop Commissary / Trustee',
+      role: isTa ? 'பேராயர் ஆணையாளர் & அறங்காவலர்' : "Archbishop's Commissary / Trustee",
+      excelDesignation: "Archbishop's Commissary / Trustee",
       image: '/trustees/trustee-5-john-samuel.jpg',
     },
   ]
@@ -225,7 +225,7 @@ export default function SynodPage() {
       name: 'Rev. R. Gnana Inbavanan',
       role: isTa ? 'D.O.S & சினோட் உறுப்பினர்' : 'D.O.S & Synod Member',
       excelDesignation: 'D.O.S & Synod Member',
-      image: '/aci-logo.png',
+      image: '/synod/council-gnana-inbavanan.jpg',
     },
     {
       sno: 15,

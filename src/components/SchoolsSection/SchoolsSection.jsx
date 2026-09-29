@@ -46,7 +46,7 @@ const synodMembersList = [
     sno: '5',
     tnNo: 'TN 0244',
     name: 'Rt. Rev. John Samuel',
-    role: 'Trustee & Pastor',
+    role: "Archbishop's Commissary / Trustee",
     email: 'john.samuelaft@gmail.com',
     ministry: 'AFT Ministry',
     exp: '15+ Years',

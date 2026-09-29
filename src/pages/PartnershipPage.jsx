@@ -48,7 +48,6 @@ export default function PartnershipPage() {
     <div style={S.page}>
       <div style={S.hero}>
         <div style={S.con}>
-          <p style={{ ...S.lbl, marginBottom: '16px' }}>{isTa ? 'பங்களிப்பு பக்கம்' : 'PARTNERSHIP PAGE'}</p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(30px,5vw,48px)', fontWeight: 400, marginBottom: '12px', color: '#fff' }}>
             {isTa ? 'பங்களிப்பு, ஜெபம் & விதைப்பதற்கான வாய்ப்புகள்' : 'Partnership, Prayer & Sowing'}
           </h1>
@@ -61,7 +60,6 @@ export default function PartnershipPage() {
       {/* PRAYER */}
       <section id="prayer" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 01' : 'Partnership · 01'}</p>
           <h2 style={S.h2}>{isTa ? 'ஜெபம் (Prayer)' : 'Prayer'}</h2>
           <div style={{ marginTop: '28px' }}>
             <ul style={S.ul}>
@@ -86,7 +84,6 @@ export default function PartnershipPage() {
       {/* PARTNER TESTIMONY */}
       <section id="partnertestimony" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 02' : 'Partnership · 02'}</p>
           <h2 style={S.h2}>{isTa ? 'பங்காளர் சாட்சி (Partner Testimony)' : 'Partner Testimony'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={{ ...S.p, color: 'rgba(255,255,255,0.55)', fontSize: '13px', textAlign: 'right', marginBottom: '4px' }}>Good Shepherd Revival Churches</p>
@@ -141,7 +138,6 @@ export default function PartnershipPage() {
       {/* CONTRIBUTIONS */}
       <section id="contributions" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 03' : 'Partnership · 03'}</p>
           <h2 style={S.h2}>{isTa ? 'பங்களிப்பு (Contributions)' : 'Contributions'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>Voluntarily fixing an amount of money for the development of our Diocese as monthly contribution.</p>
@@ -157,7 +153,6 @@ export default function PartnershipPage() {
       {/* DONATION */}
       <section id="donation" style={S.sec}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 04' : 'Partnership · 04'}</p>
           <h2 style={S.h2}>{isTa ? 'நன்கொடை (Donation)' : 'Donation'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>Those who are blessed by this Diocese can send their generous offering to the diocese to support the ministries of this diocese.</p>
@@ -172,7 +167,6 @@ export default function PartnershipPage() {
       {/* OPPORTUNITY TO SOW */}
       <section id="opportunitytosow" style={{ ...S.sec, borderBottom: 'none' }}>
         <div style={S.con}>
-          <p style={S.lbl}>{isTa ? 'பங்களிப்பு · 05' : 'Partnership · 05'}</p>
           <h2 style={S.h2}>{isTa ? 'விதைப்பதற்கான வாய்ப்புகள் (Opportunity to Sow)' : 'Opportunity to Sow'}</h2>
           <div style={{ marginTop: '28px' }}>
             <div style={S.quoteBlock}>

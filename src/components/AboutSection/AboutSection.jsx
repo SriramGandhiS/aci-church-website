@@ -148,7 +148,7 @@ const trusteesData = [
     sno: 5,
     nameEn: 'Rt. Rev. John Samuel',
     nameTa: 'பேரருட்திரு ஜான் சாமுவேல்',
-    roleEn: 'Archbishop Commissary & Trustee',
+    roleEn: "Archbishop's Commissary / Trustee",
     roleTa: 'பேராயர் ஆணையாளர் & அறங்காவலர்',
     image: '/trustees/trustee-5-john-samuel.jpg',
     imagePosition: 'center top',
