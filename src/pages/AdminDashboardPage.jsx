@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -19,18 +19,11 @@ export default function AdminDashboardPage() {
   const isTa = lang === 'ta'
   const navigate = useNavigate()
 
-  // Main navigation tab
-  const [activeTab, setActiveTab] = useState('applications') // 'applications' | 'subscriptions'
-
-  // Application vetting state
+  const [activeTab, setActiveTab] = useState('applications')
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('ALL')
-
-  // Subscriptions tab state
-  const [subSearch, setSubSearch] = useState('')
-  const [subFilter, setSubFilter] = useState('ALL')
   const [renewingId, setRenewingId] = useState(null)
   const [toastMessage, setToastMessage] = useState('')
 
@@ -84,25 +77,7 @@ export default function AdminDashboardPage() {
     }
   }
 
-  const filteredApps = applications.filter((app) => {
-    const matchesStatus =
-      statusFilter === 'ALL' ||
-      app.status === statusFilter ||
-      (statusFilter === 'PENDING' && (app.status === 'SUBMITTED' || app.status === 'UNDER_REVIEW'))
-
-    const q = searchTerm.toLowerCase().trim()
-    const matchesSearch =
-      !q ||
-      app.applicationId?.toLowerCase().includes(q) ||
-      app.applicantName?.toLowerCase().includes(q) ||
-      app.email?.toLowerCase().includes(q) ||
-      app.mobileNumber?.toLowerCase().includes(q) ||
-      app.cityTown?.toLowerCase().includes(q)
-
-    return matchesStatus && matchesSearch
-  })
-
-  const enrichedSubscriptions = applications.map((app) => {
+  const enrichedApplications = applications.map((app) => {
     const submittedDate = app.submittedAt ? new Date(app.submittedAt) : new Date('2026-01-01')
     const expiry = app.subscriptionExpiryDate ? new Date(app.subscriptionExpiryDate) : new Date(submittedDate.getTime() + 365 * 24 * 60 * 60 * 1000)
     const now = new Date()
@@ -129,21 +104,29 @@ export default function AdminDashboardPage() {
     }
   })
 
-  const filteredSubs = enrichedSubscriptions.filter((sub) => {
-    const matchesState =
-      subFilter === 'ALL' ||
-      sub.subState === subFilter
+  const filteredApps = enrichedApplications.filter((app) => {
+    let matchesStatus = true
+    if (statusFilter === 'ALL') {
+      matchesStatus = true
+    } else if (statusFilter === 'PENDING') {
+      matchesStatus = app.status === 'SUBMITTED' || app.status === 'UNDER_REVIEW'
+    } else if (statusFilter === 'EXPIRING') {
+      matchesStatus = app.subState === 'EXPIRING_SOON' || app.subState === 'EXPIRED'
+    } else {
+      matchesStatus = app.status === statusFilter
+    }
 
-    const q = subSearch.toLowerCase().trim()
+    const q = searchTerm.toLowerCase().trim()
     const matchesSearch =
       !q ||
-      sub.applicationId?.toLowerCase().includes(q) ||
-      sub.applicantName?.toLowerCase().includes(q) ||
-      sub.email?.toLowerCase().includes(q) ||
-      sub.mobileNumber?.toLowerCase().includes(q) ||
-      sub.district?.toLowerCase().includes(q)
+      app.applicationId?.toLowerCase().includes(q) ||
+      app.applicantName?.toLowerCase().includes(q) ||
+      app.email?.toLowerCase().includes(q) ||
+      app.mobileNumber?.toLowerCase().includes(q) ||
+      app.cityTown?.toLowerCase().includes(q) ||
+      app.district?.toLowerCase().includes(q)
 
-    return matchesState && matchesSearch
+    return matchesStatus && matchesSearch
   })
 
   const countTotal = applications.length
@@ -152,392 +135,591 @@ export default function AdminDashboardPage() {
   const countAccepted = applications.filter((a) => a.status === 'ACCEPTED').length
   const countRejected = applications.filter((a) => a.status === 'REJECTED').length
 
-  const subTotal = enrichedSubscriptions.filter(s => s.status === 'ACCEPTED').length
-  const subActive = enrichedSubscriptions.filter(s => s.status === 'ACCEPTED' && s.subState === 'ACTIVE').length
-  const subExpiring = enrichedSubscriptions.filter(s => s.status === 'ACCEPTED' && s.subState === 'EXPIRING_SOON').length
-  const subExpired = enrichedSubscriptions.filter(s => s.status === 'ACCEPTED' && s.subState === 'EXPIRED').length
+  const subTotal = enrichedApplications.filter(s => s.status === 'ACCEPTED').length
+  const subActive = enrichedApplications.filter(s => s.status === 'ACCEPTED' && s.subState === 'ACTIVE').length
+  const subExpiring = enrichedApplications.filter(s => s.status === 'ACCEPTED' && s.subState === 'EXPIRING_SOON').length
+  const subExpired = enrichedApplications.filter(s => s.status === 'ACCEPTED' && s.subState === 'EXPIRED').length
+
+  const handleWhatsAppReminder = (app) => {
+    const text = encodeURIComponent(
+      `Shalom Pastor ${app.applicantName},\n\nThis is an official notice from Apostolic Council of India Central Registry regarding your Diocesan Affiliation (${app.applicationId}).\n\nYour annual affiliation renewal is currently scheduled. Please visit the portal or contact the Secretariat to keep your credential active.\n\nBlessings,\nACI Diocese Central Administration`
+    )
+    const phone = app.mobileNumber ? app.mobileNumber.replace(/\D/g, '') : ''
+    const fullPhone = phone.length === 10 ? `91${phone}` : phone
+    window.open(`https://wa.me/${fullPhone}?text=${text}`, '_blank')
+  }
 
   return (
-    <div className="admin-page-container">
+    <div className="bento-canvas-wrapper">
       {toastMessage && (
-        <div className="admin-toast-banner">
+        <div className="bento-floating-toast">
           <span>✨ {toastMessage}</span>
           <button type="button" onClick={() => setToastMessage('')}>✕</button>
         </div>
       )}
 
-      <div className="admin-top-bar">
-        <div>
-          <div className="admin-badge">
-            <span>🛡️ ACI DIOCESE CENTRAL ADMINISTRATIVE PORTAL</span>
-          </div>
-          <h1 className="admin-page-title">
-            {isTa ? 'பேராய நிர்வாகக் கட்டுப்பாட்டு மையம்' : 'Central Executive Administration & Registry'}
-          </h1>
-          <p className="admin-page-sub">
-            {isTa
-              ? 'உறுப்பினர் விண்ணப்பங்களை ஆய்வு செய்தல், ஆண்டு சந்தா காலாவதி கண்காணிப்பு மற்றும் புதுப்பித்தல் மேலாண்மை.'
-              : 'Official vetting registry, applicant credential inspection, and annual subscription renewal monitoring.'}
-          </p>
-        </div>
-
-        <div className="admin-user-ctrl">
-          <span className="admin-user-email">Admin: <strong>{user?.email || 'Executive Admin'}</strong></span>
-          <button type="button" className="admin-logout-btn" onClick={logout}>
-            {isTa ? 'வெளியேறு' : 'Sign Out'}
-          </button>
-        </div>
-      </div>
-
-      <div className="admin-main-tabs">
-        <button
-          type="button"
-          className={`main-tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
-          onClick={() => setActiveTab('applications')}
-        >
-          <DocumentIcon size={18} />
-          <span>{isTa ? 'விண்ணப்பங்கள் சரிபார்ப்பு' : 'Applications & Vetting'}</span>
-          <span className="main-tab-count">{countTotal}</span>
-        </button>
-
-        <button
-          type="button"
-          className={`main-tab-btn ${activeTab === 'subscriptions' ? 'active' : ''}`}
-          onClick={() => setActiveTab('subscriptions')}
-        >
-          <UserCheckIcon size={18} />
-          <span>{isTa ? 'ஆண்டு சந்தா & உறுப்பினர் புதுப்பித்தல்' : 'Annual Subscriptions & Renewals'}</span>
-          <span className="main-tab-count text-gold">{subTotal}</span>
-        </button>
-      </div>
-
-      {activeTab === 'applications' && (
-        <div className="admin-tab-content">
-          <div className="admin-metrics-grid">
-            <div className="metric-card total" onClick={() => setStatusFilter('ALL')}>
-              <span className="metric-lbl">{isTa ? 'மொத்த விண்ணப்பங்கள்' : 'Total Applications'}</span>
-              <span className="metric-num">{countTotal}</span>
-            </div>
-            <div className="metric-card submitted" onClick={() => setStatusFilter('SUBMITTED')}>
-              <span className="metric-lbl">{isTa ? 'புதியவை' : 'New Submissions'}</span>
-              <span className="metric-num">{countSubmitted}</span>
-            </div>
-            <div className="metric-card review" onClick={() => setStatusFilter('UNDER_REVIEW')}>
-              <span className="metric-lbl">{isTa ? 'பரிசீலனையில்' : 'Under Review'}</span>
-              <span className="metric-num">{countUnderReview}</span>
-            </div>
-            <div className="metric-card accepted" onClick={() => setStatusFilter('ACCEPTED')}>
-              <span className="metric-lbl">{isTa ? 'அங்கீகரிக்கப்பட்டவை' : 'Accepted Members'}</span>
-              <span className="metric-num">{countAccepted}</span>
-            </div>
-            <div className="metric-card rejected" onClick={() => setStatusFilter('REJECTED')}>
-              <span className="metric-lbl">{isTa ? 'நிராகரிக்கப்பட்டவை' : 'Rejected'}</span>
-              <span className="metric-num">{countRejected}</span>
-            </div>
+      <div className="bento-dashboard-window">
+        {/* LEFT CAPSULE SIDEBAR DOCK */}
+        <aside className="bento-capsule-sidebar">
+          <div className="dock-top-brand">
+            <Link to="/" className="dock-brand-logo" title="ACI Diocese Home">
+              <span className="dock-shield-icon">✝</span>
+            </Link>
           </div>
 
-          <div className="admin-controls-card">
-            <div className="admin-search-wrap">
-              <SearchIcon size={16} />
-              <input
-                type="text"
-                placeholder={isTa ? 'விண்ணப்ப எண், பெயர், ஊர் அல்லது மின்னஞ்சல் மூலம் தேடுக...' : 'Search applications by ID, Name, Email, or City...'}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="admin-search-input"
-              />
-              {searchTerm && (
-                <button type="button" className="clear-search-btn" onClick={() => setSearchTerm('')}>✕</button>
-              )}
-            </div>
+          <div className="dock-nav-items">
+            <button
+              type="button"
+              className={`dock-btn ${activeTab === 'applications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('applications')}
+              title="Applications & Vetting"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="2"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="2"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="2"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="2"></rect>
+              </svg>
+            </button>
 
-            <div className="admin-filter-tabs">
-              <button
-                type="button"
-                className={`filter-tab ${statusFilter === 'ALL' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('ALL')}
-              >
-                All ({countTotal})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${statusFilter === 'SUBMITTED' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('SUBMITTED')}
-              >
-                Submitted ({countSubmitted})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${statusFilter === 'UNDER_REVIEW' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('UNDER_REVIEW')}
-              >
-                Under Review ({countUnderReview})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${statusFilter === 'ACCEPTED' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('ACCEPTED')}
-              >
-                Accepted ({countAccepted})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${statusFilter === 'REJECTED' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('REJECTED')}
-              >
-                Rejected ({countRejected})
-              </button>
-            </div>
+            <button
+              type="button"
+              className={`dock-btn ${activeTab === 'subscriptions' ? 'active' : ''}`}
+              onClick={() => setActiveTab('subscriptions')}
+              title="Annual Subscriptions"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className={`dock-btn ${activeTab === 'coordinators' ? 'active' : ''}`}
+              onClick={() => setActiveTab('coordinators')}
+              title="Diocesan Coordinators"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className={`dock-btn ${activeTab === 'trends' ? 'active' : ''}`}
+              onClick={() => setActiveTab('trends')}
+              title="Annual Trends & Analytics"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className={`dock-btn ${activeTab === 'settings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('settings')}
+              title="Diocesan Settings"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </button>
           </div>
 
-          {loading ? (
-            <div className="admin-loading-card">
-              <div className="app-dash-spinner" />
-              <p>{isTa ? 'விண்ணப்பங்கள் ஏற்றப்படுகின்றன...' : 'Loading applications from Google Sheets...'}</p>
+          <div className="dock-bottom-profile">
+            <div className="dock-avatar-chip" title={`Logged in as ${user?.email || 'Executive Admin'}`}>
+              <div className="dock-avatar-circle">
+                <span>{(user?.email?.[0] || 'A').toUpperCase()}</span>
+                <span className="dock-online-dot"></span>
+              </div>
             </div>
-          ) : filteredApps.length > 0 ? (
-            <div className="admin-table-card">
-              <table className="admin-data-table">
-                <thead>
-                  <tr>
-                    <th>App ID</th>
-                    <th>Applicant Name</th>
-                    <th>Email & Phone</th>
-                    <th>Ministry Function</th>
-                    <th>Location</th>
-                    <th>Submitted On</th>
-                    <th>Status</th>
-                    <th style={{ textAlign: 'center' }}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredApps.map((app) => (
-                    <tr key={app.applicationId}>
-                      <td className="font-mono font-bold text-gold">{app.applicationId}</td>
-                      <td>
-                        <div className="app-applicant-name-cell">
-                          <strong>{app.applicantName || '—'}</strong>
+            <button type="button" className="dock-logout-mini" onClick={logout} title="Sign Out">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </aside>
+
+        {/* MAIN EXECUTIVE DASHBOARD CONTENT AREA */}
+        <main className="bento-main-body">
+          {/* HEADER ROW */}
+          <header className="bento-header-row">
+            <div className="bento-header-left">
+              <div className="bento-crumb-tag">
+                <span className="bento-crumb-dot"></span>
+                <span>ACI DIOCESE • CENTRAL ADMINISTRATION</span>
+              </div>
+              <h1 className="bento-main-title">
+                Managing <span className="title-icon">⚙️</span> Your Diocese and <span className="title-icon">🪪</span> Workflows
+              </h1>
+            </div>
+
+            <div className="bento-header-actions">
+              <button
+                type="button"
+                className="bento-circle-action"
+                title="Diocese Settings"
+                onClick={() => setActiveTab('settings')}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+              </button>
+
+              <Link to="/membership-application" className="bento-pill-cta">
+                <span className="plus-symbol">+</span>
+                <span>Create a New Application</span>
+              </Link>
+            </div>
+          </header>
+
+          {/* HORIZONTAL CAPSULE PILL NAV TABS */}
+          <nav className="bento-pill-tabs-nav">
+            <button
+              type="button"
+              className={`pill-tab-item ${activeTab === 'applications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('applications')}
+            >
+              <span>{isTa ? 'விண்ணப்பங்கள் & சரிபார்ப்பு' : 'Applications & Vetting'}</span>
+              <span className="tab-pill-badge">{countTotal}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`pill-tab-item ${activeTab === 'subscriptions' ? 'active' : ''}`}
+              onClick={() => setActiveTab('subscriptions')}
+            >
+              <span>{isTa ? 'ஆண்டு சந்தா & புதுப்பித்தல்' : 'Annual Subscriptions'}</span>
+              <span className="tab-pill-badge lime-badge">{subTotal}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`pill-tab-item ${activeTab === 'coordinators' ? 'active' : ''}`}
+              onClick={() => setActiveTab('coordinators')}
+            >
+              <span>{isTa ? 'பேராய ஒருங்கிணைப்பாளர்கள்' : 'Diocesan Coordinators'}</span>
+              <span className="tab-pill-badge">3</span>
+            </button>
+
+            <button
+              type="button"
+              className={`pill-tab-item ${activeTab === 'trends' ? 'active' : ''}`}
+              onClick={() => setActiveTab('trends')}
+            >
+              <span>{isTa ? 'வளர்ச்சி புள்ளிவிவரங்கள்' : 'Annual Trends'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`pill-tab-item ${activeTab === 'settings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('settings')}
+            >
+              <span>{isTa ? 'கட்டமைப்பு அமைப்புகள்' : 'Diocesan Settings'}</span>
+            </button>
+          </nav>
+
+          {/* TOP BENTO ROW - 3 EXECUTIVE CARDS */}
+          <section className="bento-top-grid">
+            {/* CARD 1: APPLICATIONS OVERVIEW */}
+            <div className="bento-card bento-card-light">
+              <div className="bento-card-header">
+                <div>
+                  <span className="bento-card-label">{isTa ? 'விண்ணப்ப மேலாண்மை' : 'Applications Overview'}</span>
+                  <div className="bento-metric-large">{countTotal}</div>
+                </div>
+                <div className="bento-pill-indicator lime-indicator">
+                  <span>82% Active</span>
+                </div>
+              </div>
+
+              <div className="bento-capsule-meter-group">
+                <div className="meter-label-row">
+                  <span>Vetting Distribution</span>
+                  <span>{countAccepted} Approved / {countUnderReview + countSubmitted} Pending</span>
+                </div>
+                <div className="capsule-progress-bar">
+                  <div className="prog-pill dark-pill" style={{ width: `${Math.max(15, Math.min(80, (countAccepted / (countTotal || 1)) * 100))}%` }}></div>
+                  <div className="prog-pill lime-pill" style={{ width: `${Math.max(10, Math.min(50, ((countUnderReview + countSubmitted) / (countTotal || 1)) * 100))}%` }}></div>
+                  <div className="prog-pill slate-pill" style={{ width: `${Math.max(5, (countRejected / (countTotal || 1)) * 100)}%` }}></div>
+                </div>
+                <div className="meter-legend-row">
+                  <span className="legend-item"><span className="legend-dot dark-dot"></span> Accepted ({countAccepted})</span>
+                  <span className="legend-item"><span className="legend-dot lime-dot"></span> Review ({countUnderReview + countSubmitted})</span>
+                  <span className="legend-item"><span className="legend-dot slate-dot"></span> Rejected ({countRejected})</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD 2: VIBRANT NEON LIME ANNUAL SUBSCRIPTION CARD */}
+            <div className="bento-card bento-card-lime">
+              <div className="bento-card-header">
+                <div>
+                  <span className="bento-card-label-dark">{isTa ? 'ஆண்டு சந்தா மேலாண்மை' : 'Annual Subscriptions'}</span>
+                  <div className="bento-metric-large-dark">{subActive} Active</div>
+                </div>
+                <div className="bento-pill-indicator dark-indicator">
+                  <span>365-Day Cycle</span>
+                </div>
+              </div>
+
+              <div className="bento-capsule-meter-group lime-meter-theme">
+                <div className="meter-label-row dark-text">
+                  <span>Membership Expiry Status</span>
+                  <span>{subExpiring} Expiring &lt;30d</span>
+                </div>
+                <div className="capsule-progress-bar lime-track">
+                  <div className="prog-pill dark-solid-pill" style={{ width: `${Math.max(20, (subActive / (subTotal || 1)) * 100)}%` }}></div>
+                  <div className="prog-pill amber-solid-pill" style={{ width: `${Math.max(10, (subExpiring / (subTotal || 1)) * 100)}%` }}></div>
+                </div>
+                <div className="meter-legend-row dark-text">
+                  <span className="legend-item"><span className="legend-dot dark-dot"></span> Active ({subActive})</span>
+                  <span className="legend-item"><span className="legend-dot amber-dot"></span> Warning ({subExpiring})</span>
+                  <span className="legend-item"><span className="legend-dot red-dot"></span> Expired ({subExpired})</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD 3: DARK HERO SECRETARIAT COVER CARD */}
+            <div className="bento-card bento-card-dark-hero">
+              <div className="hero-watermark-crest">✝</div>
+              <div className="hero-content-wrap">
+                <div className="hero-badge">DIOCESE EXECUTIVE SECRETARIAT</div>
+                <h3 className="hero-title">
+                  {isTa ? 'பேராய உறுப்பினர் பதிவேடு & நெறிமுறை' : 'Diocese Registry & Ministerial Fellowship'}
+                </h3>
+                <p className="hero-desc">
+                  {isTa ? '1-வருட அங்கீகார முறைமை மற்றும் பேராய சான்றிதழ் மேலாண்மை மையம்.' : 'Official cloud vetting, credential renewal, and automated WhatsApp alert dispatch.'}
+                </p>
+                <div className="hero-action-row">
+                  <button
+                    type="button"
+                    className="hero-action-pill"
+                    onClick={() => loadApplications(user?.email || 'iamramm8@gmail.com')}
+                  >
+                    <span>Renew Registry</span>
+                    <span className="hero-arrow">▷</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* LOWER SPLIT LAYOUT (70% DATA / 30% ASIDE BENTO) */}
+          <div className="bento-lower-grid">
+            {/* LEFT MAIN DATA PANEL */}
+            <div className="bento-left-panel">
+              {/* CAPSULE STACKED STATS VISUALIZER */}
+              <div className="bento-stats-capsule-box">
+                <div className="stats-box-header">
+                  <div>
+                    <h4 className="stats-box-title">Diocesan Monthly Activity & Registrations</h4>
+                    <p className="stats-box-sub">Real-time candidate submissions and renewals by taluk centers</p>
+                  </div>
+                  <div className="stats-capsule-badge">
+                    <span>Weekly Trends</span>
+                  </div>
+                </div>
+
+                <div className="capsule-bars-visualizer">
+                  {[
+                    { day: 'Mon', val: 82, count: '82%', limeVal: 45 },
+                    { day: 'Tue', val: 64, count: '64%', limeVal: 30 },
+                    { day: 'Wed', val: 91, count: '91%', limeVal: 60 },
+                    { day: 'Thu', val: 75, count: '75%', limeVal: 40 },
+                    { day: 'Fri', val: 88, count: '88%', limeVal: 55 },
+                    { day: 'Sat', val: 95, count: '95%', limeVal: 70 },
+                    { day: 'Sun', val: 70, count: '70%', limeVal: 35 },
+                  ].map((bar, idx) => (
+                    <div className="capsule-col" key={idx}>
+                      <div className="capsule-pillar-track">
+                        <div className="capsule-pill-lime" style={{ height: `${bar.limeVal}%` }}>
+                          <span className="pill-tip-tag">{bar.count}</span>
                         </div>
-                      </td>
-                      <td>
-                        <div className="app-contact-cell">
-                          <span>{app.email}</span>
-                          {app.mobileNumber && <small className="text-muted">{app.mobileNumber}</small>}
-                        </div>
-                      </td>
-                      <td>{app.ministryFunction || 'Pastor'}</td>
-                      <td>{app.cityTown ? `${app.cityTown}, ${app.district || ''}` : '—'}</td>
-                      <td className="text-muted text-xs">
-                        {app.submittedAt ? new Date(app.submittedAt).toLocaleDateString() : 'Draft'}
-                      </td>
-                      <td>
-                        <span className={`admin-status-badge ${app.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                          {app.status}
-                        </span>
-                      </td>
-                      <td style={{ textAlign: 'center' }}>
-                        <Link
-                          to={`/admin/application/${encodeURIComponent(app.applicationId)}`}
-                          className="admin-view-btn"
-                        >
-                          <span>Review Form</span> →
-                        </Link>
-                      </td>
-                    </tr>
+                        <div className="capsule-pill-dark" style={{ height: `${bar.val - bar.limeVal}%` }}></div>
+                      </div>
+                      <span className="capsule-day-label">{bar.day}</span>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="admin-empty-card">
-              <p>{isTa ? 'பொருத்தமான விண்ணப்பங்கள் எதுவும் இல்லை.' : 'No matching applications found.'}</p>
-            </div>
-          )}
-        </div>
-      )}
+                </div>
+              </div>
 
-      {activeTab === 'subscriptions' && (
-        <div className="admin-tab-content">
-          <div className="admin-metrics-grid">
-            <div className="metric-card total" onClick={() => setSubFilter('ALL')}>
-              <span className="metric-lbl">{isTa ? 'மொத்த உறுப்பினர்கள்' : 'Affiliated Members'}</span>
-              <span className="metric-num">{subTotal}</span>
+              {/* SEARCH AND FILTER BAR */}
+              <div className="bento-table-controls">
+                <div className="bento-search-pill">
+                  <SearchIcon size={16} />
+                  <input
+                    type="text"
+                    placeholder={isTa ? 'பெயர், விண்ணப்ப எண், ஊர் அல்லது எண் மூலம் தேடுக...' : 'Search members by Name, ID, District, Phone...'}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  {searchTerm && (
+                    <button type="button" className="clear-btn" onClick={() => setSearchTerm('')}>✕</button>
+                  )}
+                </div>
+
+                <div className="bento-filter-pills">
+                  <button
+                    type="button"
+                    className={`filter-pill ${statusFilter === 'ALL' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('ALL')}
+                  >
+                    All ({applications.length})
+                  </button>
+                  <button
+                    type="button"
+                    className={`filter-pill ${statusFilter === 'PENDING' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('PENDING')}
+                  >
+                    Pending ({countUnderReview + countSubmitted})
+                  </button>
+                  <button
+                    type="button"
+                    className={`filter-pill ${statusFilter === 'ACCEPTED' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('ACCEPTED')}
+                  >
+                    Accepted ({countAccepted})
+                  </button>
+                  <button
+                    type="button"
+                    className={`filter-pill ${statusFilter === 'EXPIRING' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('EXPIRING')}
+                  >
+                    Expiring Soon ({subExpiring + subExpired})
+                  </button>
+                </div>
+              </div>
+
+              {/* DATA TABLE / LIST */}
+              <div className="bento-data-table-wrap">
+                {loading ? (
+                  <div className="bento-loading-box">
+                    <div className="bento-spinner"></div>
+                    <p>{isTa ? 'விண்ணப்பங்கள் ஏற்றப்படுகின்றன...' : 'Loading Diocese Applications & Registry...'}</p>
+                  </div>
+                ) : filteredApps.length === 0 ? (
+                  <div className="bento-empty-box">
+                    <span className="empty-icon">📁</span>
+                    <h4>{isTa ? 'விண்ணப்பங்கள் எதுவும் காணப்படவில்லை' : 'No Applications Found'}</h4>
+                    <p>{isTa ? 'தேடல் சொல்லை மாற்றி முயற்சிக்கவும்.' : 'Try adjusting your search query or filter selection.'}</p>
+                  </div>
+                ) : (
+                  <div className="bento-table-container">
+                    <table className="bento-table">
+                      <thead>
+                        <tr>
+                          <th>APPLICANT / MINISTRY</th>
+                          <th>ID</th>
+                          <th>DISTRICT</th>
+                          <th>ANNUAL SUBSCRIPTION</th>
+                          <th>STATUS</th>
+                          <th className="text-right">ACTIONS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredApps.map((app) => {
+                          const initials = (app.applicantName || 'Applicant')
+                            .split(' ')
+                            .map(n => n[0])
+                            .slice(0, 2)
+                            .join('')
+                            .toUpperCase()
+
+                          return (
+                            <tr key={app.applicationId || app.id} className="bento-row">
+                              {/* APPLICANT */}
+                              <td>
+                                <div className="applicant-cell">
+                                  <div className="applicant-avatar-chip">{initials}</div>
+                                  <div className="applicant-info">
+                                    <div className="applicant-name">{app.applicantName || 'Unnamed Candidate'}</div>
+                                    <div className="applicant-sub">{app.mobileNumber || app.email || 'No contact'}</div>
+                                  </div>
+                                </div>
+                              </td>
+
+                              {/* APP ID */}
+                              <td>
+                                <span className="app-id-pill">{app.applicationId || 'APP-ACI'}</span>
+                              </td>
+
+                              {/* DISTRICT */}
+                              <td>
+                                <span className="district-tag">{app.district || app.cityTown || 'Tamil Nadu'}</span>
+                              </td>
+
+                              {/* SUBSCRIPTION STATUS & EXPIRY */}
+                              <td>
+                                {app.status === 'ACCEPTED' ? (
+                                  <div className="sub-status-box">
+                                    {app.subState === 'ACTIVE' && (
+                                      <span className="sub-badge active-badge">
+                                        <span className="status-dot-pulse green-dot"></span>
+                                        <span>Active ({app.daysLeft}d left)</span>
+                                      </span>
+                                    )}
+                                    {app.subState === 'EXPIRING_SOON' && (
+                                      <span className="sub-badge warning-badge">
+                                        <span className="status-dot-pulse amber-dot"></span>
+                                        <span>Expiring ({app.daysLeft}d left)</span>
+                                      </span>
+                                    )}
+                                    {app.subState === 'EXPIRED' && (
+                                      <span className="sub-badge expired-badge">
+                                        <span className="status-dot-pulse red-dot"></span>
+                                        <span>Expired ({Math.abs(app.daysLeft)}d ago)</span>
+                                      </span>
+                                    )}
+                                    <span className="sub-date-sub">
+                                      Renews: {app.expiryDate ? app.expiryDate.toLocaleDateString() : 'Annual'}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <span className="sub-badge vetting-badge">
+                                    <span>Vetting in progress</span>
+                                  </span>
+                                )}
+                              </td>
+
+                              {/* STATUS PILL */}
+                              <td>
+                                {app.status === 'ACCEPTED' && <span className="status-pill status-accepted">Approved</span>}
+                                {app.status === 'SUBMITTED' && <span className="status-pill status-submitted">New</span>}
+                                {app.status === 'UNDER_REVIEW' && <span className="status-pill status-review">In Review</span>}
+                                {app.status === 'REJECTED' && <span className="status-pill status-rejected">Rejected</span>}
+                              </td>
+
+                              {/* ACTIONS */}
+                              <td className="text-right">
+                                <div className="row-actions-group">
+                                  <Link
+                                    to={`/admin/application/${app.applicationId}`}
+                                    className="row-action-btn view-btn"
+                                    title="Inspect Application & Credentials"
+                                  >
+                                    View
+                                  </Link>
+
+                                  <button
+                                    type="button"
+                                    className="row-action-btn wa-btn"
+                                    onClick={() => handleWhatsAppReminder(app)}
+                                    title="Send WhatsApp Renewal Notice"
+                                  >
+                                    WA
+                                  </button>
+
+                                  {app.status === 'ACCEPTED' && (
+                                    <button
+                                      type="button"
+                                      className="row-action-btn renew-btn"
+                                      onClick={() => handleRenewSubscription(app.applicationId)}
+                                      disabled={renewingId === app.applicationId}
+                                      title="Extend Subscription for +1 Year (365 Days)"
+                                    >
+                                      {renewingId === app.applicationId ? '...' : '+1Y'}
+                                    </button>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="metric-card accepted" onClick={() => setSubFilter('ACTIVE')}>
-              <span className="metric-lbl">{isTa ? 'செயலில் உள்ளவை (>30 நாட்கள்)' : 'Active Subscriptions'}</span>
-              <span className="metric-num">{subActive}</span>
-            </div>
-            <div className="metric-card review" onClick={() => setSubFilter('EXPIRING_SOON')}>
-              <span className="metric-lbl">{isTa ? 'விரைவில் காலாவதியாகிறது (<=30)' : 'Expiring Soon (<=30d)'}</span>
-              <span className="metric-num">{subExpiring}</span>
-            </div>
-            <div className="metric-card rejected" onClick={() => setSubFilter('EXPIRED')}>
-              <span className="metric-lbl">{isTa ? 'காலாவதியானவை' : 'Expired Subscriptions'}</span>
-              <span className="metric-num">{subExpired}</span>
-            </div>
+
+            {/* RIGHT ASIDE BENTO QUICK ACCESS WIDGETS */}
+            <aside className="bento-right-aside">
+              <div className="aside-bento-card">
+                <div className="aside-card-top">
+                  <div className="aside-icon-box">🏛️</div>
+                  <span className="aside-badge">ACTIVE DESK</span>
+                </div>
+                <h4 className="aside-card-title">Synod Council Desk</h4>
+                <p className="aside-card-desc">
+                  Central executive board review, ordination validation, and bishopric protocol.
+                </p>
+                <div className="aside-card-footer">
+                  <span className="aside-count-tag">12 Trustees</span>
+                  <button type="button" className="aside-arrow-btn" title="Open Synod Desk">↗</button>
+                </div>
+              </div>
+
+              <div className="aside-bento-card">
+                <div className="aside-card-top">
+                  <div className="aside-icon-box">📍</div>
+                  <span className="aside-badge lime-aside-badge">VIRUDHUNAGAR</span>
+                </div>
+                <h4 className="aside-card-title">Diocesan Coordinators</h4>
+                <div className="aside-coord-list">
+                  <div className="coord-mini-item">
+                    <strong>Jeddiah Dhurai Raj</strong>
+                    <span>Sattur Taluk • 9994411422</span>
+                  </div>
+                  <div className="coord-mini-item">
+                    <strong>James</strong>
+                    <span>Virudhunagar • 9629437495</span>
+                  </div>
+                  <div className="coord-mini-item">
+                    <strong>Selvakumar</strong>
+                    <span>Sivakasi • 8144603057</span>
+                  </div>
+                </div>
+                <div className="aside-card-footer">
+                  <span className="aside-count-tag">3 Coordinators Active</span>
+                  <button type="button" className="aside-arrow-btn" title="Manage Coordinators">↗</button>
+                </div>
+              </div>
+
+              <div className="aside-bento-card">
+                <div className="aside-card-top">
+                  <div className="aside-icon-box">📜</div>
+                  <span className="aside-badge">SECURE VAULT</span>
+                </div>
+                <h4 className="aside-card-title">Diocese Registry & Archives</h4>
+                <p className="aside-card-desc">
+                  Ministerial ordinations, government gazette affidavits, and membership certificates.
+                </p>
+                <div className="aside-card-footer">
+                  <span className="aside-count-tag">Cloud Sync OK</span>
+                  <button type="button" className="aside-arrow-btn" title="View Archives">↗</button>
+                </div>
+              </div>
+
+              <div className="aside-bento-card">
+                <div className="aside-card-top">
+                  <div className="aside-icon-box">📡</div>
+                  <span className="aside-badge">BROADCAST</span>
+                </div>
+                <h4 className="aside-card-title">Diocese Media & Bulletins</h4>
+                <p className="aside-card-desc">
+                  Publish notices, convention circulars, and prayer gallery updates directly to members.
+                </p>
+                <div className="aside-card-footer">
+                  <Link to="/gallery" className="aside-count-tag">View Gallery</Link>
+                  <Link to="/gallery" className="aside-arrow-btn" title="Open Media Desk">↗</Link>
+                </div>
+              </div>
+            </aside>
           </div>
-
-          <div className="admin-controls-card">
-            <div className="admin-search-wrap">
-              <SearchIcon size={16} />
-              <input
-                type="text"
-                placeholder={isTa ? 'உறுப்பினர் பெயர், ID, மின்னஞ்சல், அலைபேசி அல்லது மாவட்டம் மூலம் தேடுக...' : 'Search members by Name, ID, Phone, District...'}
-                value={subSearch}
-                onChange={(e) => setSubSearch(e.target.value)}
-                className="admin-search-input"
-              />
-              {subSearch && (
-                <button type="button" className="clear-search-btn" onClick={() => setSubSearch('')}>✕</button>
-              )}
-            </div>
-
-            <div className="admin-filter-tabs">
-              <button
-                type="button"
-                className={`filter-tab ${subFilter === 'ALL' ? 'active' : ''}`}
-                onClick={() => setSubFilter('ALL')}
-              >
-                All Members ({enrichedSubscriptions.length})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${subFilter === 'ACTIVE' ? 'active' : ''}`}
-                onClick={() => setSubFilter('ACTIVE')}
-              >
-                Active ({subActive})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${subFilter === 'EXPIRING_SOON' ? 'active' : ''}`}
-                onClick={() => setSubFilter('EXPIRING_SOON')}
-              >
-                Expiring Soon ({subExpiring})
-              </button>
-              <button
-                type="button"
-                className={`filter-tab ${subFilter === 'EXPIRED' ? 'active' : ''}`}
-                onClick={() => setSubFilter('EXPIRED')}
-              >
-                Expired ({subExpired})
-              </button>
-            </div>
-          </div>
-
-          {loading ? (
-            <div className="admin-loading-card">
-              <div className="app-dash-spinner" />
-              <p>{isTa ? 'சந்தா பதிவேடு ஏற்றப்படுகிறது...' : 'Loading annual subscriptions registry...'}</p>
-            </div>
-          ) : filteredSubs.length > 0 ? (
-            <div className="admin-table-card">
-              <table className="admin-data-table">
-                <thead>
-                  <tr>
-                    <th>Diocesan ID</th>
-                    <th>Member Details</th>
-                    <th>Calling / District</th>
-                    <th>Affiliation Date</th>
-                    <th>Annual Expiry Date</th>
-                    <th>Validity Countdown</th>
-                    <th>Status</th>
-                    <th style={{ textAlign: 'center' }}>Renewal & Contact Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredSubs.map((sub) => {
-                    const isRenewing = renewingId === sub.applicationId
-                    const waPhone = sub.mobileNumber ? sub.mobileNumber.replace(/[^0-9]/g, '') : ''
-                    const waText = encodeURIComponent(
-                      `Greetings from Apostolic Council of India Diocese.\\n\\nDear ${sub.applicantName},\\nThis is an official notice regarding your Annual Ministerial Affiliation (ID: ${sub.applicationId}).\\nExpiry Date: ${sub.expiryDate.toLocaleDateString()}\\nDays Left: ${sub.daysLeft > 0 ? sub.daysLeft : 'Expired'}.\\n\\nPlease complete your annual renewal to maintain your active diocesan standing.\\n\\nSecretariat Contact: +91 93457 12307`
-                    )
-
-                    return (
-                      <tr key={sub.applicationId}>
-                        <td className="font-mono font-bold text-gold">{sub.applicationId}</td>
-                        <td>
-                          <div className="app-applicant-name-cell">
-                            <strong>{sub.applicantName || '—'}</strong>
-                            <small className="text-muted">{sub.email}</small>
-                            {sub.mobileNumber && <small className="text-muted">📞 {sub.mobileNumber}</small>}
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            <span>{sub.ministryFunction || 'Episcopal Minister'}</span>
-                            <small className="text-muted d-block">{sub.district || sub.cityTown || '—'}</small>
-                          </div>
-                        </td>
-                        <td className="text-xs text-muted">
-                          {sub.submittedDate.toLocaleDateString()}
-                        </td>
-                        <td className="text-xs font-bold text-gold">
-                          {sub.expiryDate.toLocaleDateString()}
-                        </td>
-                        <td>
-                          <div className="sub-countdown-cell">
-                            {sub.daysLeft > 30 ? (
-                              <span className="sub-days-tag green">🟢 {sub.daysLeft} days left</span>
-                            ) : sub.daysLeft > 0 ? (
-                              <span className="sub-days-tag amber">⚠️ {sub.daysLeft} days left</span>
-                            ) : (
-                              <span className="sub-days-tag red">🔴 Expired ({Math.abs(sub.daysLeft)}d ago)</span>
-                            )}
-                          </div>
-                        </td>
-                        <td>
-                          <span className={`admin-status-badge ${sub.subState.toLowerCase().replace(/_/g, '-')}`}>
-                            {sub.subState}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="sub-actions-cell">
-                            <button
-                              type="button"
-                              className="admin-renew-action-btn"
-                              disabled={isRenewing}
-                              onClick={() => handleRenewSubscription(sub.applicationId)}
-                              title="Extend subscription for 1 Year"
-                            >
-                              {isRenewing ? 'Renewing...' : '🔄 +1 Year Renewal'}
-                            </button>
-
-                            {waPhone && (
-                              <a
-                                href={`https://wa.me/${waPhone.startsWith('91') ? waPhone : '91' + waPhone}?text=${waText}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="admin-wa-reminder-btn"
-                                title="Send WhatsApp renewal notice"
-                              >
-                                💬 WhatsApp
-                              </a>
-                            )}
-
-                            <Link
-                              to={`/admin/application/${encodeURIComponent(sub.applicationId)}`}
-                              className="admin-icon-link-btn"
-                              title="View Detailed Application"
-                            >
-                              📄
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="admin-empty-card">
-              <p>{isTa ? 'பொருத்தமான சந்தா பதிவுகள் எதுவும் இல்லை.' : 'No matching subscription records found.'}</p>
-            </div>
-          )}
-        </div>
-      )}
-
+        </main>
+      </div>
     </div>
   )
 }
-
