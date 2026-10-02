@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAuth } from '../../context/AuthContext'
 import { SearchIcon } from '../Icons/SvgIcons'
+import UserProfileModal from '../Profile/UserProfileModal'
 import './Header.css'
 
 export default function Header({ onMenuOpen }) {
@@ -10,6 +11,7 @@ export default function Header({ onMenuOpen }) {
   const { user, isAdmin, openAuthModal } = useAuth()
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [profileModalOpen, setProfileModalOpen] = useState(false)
   const headerRef = useRef(null)
   const timeoutRef = useRef(null)
   const location = useLocation()
@@ -148,204 +150,216 @@ export default function Header({ onMenuOpen }) {
   ]
 
   return (
-    <header
-      ref={headerRef}
-      className={`site-header${isScrolled ? ' scrolled' : ''}`}
-      role="banner"
-    >
-      <div className="header-inner">
+    <>
+      <header
+        ref={headerRef}
+        className={`site-header${isScrolled ? ' scrolled' : ''}`}
+        role="banner"
+      >
+        <div className="header-inner">
 
-        {/* ---- Brand Logo ---- */}
-        <Link to="/" className="header-logo" aria-label="ACI Diocese Home">
-          <img
-            src="/aci-logo.png"
-            alt="ACI Diocese Seal"
-            className="logo-img"
-            onError={(e) => { e.target.src = '/aci-logo.jpg' }}
-          />
-          <div className="logo-text">
-            <span className="logo-name">{t('common.siteName')}</span>
-            <span className="logo-tagline">{t('common.tagline')}</span>
-          </div>
-        </Link>
+          {/* ---- Brand Logo ---- */}
+          <Link to="/" className="header-logo" aria-label="ACI Diocese Home">
+            <img
+              src="/aci-logo.png"
+              alt="ACI Diocese Seal"
+              className="logo-img"
+              onError={(e) => { e.target.src = '/aci-logo.jpg' }}
+            />
+            <div className="logo-text">
+              <span className="logo-name">{t('common.siteName')}</span>
+              <span className="logo-tagline">{t('common.tagline')}</span>
+            </div>
+          </Link>
 
-        {/* ---- Desktop Navigation ---- */}
-        <nav className="header-nav" aria-label="Main navigation">
-          <ul className="nav-list" role="list">
-            {localizedNav.map((item, idx) => (
-              <li
-                key={idx}
-                className={`nav-item${item.hasDropdown ? ' has-dropdown' : ''}${activeDropdown === idx ? ' active' : ''}`}
-                onMouseEnter={() => item.hasDropdown && openDropdown(idx)}
-                onMouseLeave={() => item.hasDropdown && scheduleClose()}
-              >
-                {item.hasDropdown ? (
-                  <>
-                    <Link
-                      to={item.href}
-                      className="nav-link t-nav"
-                      aria-expanded={activeDropdown === idx}
-                      aria-haspopup="true"
-                      aria-controls={`dropdown-${idx}`}
-                      onClick={() =>
-                        setActiveDropdown(activeDropdown === idx ? null : idx)
-                      }
-                    >
-                      <span>{item.label}</span>
-                      <svg
-                        className="chevron"
-                        width="9"
-                        height="5"
-                        viewBox="0 0 10 6"
-                        fill="none"
-                        aria-hidden="true"
+          {/* ---- Desktop Navigation ---- */}
+          <nav className="header-nav" aria-label="Main navigation">
+            <ul className="nav-list" role="list">
+              {localizedNav.map((item, idx) => (
+                <li
+                  key={idx}
+                  className={`nav-item${item.hasDropdown ? ' has-dropdown' : ''}${activeDropdown === idx ? ' active' : ''}`}
+                  onMouseEnter={() => item.hasDropdown && openDropdown(idx)}
+                  onMouseLeave={() => item.hasDropdown && scheduleClose()}
+                >
+                  {item.hasDropdown ? (
+                    <>
+                      <Link
+                        to={item.href}
+                        className="nav-link t-nav"
+                        aria-expanded={activeDropdown === idx}
+                        aria-haspopup="true"
+                        aria-controls={`dropdown-${idx}`}
+                        onClick={() =>
+                          setActiveDropdown(activeDropdown === idx ? null : idx)
+                        }
                       >
-                        <path
-                          d="M1 1l4 4 4-4"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                        <span>{item.label}</span>
+                        <svg
+                          className="chevron"
+                          width="9"
+                          height="5"
+                          viewBox="0 0 10 6"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M1 1l4 4 4-4"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </Link>
+
+                      {/* Dropdown panel */}
+                      <div
+                        id={`dropdown-${idx}`}
+                        className={`dropdown-panel${activeDropdown === idx ? ' visible' : ''}`}
+                        role="menu"
+                        onMouseEnter={cancelClose}
+                        onMouseLeave={scheduleClose}
+                      >
+                        <ul role="list">
+                          {item.items.map((sub, si) => (
+                            <li key={si} role="none">
+                              <Link
+                                to={sub.href}
+                                className="dropdown-link"
+                                role="menuitem"
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                {sub.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  ) : (
+                    <Link to={item.href} className="nav-link t-nav">
+                      <span>{item.label}</span>
                     </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-                    {/* Dropdown panel */}
-                    <div
-                      id={`dropdown-${idx}`}
-                      className={`dropdown-panel${activeDropdown === idx ? ' visible' : ''}`}
-                      role="menu"
-                      onMouseEnter={cancelClose}
-                      onMouseLeave={scheduleClose}
-                    >
-                      <ul role="list">
-                        {item.items.map((sub, si) => (
-                          <li key={si} role="none">
-                            <Link
-                              to={sub.href}
-                              className="dropdown-link"
-                              role="menuitem"
-                              onClick={() => setActiveDropdown(null)}
-                            >
-                              {sub.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                ) : (
-                  <Link to={item.href} className="nav-link t-nav">
-                    <span>{item.label}</span>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
+          {/* ---- Right Controls: Language Converter + User Auth + Search Button + Hamburger ---- */}
+          <div className="header-controls">
 
-        {/* ---- Right Controls: Language Switcher + Member Search Button + Hamburger ---- */}
-        {/* ---- Right Controls: Language Converter + User Auth + Search Button + Hamburger ---- */}
-        <div className="header-controls">
-
-          {/* ---- Distinct Separated Language Converter ---- */}
-          <div className="header-lang-wrapper" aria-label="Language Converter">
-            <div className="lang-converter-pill" role="group" aria-label="Choose Language / மொழியைத் தேர்வு செய்க">
-              <span className="lang-globe-icon" aria-hidden="true" title="Language Converter / மொழி மாற்றி">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-              </span>
-              <div className="lang-toggle-track">
-                <button
-                  type="button"
-                  onClick={() => setLang('en')}
-                  className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-                  aria-pressed={lang === 'en'}
-                  title="English"
-                >
-                  EN
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLang('ta')}
-                  className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
-                  aria-pressed={lang === 'ta'}
-                  title="தமிழ் (Tamil)"
-                >
-                  தமிழ்
-                </button>
+            {/* ---- Language Converter ---- */}
+            <div className="header-lang-wrapper" aria-label="Language Converter">
+              <div className="lang-converter-pill" role="group" aria-label="Choose Language / மொழியைத் தேர்வு செய்க">
+                <span className="lang-globe-icon" aria-hidden="true" title="Language Converter / மொழி மாற்றி">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </span>
+                <div className="lang-toggle-track">
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+                    aria-pressed={lang === 'en'}
+                    title="English"
+                  >
+                    EN
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('ta')}
+                    className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+                    aria-pressed={lang === 'ta'}
+                    title="தமிழ் (Tamil)"
+                  >
+                    தமிழ்
+                  </button>
+                </div>
               </div>
+            </div>
+
+            <div className="header-actions-group">
+              {/* User Auth & Profile Button */}
+              {user ? (
+                <div className="header-auth-group">
+                  {isAdmin && (
+                    <Link
+                      to="/admin/applications"
+                      className="header-admin-pill"
+                      title="Admin Dashboard"
+                    >
+                      ADMIN
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setProfileModalOpen(true)}
+                    className="header-user-btn"
+                    title={`Signed in as: ${user.email}`}
+                  >
+                    <span className="header-user-avatar">
+                      {user.avatar ? (
+                        <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                      ) : (
+                        user.name?.charAt(0).toUpperCase() || 'U'
+                      )}
+                    </span>
+                    <span className="header-user-name">
+                      {user.name?.split(' ')[0] || 'Member'}
+                    </span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={openAuthModal}
+                  className="header-signin-btn"
+                >
+                  {lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
+                </button>
+              )}
+
+              {/* Search Button -> Member Directory */}
+              <Link
+                to="/directory"
+                className="icon-btn search-btn"
+                aria-label={t('nav.directory')}
+                title={lang === 'ta' ? 'அங்கத்தினர் தேடல் (Member Directory)' : 'Search Member Directory'}
+              >
+                <SearchIcon size={17} />
+              </Link>
+
+              {/* Mobile hamburger */}
+              <button
+                type="button"
+                className="icon-btn hamburger"
+                aria-label="Open navigation menu"
+                aria-expanded={false}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onMenuOpen?.()
+                }}
+              >
+                <span className="ham-line" />
+                <span className="ham-line" />
+                <span className="ham-line" />
+              </button>
             </div>
           </div>
 
-          <div className="header-actions-group">
-            {/* User Auth & Portal Button */}
-            {user ? (
-              <div className="header-auth-group">
-                {isAdmin && (
-                  <Link
-                    to="/admin/applications"
-                    className="header-admin-pill"
-                    title="Admin Dashboard"
-                  >
-                    ADMIN
-                  </Link>
-                )}
-                <Link
-                  to="/get-involved/status"
-                  className="header-user-btn"
-                  title={user.email}
-                >
-                  <span className="header-user-avatar">
-                    {user.name?.charAt(0).toUpperCase() || 'U'}
-                  </span>
-                  <span className="header-user-name">
-                    {user.name?.split(' ')[0] || 'Portal'}
-                  </span>
-                </Link>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={openAuthModal}
-                className="header-signin-btn"
-              >
-                {lang === 'ta' ? 'உள்நுழைக' : 'Sign In'}
-              </button>
-            )}
-
-            {/* Search Button -> Redirects directly to Member Directory Search */}
-            <Link
-              to="/directory"
-              className="icon-btn search-btn"
-              aria-label={t('nav.directory')}
-              title={lang === 'ta' ? 'அங்கத்தினர் தேடல் (Member Directory)' : 'Search Member Directory'}
-            >
-              <SearchIcon size={17} />
-            </Link>
-
-            {/* Mobile hamburger */}
-            <button
-              type="button"
-              className="icon-btn hamburger"
-              aria-label="Open navigation menu"
-              aria-expanded={false}
-              onClick={(e) => {
-                e.stopPropagation()
-                onMenuOpen?.()
-              }}
-            >
-              <span className="ham-line" />
-              <span className="ham-line" />
-              <span className="ham-line" />
-            </button>
-          </div>
         </div>
+      </header>
 
-      </div>
-    </header>
+      {/* User Profile & High Security Modal */}
+      <UserProfileModal 
+        isOpen={profileModalOpen} 
+        onClose={() => setProfileModalOpen(false)} 
+      />
+    </>
   )
 }

@@ -75,6 +75,9 @@ function handleRequest(e, method) {
       case 'admin_update_status':
         result = handleAdminUpdateStatus(data);
         break;
+      case 'admin_renew_subscription':
+        result = handleAdminRenewSubscription(data);
+        break;
       case 'attest_application':
         result = handleAttestApplication(data);
         break;
@@ -812,4 +815,40 @@ function handleGetCoordinators(data) {
     }
   }
   return { success: true, coordinators: list };
+}
+
+function handleAdminRenewSubscription(data) {
+  var applicationId = (data.applicationId || '').trim();
+  var yearsToAdd = data.years || 1;
+  var now = new Date().toISOString();
+  var nextExpiry = new Date(Date.now() + yearsToAdd * 365 * 24 * 60 * 60 * 1000).toISOString();
+  
+  var db = getDb();
+  var appSheet = db.getSheetByName(SHEETS.APPLICATIONS);
+  var auditSheet = db.getSheetByName(SHEETS.ADMIN_ACTIONS);
+  
+  if (appSheet) {
+    var rows = appSheet.getDataRange().getValues();
+    for (var i = 1; i < rows.length; i++) {
+      if (rows[i][0] && rows[i][0].toString().trim() === applicationId) {
+        appSheet.getRange(i + 1, 8).setValue(now); // updatedAt
+        break;
+      }
+    }
+  }
+  
+  if (auditSheet) {
+    auditSheet.appendRow([
+      'AUD-' + Utilities.getUuid().substring(0, 8).toUpperCase(),
+      now, 'ADMIN', '', 'admin@acidiocese.org', 'SUBSCRIPTION_RENEWED', applicationId,
+      'Annual affiliation renewed for ' + yearsToAdd + ' year(s). Valid until: ' + nextExpiry
+    ]);
+  }
+  
+  return {
+    success: true,
+    applicationId: applicationId,
+    subscriptionExpiryDate: nextExpiry,
+    message: 'Subscription renewed successfully for ' + yearsToAdd + ' year(s).'
+  };
 }

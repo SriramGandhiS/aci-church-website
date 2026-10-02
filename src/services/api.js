@@ -244,6 +244,7 @@ function handleLocalFallback(action, data) {
       const year = new Date().getFullYear()
       const seq = ('0000' + (apps.length + 1)).slice(-4)
       const officialAppId = (app?.applicationId && !app.applicationId.startsWith('DRAFT')) ? app.applicationId : `ACI-${year}-${seq}`
+      const oneYearExpiry = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
 
       if (app) {
         app.applicationId = officialAppId
@@ -254,6 +255,8 @@ function handleLocalFallback(action, data) {
         app.ministryFunction = formData.spiritual?.ministryFunction || app.ministryFunction
         app.status = 'SUBMITTED'
         app.submittedAt = now
+        app.subscriptionExpiryDate = app.subscriptionExpiryDate || oneYearExpiry
+        app.subscriptionStatus = app.subscriptionStatus || 'ACTIVE'
         app.data = formData
       } else {
         app = {
@@ -267,6 +270,8 @@ function handleLocalFallback(action, data) {
           ministryFunction: formData.spiritual?.ministryFunction || '',
           status: 'SUBMITTED',
           submittedAt: now,
+          subscriptionExpiryDate: oneYearExpiry,
+          subscriptionStatus: 'ACTIVE',
           data: formData
         }
         apps.push(app)
@@ -282,11 +287,56 @@ function handleLocalFallback(action, data) {
       })
       saveDocs(docs)
 
-      return { success: true, applicationId: officialAppId, status: 'SUBMITTED', submittedAt: now }
+      return { success: true, applicationId: officialAppId, status: 'SUBMITTED', submittedAt: now, subscriptionExpiryDate: oneYearExpiry }
     }
 
     case 'admin_list_applications': {
-      const apps = getApps().filter(a => !a.applicationId.startsWith('DRAFT'))
+      let apps = getApps().filter(a => !a.applicationId.startsWith('DRAFT'))
+      if (apps.length === 0) {
+        // Provide master seed dataset if none in localStorage yet
+        apps = [
+          {
+            applicationId: 'TN 0630',
+            applicantName: 'Rev. M. Jedidiah Durairaj',
+            email: 'jedidiah.durairaj@gmail.com',
+            mobileNumber: '9994411422',
+            ministryFunction: 'Sattur Taluk Coordinator / Episcopal Minister',
+            cityTown: 'Sattur',
+            district: 'Virudhunagar Diocese',
+            status: 'ACCEPTED',
+            submittedAt: '2026-01-10T11:00:00.000Z',
+            subscriptionExpiryDate: '2027-01-10T11:00:00.000Z',
+            subscriptionStatus: 'ACTIVE'
+          },
+          {
+            applicationId: 'TN 0637',
+            applicantName: 'Rev. S. James',
+            email: 'heavenjjames1986@gmail.com',
+            mobileNumber: '9629437495',
+            ministryFunction: 'Virudhunagar Coordinator / Episcopal Minister',
+            cityTown: 'Virudhunagar',
+            district: 'Virudhunagar Diocese',
+            status: 'ACCEPTED',
+            submittedAt: '2026-01-15T14:30:00.000Z',
+            subscriptionExpiryDate: '2027-01-15T14:30:00.000Z',
+            subscriptionStatus: 'ACTIVE'
+          },
+          {
+            applicationId: 'TN 0262',
+            applicantName: 'Rev. V. Joshua Selva Kumar',
+            email: 'selvagbc@gmail.com',
+            mobileNumber: '8144603057',
+            ministryFunction: 'Sivakasi Coordinator / Episcopal Minister',
+            cityTown: 'Sivakasi',
+            district: 'Virudhunagar Diocese',
+            status: 'ACCEPTED',
+            submittedAt: '2026-02-01T09:15:00.000Z',
+            subscriptionExpiryDate: '2027-02-01T09:15:00.000Z',
+            subscriptionStatus: 'ACTIVE'
+          }
+        ]
+        saveApps(apps)
+      }
       return { success: true, applications: apps }
     }
 
@@ -308,6 +358,10 @@ function handleLocalFallback(action, data) {
       app.reviewedAt = now
       app.reviewedBy = data.adminEmail
       app.rejectionReason = data.reason || ''
+      if (data.newStatus === 'ACCEPTED' && !app.subscriptionExpiryDate) {
+        app.subscriptionExpiryDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+        app.subscriptionStatus = 'ACTIVE'
+      }
       saveApps(apps)
 
       const hist = getHist()
@@ -323,6 +377,28 @@ function handleLocalFallback(action, data) {
       saveHist(hist)
 
       return { success: true, applicationId: data.applicationId, status: data.newStatus, reviewedAt: now, rejectionReason: data.reason }
+    }
+
+    case 'admin_renew_subscription': {
+      const apps = getApps()
+      const app = apps.find(a => a.applicationId === data.applicationId)
+      const yearsToAdd = data.years || 1
+      const currentExpiry = (app && app.subscriptionExpiryDate) ? new Date(app.subscriptionExpiryDate).getTime() : Date.now()
+      const baseTime = currentExpiry > Date.now() ? currentExpiry : Date.now()
+      const newExpiry = new Date(baseTime + yearsToAdd * 365 * 24 * 60 * 60 * 1000).toISOString()
+
+      if (app) {
+        app.subscriptionExpiryDate = newExpiry
+        app.subscriptionStatus = 'ACTIVE'
+        saveApps(apps)
+      }
+
+      return {
+        success: true,
+        applicationId: data.applicationId,
+        subscriptionExpiryDate: newExpiry,
+        message: `Subscription extended for ${yearsToAdd} year(s).`
+      }
     }
 
     case 'get_document_data': {
@@ -460,4 +536,5 @@ export const api = {
   adminUpdateStatus: (adminEmail, applicationId, status, rejectionReason, adminNotes) => callApi('admin_update_status', { adminEmail, applicationId, status, rejectionReason, adminNotes }),
   adminAddNote: (adminEmail, applicationId, note) => callApi('admin_add_note', { adminEmail, applicationId, note }),
   adminGetAuditLog: (adminEmail) => callApi('admin_get_audit_log', { adminEmail }),
+  adminRenewSubscription: (applicationId, years = 1) => callApi('admin_renew_subscription', { applicationId, years }),
 }

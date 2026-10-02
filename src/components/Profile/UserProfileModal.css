@@ -1,0 +1,448 @@
+.user-profile-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 16px;
+  animation: upmFadeIn 0.25s ease forwards;
+}
+
+@keyframes upmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.user-profile-modal-card {
+  background: #0f0f10;
+  border: 1px solid rgba(200, 169, 110, 0.35);
+  border-radius: 18px;
+  max-width: 540px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(200, 169, 110, 0.08);
+  animation: upmSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes upmSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.upm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: linear-gradient(180deg, rgba(200, 169, 110, 0.12) 0%, rgba(200, 169, 110, 0.02) 100%);
+  border-bottom: 1px solid rgba(200, 169, 110, 0.2);
+}
+
+.upm-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upm-shield-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(200, 169, 110, 0.15);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c8a96e;
+}
+
+.upm-brand-sub {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #c8a96e;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.upm-brand-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.upm-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.upm-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.upm-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.upm-identity-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.upm-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.upm-avatar-img, .upm-avatar-fallback {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 2px solid #c8a96e;
+  object-fit: cover;
+}
+
+.upm-avatar-fallback {
+  background: linear-gradient(135deg, #c8a96e 0%, #785a22 100%);
+  color: #0b0b0b;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upm-online-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #0f0f10;
+}
+
+.upm-identity-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.upm-user-name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #ffffff;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upm-user-email {
+  margin: 2px 0 8px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upm-tags-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.upm-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.upm-badge.admin-badge {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.upm-badge.member-badge {
+  background: rgba(200, 169, 110, 0.15);
+  color: #c8a96e;
+  border: 1px solid rgba(200, 169, 110, 0.3);
+}
+
+.upm-id-pill {
+  font-size: 0.72rem;
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* Subscription Box */
+.upm-sub-card {
+  background: #141416;
+  border: 1px solid rgba(200, 169, 110, 0.25);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.upm-sub-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.upm-sub-type-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c8a96e;
+  text-transform: uppercase;
+  display: block;
+}
+
+.upm-sub-title {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.upm-sub-status-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-expired {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-pending {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.upm-sub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.upm-sub-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.upm-stat-label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.upm-stat-val {
+  font-size: 0.88rem;
+  color: #f3f4f6;
+  font-weight: 600;
+}
+
+.text-gold { color: #c8a96e; }
+.text-amber { color: #f59e0b; }
+.text-green { color: #10b981; }
+
+.upm-sub-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.upm-sub-policy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: #9ca3af;
+  flex: 1;
+}
+
+.upm-sub-policy svg {
+  color: #c8a96e;
+  flex-shrink: 0;
+}
+
+.upm-renew-btn {
+  background: rgba(200, 169, 110, 0.12);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  color: #c8a96e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.upm-renew-btn:hover {
+  background: rgba(200, 169, 110, 0.25);
+  color: #ffffff;
+}
+
+.upm-renewal-modal-box {
+  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(200, 169, 110, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+.upm-renewal-modal-box h5 {
+  margin: 0 0 6px;
+  color: #c8a96e;
+  font-size: 0.85rem;
+}
+
+.upm-renewal-modal-box p {
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.upm-renew-contacts {
+  display: flex;
+  gap: 16px;
+  font-size: 0.78rem;
+  color: #f3f4f6;
+}
+
+/* Security Bar */
+.upm-security-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.upm-sec-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.upm-sec-item svg {
+  color: #10b981;
+}
+
+/* Footer */
+.upm-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.upm-btn-portal {
+  flex: 1;
+  background: linear-gradient(135deg, #c8a96e 0%, #a68444 100%);
+  color: #0b0b0b;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.upm-btn-portal:hover {
+  box-shadow: 0 4px 15px rgba(200, 169, 110, 0.3);
+}
+
+.upm-btn-admin {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #f87171;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.upm-btn-logout {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upm-btn-logout:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}

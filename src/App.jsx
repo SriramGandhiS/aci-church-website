@@ -6,6 +6,7 @@ import AuthModal from './components/Auth/AuthModal'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import MobileMenu from './components/MobileMenu/MobileMenu'
+import ProtectedAdminRoute from './components/Admin/ProtectedAdminRoute'
 
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
@@ -53,8 +54,25 @@ function App() {
               <Route path="/get-involved" element={<GetInvolvedPage />} />
               <Route path="/get-involved/application" element={<ApplicationPage />} />
               <Route path="/get-involved/status" element={<ApplicantDashboardPage />} />
-              <Route path="/admin/applications" element={<AdminDashboardPage />} />
-              <Route path="/admin/application/:id" element={<AdminApplicationDetailPage />} />
+              
+              {/* Strictly Protected Admin Routes */}
+              <Route
+                path="/admin/applications"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/application/:id"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminApplicationDetailPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+
               <Route path="/media" element={<MediaPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/gallery/album/:uniq" element={<AlbumPage />} />

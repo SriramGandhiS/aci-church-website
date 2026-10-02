@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAuth } from '../../context/AuthContext'
+import UserProfileModal from '../Profile/UserProfileModal'
 import './MobileMenu.css'
 
 export default function MobileMenu({ isOpen, onClose }) {
   const { lang, setLang, t } = useLanguage()
   const { user, isAdmin, openAuthModal, logout } = useAuth()
   const [openSubmenu, setOpenSubmenu] = useState(null)
+  const [profileModalOpen, setProfileModalOpen] = useState(false)
   const location = useLocation()
   const prevPathnameRef = useRef(location.pathname)
 
@@ -136,179 +138,193 @@ export default function MobileMenu({ isOpen, onClose }) {
   ]
 
   return (
-    <div
-      className={`mobile-menu${isOpen ? ' open' : ''}`}
-      aria-hidden={!isOpen}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Navigation menu"
-    >
-      <div className="mm-header">
-        <Link to="/" className="mm-logo" onClick={onClose}>
-          <img
-            src="/aci-logo.png"
-            alt="ACI Diocese"
-            className="mm-logo-img"
-            width="40"
-            height="40"
-            onError={(e) => { e.target.src = '/aci-logo.jpg' }}
-          />
-          <span className="mm-logo-name">{t('common.siteName')}</span>
-        </Link>
+    <>
+      <div
+        className={`mobile-menu${isOpen ? ' open' : ''}`}
+        aria-hidden={!isOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <div className="mm-header">
+          <Link to="/" className="mm-logo" onClick={onClose}>
+            <img
+              src="/aci-logo.png"
+              alt="ACI Diocese"
+              className="mm-logo-img"
+              width="40"
+              height="40"
+              onError={(e) => { e.target.src = '/aci-logo.jpg' }}
+            />
+            <span className="mm-logo-name">{t('common.siteName')}</span>
+          </Link>
 
-        {/* Mobile Language Switcher */}
-        <div className="mm-lang-wrapper" style={{ marginLeft: 'auto', marginRight: '10px' }}>
-          <div className="lang-converter-pill" role="group" aria-label="Language Selector">
-            <span className="lang-globe-icon" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-              </svg>
-            </span>
-            <div className="lang-toggle-track">
-              <button
-                type="button"
-                onClick={() => setLang('en')}
-                className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-                aria-pressed={lang === 'en'}
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                onClick={() => setLang('ta')}
-                className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
-                aria-pressed={lang === 'ta'}
-              >
-                தமிழ்
-              </button>
+          {/* Mobile Language Switcher */}
+          <div className="mm-lang-wrapper" style={{ marginLeft: 'auto', marginRight: '10px' }}>
+            <div className="lang-converter-pill" role="group" aria-label="Language Selector">
+              <span className="lang-globe-icon" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </span>
+              <div className="lang-toggle-track">
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+                  aria-pressed={lang === 'en'}
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('ta')}
+                  className={`lang-btn ${lang === 'ta' ? 'active' : ''}`}
+                  aria-pressed={lang === 'ta'}
+                >
+                  தமிழ்
+                </button>
+              </div>
             </div>
           </div>
+
+          <button
+            type="button"
+            className="mm-close"
+            onClick={onClose}
+            aria-label="Close navigation menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          </button>
         </div>
 
-        <button
-          type="button"
-          className="mm-close"
-          onClick={onClose}
-          aria-label="Close navigation menu"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        </button>
-      </div>
+        <nav className="mm-nav" aria-label="Mobile navigation">
+          <ul className="mm-list" role="list">
+            {localizedNav.map((item, idx) => (
+              <li key={idx} className="mm-item">
+                {item.hasDropdown ? (
+                  <div>
+                    <div className="mm-item-row">
+                      <Link
+                        to={item.href}
+                        className="mm-link"
+                        onClick={onClose}
+                      >
+                        {item.label}
+                      </Link>
+                      <button
+                        type="button"
+                        className={`mm-expand-btn${openSubmenu === idx ? ' open' : ''}`}
+                        aria-expanded={openSubmenu === idx}
+                        aria-label={`Toggle ${item.label} sub-links`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setOpenSubmenu(openSubmenu === idx ? null : idx)
+                        }}
+                      >
+                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                          <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
 
-      <nav className="mm-nav" aria-label="Mobile navigation">
-        <ul className="mm-list" role="list">
-          {localizedNav.map((item, idx) => (
-            <li key={idx} className="mm-item">
-              {item.hasDropdown ? (
-                <div>
-                  <div className="mm-item-row">
-                    <Link
-                      to={item.href}
-                      className="mm-link"
-                      onClick={onClose}
-                    >
-                      {item.label}
-                    </Link>
-                    <button
-                      type="button"
-                      className={`mm-expand-btn${openSubmenu === idx ? ' open' : ''}`}
-                      aria-expanded={openSubmenu === idx}
-                      aria-label={`Toggle ${item.label} sub-links`}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setOpenSubmenu(openSubmenu === idx ? null : idx)
-                      }}
-                    >
-                      <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
-                        <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </button>
+                    {openSubmenu === idx && (
+                      <ul className="mm-sublist" role="list">
+                        {item.items.map((sub, si) => (
+                          <li key={si} className="mm-subitem">
+                            <Link
+                              to={sub.href}
+                              className="mm-sublink"
+                              onClick={onClose}
+                            >
+                              {sub.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="mm-link"
+                    onClick={onClose}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
 
-                  {openSubmenu === idx && (
-                    <ul className="mm-sublist" role="list">
-                      {item.items.map((sub, si) => (
-                        <li key={si} className="mm-subitem">
-                          <Link
-                            to={sub.href}
-                            className="mm-sublink"
-                            onClick={onClose}
-                          >
-                            {sub.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  to={item.href}
-                  className="mm-link"
-                  onClick={onClose}
+          {/* Member Portal / Sign In CTA in Mobile Menu */}
+          <div style={{ padding: '16px 20px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            {user ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <button
+                  type="button"
+                  onClick={() => { setProfileModalOpen(true); }}
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
                 >
-                  {item.label}
+                  ✝️ {lang === 'ta' ? 'என் சுயவிவரம் & சந்தா' : 'My Profile & Subscription'}
+                </button>
+                <Link
+                  to="/get-involved/status"
+                  onClick={onClose}
+                  style={{ width: '100%', textAlign: 'center', background: 'rgba(255,255,255,0.08)', color: '#fff', padding: '8px 12px', borderRadius: '4px', fontSize: '12.5px', textDecoration: 'none' }}
+                >
+                  {lang === 'ta' ? 'விண்ணப்ப நிலை பக்கம்' : 'Applicant Status Page'}
                 </Link>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {/* Member Portal / Sign In CTA in Mobile Menu */}
-        <div style={{ padding: '16px 20px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          {user ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Link
-                to="/get-involved/status"
-                onClick={onClose}
+                {isAdmin && (
+                  <Link
+                    to="/admin/applications"
+                    onClick={onClose}
+                    style={{ width: '100%', textAlign: 'center', background: '#991b1b', color: '#fff', padding: '8px 12px', borderRadius: '4px', fontSize: '12.5px', fontWeight: 700, textDecoration: 'none' }}
+                  >
+                    {lang === 'ta' ? 'நிர்வாகக் குழு (ADMIN DASHBOARD)' : 'ADMIN DASHBOARD'}
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  onClick={() => { logout(); onClose(); }}
+                  style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '12px', cursor: 'pointer', paddingTop: '4px' }}
+                >
+                  {lang === 'ta' ? 'வெளியேறு (Sign Out)' : 'Sign Out'}
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => { onClose(); openAuthModal(); }}
                 className="btn btn-primary"
                 style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
               >
-                {lang === 'ta' ? 'விண்ணப்ப நிலை / பயனர் பக்கம்' : 'My Application & Portal'}
-              </Link>
-              {isAdmin && (
-                <Link
-                  to="/admin/applications"
-                  onClick={onClose}
-                  style={{ width: '100%', textAlign: 'center', background: '#991b1b', color: '#fff', padding: '8px 12px', borderRadius: '4px', fontSize: '12.5px', fontWeight: 700, textDecoration: 'none' }}
-                >
-                  {lang === 'ta' ? 'நிர்வாகக் குழு (ADMIN DASHBOARD)' : 'ADMIN DASHBOARD'}
-                </Link>
-              )}
-              <button
-                type="button"
-                onClick={() => { logout(); onClose(); }}
-                style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '12px', cursor: 'pointer', paddingTop: '4px' }}
-              >
-                {lang === 'ta' ? 'வெளியேறு (Sign Out)' : 'Sign Out'}
+                {lang === 'ta' ? 'உள்நுழைக / உறுப்பினர் பக்கம்' : 'Sign In to Portal'}
               </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => { onClose(); openAuthModal(); }}
-              className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
-            >
-              {lang === 'ta' ? 'உள்நுழைக / உறுப்பினர் பக்கம்' : 'Sign In to Portal'}
-            </button>
-          )}
-        </div>
-      </nav>
+            )}
+          </div>
+        </nav>
 
-      <div className="mm-footer">
-        <div className="mm-contact">
-          <p className="mm-contact-label">{t('common.officialDiocese')}</p>
-          <p className="mm-contact-text">Batlagundu & Dindigul, Tamil Nadu, India</p>
-          <p className="mm-contact-text">Email: rev.johnsondurai@gmail.com</p>
-          <p className="mm-contact-text">Mobile: +91 93457 12307</p>
+        <div className="mm-footer">
+          <div className="mm-contact">
+            <p className="mm-contact-label">{t('common.officialDiocese')}</p>
+            <p className="mm-contact-text">Batlagundu & Dindigul, Tamil Nadu, India</p>
+            <p className="mm-contact-text">Email: rev.johnsondurai@gmail.com</p>
+            <p className="mm-contact-text">Mobile: +91 93457 12307</p>
+          </div>
         </div>
       </div>
-    </div>
+
+      <UserProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
+    </>
   )
 }
