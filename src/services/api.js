@@ -396,6 +396,44 @@ function handleLocalFallback(action, data) {
       return { success: true, applicationId: data.appId, refKey: data.refKey, attestedAt: now }
     }
 
+    case 'get_coordinators': {
+      return {
+        success: true,
+        coordinators: [
+          {
+            dioceseId: 'virudhunagar',
+            dioceseName: 'ACI Virudhunagar Diocese',
+            name: 'Rev. M. Jedidiah Durairaj',
+            role: 'Sattur Taluk Coordinator',
+            church: 'Tamil Baptist Church, Sattur',
+            regNo: 'TN 0630',
+            email: 'jedidiah.durairaj@gmail.com',
+            phone: '9994411422'
+          },
+          {
+            dioceseId: 'virudhunagar',
+            dioceseName: 'ACI Virudhunagar Diocese',
+            name: 'Rev. S. James',
+            role: 'Virudhunagar Coordinator',
+            church: 'Divine Love Church, Virudhunagar',
+            regNo: 'TN 0637',
+            email: 'heavenjjames1986@gmail.com',
+            phone: '9629437495'
+          },
+          {
+            dioceseId: 'virudhunagar',
+            dioceseName: 'ACI Virudhunagar Diocese',
+            name: 'Rev. V. Joshua Selva Kumar',
+            role: 'Sivakasi Coordinator',
+            church: 'El-Bethel Prayer House, Sivakasi',
+            regNo: 'TN 0262',
+            email: 'selvagbc@gmail.com',
+            phone: '8144603057'
+          }
+        ]
+      }
+    }
+
     default:
       return { success: false, error: 'UNKNOWN_ACTION' }
   }
@@ -416,6 +454,7 @@ export const api = {
   getApplicationForAttestation: (appId) => callApi('get_application_for_attestation', { appId }),
   attestApplication: (payload) => callApi('attest_application', payload),
   sendRefereeEmail: (payload) => callApi('send_referee_email', payload),
+  getCoordinators: (dioceseId) => callApi('get_coordinators', { dioceseId }),
   adminListApplications: (adminEmail) => callApi('admin_list_applications', { adminEmail }),
   adminGetApplication: (adminEmail, applicationId) => callApi('admin_get_application', { adminEmail, applicationId }),
   adminUpdateStatus: (adminEmail, applicationId, status, rejectionReason, adminNotes) => callApi('admin_update_status', { adminEmail, applicationId, status, rejectionReason, adminNotes }),

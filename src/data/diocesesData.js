@@ -177,6 +177,41 @@ export const diocesesList = [
       { en: '7-Member Evangelistic Gospel Teams', ta: '7 நபர் நற்செய்தி சுவிசேஷக் குழுக்கள்' },
       { en: 'Family Enrichment & Pastoral Care Retreats', ta: 'குடும்ப ஆசீர்வாத முகாம்கள் & மேய்ப்பர் ஓய்வு நாட்கள்' },
       { en: 'Rural Literature & Film Ministry Wings', ta: 'கிராமப்புற வேத பிரசுரங்கள் & படக்காட்சி ஊழியம்' }
+    ],
+    coordinators: [
+      {
+        name: 'Rev. M. Jedidiah Durairaj',
+        nameTa: 'Rev. M. ஜெடிடியா துரைராஜ்',
+        roleEn: 'Sattur Taluk Coordinator',
+        roleTa: 'சாத்தூர் தாலுகா ஒருங்கிணைப்பாளர்',
+        church: 'Tamil Baptist Church, Sattur',
+        churchTa: 'தமிழ் பாப்டிஸ்ட் சர்ச், சாத்தூர்',
+        regNo: 'TN 0630',
+        email: 'jedidiah.durairaj@gmail.com',
+        phone: '9994411422'
+      },
+      {
+        name: 'Rev. S. James',
+        nameTa: 'Rev. S. ஜேம்ஸ்',
+        roleEn: 'Virudhunagar Coordinator',
+        roleTa: 'விருதுநகர் ஒருங்கிணைப்பாளர்',
+        church: 'Divine Love Church, Virudhunagar',
+        churchTa: 'டிவைன் லவ் சர்ச், விருதுநகர்',
+        regNo: 'TN 0637',
+        email: 'heavenjjames1986@gmail.com',
+        phone: '9629437495'
+      },
+      {
+        name: 'Rev. V. Joshua Selva Kumar',
+        nameTa: 'Rev. V. ஜோசுவா செல்வகுமார்',
+        roleEn: 'Sivakasi Coordinator',
+        roleTa: 'சிவகாசி ஒருங்கிணைப்பாளர்',
+        church: 'El-Bethel Prayer House, Sivakasi',
+        churchTa: 'எல்-பெத்தேல் ஜெப வீடு, சிவகாசி',
+        regNo: 'TN 0262',
+        email: 'selvagbc@gmail.com',
+        phone: '8144603057'
+      }
     ]
   },
   {

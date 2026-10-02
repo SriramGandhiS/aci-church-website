@@ -13,7 +13,8 @@ var SHEETS = {
   APPLICATION_DATA: 'ApplicationData',
   DOCUMENTS: 'Documents',
   ADMIN_ACTIONS: 'AdminActions',
-  SETTINGS: 'Settings'
+  SETTINGS: 'Settings',
+  COORDINATORS: 'Coordinators'
 };
 
 var ALLOWED_STATUS = {
@@ -82,6 +83,9 @@ function handleRequest(e, method) {
         break;
       case 'send_referee_email':
         result = handleSendRefereeEmail(data);
+        break;
+      case 'get_coordinators':
+        result = handleGetCoordinators(data);
         break;
       default:
         result = { success: false, error: 'INVALID_ACTION' };
@@ -188,6 +192,25 @@ function setupDatabase() {
     settingsSheet.appendRow(['APP_ID_COUNTER', '5', new Date().toISOString()]);
     settingsSheet.appendRow(['SYSTEM_VERSION', '2.0.0', new Date().toISOString()]);
     formatHeaderRow(settingsSheet);
+  }
+
+  // 7. Coordinators Sheet (Zonal & Taluk Coordinators for Dioceses)
+  var coordSheet = db.getSheetByName(SHEETS.COORDINATORS);
+  if (!coordSheet) {
+    coordSheet = db.insertSheet(SHEETS.COORDINATORS);
+  } else {
+    coordSheet.clear();
+  }
+  coordSheet.appendRow(['dioceseId', 'dioceseName', 'coordinatorName', 'role', 'church', 'regNo', 'email', 'phone', 'district', 'state', 'status', 'updatedAt']);
+  formatHeaderRow(coordSheet);
+
+  var sampleCoordinators = [
+    ['virudhunagar', 'ACI Virudhunagar Diocese', 'Rev. M. Jedidiah Durairaj', 'Sattur Taluk Coordinator', 'Tamil Baptist Church, Sattur', 'TN 0630', 'jedidiah.durairaj@gmail.com', '9994411422', 'Virudhunagar', 'Tamil Nadu', 'Active', new Date().toISOString()],
+    ['virudhunagar', 'ACI Virudhunagar Diocese', 'Rev. S. James', 'Virudhunagar Coordinator', 'Divine Love Church, Virudhunagar', 'TN 0637', 'heavenjjames1986@gmail.com', '9629437495', 'Virudhunagar', 'Tamil Nadu', 'Active', new Date().toISOString()],
+    ['virudhunagar', 'ACI Virudhunagar Diocese', 'Rev. V. Joshua Selva Kumar', 'Sivakasi Coordinator', 'El-Bethel Prayer House, Sivakasi', 'TN 0262', 'selvagbc@gmail.com', '8144603057', 'Virudhunagar', 'Tamil Nadu', 'Active', new Date().toISOString()]
+  ];
+  for (var cIdx = 0; cIdx < sampleCoordinators.length; cIdx++) {
+    coordSheet.appendRow(sampleCoordinators[cIdx]);
   }
   
   // Insert Sample Clean Records
@@ -724,4 +747,69 @@ function handleSendRefereeEmail(data) {
   } catch (err) {
     return { success: false, error: err.message };
   }
+}
+
+function handleGetCoordinators(data) {
+  var dioceseId = (data.dioceseId || '').trim();
+  var db = getDb();
+  var coordSheet = db.getSheetByName(SHEETS.COORDINATORS);
+  if (!coordSheet) {
+    return {
+      success: true,
+      coordinators: [
+        {
+          dioceseId: 'virudhunagar',
+          dioceseName: 'ACI Virudhunagar Diocese',
+          name: 'Rev. M. Jedidiah Durairaj',
+          role: 'Sattur Taluk Coordinator',
+          church: 'Tamil Baptist Church, Sattur',
+          regNo: 'TN 0630',
+          email: 'jedidiah.durairaj@gmail.com',
+          phone: '9994411422'
+        },
+        {
+          dioceseId: 'virudhunagar',
+          dioceseName: 'ACI Virudhunagar Diocese',
+          name: 'Rev. S. James',
+          role: 'Virudhunagar Coordinator',
+          church: 'Divine Love Church, Virudhunagar',
+          regNo: 'TN 0637',
+          email: 'heavenjjames1986@gmail.com',
+          phone: '9629437495'
+        },
+        {
+          dioceseId: 'virudhunagar',
+          dioceseName: 'ACI Virudhunagar Diocese',
+          name: 'Rev. V. Joshua Selva Kumar',
+          role: 'Sivakasi Coordinator',
+          church: 'El-Bethel Prayer House, Sivakasi',
+          regNo: 'TN 0262',
+          email: 'selvagbc@gmail.com',
+          phone: '8144603057'
+        }
+      ]
+    };
+  }
+
+  var rows = coordSheet.getDataRange().getValues();
+  var list = [];
+  for (var i = 1; i < rows.length; i++) {
+    var rowDioceseId = rows[i][0] ? rows[i][0].toString().trim() : '';
+    if (!dioceseId || rowDioceseId.toLowerCase() === dioceseId.toLowerCase()) {
+      list.push({
+        dioceseId: rows[i][0],
+        dioceseName: rows[i][1],
+        name: rows[i][2],
+        role: rows[i][3],
+        church: rows[i][4],
+        regNo: rows[i][5],
+        email: rows[i][6],
+        phone: rows[i][7],
+        district: rows[i][8],
+        state: rows[i][9],
+        status: rows[i][10]
+      });
+    }
+  }
+  return { success: true, coordinators: list };
 }

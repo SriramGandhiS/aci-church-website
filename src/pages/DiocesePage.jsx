@@ -314,6 +314,105 @@ export default function DiocesePage() {
                 </div>
               )}
 
+              {/* Zonal & Taluk Coordinators Section */}
+              {d.coordinators && d.coordinators.length > 0 && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(200, 169, 110, 0.22)',
+                  borderRadius: '6px',
+                  padding: '20px 24px',
+                  marginBottom: '24px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '10px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.12em', color: '#c8a96e', textTransform: 'uppercase' }}>
+                      {isTa ? 'மண்டல & தாலுகா ஒருங்கிணைப்பாளர்கள்' : 'ZONAL & TALUK COORDINATORS'}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
+                    {d.coordinators.map((coord, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: '#161616',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '6px',
+                          padding: '14px 16px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          gap: '10px'
+                        }}
+                      >
+                        <div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', marginBottom: '4px' }}>
+                            <h4 style={{ fontSize: '14.5px', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+                              {isTa ? (coord.nameTa || coord.name) : coord.name}
+                            </h4>
+                            {coord.regNo && (
+                              <span style={{ fontSize: '10.5px', color: '#c8a96e', background: 'rgba(200,169,110,0.12)', padding: '2px 6px', borderRadius: '3px', fontWeight: 600 }}>
+                                {coord.regNo}
+                              </span>
+                            )}
+                          </div>
+
+                          <div style={{ fontSize: '12px', color: '#c8a96e', fontWeight: 600, marginBottom: '4px' }}>
+                            {isTa ? coord.roleTa : coord.roleEn}
+                          </div>
+
+                          {coord.church && (
+                            <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.4 }}>
+                              {isTa ? (coord.churchTa || coord.church) : coord.church}
+                            </div>
+                          )}
+                        </div>
+
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                          {coord.phone && (
+                            <a
+                              href={`tel:${coord.phone}`}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                fontSize: '11.5px',
+                                color: '#e4caa0',
+                                textDecoration: 'none',
+                                background: 'rgba(200,169,110,0.1)',
+                                padding: '3px 8px',
+                                borderRadius: '4px'
+                              }}
+                            >
+                              <PhoneIcon size={11} color="#c8a96e" />
+                              <span>{coord.phone}</span>
+                            </a>
+                          )}
+                          {coord.email && (
+                            <a
+                              href={`mailto:${coord.email}`}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                fontSize: '11.5px',
+                                color: 'rgba(255,255,255,0.8)',
+                                textDecoration: 'none',
+                                background: 'rgba(255,255,255,0.04)',
+                                padding: '3px 8px',
+                                borderRadius: '4px'
+                              }}
+                            >
+                              <EmailIcon size={11} color="#c8a96e" />
+                              <span style={{ maxWidth: '140px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{coord.email}</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: d.address ? '0' : '20px' }}>
                 <Link to="/contact" style={{ background: '#ffffff', color: '#000000', padding: '10px 22px', fontSize: '13px', fontWeight: 700, textDecoration: 'none', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
