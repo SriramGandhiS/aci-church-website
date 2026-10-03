@@ -205,8 +205,8 @@
   border-radius: 4px;
 }
 
-/* Subscription Box */
-.upm-sub-card {
+/* Member Record Box */
+.upm-member-record-card {
   background: #141416;
   border: 1px solid rgba(200, 169, 110, 0.25);
   border-radius: 12px;
@@ -253,6 +253,12 @@
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
+.status-admin {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
 .status-warning {
   background: rgba(245, 158, 11, 0.15);
   color: #fbbf24;
@@ -273,8 +279,8 @@
 
 .upm-sub-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 12px;
   padding: 14px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -294,13 +300,14 @@
   font-size: 0.88rem;
   color: #f3f4f6;
   font-weight: 600;
+  word-break: break-word;
 }
 
 .text-gold { color: #c8a96e; }
 .text-amber { color: #f59e0b; }
 .text-green { color: #10b981; }
 
-.upm-sub-footer {
+.upm-member-info-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -318,54 +325,8 @@
 }
 
 .upm-sub-policy svg {
-  color: #c8a96e;
+  color: #10b981;
   flex-shrink: 0;
-}
-
-.upm-renew-btn {
-  background: rgba(200, 169, 110, 0.12);
-  border: 1px solid rgba(200, 169, 110, 0.3);
-  color: #c8a96e;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.upm-renew-btn:hover {
-  background: rgba(200, 169, 110, 0.25);
-  color: #ffffff;
-}
-
-.upm-renewal-modal-box {
-  margin-top: 12px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px dashed rgba(200, 169, 110, 0.3);
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 0.8rem;
-  color: #d1d5db;
-}
-
-.upm-renewal-modal-box h5 {
-  margin: 0 0 6px;
-  color: #c8a96e;
-  font-size: 0.85rem;
-}
-
-.upm-renewal-modal-box p {
-  margin: 0 0 8px;
-  line-height: 1.4;
-}
-
-.upm-renew-contacts {
-  display: flex;
-  gap: 16px;
-  font-size: 0.78rem;
-  color: #f3f4f6;
 }
 
 /* Security Bar */

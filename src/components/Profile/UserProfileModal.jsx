@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/api'
+import { ShieldIcon, UserCheckIcon, UsersIcon, CheckIcon, LogOutIcon } from '../Icons/SvgIcons'
 import './UserProfileModal.css'
 
 export default function UserProfileModal({ isOpen, onClose }) {
@@ -12,7 +13,6 @@ export default function UserProfileModal({ isOpen, onClose }) {
 
   const [application, setApplication] = useState(null)
   const [loadingApp, setLoadingApp] = useState(false)
-  const [showRenewalInfo, setShowRenewalInfo] = useState(false)
 
   useEffect(() => {
     if (isOpen && user?.email) {
@@ -38,44 +38,30 @@ export default function UserProfileModal({ isOpen, onClose }) {
 
   if (!isOpen || !user) return null
 
-  // Calculate annual subscription & expiry
-  const affiliatedDate = application?.submittedAt ? new Date(application.submittedAt) : new Date('2026-01-01')
+  const appData = application?.data || {}
   
-  let expiryDate = application?.subscriptionExpiryDate 
-    ? new Date(application.subscriptionExpiryDate) 
-    : new Date(affiliatedDate.getTime() + 365 * 24 * 60 * 60 * 1000)
+  const diocesanId = application?.applicationId || appData.applicationNumber || (isAdmin ? 'ACI-EXEC-001' : 'ACI-MEMBER')
+  const designation = appData.designation || (isAdmin ? 'Diocesan Executive Administrator' : 'Episcopal Minister / Pastor')
+  const district = appData.district || appData.city || 'Tamil Nadu Central Diocese'
+  const churchName = appData.churchName || appData.organizationName || 'Affiliated Parish / Ministry'
 
-  const now = new Date()
-  const diffTime = expiryDate.getTime() - now.getTime()
-  const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-  let subStatus = 'ACTIVE'
-  let subStatusClass = 'status-active'
-  let subStatusLabel = isTa ? 'செயலில் உள்ளது (Active)' : 'Active (Affiliated)'
+  let memberStatus = 'ACTIVE'
+  let memberStatusLabel = isTa ? 'செயலில் உள்ள உறுப்பினர்' : 'Active Diocese Member'
+  let statusBadgeClass = 'status-active'
 
   if (isAdmin) {
-    subStatus = 'ACTIVE'
-    subStatusClass = 'status-active'
-    subStatusLabel = isTa ? 'முதன்மை நிர்வாகி (Active Executive)' : 'Active Executive Access'
+    memberStatus = 'ADMIN'
+    memberStatusLabel = isTa ? 'முதன்மை நிர்வாகி' : 'Executive Administrator'
+    statusBadgeClass = 'status-admin'
   } else if (application?.status === 'REJECTED') {
-    subStatus = 'REJECTED'
-    subStatusClass = 'status-expired'
-    subStatusLabel = isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected'
+    memberStatus = 'REJECTED'
+    memberStatusLabel = isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected'
+    statusBadgeClass = 'status-expired'
   } else if (!application || application.status === 'DRAFT' || application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW') {
-    subStatus = 'PENDING'
-    subStatusClass = 'status-pending'
-    subStatusLabel = isTa ? 'பரிசீலனையில் உள்ளது' : 'Pending Approval'
-  } else if (daysRemaining <= 0) {
-    subStatus = 'EXPIRED'
-    subStatusClass = 'status-expired'
-    subStatusLabel = isTa ? 'காலாவதியானது (Renewal Required)' : 'Expired (Renewal Required)'
-  } else if (daysRemaining <= 30) {
-    subStatus = 'EXPIRING_SOON'
-    subStatusClass = 'status-warning'
-    subStatusLabel = isTa ? 'விரைவில் காலாவதியாகிறது' : 'Expiring Soon'
+    memberStatus = 'PENDING'
+    memberStatusLabel = isTa ? 'பரிசீலனையில் உள்ளது' : 'Pending Verification'
+    statusBadgeClass = 'status-pending'
   }
-
-  const diocesanId = application?.applicationId || (isAdmin ? 'ACI-EXEC-001' : 'ACI-2026-MEM')
 
   return (
     <div className="user-profile-modal-backdrop" onClick={onClose}>
@@ -85,17 +71,18 @@ export default function UserProfileModal({ isOpen, onClose }) {
         <div className="upm-header">
           <div className="upm-header-brand">
             <div className="upm-shield-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
+              <ShieldIcon size={20} />
             </div>
             <div>
               <span className="upm-brand-sub">APOSTOLIC COUNCIL OF INDIA DIOCESE</span>
-              <h3 className="upm-brand-title">{isTa ? 'உறுப்பினர் சுயவிவரம் & பாதுகாப்பு' : 'Member Identity & Security'}</h3>
+              <h3 className="upm-brand-title">{isTa ? 'உறுப்பினர் சுயவிவரம்' : 'Member Identity & Profile'}</h3>
             </div>
           </div>
           <button type="button" className="upm-close-btn" onClick={onClose} aria-label="Close">
-            ✕
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
 
@@ -119,110 +106,89 @@ export default function UserProfileModal({ isOpen, onClose }) {
               <p className="upm-user-email">{user.email}</p>
               <div className="upm-tags-row">
                 {isAdmin ? (
-                  <span className="upm-badge admin-badge">🛡️ {isTa ? 'முதன்மை நிர்வாகி' : 'Diocesan Administrator'}</span>
+                  <span className="upm-badge admin-badge">{isTa ? 'முதன்மை நிர்வாகி' : 'Executive Admin'}</span>
                 ) : (
-                  <span className="upm-badge member-badge">✝️ {isTa ? 'பேராய உறுப்பினர்' : 'Diocese Member'}</span>
+                  <span className="upm-badge member-badge">{isTa ? 'பேராய உறுப்பினர்' : 'Diocese Member'}</span>
                 )}
                 <span className="upm-id-pill">ID: {diocesanId}</span>
               </div>
             </div>
           </div>
 
-          {/* Annual Subscription & Renewal Box */}
-          <div className="upm-sub-card">
+          {/* Member Credentials & Diocesan Record */}
+          <div className="upm-member-record-card">
             <div className="upm-sub-header">
               <div className="upm-sub-title-wrap">
                 <span className="upm-sub-type-badge">
-                  {isTa ? 'ஆண்டு உறுப்பினர் சந்தா' : 'ANNUAL AFFILIATION PLAN'}
+                  {isTa ? 'அங்கத்துவ விபரம்' : 'MINISTERIAL CREDENTIALS'}
                 </span>
                 <h4 className="upm-sub-title">
-                  {isTa ? '1 வருட பேராய இணைப்பு (365 நாட்கள்)' : '1-Year Ministerial Affiliation (365 Days)'}
+                  {isTa ? 'அங்கீகரிக்கப்பட்ட பேராய உறுப்பினர்' : 'Verified Diocesan Membership'}
                 </h4>
               </div>
-              <span className={`upm-sub-status-tag ${subStatusClass}`}>
-                {subStatusLabel}
+              <span className={`upm-sub-status-tag ${statusBadgeClass}`}>
+                {memberStatusLabel}
               </span>
             </div>
 
             <div className="upm-sub-grid">
               <div className="upm-sub-stat">
-                <span className="upm-stat-label">{isTa ? 'இணைந்த தேதி' : 'Affiliation Date'}</span>
-                <strong className="upm-stat-val">{affiliatedDate.toLocaleDateString()}</strong>
+                <span className="upm-stat-label">{isTa ? 'பதவி / ஊழியம்' : 'Designation / Ministry'}</span>
+                <strong className="upm-stat-val text-gold">{designation}</strong>
               </div>
               <div className="upm-sub-stat">
-                <span className="upm-stat-label">{isTa ? 'காலாவதியாகும் தேதி' : 'Valid Until (Expiry)'}</span>
-                <strong className="upm-stat-val text-gold">{expiryDate.toLocaleDateString()}</strong>
+                <span className="upm-stat-label">{isTa ? 'மாவட்டம் / மண்டலம்' : 'Diocese / District'}</span>
+                <strong className="upm-stat-val">{district}</strong>
               </div>
               <div className="upm-sub-stat">
-                <span className="upm-stat-label">{isTa ? 'மீதமுள்ள நாட்கள்' : 'Days Remaining'}</span>
-                <strong className={`upm-stat-val ${daysRemaining <= 30 ? 'text-amber' : 'text-green'}`}>
-                  {daysRemaining > 0 ? `${daysRemaining} ${isTa ? 'நாட்கள்' : 'Days'}` : (isTa ? 'காலாவதியானது' : 'Expired')}
-                </strong>
+                <span className="upm-stat-label">{isTa ? 'சபை / ஸ்தலம்' : 'Parish / Church'}</span>
+                <strong className="upm-stat-val">{churchName}</strong>
+              </div>
+              <div className="upm-sub-stat">
+                <span className="upm-stat-label">{isTa ? 'பதிவு எண்' : 'Registration ID'}</span>
+                <strong className="upm-stat-val text-gold">{diocesanId}</strong>
               </div>
             </div>
 
-            {/* Annual Renewal Notice */}
-            <div className="upm-sub-footer">
+            <div className="upm-member-info-footer">
               <div className="upm-sub-policy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="16" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
                 <span>
                   {isTa 
-                    ? 'பேராய விதிமுறைகளின்படி, அனைத்து அங்கத்தினர்களும் ஆண்டுதோறும் தங்கள் அங்கீகாரத்தை புதுப்பிக்க வேண்டும்.'
-                    : 'Per Diocesan Constitution, ministerial credentials & certificates are renewed on an annual basis.'}
+                    ? 'அப்போஸ்தலிக் கவுன்சில் ஆப் இந்தியா பேராயத்தின் அதிகாரப்பூர்வ பதிவேட்டில் சரிபார்க்கப்பட்டது.'
+                    : 'Authenticated and registered in the official records of the Apostolic Council of India Diocese.'}
                 </span>
               </div>
-              
-              <button 
-                type="button" 
-                className="upm-renew-btn"
-                onClick={() => setShowRenewalInfo(!showRenewalInfo)}
-              >
-                {isTa ? 'புதுப்பித்தல் விவரங்கள்' : 'Annual Renewal Details'}
-              </button>
             </div>
-
-            {showRenewalInfo && (
-              <div className="upm-renewal-modal-box">
-                <h5>{isTa ? 'ஆண்டு புதுப்பித்தல் வழிகாட்டுதல்' : 'Annual Renewal Instructions'}</h5>
-                <p>
-                  {isTa
-                    ? 'உங்கள் பேராய அங்கீகாரத்தை புதுப்பிக்க செயலகத்தை தொடர்பு கொள்ளவும் அல்லது Canara Bank கணக்கிற்கு சந்தா செலுத்தி ரசீதை அனுப்பவும்.'
-                    : 'To renew your annual affiliation, remit the annual dues to Canara Bank A/C 1567201000059 (IFSC: CNRB0001567) and send the receipt to Secretariat.'}
-                </p>
-                <div className="upm-renew-contacts">
-                  <span>📞 +91 93457 12307</span>
-                  <span>✉️ rev.johnsondurai@gmail.com</span>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* High Security Badges */}
           <div className="upm-security-bar">
             <div className="upm-sec-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
               <span>256-Bit SSL Encrypted</span>
             </div>
             <div className="upm-sec-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
               <span>Synod Authenticated</span>
             </div>
             <div className="upm-sec-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
-              <span>Annual Cycle 2026</span>
+              <span>Official Roster</span>
             </div>
           </div>
 
@@ -235,7 +201,7 @@ export default function UserProfileModal({ isOpen, onClose }) {
             className="upm-btn-portal"
             onClick={onClose}
           >
-            {isTa ? 'விண்ணப்ப பக்கம் செல்லவும்' : 'Go to Applicant Dashboard'} →
+            {isTa ? 'விண்ணப்ப நிலை பக்கம்' : 'Applicant Status Dashboard'} →
           </Link>
           
           {isAdmin && (
@@ -244,7 +210,7 @@ export default function UserProfileModal({ isOpen, onClose }) {
               className="upm-btn-admin"
               onClick={onClose}
             >
-              🛡️ {isTa ? 'நிர்வாக தளம்' : 'Admin Portal'}
+              {isTa ? 'நிர்வாக தளம்' : 'Admin Portal'}
             </Link>
           )}
 

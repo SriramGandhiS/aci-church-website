@@ -272,7 +272,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                   className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center', fontSize: '13.5px', padding: '10px 16px' }}
                 >
-                  ✝️ {lang === 'ta' ? 'என் சுயவிவரம் & சந்தா' : 'My Profile & Subscription'}
+                  {lang === 'ta' ? 'என் சுயவிவரம்' : 'My Member Profile'}
                 </button>
                 <Link
                   to="/get-involved/status"
