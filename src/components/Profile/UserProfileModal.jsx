@@ -53,7 +53,11 @@ export default function UserProfileModal({ isOpen, onClose }) {
   let subStatusClass = 'status-active'
   let subStatusLabel = isTa ? 'செயலில் உள்ளது (Active)' : 'Active (Affiliated)'
 
-  if (application?.status === 'REJECTED') {
+  if (isAdmin) {
+    subStatus = 'ACTIVE'
+    subStatusClass = 'status-active'
+    subStatusLabel = isTa ? 'முதன்மை நிர்வாகி (Active Executive)' : 'Active Executive Access'
+  } else if (application?.status === 'REJECTED') {
     subStatus = 'REJECTED'
     subStatusClass = 'status-expired'
     subStatusLabel = isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected'

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { api } from '../services/api'
+import { api, isEmailAdmin } from '../services/api'
 
 const AuthContext = createContext(null)
 const SESSION_KEY = 'aci_auth_session_v1'
@@ -17,7 +17,8 @@ export function AuthProvider({ children }) {
       if (saved) {
         const parsed = JSON.parse(saved)
         if (parsed && parsed.email) {
-          setUser(parsed)
+          const isAdmin = isEmailAdmin(parsed.email) || !!parsed.isAdmin || parsed.role === 'ADMIN'
+          setUser({ ...parsed, isAdmin, role: isAdmin ? 'ADMIN' : (parsed.role || 'APPLICANT') })
         }
       }
     } catch (e) {
@@ -156,7 +157,7 @@ export function AuthProvider({ children }) {
       value={{
         user,
         loading,
-        isAdmin: !!user?.isAdmin,
+        isAdmin: isEmailAdmin(user?.email) || !!user?.isAdmin,
         loginWithGoogleCredential,
         loginWithPassword,
         registerWithPassword,

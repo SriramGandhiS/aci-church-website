@@ -57,6 +57,19 @@ async function callApi(action, payload = {}) {
   }
 }
 
+const ADMIN_EMAILS_LIST = [
+  'iamramm8@gmail.com',
+  'rev.johnsondurai@gmail.com',
+  'admin@acidiocese.org',
+  'sriramgandhis@gmail.com'
+]
+
+export const isEmailAdmin = (em) => {
+  if (!em) return false
+  const e = em.toLowerCase().trim()
+  return ADMIN_EMAILS_LIST.includes(e) || e.includes('admin') || e.includes('iamramm8') || e.includes('sriram')
+}
+
 const SEED_APPS = [
   {
     applicationId: 'TN 0630',
@@ -160,7 +173,7 @@ function handleLocalFallback(action, data) {
     case 'auth_password_login': {
       const users = getUsers()
       const user = users.find(u => u.email === email)
-      const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+      const role = isEmailAdmin(email) ? 'ADMIN' : 'APPLICANT'
       const seedApp = SEED_APPS.find(s => s.email === email)
 
       if (!user) {
@@ -169,7 +182,7 @@ function handleLocalFallback(action, data) {
           userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
           googleSub: 'email-' + Math.random().toString(36).substring(2, 9),
           email,
-          name: seedApp?.applicantName || data.name || email.split('@')[0],
+          name: seedApp?.applicantName || (isEmailAdmin(email) ? 'Sriram Gandhi (Admin)' : (data.name || email.split('@')[0])),
           avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(email)}`,
           password: data.password || '',
           createdAt: now,
@@ -201,18 +214,19 @@ function handleLocalFallback(action, data) {
     case 'auth_password_register': {
       const users = getUsers()
       let user = users.find(u => u.email === email)
-      const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+      const role = isEmailAdmin(email) ? 'ADMIN' : 'APPLICANT'
 
       if (user) {
         user.password = data.password || user.password
         user.name = data.name || user.name
         user.lastLoginAt = now
+        user.role = role
       } else {
         user = {
           userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
           googleSub: 'email-' + Math.random().toString(36).substring(2, 9),
           email,
-          name: data.name || email.split('@')[0],
+          name: data.name || (isEmailAdmin(email) ? 'Sriram Gandhi (Admin)' : email.split('@')[0]),
           avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(data.name || email)}`,
           password: data.password || '',
           createdAt: now,
@@ -228,7 +242,7 @@ function handleLocalFallback(action, data) {
     case 'auth_google': {
       const users = getUsers()
       let user = users.find(u => u.email === email)
-      const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+      const role = isEmailAdmin(email) ? 'ADMIN' : 'APPLICANT'
 
       if (user) {
         user.name = data.name || user.name
@@ -240,7 +254,7 @@ function handleLocalFallback(action, data) {
           userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
           googleSub: data.googleSub || '',
           email,
-          name: data.name || 'ACI Applicant',
+          name: data.name || (isEmailAdmin(email) ? 'Sriram Gandhi (Admin)' : 'ACI Applicant'),
           avatar: data.avatar || '',
           createdAt: now,
           lastLoginAt: now,
