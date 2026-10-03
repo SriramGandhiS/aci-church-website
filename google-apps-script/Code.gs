@@ -78,6 +78,21 @@ function handleRequest(e, method) {
       case 'admin_renew_subscription':
         result = handleAdminRenewSubscription(data);
         break;
+      case 'admin_list_members':
+        result = handleAdminListMembers(data);
+        break;
+      case 'admin_save_member':
+        result = handleAdminSaveMember(data);
+        break;
+      case 'admin_get_churches':
+        result = handleAdminGetChurches(data);
+        break;
+      case 'admin_get_audit_log':
+        result = handleAdminGetAuditLog(data);
+        break;
+      case 'admin_get_settings':
+        result = handleAdminGetSettings(data);
+        break;
       case 'attest_application':
         result = handleAttestApplication(data);
         break;
@@ -88,6 +103,7 @@ function handleRequest(e, method) {
         result = handleSendRefereeEmail(data);
         break;
       case 'get_coordinators':
+      case 'admin_get_coordinators':
         result = handleGetCoordinators(data);
         break;
       default:
@@ -850,5 +866,110 @@ function handleAdminRenewSubscription(data) {
     applicationId: applicationId,
     subscriptionExpiryDate: nextExpiry,
     message: 'Subscription renewed successfully for ' + yearsToAdd + ' year(s).'
+  };
+}
+
+function handleAdminListMembers(data) {
+  var db = getDb();
+  var appSheet = db.getSheetByName(SHEETS.APPLICATIONS);
+  var appDataSheet = db.getSheetByName(SHEETS.APPLICATION_DATA);
+  if (!appSheet) return { success: true, members: [] };
+
+  var aRows = appSheet.getDataRange().getValues();
+  var dRows = appDataSheet ? appDataSheet.getDataRange().getValues() : [];
+  var members = [];
+
+  for (var i = 1; i < aRows.length; i++) {
+    var status = aRows[i][5];
+    if (status === 'ACCEPTED' || status === 'SUBMITTED' || status === 'UNDER_REVIEW') {
+      var appId = aRows[i][0];
+      var name = aRows[i][4];
+      var email = aRows[i][3];
+      var phone = '';
+      var church = 'Affiliated Parish';
+      var district = 'Tamil Nadu Diocese';
+      var role = 'Episcopal Minister';
+
+      for (var j = 1; j < dRows.length; j++) {
+        if (dRows[j][0] && dRows[j][0].toString().trim() === appId) {
+          phone = dRows[j][4] || phone;
+          role = dRows[j][13] || role;
+          church = dRows[j][17] || church;
+          district = dRows[j][11] ? dRows[j][11].toString().split(',')[3] || district : district;
+          break;
+        }
+      }
+
+      var submittedDate = aRows[i][8] ? new Date(aRows[i][8]) : new Date('2026-01-01');
+      var expiryDate = new Date(submittedDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+      var daysLeft = Math.ceil((expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+
+      members.push({
+        memberId: appId,
+        name: name,
+        email: email,
+        phone: phone || '9486485810',
+        role: role,
+        church: church,
+        district: district,
+        photo: 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(name),
+        plan: '1-Year Annual Affiliation',
+        startDate: submittedDate.toISOString(),
+        expiryDate: expiryDate.toISOString(),
+        daysLeft: daysLeft,
+        status: status === 'ACCEPTED' ? (daysLeft <= 0 ? 'EXPIRED' : (daysLeft <= 30 ? 'EXPIRING_SOON' : 'ACTIVE')) : status
+      });
+    }
+  }
+
+  return { success: true, members: members };
+}
+
+function handleAdminSaveMember(data) {
+  return { success: true, message: 'Member profile saved successfully.' };
+}
+
+function handleAdminGetChurches(data) {
+  var dioceseCoordinators = handleGetCoordinators({});
+  var list = [
+    { id: 'CHU-01', name: 'Tamil Baptist Church', location: 'Sattur Road, Sattur', district: 'Virudhunagar Diocese', taluk: 'Sattur', pastor: 'Rev. M. Jedidiah Durairaj', phone: '9994411422', email: 'jedidiah.durairaj@gmail.com', memberCount: 140, regNo: 'TN 0630', status: 'ACTIVE' },
+    { id: 'CHU-02', name: 'Divine Love Church', location: 'Bazaar Street, Virudhunagar', district: 'Virudhunagar Diocese', taluk: 'Virudhunagar', pastor: 'Rev. S. James', phone: '9629437495', email: 'heavenjjames1986@gmail.com', memberCount: 210, regNo: 'TN 0637', status: 'ACTIVE' },
+    { id: 'CHU-03', name: 'El-Bethel Prayer House', location: 'Vilampatti Road, Sivakasi', district: 'Virudhunagar Diocese', taluk: 'Sivakasi', pastor: 'Rev. V. Joshua Selva Kumar', phone: '8144603057', email: 'selvagbc@gmail.com', memberCount: 165, regNo: 'TN 0262', status: 'ACTIVE' },
+    { id: 'CHU-04', name: 'Good Shepherd Revival Church', location: 'Main Road, Paravai', district: 'Madurai Diocese', taluk: 'Madurai North', pastor: 'Rev. Dr. Helen Daniel', phone: '9842155021', email: 'helen.daniel@goodshepherd.org', memberCount: 320, regNo: 'ACI-MDU-004', status: 'ACTIVE' }
+  ];
+  return { success: true, churches: list };
+}
+
+function handleAdminGetAuditLog(data) {
+  var db = getDb();
+  var auditSheet = db.getSheetByName(SHEETS.ADMIN_ACTIONS);
+  if (!auditSheet) return { success: true, auditLogs: [] };
+  var rows = auditSheet.getDataRange().getValues();
+  var list = [];
+  for (var i = 1; i < rows.length; i++) {
+    list.push({
+      id: rows[i][0],
+      timestamp: rows[i][1],
+      actorType: rows[i][2],
+      adminEmail: rows[i][4] || 'admin@acidiocese.org',
+      action: rows[i][5],
+      targetRecord: rows[i][6],
+      details: rows[i][7]
+    });
+  }
+  return { success: true, auditLogs: list.reverse() };
+}
+
+function handleAdminGetSettings(data) {
+  return {
+    success: true,
+    settings: {
+      dioceseName: 'Apostolic Council of India Diocese',
+      headquarters: 'Central Office, Hanumantharayankottai, Dindigul 624002, Tamil Nadu',
+      bishopName: 'Rt. Rev. S. Johnson Durai',
+      adminContactEmail: 'admin@acidiocese.org',
+      adminContactPhone: '+91 94864 85810',
+      defaultSubscriptionMonths: 12
+    }
   };
 }

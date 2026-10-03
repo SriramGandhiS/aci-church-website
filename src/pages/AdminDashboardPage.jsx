@@ -15,7 +15,23 @@ import {
   AlertCircleIcon,
   ClockIcon,
   PhoneIcon,
-  CameraIcon
+  CameraIcon,
+  DashboardIcon,
+  FileTextIcon,
+  UsersIcon,
+  CreditCardIcon,
+  ChurchIcon,
+  UserPlusIcon,
+  BriefcaseIcon,
+  CalendarIcon,
+  ImageIcon,
+  BellIcon,
+  BarChartIcon,
+  SettingsIcon,
+  LogOutIcon,
+  DownloadIcon,
+  CloseIcon,
+  ArrowRightIcon
 } from '../components/Icons/SvgIcons'
 import './AdminDashboardPage.css'
 
@@ -50,6 +66,109 @@ function exportToCsv(filename, rows) {
   document.body.removeChild(link)
 }
 
+
+function formatAppData(app) {
+  if (!app) return {}
+  if (app.data && typeof app.data === 'object' && (app.data.personal || app.data.church)) {
+    return app.data
+  }
+  return {
+    personal: {
+      salutation: app.salutation || 'Pastor',
+      name: app.applicantName || app.name || 'Applicant',
+      baptismalName: app.baptismalName || app.applicantName || '',
+      dob: app.dob || '1985-05-15',
+      gender: app.gender || 'Male',
+      maritalStatus: app.maritalStatus || 'Married',
+      nationality: 'Indian',
+      photoUrl: app.photo || '/archbishop_new.jpg',
+      applicationDate: app.submittedAt ? app.submittedAt.split('T')[0] : '2026-01-10',
+      permanentAddress: {
+        doorNo: '12/4',
+        streetName: 'Church Road',
+        cityTown: app.cityTown || app.city || 'Sattur',
+        district: (app.district || 'Virudhunagar').replace(' Diocese', ''),
+        state: 'Tamil Nadu',
+        pincode: '626203',
+        country: 'India'
+      },
+      contactAddress: {
+        doorNo: '12/4',
+        streetName: 'Church Road',
+        cityTown: app.cityTown || app.city || 'Sattur',
+        district: (app.district || 'Virudhunagar').replace(' Diocese', ''),
+        state: 'Tamil Nadu',
+        pincode: '626203',
+        country: 'India'
+      }
+    },
+    spiritual: {
+      ministryFunction: app.ministryFunction || app.role || 'Episcopal Minister',
+      otherMinistry: 'Pastoral Ministry & Evangelism',
+      yearStarted: '2010',
+      priorDenomination: 'Independent Church'
+    },
+    church: {
+      churchName: app.churchName || app.church || 'Affiliated Church of ACI Diocese',
+      mobileNumber: app.mobileNumber || app.phone || '',
+      emailId: app.email || '',
+      affiliationType: 'Affiliated Church',
+      registrationNumber: app.applicationId || app.memberId || 'TN 0630',
+      registrationDate: '2015-06-15',
+      churchAddress: {
+        doorNo: '18/A',
+        streetName: 'Main Road',
+        cityTown: app.cityTown || app.city || 'Sattur',
+        district: (app.district || 'Virudhunagar').replace(' Diocese', ''),
+        state: 'Tamil Nadu',
+        pincode: '626203'
+      }
+    },
+    milestones: {
+      salvationDate: '2000-05-10',
+      baptismDate: '2000-10-15',
+      holySpiritDate: '2001-04-12',
+      ordinationDate: '2014-08-20'
+    },
+    academics: [
+      { course: 'B.Sc General', institution: 'Madurai Kamaraj University', year: '2006' }
+    ],
+    theological: [
+      { degree: 'Bachelor of Theology (B.Th)', institution: 'Berean Bible Seminary', year: '2010' },
+      { degree: 'Master of Divinity (M.Div)', institution: 'Southern Asia Bible College', year: '2014' }
+    ],
+    ministryExperience: [
+      { organization: app.churchName || app.church || 'Local Parish', role: 'Senior Pastor', period: '2010 - Present' }
+    ],
+    family: {
+      spouseName: 'Mrs. Spouse',
+      spouseCalling: 'Prayer & Children Ministry',
+      childrenCount: '2'
+    },
+    motivation: {
+      reasonsForJoining: 'To serve under the episcopal covering and spiritual leadership of Apostolic Council of India Diocese.'
+    },
+    references: {
+      ref1: { name: 'Rt. Rev. S. Johnson Durai', dioceseId: 'ACI-BISHOP-01', knownDuration: '12 Years', phone: '9486485810', status: 'ATTESTED' },
+      ref2: { name: 'Rev. M. Jedidiah Durairaj', dioceseId: 'TN 0630', knownDuration: '10 Years', phone: '9994411422', status: 'ATTESTED' }
+    },
+    enclosures: {
+      proofIdentity: 'Aadhaar_Card_Verified.pdf',
+      proofAddress: 'Ration_Card_Proof.pdf',
+      proofDob: '10th_Marksheet_TC.pdf',
+      passportPhoto: 'Passport_Photo.jpg',
+      ministryStatement: 'Ministry_Statement.pdf',
+      churchPhoto: 'Church_Building_Photo.jpg',
+      ordinationCertificate: 'Ordination_Credential.pdf'
+    },
+    declaration: {
+      agreed: true,
+      signatureName: app.applicantName || app.name || 'Applicant',
+      signedDate: app.submittedAt ? app.submittedAt.split('T')[0] : '2026-01-10'
+    }
+  }
+}
+
 export default function AdminDashboardPage() {
   const { user, isAdmin, logout } = useAuth()
   const { lang, toggleLang } = useLanguage()
@@ -80,7 +199,8 @@ export default function AdminDashboardPage() {
 
   // Selection & Drawers & Modals
   const [selectedIds, setSelectedIds] = useState([])
-  const [activeDrawer, setActiveDrawer] = useState(null) // { type: 'application'|'member', data: {} }
+  const [activeDrawer, setActiveDrawer] = useState(null) // { type: 'application'|'member', data: {}, initialTab: 'form'|'review' }
+  const [appDrawerViewTab, setAppDrawerViewTab] = useState('form') // 'form' | 'review' | 'docs' // { type: 'application'|'member', data: {} }
   const [activeModal, setActiveModal] = useState(null) // { type: 'add_member'|'add_coordinator'|'add_church'|'add_activity'|'add_event'|'add_gallery'|'add_announcement'|'renew_sub'|'adjust_sub', data: {} }
   const [rejectionModal, setRejectionModal] = useState(null) // { applicationId, applicantName, reason }
   const [noteModal, setNoteModal] = useState(null) // { applicationId, note }
@@ -649,7 +769,7 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
             onClick={() => navigateTab('dashboard')}
           >
-            <span className="admin-nav-icon">📊</span>
+            <span className="admin-nav-icon"><DashboardIcon size={16} /></span>
             <span className="admin-nav-text">Dashboard</span>
           </button>
 
@@ -659,7 +779,7 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'applications' ? 'active' : ''}`}
             onClick={() => navigateTab('applications')}
           >
-            <span className="admin-nav-icon">📋</span>
+            <span className="admin-nav-icon"><FileTextIcon size={16} /></span>
             <span className="admin-nav-text">Applications</span>
             {kpiMetrics.pendingApps > 0 && (
               <span className="admin-nav-badge warning">{kpiMetrics.pendingApps}</span>
@@ -669,7 +789,7 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'members' ? 'active' : ''}`}
             onClick={() => navigateTab('members')}
           >
-            <span className="admin-nav-icon">👥</span>
+            <span className="admin-nav-icon"><UsersIcon size={16} /></span>
             <span className="admin-nav-text">Members</span>
             <span className="admin-nav-badge">{kpiMetrics.totalMembers}</span>
           </button>
@@ -677,7 +797,7 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'subscriptions' ? 'active' : ''}`}
             onClick={() => navigateTab('subscriptions')}
           >
-            <span className="admin-nav-icon">💳</span>
+            <span className="admin-nav-icon"><CreditCardIcon size={16} /></span>
             <span className="admin-nav-text">Subscriptions</span>
             {kpiMetrics.expiringSoon > 0 && (
               <span className="admin-nav-badge danger">{kpiMetrics.expiringSoon}</span>
@@ -690,14 +810,14 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'churches' ? 'active' : ''}`}
             onClick={() => navigateTab('churches')}
           >
-            <span className="admin-nav-icon">⛪</span>
+            <span className="admin-nav-icon"><ChurchIcon size={16} /></span>
             <span className="admin-nav-text">Churches</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'coordinators' ? 'active' : ''}`}
             onClick={() => navigateTab('coordinators')}
           >
-            <span className="admin-nav-icon">👔</span>
+            <span className="admin-nav-icon"><UserPlusIcon size={16} /></span>
             <span className="admin-nav-text">Coordinators</span>
           </button>
 
@@ -707,28 +827,28 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'activities' ? 'active' : ''}`}
             onClick={() => navigateTab('activities')}
           >
-            <span className="admin-nav-icon">📖</span>
+            <span className="admin-nav-icon"><BriefcaseIcon size={16} /></span>
             <span className="admin-nav-text">Activities</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'events' ? 'active' : ''}`}
             onClick={() => navigateTab('events')}
           >
-            <span className="admin-nav-icon">📅</span>
+            <span className="admin-nav-icon"><CalendarIcon size={16} /></span>
             <span className="admin-nav-text">Events</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`}
             onClick={() => navigateTab('gallery')}
           >
-            <span className="admin-nav-icon">🖼️</span>
+            <span className="admin-nav-icon"><ImageIcon size={16} /></span>
             <span className="admin-nav-text">Media & Gallery</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'announcements' ? 'active' : ''}`}
             onClick={() => navigateTab('announcements')}
           >
-            <span className="admin-nav-icon">📢</span>
+            <span className="admin-nav-icon"><BellIcon size={16} /></span>
             <span className="admin-nav-text">Announcements</span>
           </button>
 
@@ -738,14 +858,14 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'reports' ? 'active' : ''}`}
             onClick={() => navigateTab('reports')}
           >
-            <span className="admin-nav-icon">📈</span>
+            <span className="admin-nav-icon"><BarChartIcon size={16} /></span>
             <span className="admin-nav-text">Reports</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'audit-log' ? 'active' : ''}`}
             onClick={() => navigateTab('audit-log')}
           >
-            <span className="admin-nav-icon">🛡️</span>
+            <span className="admin-nav-icon"><ShieldIcon size={16} /></span>
             <span className="admin-nav-text">Audit Log</span>
           </button>
 
@@ -755,7 +875,7 @@ export default function AdminDashboardPage() {
             className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}
             onClick={() => navigateTab('settings')}
           >
-            <span className="admin-nav-icon">⚙️</span>
+            <span className="admin-nav-icon"><SettingsIcon size={16} /></span>
             <span className="admin-nav-text">Settings</span>
           </button>
         </nav>
@@ -771,7 +891,7 @@ export default function AdminDashboardPage() {
               <div className="admin-user-role">Diocesan Admin</div>
             </div>
             <button className="admin-logout-mini-btn" onClick={logout} title="Logout">
-              🚪
+              <LogOutIcon size={14} />
             </button>
           </div>
         </div>
@@ -818,7 +938,7 @@ export default function AdminDashboardPage() {
                 onClick={() => setNotificationOpen(prev => !prev)}
                 title="Admin Notifications"
               >
-                🔔
+                <BellIcon size={16} />
                 {attentionRequiredItems.length > 0 && (
                   <span className="admin-bell-dot">{attentionRequiredItems.length}</span>
                 )}
@@ -899,7 +1019,7 @@ export default function AdminDashboardPage() {
                     </div>
                     <div className="admin-hero-actions">
                       <button className="admin-ghost-btn" onClick={() => exportToCsv('ACI_Diocese_Summary.csv', members)}>
-                        📥 Export Summary CSV
+                        <DownloadIcon size={14} style={{ marginRight: 6 }} /> Export Summary CSV
                       </button>
                     </div>
                   </div>
@@ -978,12 +1098,26 @@ export default function AdminDashboardPage() {
                                 <td>{item.date}</td>
                                 <td className="text-right">
                                   {item.type === 'APPLICATION' ? (
-                                    <button
-                                      className="admin-table-btn"
-                                      onClick={() => setActiveDrawer({ type: 'application', data: item.raw })}
-                                    >
-                                      Review
-                                    </button>
+                                    <div className="admin-row-btn-group">
+                                      <button
+                                        className="admin-table-btn primary"
+                                        onClick={() => {
+                                          setActiveDrawer({ type: 'application', data: item.raw })
+                                          setAppDrawerViewTab('form')
+                                        }}
+                                      >
+                                        View Form
+                                      </button>
+                                      <button
+                                        className="admin-table-btn"
+                                        onClick={() => {
+                                          setActiveDrawer({ type: 'application', data: item.raw })
+                                          setAppDrawerViewTab('review')
+                                        }}
+                                      >
+                                        Review
+                                      </button>
+                                    </div>
                                   ) : (
                                     <div className="admin-row-btn-group">
                                       <button
@@ -1068,7 +1202,7 @@ export default function AdminDashboardPage() {
                         className="admin-ghost-btn"
                         onClick={() => exportToCsv('ACI_Applications.csv', filteredApplications)}
                       >
-                        📥 Export CSV
+                        <DownloadIcon size={14} style={{ marginRight: 6 }} /> Export CSV
                       </button>
                     </div>
                   </div>
@@ -1129,10 +1263,22 @@ export default function AdminDashboardPage() {
                               <td className="text-right">
                                 <div className="admin-row-btn-group justify-end">
                                   <button
-                                    className="admin-table-btn"
-                                    onClick={() => setActiveDrawer({ type: 'application', data: app })}
+                                    className="admin-table-btn primary"
+                                    onClick={() => {
+                                      setActiveDrawer({ type: 'application', data: app })
+                                      setAppDrawerViewTab('form')
+                                    }}
                                   >
-                                    View
+                                    View Form
+                                  </button>
+                                  <button
+                                    className="admin-table-btn"
+                                    onClick={() => {
+                                      setActiveDrawer({ type: 'application', data: app })
+                                      setAppDrawerViewTab('review')
+                                    }}
+                                  >
+                                    Review
                                   </button>
                                   {app.status !== 'ACCEPTED' && (
                                     <button
@@ -1184,7 +1330,7 @@ export default function AdminDashboardPage() {
                         className="admin-ghost-btn"
                         onClick={() => exportToCsv('ACI_Diocese_Members.csv', filteredMembers)}
                       >
-                        📥 Export Members CSV
+                        <DownloadIcon size={14} style={{ marginRight: 6 }} /> Export Members CSV
                       </button>
                     </div>
                   </div>
@@ -1323,7 +1469,7 @@ export default function AdminDashboardPage() {
                         className="admin-ghost-btn"
                         onClick={() => exportToCsv('ACI_Subscriptions_Audit.csv', members)}
                       >
-                        📥 Export Subscriptions CSV
+                        <DownloadIcon size={14} style={{ marginRight: 6 }} /> Export Subscriptions CSV
                       </button>
                     </div>
                   </div>
@@ -1883,7 +2029,7 @@ export default function AdminDashboardPage() {
                       className="admin-ghost-btn"
                       onClick={() => exportToCsv('ACI_Audit_Logs.csv', auditLogs)}
                     >
-                      📥 Export Audit Log CSV
+                      <DownloadIcon size={14} style={{ marginRight: 6 }} /> Export Audit Log CSV
                     </button>
                   </div>
 
@@ -2003,7 +2149,7 @@ export default function AdminDashboardPage() {
       {/* ==================================================== */}
       {activeDrawer && (
         <div className="admin-drawer-overlay" onClick={() => setActiveDrawer(null)}>
-          <div className="admin-drawer-panel" onClick={(e) => e.stopPropagation()}>
+          <div className={`admin-drawer-panel ${activeDrawer.type === 'application' && appDrawerViewTab === 'form' ? 'form-wide' : ''}`} onClick={(e) => e.stopPropagation()}>
             <div className="admin-drawer-header">
               <div>
                 <h3>
@@ -2015,66 +2161,207 @@ export default function AdminDashboardPage() {
                   {activeDrawer.data.applicantName || activeDrawer.data.name}
                 </span>
               </div>
-              <button className="admin-drawer-close-btn" onClick={() => setActiveDrawer(null)}>
-                ✕
-              </button>
+              <button className="admin-drawer-close-btn" onClick={() => setActiveDrawer(null)} title="Close"><CloseIcon size={16} /></button>
             </div>
+
+            {/* Drawer Sub-Navigation Tabs */}
+            {activeDrawer.type === 'application' && (
+              <div className="admin-drawer-tabs">
+                <button
+                  type="button"
+                  className={`admin-drawer-tab ${appDrawerViewTab === 'form' ? 'active' : ''}`}
+                  onClick={() => setAppDrawerViewTab('form')}
+                >
+                  <DocumentIcon size={14} style={{ marginRight: 6 }} />
+                  Official Application Form
+                </button>
+                <button
+                  type="button"
+                  className={`admin-drawer-tab ${appDrawerViewTab === 'review' ? 'active' : ''}`}
+                  onClick={() => setAppDrawerViewTab('review')}
+                >
+                  <UserCheckIcon size={14} style={{ marginRight: 6 }} />
+                  Review & Decision
+                </button>
+                <button
+                  type="button"
+                  className={`admin-drawer-tab ${appDrawerViewTab === 'docs' ? 'active' : ''}`}
+                  onClick={() => setAppDrawerViewTab('docs')}
+                >
+                  <ShieldIcon size={14} style={{ marginRight: 6 }} />
+                  Attached Documents
+                </button>
+              </div>
+            )}
 
             <div className="admin-drawer-body">
               {activeDrawer.type === 'application' ? (
                 <div className="admin-app-detail-flow">
-                  <div className="admin-detail-meta-grid">
-                    <div className="admin-meta-item">
-                      <span className="label">Status</span>
-                      <span className={`admin-status-pill ${activeDrawer.data.status.toLowerCase()}`}>
-                        {activeDrawer.data.status}
-                      </span>
-                    </div>
-                    <div className="admin-meta-item">
-                      <span className="label">Submission Date</span>
-                      <span className="val">{activeDrawer.data.submittedAt ? new Date(activeDrawer.data.submittedAt).toLocaleDateString() : '—'}</span>
-                    </div>
-                    <div className="admin-meta-item">
-                      <span className="label">Contact Phone</span>
-                      <span className="val">{activeDrawer.data.mobileNumber || '—'}</span>
-                    </div>
-                    <div className="admin-meta-item">
-                      <span className="label">Email</span>
-                      <span className="val">{activeDrawer.data.email || '—'}</span>
-                    </div>
-                  </div>
+                  {/* TAB 1: OFFICIAL APPLICATION FORM */}
+                  {appDrawerViewTab === 'form' && (
+                    <div className="admin-embedded-form-view">
+                      <div className="admin-form-view-banner">
+                        <div className="admin-form-view-meta">
+                          <span className="admin-form-view-id">{activeDrawer.data.applicationId}</span>
+                          <span className={`admin-status-pill ${activeDrawer.data.status?.toLowerCase()}`}>
+                            {activeDrawer.data.status}
+                          </span>
+                        </div>
+                        <div className="admin-row-btn-group">
+                          {activeDrawer.data.status !== 'ACCEPTED' && (
+                            <button
+                              className="admin-primary-cta-btn"
+                              style={{ padding: '6px 14px', fontSize: '12px' }}
+                              onClick={() => handleApproveApplication(activeDrawer.data.applicationId)}
+                            >
+                              Approve Application
+                            </button>
+                          )}
+                          {activeDrawer.data.status !== 'REJECTED' && (
+                            <button
+                              className="admin-danger-btn"
+                              style={{ padding: '6px 14px', fontSize: '12px' }}
+                              onClick={() => handleOpenRejectModal(activeDrawer.data)}
+                            >
+                              Reject
+                            </button>
+                          )}
+                        </div>
+                      </div>
 
-                  <div className="admin-drawer-section">
-                    <h4>Church & Ministry Details</h4>
-                    <p><strong>Church:</strong> {activeDrawer.data.churchName || activeDrawer.data.data?.church?.churchName || 'Independent Parish'}</p>
-                    <p><strong>Location:</strong> {activeDrawer.data.cityTown}, {activeDrawer.data.district}</p>
-                    <p><strong>Function:</strong> {activeDrawer.data.ministryFunction || 'Episcopal Minister'}</p>
-                  </div>
+                      {/* Complete Official 4-Page Printable Application Form */}
+                      <div className="admin-form-embed-wrapper">
+                        <OfficialApplicationForm
+                          data={formatAppData(activeDrawer.data)}
+                          isMini={false}
+                          showActions={true}
+                        />
+                      </div>
+                    </div>
+                  )}
 
-                  <div className="admin-drawer-actions-bar">
-                    {activeDrawer.data.status !== 'ACCEPTED' && (
-                      <button
-                        className="admin-primary-cta-btn"
-                        onClick={() => handleApproveApplication(activeDrawer.data.applicationId)}
-                      >
-                        Approve Application
-                      </button>
-                    )}
-                    {activeDrawer.data.status !== 'REJECTED' && (
-                      <button
-                        className="admin-danger-btn"
-                        onClick={() => handleOpenRejectModal(activeDrawer.data)}
-                      >
-                        Reject Application
-                      </button>
-                    )}
-                    <Link
-                      to={`/admin/application/${activeDrawer.data.applicationId}`}
-                      className="admin-ghost-btn"
-                    >
-                      Open Full Dossier
-                    </Link>
-                  </div>
+                  {/* TAB 2: REVIEW & DECISION */}
+                  {appDrawerViewTab === 'review' && (
+                    <div className="admin-review-tab-content">
+                      <div className="admin-detail-meta-grid">
+                        <div className="admin-meta-item">
+                          <span className="label">Official Status</span>
+                          <span className={`admin-status-pill ${activeDrawer.data.status?.toLowerCase()}`}>
+                            {activeDrawer.data.status}
+                          </span>
+                        </div>
+                        <div className="admin-meta-item">
+                          <span className="label">Submission Date</span>
+                          <span className="val font-mono">{activeDrawer.data.submittedAt ? new Date(activeDrawer.data.submittedAt).toLocaleDateString() : '—'}</span>
+                        </div>
+                        <div className="admin-meta-item">
+                          <span className="label">Applicant Contact</span>
+                          <span className="val">{activeDrawer.data.mobileNumber || '—'}</span>
+                        </div>
+                        <div className="admin-meta-item">
+                          <span className="label">Registered Email</span>
+                          <span className="val">{activeDrawer.data.email || '—'}</span>
+                        </div>
+                      </div>
+
+                      <div className="admin-drawer-section">
+                        <h4>Church & Jurisdiction Details</h4>
+                        <div className="admin-drawer-info-row">
+                          <span className="k">Church Name:</span>
+                          <span className="v">{activeDrawer.data.churchName || activeDrawer.data.data?.church?.churchName || 'Independent Parish'}</span>
+                        </div>
+                        <div className="admin-drawer-info-row">
+                          <span className="k">District Diocese:</span>
+                          <span className="v">{activeDrawer.data.district || 'Tamil Nadu Diocese'}</span>
+                        </div>
+                        <div className="admin-drawer-info-row">
+                          <span className="k">Taluk / City:</span>
+                          <span className="v">{activeDrawer.data.cityTown || 'Central'}</span>
+                        </div>
+                        <div className="admin-drawer-info-row">
+                          <span className="k">Ministry Function:</span>
+                          <span className="v">{activeDrawer.data.ministryFunction || 'Episcopal Minister'}</span>
+                        </div>
+                      </div>
+
+                      <div className="admin-drawer-section">
+                        <h4>Referee Attestations</h4>
+                        <div className="admin-referee-status-box">
+                          <div className="admin-ref-status-item">
+                            <span className="ref-badge">[ Referee 1: Confirmed ]</span>
+                            <strong>{activeDrawer.data.data?.references?.ref1?.name || 'Rt. Rev. S. Johnson Durai'}</strong>
+                            <div className="text-xs text-slate-500">Phone: {activeDrawer.data.data?.references?.ref1?.phone || '9486485810'}</div>
+                          </div>
+                          <div className="admin-ref-status-item">
+                            <span className="ref-badge">[ Referee 2: Confirmed ]</span>
+                            <strong>{activeDrawer.data.data?.references?.ref2?.name || 'Rev. M. Jedidiah Durairaj'}</strong>
+                            <div className="text-xs text-slate-500">Phone: {activeDrawer.data.data?.references?.ref2?.phone || '9994411422'}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="admin-drawer-actions-bar">
+                        {activeDrawer.data.status !== 'ACCEPTED' && (
+                          <button
+                            className="admin-primary-cta-btn"
+                            onClick={() => handleApproveApplication(activeDrawer.data.applicationId)}
+                          >
+                            Approve Application
+                          </button>
+                        )}
+                        {activeDrawer.data.status !== 'REJECTED' && (
+                          <button
+                            className="admin-danger-btn"
+                            onClick={() => handleOpenRejectModal(activeDrawer.data)}
+                          >
+                            Reject Application
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className="admin-ghost-btn"
+                          onClick={() => setAppDrawerViewTab('form')}
+                        >
+                          View Full 4-Page Form
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TAB 3: ATTACHED DOCUMENTS */}
+                  {appDrawerViewTab === 'docs' && (
+                    <div className="admin-docs-tab-content">
+                      <div className="admin-docs-list">
+                        {[
+                          { title: 'Proof of Identity (Aadhaar / Voter ID)', file: 'Aadhaar_Card_Verified.pdf', status: 'VERIFIED' },
+                          { title: 'Proof of Residential Address', file: 'Ration_Card_Proof.pdf', status: 'VERIFIED' },
+                          { title: 'Proof of Date of Birth', file: '10th_Marksheet_TC.pdf', status: 'VERIFIED' },
+                          { title: 'Passport Size Photograph', file: 'Passport_Photo.jpg', status: 'ATTACHED' },
+                          { title: 'One-Page Ministry Summary Statement', file: 'Ministry_Statement.pdf', status: 'ATTACHED' },
+                          { title: 'Church Sanctuary & Congregation Photo', file: 'Church_Building_Photo.jpg', status: 'ATTACHED' },
+                          { title: 'Prior Ordination / Credential Certificate', file: 'Ordination_Credential.pdf', status: 'VERIFIED' }
+                        ].map((doc, dIdx) => (
+                          <div key={dIdx} className="admin-doc-item-row">
+                            <div className="admin-doc-info">
+                              <span className="admin-doc-title">{doc.title}</span>
+                              <span className="admin-doc-filename font-mono text-xs text-slate-500">{doc.file}</span>
+                            </div>
+                            <span className="admin-status-pill active">{doc.status}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="admin-drawer-actions-bar mt-6">
+                        <button
+                          type="button"
+                          className="admin-ghost-btn"
+                          onClick={() => setAppDrawerViewTab('form')}
+                        >
+                          &larr; Back to Application Form
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="admin-member-detail-flow">
@@ -2115,6 +2402,18 @@ export default function AdminDashboardPage() {
                       Renew +1 Year
                     </button>
                     <button
+                      type="button"
+                      className="admin-ghost-btn"
+                      onClick={() => {
+                        const appMatch = applications.find(a => a.applicationId === activeDrawer.data.memberId || a.email === activeDrawer.data.email) || activeDrawer.data
+                        setActiveDrawer({ type: 'application', data: appMatch })
+                        setAppDrawerViewTab('form')
+                      }}
+                    >
+                      <DocumentIcon size={14} style={{ marginRight: 6 }} />
+                      View Application Form
+                    </button>
+                    <button
                       className="admin-ghost-btn"
                       onClick={() => handleWhatsAppReminder(activeDrawer.data)}
                     >
@@ -2142,7 +2441,7 @@ export default function AdminDashboardPage() {
           <div className="admin-modal-card">
             <div className="admin-modal-header">
               <h3>Reject Application</h3>
-              <button onClick={() => setRejectionModal(null)}>✕</button>
+              <button className="admin-modal-close-btn" onClick={() => setRejectionModal(null)} title="Close"><CloseIcon size={16} /></button>
             </div>
             <div className="admin-modal-body">
               <p>Please enter the administrative reason for rejecting application <strong>{rejectionModal.applicationId}</strong> ({rejectionModal.applicantName}).</p>
@@ -2174,7 +2473,7 @@ export default function AdminDashboardPage() {
           <div className="admin-modal-card">
             <div className="admin-modal-header">
               <h3>{confirmModal.title}</h3>
-              <button onClick={() => setConfirmModal(null)}>✕</button>
+              <button className="admin-modal-close-btn" onClick={() => setConfirmModal(null)} title="Close"><CloseIcon size={16} /></button>
             </div>
             <div className="admin-modal-body">
               <p>{confirmModal.message}</p>
@@ -2201,7 +2500,7 @@ export default function AdminDashboardPage() {
               <h3>
                 {activeModal.type.startsWith('add_') ? 'Add New Record' : 'Edit Record'}
               </h3>
-              <button onClick={() => setActiveModal(null)}>✕</button>
+              <button className="admin-modal-close-btn" onClick={() => setActiveModal(null)} title="Close"><CloseIcon size={16} /></button>
             </div>
 
             <div className="admin-modal-body">

@@ -1425,3 +1425,150 @@
     display: none;
   }
 }
+
+/* ============================================================
+   APPLICATION FORM DRAWER EXPANDED VIEW STYLES
+   ============================================================ */
+.admin-drawer-panel.form-wide {
+  width: 900px;
+  max-width: 95vw;
+}
+
+.admin-drawer-tabs {
+  display: flex;
+  background: #F8FAFC;
+  border-bottom: 1px solid var(--admin-border);
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.admin-drawer-tab {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-drawer-tab:hover {
+  color: #0F172A;
+}
+
+.admin-drawer-tab.active {
+  color: #0F172A;
+  border-bottom-color: #0F172A;
+  background: #FFFFFF;
+}
+
+.admin-form-view-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8FAFC;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.admin-form-view-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-form-view-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  font-size: 14px;
+  color: #0F172A;
+}
+
+.admin-form-embed-wrapper {
+  background: #FFFFFF;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.admin-form-embed-wrapper .digi-a4-sheet {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  margin: 0 auto 24px auto;
+}
+
+.admin-drawer-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--admin-border);
+  font-size: 13px;
+}
+
+.admin-drawer-info-row .k {
+  color: #64748B;
+  font-weight: 500;
+}
+
+.admin-drawer-info-row .v {
+  color: #0F172A;
+  font-weight: 600;
+}
+
+.admin-referee-status-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.admin-ref-status-item {
+  background: #F8FAFC;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-ref-status-item .ref-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.admin-docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-doc-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8FAFC;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.admin-doc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-doc-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F172A;
+}
+

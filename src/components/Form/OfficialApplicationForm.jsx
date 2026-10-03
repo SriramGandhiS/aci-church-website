@@ -134,7 +134,13 @@ export default function OfficialApplicationForm({ data, onEdit, showActions = tr
             onClick={handlePrint}
             className="app-action-btn-print"
           >
-            <span className="btn-icon">🖨</span>
+            <span className="btn-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+            </span>
             <span>Print / Save Official 4-Page PDF</span>
           </button>
         </div>
@@ -877,31 +883,31 @@ export default function OfficialApplicationForm({ data, onEdit, showActions = tr
 
           <div className="enclosures-official-list">
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>1. Proof of Identity / அடையாளச் சான்று</strong> (ஆதார் கார்டு / பாஸ்போர்ட் / வாக்காளர் அடையாள அட்டை)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>2. Proof of Address / வீட்டு முகவரிச் சான்று</strong> (ரேஷன் கார்டு / மின் கட்டண ரசீது / காஸ் இணைப்பு / வாக்காளர் அடையாள அட்டை)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>3. Proof of Date of Birth / பிறந்த தேதிக்கான சான்று</strong> (பள்ளி மாற்றுச் சான்றிதழ் / 10, 12ம் வகுப்பு மதிப்பெண் பட்டியல் / பிறப்புச் சான்றிதழ் / வாக்காளர் அடையாள அட்டை)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>4. Proof of Name Change / பெயர் மாற்றத்திற்கான சான்று</strong> (ஞானஸ்நான சான்றிதழ் / அரசிதழ் பதிவு - அறிவிப்பு)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>5. Two Copies of recent passport size photos / சமீபத்தில் எடுத்த இரண்டு புகைப்படங்கள்</strong> (பாஸ்போர்ட் அளவிலான புகைப்படம் ஒன்று ஒட்டவும், ஒன்று ஒட்டாமல் வைக்கவும்)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>6. Your Ministry Statement / தங்களது ஊழியத்தைப் பற்றிய விளக்கம்</strong> (ஒரு பக்க அளவில் தற்போது தாங்கள் செய்து வரும் ஊழியத்தின் சுருக்கம்)</span>
             </div>
             <div className="enc-item-row">
-              <span className="enc-check">☑</span>
+              <span className="enc-check">[X]</span>
               <span className="enc-txt"><strong>7. Your Ministry or Church Photo / தங்களது ஊழியம் / சபையின் புகைப்படம்</strong> (தாங்களும் தங்கள் சபையாரும் சேர்ந்து சபையில் எடுத்த புகைப்படம்)</span>
             </div>
           </div>
