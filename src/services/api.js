@@ -41,12 +41,63 @@ async function callApi(action, payload = {}) {
     }
 
     const data = await response.json()
+    if (!data.success && (
+      data.error === 'INVALID_ACTION' ||
+      data.error === 'UNKNOWN_ACTION' ||
+      (typeof data.message === 'string' && data.message.toLowerCase().includes('not supported')) ||
+      (typeof data.error === 'string' && data.error.toLowerCase().includes('not supported'))
+    )) {
+      console.warn(`[API] Remote endpoint does not support action "${action}", using local fallback:`, data)
+      return handleLocalFallback(action, payload)
+    }
     return data
   } catch (error) {
     console.warn(`[API] Remote call failed for action "${action}", falling back to local storage:`, error)
     return handleLocalFallback(action, payload)
   }
 }
+
+const SEED_APPS = [
+  {
+    applicationId: 'TN 0630',
+    applicantName: 'Rev. M. Jedidiah Durairaj',
+    email: 'jedidiah.durairaj@gmail.com',
+    mobileNumber: '9994411422',
+    ministryFunction: 'Sattur Taluk Coordinator / Episcopal Minister',
+    cityTown: 'Sattur',
+    district: 'Virudhunagar Diocese',
+    status: 'ACCEPTED',
+    submittedAt: '2026-01-10T11:00:00.000Z',
+    subscriptionExpiryDate: '2027-01-10T11:00:00.000Z',
+    subscriptionStatus: 'ACTIVE'
+  },
+  {
+    applicationId: 'TN 0637',
+    applicantName: 'Rev. S. James',
+    email: 'heavenjjames1986@gmail.com',
+    mobileNumber: '9629437495',
+    ministryFunction: 'Virudhunagar Coordinator / Episcopal Minister',
+    cityTown: 'Virudhunagar',
+    district: 'Virudhunagar Diocese',
+    status: 'ACCEPTED',
+    submittedAt: '2026-01-15T14:30:00.000Z',
+    subscriptionExpiryDate: '2027-01-15T14:30:00.000Z',
+    subscriptionStatus: 'ACTIVE'
+  },
+  {
+    applicationId: 'TN 0262',
+    applicantName: 'Rev. V. Joshua Selva Kumar',
+    email: 'selvagbc@gmail.com',
+    mobileNumber: '8144603057',
+    ministryFunction: 'Sivakasi Coordinator / Episcopal Minister',
+    cityTown: 'Sivakasi',
+    district: 'Virudhunagar Diocese',
+    status: 'ACCEPTED',
+    submittedAt: '2026-02-01T09:15:00.000Z',
+    subscriptionExpiryDate: '2027-02-01T09:15:00.000Z',
+    subscriptionStatus: 'ACTIVE'
+  }
+]
 
 /**
  * Robust LocalStorage Fallback for dev / offline resilience
@@ -59,7 +110,21 @@ function handleLocalFallback(action, data) {
 
   const getUsers = () => JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]')
   const saveUsers = (u) => localStorage.setItem(STORAGE_USERS, JSON.stringify(u))
-  const getApps = () => JSON.parse(localStorage.getItem(STORAGE_APPS) || '[]')
+  const getApps = () => {
+    let list = JSON.parse(localStorage.getItem(STORAGE_APPS) || '[]')
+    if (list.length === 0) {
+      list = [...SEED_APPS]
+      localStorage.setItem(STORAGE_APPS, JSON.stringify(list))
+    } else {
+      SEED_APPS.forEach(s => {
+        if (!list.some(a => a.email === s.email || a.applicationId === s.applicationId)) {
+          list.push(s)
+        }
+      })
+      localStorage.setItem(STORAGE_APPS, JSON.stringify(list))
+    }
+    return list
+  }
   const saveApps = (a) => localStorage.setItem(STORAGE_APPS, JSON.stringify(a))
   const getDocs = () => JSON.parse(localStorage.getItem(STORAGE_DOCS) || '[]')
   const saveDocs = (d) => localStorage.setItem(STORAGE_DOCS, JSON.stringify(d))
@@ -96,14 +161,15 @@ function handleLocalFallback(action, data) {
       const users = getUsers()
       const user = users.find(u => u.email === email)
       const role = (email === 'rev.johnsondurai@gmail.com' || email.includes('admin') || email.includes('sriram')) ? 'ADMIN' : 'APPLICANT'
+      const seedApp = SEED_APPS.find(s => s.email === email)
 
       if (!user) {
-        // Auto-register new applicant if not found, or return error
+        // Auto-register member / applicant with initial password
         const newUser = {
           userId: 'USR-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
           googleSub: 'email-' + Math.random().toString(36).substring(2, 9),
           email,
-          name: data.name || email.split('@')[0],
+          name: seedApp?.applicantName || data.name || email.split('@')[0],
           avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(email)}`,
           password: data.password || '',
           createdAt: now,
@@ -120,6 +186,12 @@ function handleLocalFallback(action, data) {
         return { success: false, error: 'INVALID_PASSWORD', message: 'Incorrect password. Please try again.' }
       }
 
+      if (!user.password && data.password) {
+        user.password = data.password
+      }
+      if (seedApp?.applicantName && (!user.name || user.name === email.split('@')[0])) {
+        user.name = seedApp.applicantName
+      }
       user.lastLoginAt = now
       user.role = role
       saveUsers(users)
