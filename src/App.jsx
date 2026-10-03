@@ -57,7 +57,103 @@ function App() {
               
               {/* Strictly Protected Admin Routes */}
               <Route
+                path="/admin"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
                 path="/admin/applications"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/members"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/subscriptions"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/coordinators"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/churches"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/activities"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/events"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/gallery"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/announcements"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/reports"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/audit-log"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboardPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/settings"
                 element={
                   <ProtectedAdminRoute>
                     <AdminDashboardPage />
