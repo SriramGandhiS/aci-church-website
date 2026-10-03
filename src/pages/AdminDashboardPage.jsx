@@ -331,7 +331,7 @@ export default function AdminDashboardPage() {
             </button>
           </nav>
 
-          {/* TOP BENTO ROW - 3 EQUAL HEIGHT EXECUTIVE CARDS */}
+          {/* TOP BENTO ROW */}
           <section className="bento-top-grid">
             {/* CARD 1: APPLICATIONS OVERVIEW */}
             <div className="bento-card bento-card-light">
@@ -643,6 +643,7 @@ export default function AdminDashboardPage() {
                 )}
               </div>
             </div>
+
             {/* RIGHT ASIDE BENTO QUICK ACCESS WIDGETS */}
             <aside className="bento-right-aside">
               <div className="aside-bento-card">
@@ -677,15 +678,15 @@ export default function AdminDashboardPage() {
                 <h4 className="aside-card-title">Diocesan Coordinators</h4>
                 <div className="aside-coord-list">
                   <div className="coord-mini-item">
-                    <strong>Jeddiah Dhurai Raj</strong>
+                    <strong>Rev. M. Jedidiah Durairaj</strong>
                     <span>Sattur Taluk • 9994411422</span>
                   </div>
                   <div className="coord-mini-item">
-                    <strong>James</strong>
+                    <strong>Rev. S. James</strong>
                     <span>Virudhunagar • 9629437495</span>
                   </div>
                   <div className="coord-mini-item">
-                    <strong>Selvakumar</strong>
+                    <strong>Rev. V. Joshua Selva Kumar</strong>
                     <span>Sivakasi • 8144603057</span>
                   </div>
                 </div>

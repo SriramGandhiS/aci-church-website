@@ -593,7 +593,16 @@ export const api = {
   registerWithPassword: (email, password, name) => callApi('auth_password_register', { email, password, name }),
   requestEmailOtp: (email) => callApi('request_email_otp', { email }),
   verifyEmailOtp: (email, otp, name) => callApi('verify_email_otp', { email, otp, name }),
-  getMyApplication: (email, googleSub) => callApi('get_my_application', { email, googleSub }),
+  getMyApplication: async (email, googleSub) => {
+    const res = await callApi('get_my_application', { email, googleSub })
+    if ((!res || !res.success || !res.application) && email) {
+      const match = SEED_APPS.find(s => s.email.toLowerCase() === email.toLowerCase().trim())
+      if (match) {
+        return { success: true, application: match }
+      }
+    }
+    return res
+  },
   saveDraft: (email, userId, googleSub, formData) => callApi('save_draft', { email, userId, googleSub, formData }),
   uploadDocumentMeta: (payload) => callApi('upload_document_meta', payload),
   uploadDocument: (payload) => callApi('upload_document', payload),
@@ -603,7 +612,17 @@ export const api = {
   attestApplication: (payload) => callApi('attest_application', payload),
   sendRefereeEmail: (payload) => callApi('send_referee_email', payload),
   getCoordinators: (dioceseId) => callApi('get_coordinators', { dioceseId }),
-  adminListApplications: (adminEmail) => callApi('admin_list_applications', { adminEmail }),
+  adminListApplications: async (adminEmail) => {
+    const res = await callApi('admin_list_applications', { adminEmail })
+    if (res && res.success && Array.isArray(res.applications)) {
+      SEED_APPS.forEach(s => {
+        if (!res.applications.some(a => a.email === s.email || a.applicationId === s.applicationId)) {
+          res.applications.push(s)
+        }
+      })
+    }
+    return res
+  },
   adminGetApplication: (adminEmail, applicationId) => callApi('admin_get_application', { adminEmail, applicationId }),
   adminUpdateStatus: (adminEmail, applicationId, status, rejectionReason, adminNotes) => callApi('admin_update_status', { adminEmail, applicationId, status, rejectionReason, adminNotes }),
   adminAddNote: (adminEmail, applicationId, note) => callApi('admin_add_note', { adminEmail, applicationId, note }),
