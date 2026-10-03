@@ -148,12 +148,11 @@ export default function AdminDashboardPage() {
     const fullPhone = phone.length === 10 ? `91${phone}` : phone
     window.open(`https://wa.me/${fullPhone}?text=${text}`, '_blank')
   }
-
   return (
     <div className="bento-canvas-wrapper">
       {toastMessage && (
         <div className="bento-floating-toast">
-          <span>✨ {toastMessage}</span>
+          <span>{toastMessage}</span>
           <button type="button" onClick={() => setToastMessage('')}>✕</button>
         </div>
       )}
@@ -163,7 +162,9 @@ export default function AdminDashboardPage() {
         <aside className="bento-capsule-sidebar">
           <div className="dock-top-brand">
             <Link to="/" className="dock-brand-logo" title="ACI Diocese Home">
-              <span className="dock-shield-icon">✝</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="dock-cross-icon">
+                <path d="M12 2v20M7 8h10"></path>
+              </svg>
             </Link>
           </div>
 
@@ -174,7 +175,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('applications')}
               title="Applications & Vetting"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7" rx="2"></rect>
                 <rect x="14" y="3" width="7" height="7" rx="2"></rect>
                 <rect x="14" y="14" width="7" height="7" rx="2"></rect>
@@ -188,7 +189,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('subscriptions')}
               title="Annual Subscriptions"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -202,7 +203,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('coordinators')}
               title="Diocesan Coordinators"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
@@ -215,7 +216,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('trends')}
               title="Annual Trends & Analytics"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
               </svg>
             </button>
@@ -226,7 +227,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('settings')}
               title="Diocesan Settings"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
               </svg>
@@ -260,7 +261,7 @@ export default function AdminDashboardPage() {
                 <span>ACI DIOCESE • CENTRAL ADMINISTRATION</span>
               </div>
               <h1 className="bento-main-title">
-                Managing <span className="title-icon">⚙️</span> Your Diocese and <span className="title-icon">🪪</span> Workflows
+                Managing Your Diocese and Workflows
               </h1>
             </div>
 
@@ -330,7 +331,7 @@ export default function AdminDashboardPage() {
             </button>
           </nav>
 
-          {/* TOP BENTO ROW - 3 EXECUTIVE CARDS */}
+          {/* TOP BENTO ROW - 3 EQUAL HEIGHT EXECUTIVE CARDS */}
           <section className="bento-top-grid">
             {/* CARD 1: APPLICATIONS OVERVIEW */}
             <div className="bento-card bento-card-light">
@@ -393,15 +394,16 @@ export default function AdminDashboardPage() {
 
             {/* CARD 3: DARK HERO SECRETARIAT COVER CARD */}
             <div className="bento-card bento-card-dark-hero">
-              <div className="hero-watermark-crest">✝</div>
               <div className="hero-content-wrap">
-                <div className="hero-badge">DIOCESE EXECUTIVE SECRETARIAT</div>
-                <h3 className="hero-title">
-                  {isTa ? 'பேராய உறுப்பினர் பதிவேடு & நெறிமுறை' : 'Diocese Registry & Ministerial Fellowship'}
-                </h3>
-                <p className="hero-desc">
-                  {isTa ? '1-வருட அங்கீகார முறைமை மற்றும் பேராய சான்றிதழ் மேலாண்மை மையம்.' : 'Official cloud vetting, credential renewal, and automated WhatsApp alert dispatch.'}
-                </p>
+                <div>
+                  <div className="hero-badge">DIOCESE EXECUTIVE SECRETARIAT</div>
+                  <h3 className="hero-title">
+                    {isTa ? 'பேராய உறுப்பினர் பதிவேடு & நெறிமுறை' : 'Diocese Registry & Fellowship'}
+                  </h3>
+                  <p className="hero-desc">
+                    {isTa ? '1-வருட அங்கீகார முறைமை மற்றும் பேராய சான்றிதழ் மேலாண்மை மையம்.' : 'Official cloud vetting, credential renewal, and automated dispatch.'}
+                  </p>
+                </div>
                 <div className="hero-action-row">
                   <button
                     type="button"
@@ -409,14 +411,13 @@ export default function AdminDashboardPage() {
                     onClick={() => loadApplications(user?.email || 'iamramm8@gmail.com')}
                   >
                     <span>Renew Registry</span>
-                    <span className="hero-arrow">▷</span>
+                    <span className="hero-arrow">→</span>
                   </button>
                 </div>
               </div>
             </div>
           </section>
-
-          {/* LOWER SPLIT LAYOUT (70% DATA / 30% ASIDE BENTO) */}
+          {/* LOWER SPLIT LAYOUT */}
           <div className="bento-lower-grid">
             {/* LEFT MAIN DATA PANEL */}
             <div className="bento-left-panel">
@@ -425,7 +426,7 @@ export default function AdminDashboardPage() {
                 <div className="stats-box-header">
                   <div>
                     <h4 className="stats-box-title">Diocesan Monthly Activity & Registrations</h4>
-                    <p className="stats-box-sub">Real-time candidate submissions and renewals by taluk centers</p>
+                    <p className="stats-box-sub">Candidate submissions and renewals across taluk zones</p>
                   </div>
                   <div className="stats-capsule-badge">
                     <span>Weekly Trends</span>
@@ -511,7 +512,6 @@ export default function AdminDashboardPage() {
                   </div>
                 ) : filteredApps.length === 0 ? (
                   <div className="bento-empty-box">
-                    <span className="empty-icon">📁</span>
                     <h4>{isTa ? 'விண்ணப்பங்கள் எதுவும் காணப்படவில்லை' : 'No Applications Found'}</h4>
                     <p>{isTa ? 'தேடல் சொல்லை மாற்றி முயற்சிக்கவும்.' : 'Try adjusting your search query or filter selection.'}</p>
                   </div>
@@ -618,7 +618,7 @@ export default function AdminDashboardPage() {
                                     onClick={() => handleWhatsAppReminder(app)}
                                     title="Send WhatsApp Renewal Notice"
                                   >
-                                    WA
+                                    WhatsApp
                                   </button>
 
                                   {app.status === 'ACCEPTED' && (
@@ -629,7 +629,7 @@ export default function AdminDashboardPage() {
                                       disabled={renewingId === app.applicationId}
                                       title="Extend Subscription for +1 Year (365 Days)"
                                     >
-                                      {renewingId === app.applicationId ? '...' : '+1Y'}
+                                      {renewingId === app.applicationId ? '...' : '+1 Year'}
                                     </button>
                                   )}
                                 </div>
@@ -643,12 +643,15 @@ export default function AdminDashboardPage() {
                 )}
               </div>
             </div>
-
             {/* RIGHT ASIDE BENTO QUICK ACCESS WIDGETS */}
             <aside className="bento-right-aside">
               <div className="aside-bento-card">
                 <div className="aside-card-top">
-                  <div className="aside-icon-box">🏛️</div>
+                  <div className="aside-icon-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2l9 5H3l9-5z"></path>
+                    </svg>
+                  </div>
                   <span className="aside-badge">ACTIVE DESK</span>
                 </div>
                 <h4 className="aside-card-title">Synod Council Desk</h4>
@@ -663,7 +666,12 @@ export default function AdminDashboardPage() {
 
               <div className="aside-bento-card">
                 <div className="aside-card-top">
-                  <div className="aside-icon-box">📍</div>
+                  <div className="aside-icon-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
                   <span className="aside-badge lime-aside-badge">VIRUDHUNAGAR</span>
                 </div>
                 <h4 className="aside-card-title">Diocesan Coordinators</h4>
@@ -689,12 +697,20 @@ export default function AdminDashboardPage() {
 
               <div className="aside-bento-card">
                 <div className="aside-card-top">
-                  <div className="aside-icon-box">📜</div>
+                  <div className="aside-icon-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                  </div>
                   <span className="aside-badge">SECURE VAULT</span>
                 </div>
                 <h4 className="aside-card-title">Diocese Registry & Archives</h4>
                 <p className="aside-card-desc">
-                  Ministerial ordinations, government gazette affidavits, and membership certificates.
+                  Ministerial ordinations, government affidavits, and membership records.
                 </p>
                 <div className="aside-card-footer">
                   <span className="aside-count-tag">Cloud Sync OK</span>
@@ -704,12 +720,17 @@ export default function AdminDashboardPage() {
 
               <div className="aside-bento-card">
                 <div className="aside-card-top">
-                  <div className="aside-icon-box">📡</div>
+                  <div className="aside-icon-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="2"></circle>
+                      <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+                    </svg>
+                  </div>
                   <span className="aside-badge">BROADCAST</span>
                 </div>
                 <h4 className="aside-card-title">Diocese Media & Bulletins</h4>
                 <p className="aside-card-desc">
-                  Publish notices, convention circulars, and prayer gallery updates directly to members.
+                  Publish circulars, convention bulletins, and prayer gallery updates.
                 </p>
                 <div className="aside-card-footer">
                   <Link to="/gallery" className="aside-count-tag">View Gallery</Link>

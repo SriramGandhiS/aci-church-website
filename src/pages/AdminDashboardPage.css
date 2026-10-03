@@ -1,15 +1,15 @@
 ﻿/* ============================================================
-   NEXT-GEN BENTO EXECUTIVE DASHBOARD - SYSTEM DESIGN
+   PREMIUM BENTO EXECUTIVE DASHBOARD - REFINED DESIGN SYSTEM
    ============================================================ */
 
 .bento-canvas-wrapper {
   background: #9cb19e;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.18) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(0, 0, 0, 0.08) 0%, transparent 40%),
-    linear-gradient(135deg, #96ab98 0%, #a4bba7 50%, #90a592 100%);
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(0, 0, 0, 0.08) 0%, transparent 45%),
+    linear-gradient(135deg, #95ab97 0%, #a2b9a5 50%, #8fa491 100%);
   min-height: 100vh;
-  padding: 32px 24px 60px;
+  padding: 36px 28px 70px;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #111417;
@@ -23,14 +23,14 @@
   background: #111417;
   color: #d6f873;
   border: 1px solid #d6f873;
-  padding: 12px 22px;
+  padding: 12px 24px;
   border-radius: 9999px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   gap: 14px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   animation: slideInDown 0.3s ease;
 }
 
@@ -56,10 +56,10 @@
   border-radius: 36px;
   box-shadow: 
     0 30px 80px rgba(15, 23, 42, 0.16),
-    0 4px 20px rgba(0, 0, 0, 0.06);
+    0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
-  padding: 18px;
-  min-height: 880px;
+  padding: 20px;
+  min-height: 900px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -69,13 +69,13 @@
   width: 68px;
   background: #111417;
   border-radius: 28px;
-  padding: 20px 0 18px;
+  padding: 22px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .dock-top-brand {
@@ -87,7 +87,7 @@
 .dock-brand-logo {
   width: 44px;
   height: 44px;
-  background: #1e2227;
+  background: #1c2024;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -98,20 +98,18 @@
 }
 
 .dock-brand-logo:hover {
-  transform: scale(1.06);
-  background: #282d33;
+  transform: scale(1.05);
+  background: #252b31;
 }
 
-.dock-shield-icon {
+.dock-cross-icon {
   color: #d6f873;
-  font-size: 1.3rem;
-  font-weight: bold;
 }
 
 .dock-nav-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .dock-btn {
@@ -130,11 +128,11 @@
 
 .dock-btn:hover {
   color: #ffffff;
-  background: #1e2227;
+  background: #1c2024;
 }
 
 .dock-btn.active {
-  background: #252a30;
+  background: #252b31;
   color: #d6f873;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -146,19 +144,23 @@
   gap: 12px;
 }
 
+.dock-avatar-chip {
+  position: relative;
+}
+
 .dock-avatar-circle {
   position: relative;
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  background: #252b31;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 0.85rem;
-  border: 2px solid #282d33;
+  border: 2px solid #1c2024;
 }
 
 .dock-online-dot {
@@ -184,19 +186,19 @@
 
 .dock-logout-mini:hover {
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.12);
 }
 
 /* MAIN BODY AREA */
 .bento-main-body {
   flex: 1;
-  background: #f7f9f7;
+  background: #f8faf8;
   border-radius: 28px;
-  margin-left: 14px;
-  padding: 22px 28px 28px;
+  margin-left: 16px;
+  padding: 24px 32px 32px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -218,7 +220,7 @@
   font-weight: 700;
   letter-spacing: 1.2px;
   color: #64748b;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .bento-crumb-dot {
@@ -235,11 +237,6 @@
   letter-spacing: -0.6px;
   margin: 0;
   line-height: 1.2;
-}
-
-.title-icon {
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .bento-header-actions {
@@ -259,7 +256,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
   transition: all 0.2s;
 }
 
@@ -274,12 +271,13 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 0.88rem;
-  padding: 11px 22px;
+  height: 44px;
+  padding: 0 22px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(17, 20, 23, 0.2);
+  box-shadow: 0 4px 14px rgba(17, 20, 23, 0.16);
   transition: all 0.2s;
 }
 
@@ -290,7 +288,6 @@
 
 .plus-symbol {
   font-size: 1.1rem;
-  line-height: 1;
   color: #d6f873;
 }
 
@@ -299,7 +296,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #e9ede9;
+  background: #e8ede8;
   padding: 5px;
   border-radius: 9999px;
   overflow-x: auto;
@@ -313,13 +310,14 @@
 .pill-tab-item {
   background: transparent;
   border: none;
-  padding: 8px 18px;
+  height: 38px;
+  padding: 0 18px;
   border-radius: 9999px;
   font-size: 0.84rem;
   font-weight: 600;
   color: #4b5563;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   white-space: nowrap;
@@ -333,7 +331,7 @@
 .pill-tab-item.active {
   background: #ffffff;
   color: #111417;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .tab-pill-badge {
@@ -343,21 +341,22 @@
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 9999px;
+  line-height: 1.4;
 }
 
 .tab-pill-badge.lime-badge {
   background: #d6f873;
   color: #111417;
 }
-
 /* ============================================================
-   TOP BENTO 3-CARD ROW
+   TOP BENTO 3-CARD ROW (EQUAL HEIGHT, ROOMY PADDING)
    ============================================================ */
 
 .bento-top-grid {
   display: grid;
   grid-template-columns: 1fr 1.05fr 1.35fr;
-  gap: 16px;
+  gap: 18px;
+  align-items: stretch;
 }
 
 @media (max-width: 1100px) {
@@ -368,47 +367,48 @@
 
 .bento-card {
   border-radius: 24px;
-  padding: 22px;
+  padding: 24px;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 195px;
 }
 
 /* CARD 1: LIGHT CARD */
 .bento-card-light {
   background: #ffffff;
   border: 1px solid #e5e9e5;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 
 .bento-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .bento-card-label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .bento-card-label-dark {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: #1e293b;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .bento-metric-large {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 800;
   color: #111417;
   letter-spacing: -1px;
@@ -416,7 +416,7 @@
 }
 
 .bento-metric-large-dark {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 800;
   color: #111417;
   letter-spacing: -1px;
@@ -503,7 +503,7 @@
 .legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .legend-dot {
@@ -523,7 +523,7 @@
   background: #d6f873;
   border: 1px solid #c2e858;
   color: #111417;
-  box-shadow: 0 8px 24px rgba(214, 248, 115, 0.25);
+  box-shadow: 0 6px 20px rgba(214, 248, 115, 0.22);
 }
 
 /* CARD 3: DARK HERO COVER */
@@ -531,24 +531,10 @@
   background: linear-gradient(135deg, #111417 0%, #1e242a 60%, #141a20 100%);
   color: #ffffff;
   border: 1px solid #282f37;
-  position: relative;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-
-.hero-watermark-crest {
-  position: absolute;
-  top: -10px;
-  right: 14px;
-  font-size: 7rem;
-  color: rgba(214, 248, 115, 0.05);
-  user-select: none;
-  pointer-events: none;
-  font-weight: 900;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .hero-content-wrap {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -574,8 +560,8 @@
 .hero-desc {
   font-size: 0.8rem;
   color: #9ca3af;
-  margin: 0 0 14px;
-  line-height: 1.4;
+  margin: 0 0 16px;
+  line-height: 1.45;
 }
 
 .hero-action-row {
@@ -589,7 +575,8 @@
   border: none;
   font-size: 0.82rem;
   font-weight: 700;
-  padding: 8px 18px;
+  height: 36px;
+  padding: 0 18px;
   border-radius: 9999px;
   cursor: pointer;
   display: inline-flex;
@@ -604,17 +591,16 @@
 }
 
 .hero-arrow {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
-
 /* ============================================================
-   LOWER SPLIT GRID (72% DATA / 28% ASIDE WIDGETS)
+   LOWER SPLIT GRID (SPACIOUS DATA & ASIDE BENTO)
    ============================================================ */
 
 .bento-lower-grid {
   display: grid;
   grid-template-columns: 1fr 320px;
-  gap: 16px;
+  gap: 18px;
   align-items: start;
 }
 
@@ -627,7 +613,7 @@
 .bento-left-panel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 /* CAPSULE STACKED STATS VISUALIZER */
@@ -635,8 +621,8 @@
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid #e5e9e5;
-  padding: 20px 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  padding: 22px 26px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 
 .stats-box-header {
@@ -647,14 +633,14 @@
 }
 
 .stats-box-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #111417;
-  margin: 0 0 2px;
+  margin: 0 0 4px;
 }
 
 .stats-box-sub {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: #64748b;
   margin: 0;
 }
@@ -664,7 +650,7 @@
   font-size: 0.74rem;
   font-weight: 700;
   color: #334155;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 9999px;
 }
 
@@ -673,7 +659,7 @@
   justify-content: space-between;
   align-items: flex-end;
   height: 140px;
-  padding: 10px 10px 0;
+  padding: 10px 14px 0;
 }
 
 .capsule-col {
@@ -741,11 +727,13 @@
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 9999px;
-  padding: 8px 16px;
+  height: 42px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
 .bento-search-pill input {
@@ -775,12 +763,16 @@
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 9999px;
-  padding: 7px 14px;
-  font-size: 0.78rem;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #4b5563;
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filter-pill:hover {
@@ -799,12 +791,12 @@
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid #e5e9e5;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
   overflow: hidden;
 }
 
 .bento-loading-box, .bento-empty-box {
-  padding: 48px 24px;
+  padding: 50px 24px;
   text-align: center;
   color: #64748b;
 }
@@ -823,15 +815,10 @@
   to { transform: rotate(360deg); }
 }
 
-.empty-icon {
-  font-size: 2.2rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
 .bento-empty-box h4 {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   color: #111417;
+  font-size: 1rem;
 }
 
 .bento-empty-box p {
@@ -846,28 +833,28 @@
 .bento-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   text-align: left;
 }
 
 .bento-table th {
   background: #fafbfa;
-  padding: 14px 16px;
+  padding: 16px 18px;
   font-size: 0.72rem;
   font-weight: 800;
   color: #64748b;
   letter-spacing: 0.8px;
-  border-bottom: 1px solid #eef2ee;
+  border-bottom: 1px solid #edf1ed;
 }
 
 .bento-table td {
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-bottom: 1px solid #f1f4f1;
   vertical-align: middle;
 }
 
 .bento-row:hover {
-  background: #f9fbf9;
+  background: #f8faf8;
 }
 
 /* APPLICANT CELL */
@@ -878,8 +865,8 @@
 }
 
 .applicant-avatar-chip {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 12px;
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: #d6f873;
@@ -894,13 +881,13 @@
 .applicant-name {
   font-weight: 700;
   color: #111417;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .applicant-sub {
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: #64748b;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .app-id-pill {
@@ -909,12 +896,12 @@
   font-weight: 700;
   background: #f1f5f9;
   color: #334155;
-  padding: 3px 8px;
+  padding: 4px 8px;
   border-radius: 6px;
 }
 
 .district-tag {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #475569;
 }
@@ -932,7 +919,7 @@
   gap: 6px;
   font-size: 0.74rem;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 9999px;
   width: fit-content;
 }
@@ -971,7 +958,7 @@
 .red-dot { background: #ef4444; }
 
 .sub-date-sub {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: #94a3b8;
 }
 
@@ -991,56 +978,61 @@
 .status-review { background: #fef3c7; color: #92400e; }
 .status-rejected { background: #fee2e2; color: #b91c1c; }
 
-/* ACTION BUTTONS */
+/* ACTION BUTTONS (UNIFORM SIZING & PREMIUM SLEEK STYLE) */
 .row-actions-group {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
 }
 
 .row-action-btn {
+  height: 32px;
+  padding: 0 14px;
   border-radius: 8px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 5px 10px;
-  border: 1px solid transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .view-btn {
   background: #111417;
   color: #ffffff;
+  border: 1px solid #111417;
 }
 
 .view-btn:hover {
   background: #23272d;
+  border-color: #23272d;
 }
 
 .wa-btn {
-  background: #ecfdf5;
-  color: #047857;
-  border-color: #a7f3d0;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .wa-btn:hover {
-  background: #d1fae5;
+  background: #dcfce7;
+  border-color: #86efac;
 }
 
 .renew-btn {
-  background: #d6f873;
-  color: #111417;
-  border-color: #c2e858;
+  background: #ecfccb;
+  color: #3f6212;
+  border: 1px solid #d9f99d;
 }
 
 .renew-btn:hover {
-  background: #c5ee58;
-  transform: translateY(-1px);
+  background: #d6f873;
+  border-color: #bef264;
 }
 
 .text-right {
@@ -1062,7 +1054,7 @@
   border-radius: 20px;
   border: 1px solid #e5e9e5;
   padding: 18px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1071,7 +1063,7 @@
 
 .aside-bento-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .aside-card-top {
@@ -1081,7 +1073,14 @@
 }
 
 .aside-icon-box {
-  font-size: 1.3rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .aside-badge {
@@ -1172,4 +1171,3 @@
   background: #23272d;
   transform: scale(1.08);
 }
-
