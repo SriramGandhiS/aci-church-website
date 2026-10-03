@@ -1,5 +1,5 @@
 ﻿/* ============================================================
-   PREMIUM BENTO EXECUTIVE DASHBOARD - REFINED DESIGN SYSTEM
+   PREMIUM BENTO EXECUTIVE DASHBOARD - FULL WIDTH DESIGN
    ============================================================ */
 
 .bento-canvas-wrapper {
@@ -9,7 +9,8 @@
     radial-gradient(circle at 88% 82%, rgba(0, 0, 0, 0.08) 0%, transparent 45%),
     linear-gradient(135deg, #95ab97 0%, #a2b9a5 50%, #8fa491 100%);
   min-height: 100vh;
-  padding: 36px 28px 70px;
+  padding: 16px 20px 40px;
+  width: 100%;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #111417;
@@ -48,18 +49,19 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* FLOATING APP WINDOW CONTAINER */
+/* FULL WIDTH APP WINDOW CONTAINER */
 .bento-dashboard-window {
-  max-width: 1440px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   background: #ffffff;
-  border-radius: 36px;
+  border-radius: 28px;
   box-shadow: 
-    0 30px 80px rgba(15, 23, 42, 0.16),
-    0 4px 20px rgba(0, 0, 0, 0.05);
+    0 20px 60px rgba(15, 23, 42, 0.12),
+    0 4px 20px rgba(0, 0, 0, 0.04);
   display: flex;
-  padding: 20px;
-  min-height: 900px;
+  padding: 16px;
+  min-height: calc(100vh - 80px);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -68,7 +70,7 @@
 .bento-capsule-sidebar {
   width: 68px;
   background: #111417;
-  border-radius: 28px;
+  border-radius: 22px;
   padding: 22px 0 20px;
   display: flex;
   flex-direction: column;
@@ -189,17 +191,17 @@
   background: rgba(239, 68, 68, 0.12);
 }
 
-/* MAIN BODY AREA */
+/* MAIN BODY AREA - EXPANDS TO FULL WIDTH */
 .bento-main-body {
   flex: 1;
+  width: calc(100% - 84px);
   background: #f8faf8;
-  border-radius: 28px;
+  border-radius: 22px;
   margin-left: 16px;
   padding: 24px 32px 32px;
   display: flex;
   flex-direction: column;
   gap: 22px;
-  overflow-x: hidden;
   box-sizing: border-box;
 }
 
@@ -210,6 +212,7 @@
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .bento-crumb-tag {
@@ -301,6 +304,8 @@
   border-radius: 9999px;
   overflow-x: auto;
   scrollbar-width: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bento-pill-tabs-nav::-webkit-scrollbar {
@@ -349,7 +354,7 @@
   color: #111417;
 }
 /* ============================================================
-   TOP BENTO 3-CARD ROW (EQUAL HEIGHT, ROOMY PADDING)
+   TOP BENTO 3-CARD ROW (EXPANDS HORIZONTALLY)
    ============================================================ */
 
 .bento-top-grid {
@@ -357,6 +362,7 @@
   grid-template-columns: 1fr 1.05fr 1.35fr;
   gap: 18px;
   align-items: stretch;
+  width: 100%;
 }
 
 @media (max-width: 1100px) {
@@ -594,14 +600,15 @@
   font-size: 0.85rem;
 }
 /* ============================================================
-   LOWER SPLIT GRID (SPACIOUS DATA & ASIDE BENTO)
+   LOWER SPLIT GRID (FULL HORIZONTAL WIDTH)
    ============================================================ */
 
 .bento-lower-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 340px;
   gap: 18px;
   align-items: start;
+  width: 100%;
 }
 
 @media (max-width: 1040px) {
@@ -614,6 +621,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  width: 100%;
 }
 
 /* CAPSULE STACKED STATS VISUALIZER */
@@ -623,6 +631,8 @@
   border: 1px solid #e5e9e5;
   padding: 22px 26px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .stats-box-header {
@@ -660,6 +670,8 @@
   align-items: flex-end;
   height: 140px;
   padding: 10px 14px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .capsule-col {
@@ -719,6 +731,7 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .bento-search-pill {
@@ -793,6 +806,8 @@
   border: 1px solid #e5e9e5;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bento-loading-box, .bento-empty-box {
@@ -828,6 +843,7 @@
 
 .bento-table-container {
   overflow-x: auto;
+  width: 100%;
 }
 
 .bento-table {
@@ -1047,6 +1063,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
 }
 
 .aside-bento-card {
@@ -1059,6 +1076,8 @@
   flex-direction: column;
   gap: 8px;
   transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aside-bento-card:hover {
