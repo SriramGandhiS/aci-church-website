@@ -23,6 +23,8 @@ import {
 import DateField from '../components/Form/DateField'
 import FilledApplicationPdf from '../components/Form/FilledApplicationPdf'
 import OfficialApplicationForm from '../components/Form/OfficialApplicationForm'
+import LocationSelectorModal from '../components/Form/LocationSelectorModal'
+import { getDistrictLocation, getAutoReferees, BISHOP_REFEREE } from '../data/dioceseLocationsData'
 import { lookupPincode } from '../utils/postalApi'
 import {
   initialApplicationData,
@@ -116,6 +118,18 @@ export default function ApplicationPage() {
   const [submittedAppId, setSubmittedAppId] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [reviewTab, setReviewTab] = useState('summary') // 'summary' | 'official'
+  const [showLocModal, setShowLocModal] = useState(false)
+  const [hasConfirmedJurisdiction, setHasConfirmedJurisdiction] = useState(() => {
+    try {
+      return !!localStorage.getItem('aci_app_jurisdiction_set')
+    } catch (e) {
+      return false
+    }
+  })
+
+  const hasJurisdiction = Boolean(formData.personal?.permanentAddress?.district)
+  const isJurisdictionLocked = !hasJurisdiction && !isCompleted
+  const isLocModalOpen = isJurisdictionLocked || showLocModal
 
   const [permPostalInfo, setPermPostalInfo] = useState({ loading: false, msg: '', results: [] })
   const [churchPostalInfo, setChurchPostalInfo] = useState({ loading: false, msg: '', results: [] })
@@ -123,6 +137,61 @@ export default function ApplicationPage() {
   const [userEditedChurch, setUserEditedChurch] = useState({ cityTown: false, taluk: false, district: false, state: false })
 
   const photoInputRef = useRef(null)
+
+  const handleLocationConfirm = (locData) => {
+    setFormData(prev => {
+      const perm = {
+        ...prev.personal.permanentAddress,
+        state: locData.state || 'Tamil Nadu',
+        district: locData.district,
+        taluk: locData.taluk || prev.personal.permanentAddress.taluk,
+        country: 'India'
+      }
+      const church = {
+        ...prev.church,
+        state: locData.state || 'Tamil Nadu',
+        district: locData.district,
+        taluk: locData.taluk || prev.church.taluk,
+        country: 'India'
+      }
+      return {
+        ...prev,
+        personal: {
+          ...prev.personal,
+          permanentAddress: perm,
+          contactAddress: prev.personal.contactAddressSameAsPermanent ? perm : prev.personal.contactAddress
+        },
+        church: church,
+        references: {
+          ref1: {
+            name: locData.dos.name,
+            diocesanId: locData.dos.dioceseId || locData.dos.regNo || '',
+            designation: locData.dos.designation || 'District Overseer (D.O.S)',
+            church: locData.dos.church || '',
+            address: locData.dos.address || '',
+            phone: locData.dos.phone || '',
+            email: locData.dos.email || '',
+            status: 'PENDING_DOS_RECOMMENDATION'
+          },
+          ref2: {
+            name: locData.referees?.ref2?.name || BISHOP_REFEREE.name,
+            diocesanId: locData.referees?.ref2?.dioceseId || BISHOP_REFEREE.dioceseId,
+            designation: BISHOP_REFEREE.designation,
+            church: BISHOP_REFEREE.church,
+            address: BISHOP_REFEREE.address,
+            phone: BISHOP_REFEREE.phone,
+            email: BISHOP_REFEREE.email,
+            status: 'PENDING_BISHOP_APPROVAL'
+          }
+        }
+      }
+    })
+    try {
+      localStorage.setItem('aci_app_jurisdiction_set', 'true')
+    } catch (e) {}
+    setHasConfirmedJurisdiction(true)
+    setShowLocModal(false)
+  }
   const isInitialMount = useRef(true)
 
   // 1. Initial Load: Check remote database if logged in, or local draft
@@ -145,11 +214,15 @@ export default function ApplicationPage() {
       // Check localStorage draft
       try {
         const saved = localStorage.getItem(STORAGE_KEY)
+        const hasSavedLocation = localStorage.getItem('aci_app_jurisdiction_set')
         if (saved) {
           const parsed = JSON.parse(saved)
           if (parsed && parsed.formData && (parsed.formData.personal?.name || parsed.currentStep > 1)) {
             setShowResumeBanner(true)
           }
+        } else if (!hasSavedLocation) {
+          // Open location pre-selector immediately on fresh visit
+          setShowLocModal(true)
         }
       } catch (e) {}
     }
@@ -216,10 +289,12 @@ export default function ApplicationPage() {
   const handleClearApplication = () => {
     try {
       localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem('aci_app_jurisdiction_set')
     } catch (e) {}
     setFormData(initialApplicationData)
     setCurrentStep(1)
     setIsCompleted(false)
+    setHasConfirmedJurisdiction(false)
     setShowClearModal(false)
     setShowResumeBanner(false)
     setErrors({})
@@ -937,7 +1012,8 @@ export default function ApplicationPage() {
   }
 
   return (
-    <div className="clean-app-page">
+    <>
+      <div className={`clean-app-page ${isJurisdictionLocked ? 'clean-app-locked' : ''}`}>
 
       {/* Save Status & Clear Draft Header Bar */}
       <div className="app-save-bar">
@@ -1007,6 +1083,32 @@ export default function ApplicationPage() {
             ? 'அப்போஸ்தல பேராயத்தில் உறுப்பினராக இணைய தேவையான தகவல்களைப் பதிவு செய்யவும்.'
             : 'Complete your official membership application. Your progress is saved automatically on this device.'}
         </p>
+
+        {/* Jurisdiction & Assigned DOS Banner */}
+        <div className="app-jurisdiction-banner">
+          <div className="app-jurisdiction-left">
+            <div className="app-jurisdiction-icon">
+              <ShieldIcon size={18} />
+            </div>
+            <div>
+              <span className="app-jurisdiction-tag">{isTa ? 'பேராய ஆட்சி எல்லை & மண்டலம்' : 'DIOCESE JURISDICTION & OVERSEER'}</span>
+              <h4 className="app-jurisdiction-name">
+                {formData.personal?.permanentAddress?.district ? `${formData.personal.permanentAddress.district} ${isTa ? 'பேராயம்' : 'Diocese'}` : (isTa ? 'பேராயம் தேர்ந்தெடுக்கப்படவில்லை' : 'Diocese Not Selected')}
+                {formData.personal?.permanentAddress?.taluk ? ` • ${formData.personal.permanentAddress.taluk} Taluk` : ''}
+              </h4>
+              <p className="app-jurisdiction-dos">
+                {isTa ? 'மாவட்ட கண்காணிப்பாளர் (DOS):' : 'Assigned District Overseer (DOS):'} <strong>{formData.references?.ref1?.name || (isTa ? 'தேர்ந்தெடுக்கப்படவில்லை' : 'Not Selected')}</strong> {formData.references?.ref1?.email ? `(${formData.references.ref1.email})` : ''}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="app-jurisdiction-change-btn"
+            onClick={() => setShowLocModal(true)}
+          >
+            {formData.personal?.permanentAddress?.district ? (isTa ? 'மாவட்டத்தை மாற்று' : 'Change Diocese / DOS') : (isTa ? 'மாவட்டத்தைத் தேர்ந்தெடு' : 'Select Diocese / DOS')}
+          </button>
+        </div>
 
         {/* Stepper Progress Bar */}
         <div className="clean-stepper-wrap">
@@ -2422,66 +2524,133 @@ export default function ApplicationPage() {
                 </div>
               )}
 
-              {/* Two References Inputs */}
+              {/* Two References Inputs — Auto-Routed via DOS & Bishop */}
               <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '14.5px', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>
-                  {isTa ? 'X. இரண்டு பேராய அங்கத்தினர்களின் பரிந்துரை' : 'X. Details of Two References (Must)'}
-                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <h3 style={{ fontSize: '14.5px', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                    {isTa ? 'X. இரண்டு பேராய அங்கத்தினர்களின் பரிந்துரை' : 'X. Details of Two Official References (Mandatory)'}
+                  </h3>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowLocModal(true)}
+                    style={{ fontSize: '12px', color: '#1e40af', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {isTa ? 'மண்டல கண்காணிப்பாளரை மாற்ற' : 'Change District Overseer (DOS)'}
+                  </button>
+                </div>
 
                 <div className="clean-grid-2" style={{ marginBottom: '18px' }}>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '14px' }}>
-                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af' }}>Reference 1: District Overseer / Member</span>
-                    <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <input
-                        type="text"
-                        value={formData.references.ref1.name}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, name: e.target.value } } }))}
-                        placeholder="Name of Referrer"
-                        className="clean-input"
-                      />
-                      <input
-                        type="text"
-                        value={formData.references.ref1.diocesanId}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, diocesanId: e.target.value } } }))}
-                        placeholder="Diocesan ID No (e.g. TN 0146)"
-                        className="clean-input"
-                      />
-                      <input
-                        type="tel"
-                        inputMode="tel"
-                        value={formData.references.ref1.phone}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, phone: e.target.value } } }))}
-                        placeholder="Mobile Number"
-                        className="clean-input"
-                      />
+                  <div style={{ background: '#f8fafc', border: '1.5px solid #bfdbfe', borderRadius: '8px', padding: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {isTa ? 'பரிந்துரை 1: மாவட்ட கண்காணிப்பாளர் (DOS)' : 'Reference 1: District Overseer (DOS)'}
+                      </span>
+                      <span style={{ fontSize: '10px', background: '#dbeafe', color: '#1e40af', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
+                        {isTa ? 'தானியங்கி பரிந்துரை' : 'Auto-Assigned'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் பெயர்' : 'Overseer Name'}</label>
+                        <input
+                          type="text"
+                          value={formData.references.ref1.name}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, name: e.target.value } } }))}
+                          placeholder="Name of Referrer"
+                          className="clean-input"
+                          style={{ fontWeight: 600, color: '#0f172a' }}
+                        />
+                      </div>
+                      <div className="clean-grid-2" style={{ gap: '8px' }}>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'பதிவு எண்' : 'Diocese ID'}</label>
+                          <input
+                            type="text"
+                            value={formData.references.ref1.diocesanId || formData.references.ref1.dioceseId}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, diocesanId: e.target.value, dioceseId: e.target.value } } }))}
+                            placeholder="e.g. TN 0283"
+                            className="clean-input"
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'அலைபேசி' : 'Phone'}</label>
+                          <input
+                            type="tel"
+                            value={formData.references.ref1.phone}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, phone: e.target.value } } }))}
+                            placeholder="Mobile Number"
+                            className="clean-input"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் மின்னஞ்சல் (பரிந்துரை இணைப்பு அனுப்பப்படும்)' : 'Official Email (Receives Recommendation Link)'}</label>
+                        <input
+                          type="email"
+                          value={formData.references.ref1.email || ''}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, email: e.target.value } } }))}
+                          placeholder="e.g. christchurchmmt@gmail.com"
+                          className="clean-input"
+                          style={{ color: '#1e40af', fontWeight: 600 }}
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '14px' }}>
-                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af' }}>Reference 2: Taluk Co-ordinator / Member</span>
-                    <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <input
-                        type="text"
-                        value={formData.references.ref2.name}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, name: e.target.value } } }))}
-                        placeholder="Name of Referrer"
-                        className="clean-input"
-                      />
-                      <input
-                        type="text"
-                        value={formData.references.ref2.diocesanId}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, diocesanId: e.target.value } } }))}
-                        placeholder="Diocesan ID No (e.g. TN 0466)"
-                        className="clean-input"
-                      />
-                      <input
-                        type="tel"
-                        inputMode="tel"
-                        value={formData.references.ref2.phone}
-                        onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, phone: e.target.value } } }))}
-                        placeholder="Mobile Number"
-                        className="clean-input"
-                      />
+                  <div style={{ background: '#f8fafc', border: '1.5px solid #fed7aa', borderRadius: '8px', padding: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#c2410c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {isTa ? 'பரிந்துரை 2: பேராய தலைமை & சினாடு' : 'Reference 2: Episcopal Bishop & Synod'}
+                      </span>
+                      <span style={{ fontSize: '10px', background: '#ffedd5', color: '#c2410c', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
+                        {isTa ? 'முதன்மை ஒப்புதல்' : 'Final Authority'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'தலைமை பேராயர் பெயர்' : 'Episcopal Authority'}</label>
+                        <input
+                          type="text"
+                          value={formData.references.ref2.name}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, name: e.target.value } } }))}
+                          placeholder="Name of Referrer"
+                          className="clean-input"
+                          style={{ fontWeight: 600, color: '#0f172a' }}
+                        />
+                      </div>
+                      <div className="clean-grid-2" style={{ gap: '8px' }}>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'பதிவு எண்' : 'Diocese ID'}</label>
+                          <input
+                            type="text"
+                            value={formData.references.ref2.diocesanId || formData.references.ref2.dioceseId}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, diocesanId: e.target.value, dioceseId: e.target.value } } }))}
+                            placeholder="e.g. TN 0001"
+                            className="clean-input"
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'அலைபேசி' : 'Phone'}</label>
+                          <input
+                            type="tel"
+                            value={formData.references.ref2.phone}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, phone: e.target.value } } }))}
+                            placeholder="Mobile Number"
+                            className="clean-input"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'செயலக மின்னஞ்சல்' : 'Diocesan Secretariat Email'}</label>
+                        <input
+                          type="email"
+                          value={formData.references.ref2.email || 'rev.johnsondurai@gmail.com'}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, email: e.target.value } } }))}
+                          placeholder="rev.johnsondurai@gmail.com"
+                          className="clean-input"
+                          style={{ color: '#c2410c', fontWeight: 600 }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2640,6 +2809,18 @@ export default function ApplicationPage() {
         </div>
       )}
 
-    </div>
+      </div>
+
+      {/* Strict Glass UI Diocese Jurisdiction Modal (Lock System - Step 0) */}
+      <LocationSelectorModal
+        isOpen={isLocModalOpen}
+        initialDistrict={formData.personal?.permanentAddress?.district || ''}
+        initialTaluk={formData.personal?.permanentAddress?.taluk || ''}
+        onConfirm={handleLocationConfirm}
+        onClose={() => setShowLocModal(false)}
+        isTa={isTa}
+        canDismiss={!isJurisdictionLocked}
+      />
+    </>
   )
 }

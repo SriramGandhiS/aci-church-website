@@ -24,7 +24,7 @@ async function callApi(action, payload = {}) {
 
   try {
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 3500)
+    const timeoutId = setTimeout(() => controller.abort(), 20000) // 20s for Google Apps Script + email dispatch
 
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
@@ -74,6 +74,90 @@ export const isEmailAdmin = (em) => {
 const SEED_APPS = DIOCESE_MEMBERS_ROSTER
 
 const SEED_COORDINATORS = [
+  {
+    id: 'COORD-TPT-01',
+    name: 'Rev. Y. Santhakumar',
+    regNo: 'TN 0283',
+    role: 'District Overseer (D.O.S)',
+    district: 'Tirupattur Diocese',
+    taluk: 'Uthangarai / Tirupattur',
+    church: 'Christ Church',
+    email: 'christchurchmmt@gmail.com',
+    phone: '9443390461',
+    assignedChurches: 24,
+    activeMembers: 96,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-TPT-02',
+    name: 'Rev. B. Simson',
+    regNo: 'TN 0518',
+    role: 'District Overseer / Coordinator',
+    district: 'Tirupattur Diocese',
+    taluk: 'Tirupattur',
+    church: 'Nalvazhi Church',
+    email: 'johnbsimson2010@gmail.com',
+    phone: '9943759925',
+    assignedChurches: 15,
+    activeMembers: 60,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-TPT-03',
+    name: 'Rev. D. A. H. Stephen',
+    regNo: 'TN 0569',
+    role: 'District Coordinator',
+    district: 'Tirupattur Diocese',
+    taluk: 'Arakkonam / Tirupattur',
+    church: 'Apostolic Fellowship Church',
+    email: 'jesus4dahs@gmail.com',
+    phone: '7502411000',
+    assignedChurches: 12,
+    activeMembers: 45,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-TPT-04',
+    name: 'Rev. G. Kamaraj David',
+    regNo: 'TN 0572',
+    role: 'District Coordinator',
+    district: 'Tirupattur Diocese',
+    taluk: 'Gudiyatham',
+    church: 'Grace Prayer House',
+    email: 'kamarajsim2020@yahoo.com',
+    phone: '9943294302',
+    assignedChurches: 10,
+    activeMembers: 40,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-TPT-05',
+    name: 'Rev. D. Vincentvelu',
+    regNo: 'TN 0416',
+    role: 'District Coordinator',
+    district: 'Tirupattur Diocese',
+    taluk: 'Madapalli / Tirupattur',
+    church: 'Living Faith Ministries',
+    email: 'vincentvelu1978@gmail.com',
+    phone: '9944614333',
+    assignedChurches: 14,
+    activeMembers: 52,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-TPT-06',
+    name: 'Rev. S. Reuban Devakumar',
+    regNo: 'TN 0732',
+    role: 'Taluk Coordinator',
+    district: 'Tirupattur Diocese',
+    taluk: 'Vaniyambadi',
+    church: 'Bethel Apostolic Church',
+    email: 'reubendevakumar164@gmail.com',
+    phone: '9597932918',
+    assignedChurches: 8,
+    activeMembers: 35,
+    status: 'ACTIVE'
+  },
   {
     id: 'COORD-01',
     name: 'Rev. M. Jedidiah Durairaj',
@@ -412,19 +496,7 @@ function handleLocalFallback(action, data) {
   const getUsers = () => JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]')
   const saveUsers = (u) => localStorage.setItem(STORAGE_USERS, JSON.stringify(u))
   const getApps = () => {
-    let list = JSON.parse(localStorage.getItem(STORAGE_APPS) || '[]')
-    if (list.length < SEED_APPS.length) {
-      list = [...SEED_APPS]
-      localStorage.setItem(STORAGE_APPS, JSON.stringify(list))
-    } else {
-      SEED_APPS.forEach(s => {
-        if (!list.some(a => a.email === s.email || a.applicationId === s.applicationId)) {
-          list.push(s)
-        }
-      })
-      localStorage.setItem(STORAGE_APPS, JSON.stringify(list))
-    }
-    return list
+    return JSON.parse(localStorage.getItem(STORAGE_APPS) || '[]')
   }
   const saveApps = (a) => localStorage.setItem(STORAGE_APPS, JSON.stringify(a))
   const getDocs = () => JSON.parse(localStorage.getItem(STORAGE_DOCS) || '[]')
@@ -1244,12 +1316,6 @@ export const api = {
   verifyEmailOtp: (email, otp, name) => callApi('verify_email_otp', { email, otp, name }),
   getMyApplication: async (email, googleSub) => {
     const res = await callApi('get_my_application', { email, googleSub })
-    if ((!res || !res.success || !res.application) && email) {
-      const match = SEED_APPS.find(s => s.email.toLowerCase() === email.toLowerCase().trim())
-      if (match) {
-        return { success: true, application: match }
-      }
-    }
     return res
   },
   saveDraft: (email, userId, googleSub, formData) => callApi('save_draft', { email, userId, googleSub, formData }),

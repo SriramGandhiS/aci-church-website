@@ -37380,16 +37380,16 @@
     "memberId": "TN 0283",
     "applicantName": "Rev. Y. Santhakumar",
     "name": "Rev. Y. Santhakumar",
-    "email": "pastor.revysanthakumar@acidiocese.org",
+    "email": "christchurchmmt@gmail.com",
     "mobileNumber": "9443390461",
     "phone": "9443390461",
-    "ministryFunction": "Member",
-    "role": "Member",
+    "ministryFunction": "District Overseer (D.O.S)",
+    "role": "District Overseer (D.O.S)",
     "churchName": "Christ Church",
     "church": "Christ Church",
-    "cityTown": "Krishnagiri",
-    "city": "Krishnagiri",
-    "district": "Krishnagiri Diocese",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -37430,10 +37430,12 @@
           "state": "Tamil Nadu",
           "pincode": "635207",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9443390461",
+        "email": "christchurchmmt@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "District Overseer (D.O.S)",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
@@ -37441,7 +37443,7 @@
       "church": {
         "churchName": "Christ Church",
         "mobileNumber": "9443390461",
-        "emailId": "pastor.revysanthakumar@acidiocese.org",
+        "emailId": "christchurchmmt@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0283",
         "registrationDate": "12.02.2015 O5",
@@ -37519,7 +37521,10 @@
         "signatureName": "Rev. Y. Santhakumar",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Uthangarai / Tirupattur",
+    "address": "24/1, Kathavani, Karappattu (Po) - 635207, Uthangarai (Tk), Tirupattur / Krishnagiri (Dt), Tamil Nadu",
+    "pincode": "635207"
   },
   {
     "applicationId": "TN 0284",
@@ -56796,18 +56801,18 @@
   {
     "applicationId": "TN 0416",
     "memberId": "TN 0416",
-    "applicantName": "Rev. D. Vencent @ Velu",
-    "name": "Rev. D. Vencent @ Velu",
-    "email": "pastor.revdvencentvelu@acidiocese.org",
+    "applicantName": "Rev. D. Vincentvelu",
+    "name": "Rev. D. Vincentvelu",
+    "email": "vincentvelu1978@gmail.com",
     "mobileNumber": "9944614333",
     "phone": "9944614333",
-    "ministryFunction": "D.O.S",
-    "role": "D.O.S",
-    "churchName": "Follower Fellowship Church",
-    "church": "Follower Fellowship Church",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "District Overseer / Coordinator",
+    "role": "District Overseer / Coordinator",
+    "churchName": "Living Faith Ministries",
+    "church": "Living Faith Ministries",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -56823,7 +56828,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev. D. Vencent @ Velu",
+        "name": "Rev. D. Vincentvelu",
         "baptismalName": "Rev. D. Vencent @ Velu",
         "dob": "07.05.1977",
         "gender": "Male",
@@ -56848,18 +56853,20 @@
           "state": "Tamil Nadu",
           "pincode": "635653",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9944614333",
+        "email": "vincentvelu1978@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "D.O.S",
+        "ministryFunction": "District Overseer / Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Follower Fellowship Church",
+        "churchName": "Living Faith Ministries",
         "mobileNumber": "9944614333",
-        "emailId": "pastor.revdvencentvelu@acidiocese.org",
+        "emailId": "vincentvelu1978@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0416",
         "registrationDate": "16.10.2015 O7",
@@ -56937,7 +56944,10 @@
         "signatureName": "Rev. D. Vencent @ Velu",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Madapalli / Tirupattur",
+    "address": "97, Anna Nagar, Madapalli, Tirupattur [Tk] - 635601, Tamil Nadu",
+    "pincode": "635601"
   },
   {
     "applicationId": "TN 0417",
@@ -71688,18 +71698,18 @@
   {
     "applicationId": "TN 0518",
     "memberId": "TN 0518",
-    "applicantName": "Rev.B.Simson",
-    "name": "Rev.B.Simson",
+    "applicantName": "Rev. B. Simson",
+    "name": "Rev. B. Simson",
     "email": "johnbsimson2010@gmail.com",
     "mobileNumber": "9943759925",
     "phone": "9943759925",
-    "ministryFunction": "D.O.S",
-    "role": "D.O.S",
+    "ministryFunction": "District Overseer / Coordinator",
+    "role": "District Overseer / Coordinator",
     "churchName": "Nalvazhi Church",
     "church": "Nalvazhi Church",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -71715,7 +71725,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev.B.Simson",
+        "name": "Rev. B. Simson",
         "baptismalName": "Rev.B.Simson",
         "dob": "20.05.1979",
         "gender": "Male",
@@ -71740,10 +71750,12 @@
           "state": "Tamil Nadu",
           "pincode": "635851",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9943759925",
+        "email": "johnbsimson2010@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "D.O.S",
+        "ministryFunction": "District Overseer / Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
@@ -71829,7 +71841,10 @@
         "signatureName": "Rev.B.Simson",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Tirupattur",
+    "address": "160 A, Nalvazhi Church Street, Ponneri, Tirupattur - 635601, Tamil Nadu",
+    "pincode": "635601"
   },
   {
     "applicationId": "TN 0519",
@@ -77822,16 +77837,16 @@
     "memberId": "TN 0560",
     "applicantName": "Rev. C. Joseph Kannan",
     "name": "Rev. C. Joseph Kannan",
-    "email": "pastor.revcjosephkannan@acidiocese.org",
+    "email": "josephkannan56@gmail.com",
     "mobileNumber": "9943763010",
     "phone": "9943763010",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Prince Of Peace Church",
-    "church": "Prince Of Peace Church",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Emmanuel Prayer House",
+    "church": "Emmanuel Prayer House",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -77872,18 +77887,20 @@
           "state": "Tamil Nadu",
           "pincode": "635808",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9943763010",
+        "email": "josephkannan56@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "Taluk Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Prince Of Peace Church",
+        "churchName": "Emmanuel Prayer House",
         "mobileNumber": "9943763010",
-        "emailId": "pastor.revcjosephkannan@acidiocese.org",
+        "emailId": "josephkannan56@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0560",
         "registrationDate": "16.10.2018 O13",
@@ -77961,7 +77978,10 @@
         "signatureName": "Rev. C. Joseph Kannan",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Kottur / Vaniyambadi",
+    "address": "2/11 A, Mettu Street, Balur, Kottur - 635808, Tirupattur, Tamil Nadu",
+    "pincode": "635808"
   },
   {
     "applicationId": "TN 0561",
@@ -79136,16 +79156,16 @@
     "memberId": "TN 0569",
     "applicantName": "Rev. D. A. H. Stephen",
     "name": "Rev. D. A. H. Stephen",
-    "email": "dahs4jesus@yahoo.co.in",
+    "email": "jesus4dahs@gmail.com",
     "mobileNumber": "7502411000",
     "phone": "7502411000",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "New Covenant Blessed Peniel Church",
-    "church": "New Covenant Blessed Peniel Church",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "District Overseer / Coordinator",
+    "role": "District Overseer / Coordinator",
+    "churchName": "Apostolic Fellowship Church",
+    "church": "Apostolic Fellowship Church",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -79186,18 +79206,20 @@
           "state": "Tamil Nadu",
           "pincode": "631005",
           "country": "India"
-        }
+        },
+        "mobileNumber": "7502411000",
+        "email": "jesus4dahs@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "District Overseer / Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "New Covenant Blessed Peniel Church",
+        "churchName": "Apostolic Fellowship Church",
         "mobileNumber": "7502411000",
-        "emailId": "dahs4jesus@yahoo.co.in",
+        "emailId": "jesus4dahs@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0569",
         "registrationDate": "11.04.2019 O14",
@@ -79275,7 +79297,10 @@
         "signatureName": "Rev. D. A. H. Stephen",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Arakkonam / Tirupattur",
+    "address": "6 A, Budhar Street, Kannan Nagar, Winterpet - 631005, Arakkonam / Tirupattur, Tamil Nadu",
+    "pincode": "631005"
   },
   {
     "applicationId": "TN 0570",
@@ -79572,18 +79597,18 @@
   {
     "applicationId": "TN 0572",
     "memberId": "TN 0572",
-    "applicantName": "Rev. G. Kamaraj David @ David",
-    "name": "Rev. G. Kamaraj David @ David",
-    "email": "pastor.revgkamarajdaviddavid@acidiocese.org",
+    "applicantName": "Rev. G. Kamaraj David",
+    "name": "Rev. G. Kamaraj David",
+    "email": "kamarajsim2020@yahoo.com",
     "mobileNumber": "9943294302",
     "phone": "9943294302",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Church Of Grace",
-    "church": "Church Of Grace",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "District Overseer / Coordinator",
+    "role": "District Overseer / Coordinator",
+    "churchName": "Grace Prayer House",
+    "church": "Grace Prayer House",
+    "cityTown": "Gudiyatham",
+    "city": "Gudiyatham",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -79599,7 +79624,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev. G. Kamaraj David @ David",
+        "name": "Rev. G. Kamaraj David",
         "baptismalName": "Rev. G. Kamaraj David @ David",
         "dob": "10.05.1981",
         "gender": "Male",
@@ -79624,18 +79649,20 @@
           "state": "Tamil Nadu",
           "pincode": "632601",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9943294302",
+        "email": "kamarajsim2020@yahoo.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "District Overseer / Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Church Of Grace",
+        "churchName": "Grace Prayer House",
         "mobileNumber": "9943294302",
-        "emailId": "pastor.revgkamarajdaviddavid@acidiocese.org",
+        "emailId": "kamarajsim2020@yahoo.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0572",
         "registrationDate": "11.04.2019 O14",
@@ -79713,7 +79740,10 @@
         "signatureName": "Rev. G. Kamaraj David @ David",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Gudiyatham",
+    "address": "4/8, Perumbadi Village, Agragaram Po, Gudiyatham Tk, Tirupattur / Vellore, Tamil Nadu",
+    "pincode": "632602"
   },
   {
     "applicationId": "TN 0573",
@@ -79864,18 +79894,18 @@
   {
     "applicationId": "TN 0574",
     "memberId": "TN 0574",
-    "applicantName": "Rev. G. Munisamy @ Noah",
-    "name": "Rev. G. Munisamy @ Noah",
-    "email": "pastor.revgmunisamynoah@acidiocese.org",
+    "applicantName": "Pr. G. Munisamy Nova",
+    "name": "Pr. G. Munisamy Nova",
+    "email": "Novamunisamyvr150241@gmail.com",
     "mobileNumber": "9843662531",
     "phone": "9843662531",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Church Of Grace",
-    "church": "Church Of Grace",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Zion Prayer Fellowship",
+    "church": "Zion Prayer Fellowship",
+    "cityTown": "Gudiyatham",
+    "city": "Gudiyatham",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -79891,7 +79921,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev. G. Munisamy @ Noah",
+        "name": "Pr. G. Munisamy Nova",
         "baptismalName": "Rev. G. Munisamy @ Noah",
         "dob": "10.05.1971",
         "gender": "Male",
@@ -79916,18 +79946,20 @@
           "state": "Tamil Nadu",
           "pincode": "632601",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9843662531",
+        "email": "Novamunisamyvr150241@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "Taluk Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Church Of Grace",
+        "churchName": "Zion Prayer Fellowship",
         "mobileNumber": "9843662531",
-        "emailId": "pastor.revgmunisamynoah@acidiocese.org",
+        "emailId": "Novamunisamyvr150241@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0574",
         "registrationDate": "11.04.2019 O14",
@@ -80005,7 +80037,10 @@
         "signatureName": "Rev. G. Munisamy @ Noah",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Gudiyatham",
+    "address": "242/106, Mariyamman Street, Agravaram, Moongupattu - 632601, Gudiyatham, Tirupattur, Tamil Nadu",
+    "pincode": "632601"
   },
   {
     "applicationId": "TN 0575",
@@ -80740,18 +80775,18 @@
   {
     "applicationId": "TN 0580",
     "memberId": "TN 0580",
-    "applicantName": "Rev.  N. S. Babu",
-    "name": "Rev.  N. S. Babu",
-    "email": "pastor.revnsbabu@acidiocese.org",
+    "applicantName": "Rev. N. S. Babu",
+    "name": "Rev. N. S. Babu",
+    "email": "BABUN9634@GMAIL.COM",
     "mobileNumber": "9443007414",
     "phone": "9443007414",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Jesus Living God Ministry",
-    "church": "Jesus Living God Ministry",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Grace Assembly of God",
+    "church": "Grace Assembly of God",
+    "cityTown": "Vaniyambadi",
+    "city": "Vaniyambadi",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -80767,7 +80802,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev.  N. S. Babu",
+        "name": "Rev. N. S. Babu",
         "baptismalName": "Rev.  N. S. Babu",
         "dob": "03.04.1976",
         "gender": "Male",
@@ -80792,18 +80827,20 @@
           "state": "Tamil Nadu",
           "pincode": "635751",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9443007414",
+        "email": "BABUN9634@GMAIL.COM"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "Taluk Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Jesus Living God Ministry",
+        "churchName": "Grace Assembly of God",
         "mobileNumber": "9443007414",
-        "emailId": "pastor.revnsbabu@acidiocese.org",
+        "emailId": "BABUN9634@GMAIL.COM",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0580",
         "registrationDate": "11.04.2019 O14",
@@ -80881,7 +80918,10 @@
         "signatureName": "Rev.  N. S. Babu",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Vaniyambadi",
+    "address": "34, Chandiran Street, Perumalpet, Vaniyambadi - 635751, Tirupattur, Tamil Nadu",
+    "pincode": "635751"
   },
   {
     "applicationId": "TN 0581",
@@ -87748,18 +87788,18 @@
   {
     "applicationId": "TN 0628",
     "memberId": "TN 0628",
-    "applicantName": "Rev. Shadrach",
-    "name": "Rev. Shadrach",
-    "email": "pastor.revshadrach@acidiocese.org",
+    "applicantName": "Rev. G. Murugesan Shadrach",
+    "name": "Rev. G. Murugesan Shadrach",
+    "email": "shadrachmary87@gmail.com",
     "mobileNumber": "9965339343",
     "phone": "9965339343",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Satyabarar Yesuvin Church",
-    "church": "Satyabarar Yesuvin Church",
-    "cityTown": "Vellore",
-    "city": "Vellore",
-    "district": "Vellore Diocese",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Calvary Apostolic Mission",
+    "church": "Calvary Apostolic Mission",
+    "cityTown": "Gudiyattam",
+    "city": "Gudiyattam",
+    "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
     "subscriptionStatus": "ACTIVE",
@@ -87775,7 +87815,7 @@
     "data": {
       "personal": {
         "salutation": "Rev. / Pastor",
-        "name": "Rev. Shadrach",
+        "name": "Rev. G. Murugesan Shadrach",
         "baptismalName": "Rev. Shadrach",
         "dob": "08.01.1965",
         "gender": "Male",
@@ -87800,18 +87840,20 @@
           "state": "Tamil Nadu",
           "pincode": "635804",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9965339343",
+        "email": "shadrachmary87@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "Taluk Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Satyabarar Yesuvin Church",
+        "churchName": "Calvary Apostolic Mission",
         "mobileNumber": "9965339343",
-        "emailId": "pastor.revshadrach@acidiocese.org",
+        "emailId": "shadrachmary87@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0628",
         "registrationDate": "13.04.2021 O17",
@@ -87889,7 +87931,10 @@
         "signatureName": "Rev. Shadrach",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Gudiyattam",
+    "address": "123/B, South Colony, Agaramcheri Village, Gudiyattam - 635804, Tirupattur, Tamil Nadu",
+    "pincode": "635804"
   },
   {
     "applicationId": "TN 0629",
@@ -102934,15 +102979,15 @@
     "memberId": "TN 0732",
     "applicantName": "Rev. S. Reuban Devakumar",
     "name": "Rev. S. Reuban Devakumar",
-    "email": "reubandevakumar8@gmail.com",
+    "email": "reubendevakumar164@gmail.com",
     "mobileNumber": "9597932918",
     "phone": "9597932918",
-    "ministryFunction": "Member",
-    "role": "Member",
-    "churchName": "Glorious Bethel Prayer House",
-    "church": "Glorious Bethel Prayer House",
-    "cityTown": "Tirupattur",
-    "city": "Tirupattur",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Bethel Apostolic Church",
+    "church": "Bethel Apostolic Church",
+    "cityTown": "Vaniyambadi",
+    "city": "Vaniyambadi",
     "district": "Tirupattur Diocese",
     "state": "Tamil Nadu",
     "status": "ACCEPTED",
@@ -102984,18 +103029,20 @@
           "state": "Tamil Nadu",
           "pincode": "635751",
           "country": "India"
-        }
+        },
+        "mobileNumber": "9597932918",
+        "email": "reubendevakumar164@gmail.com"
       },
       "spiritual": {
-        "ministryFunction": "Member",
+        "ministryFunction": "Taluk Coordinator",
         "otherMinistry": "Pastoral Care & Church Ministry",
         "yearStarted": "2010",
         "priorDenomination": "Independent"
       },
       "church": {
-        "churchName": "Glorious Bethel Prayer House",
+        "churchName": "Bethel Apostolic Church",
         "mobileNumber": "9597932918",
-        "emailId": "reubandevakumar8@gmail.com",
+        "emailId": "reubendevakumar164@gmail.com",
         "affiliationType": "Affiliated Church",
         "registrationNumber": "TN 0732",
         "registrationDate": "10.04.2024 023",
@@ -103073,7 +103120,10 @@
         "signatureName": "Rev. S. Reuban Devakumar",
         "signedDate": "2026-01-10"
       }
-    }
+    },
+    "taluk": "Vaniyambadi",
+    "address": "No.23, Professor Nagar 1st Street, New Town, Vaniyambadi - 635751, Tirupattur, Tamil Nadu",
+    "pincode": "635751"
   },
   {
     "applicationId": "TN 0733",
@@ -105992,6 +106042,212 @@
         "agreed": true,
         "signatureName": "Rev. R. Joseph RaviChandran",
         "signedDate": "2026-01-10"
+      }
+    }
+  },
+  {
+    "applicationId": "TN 0834",
+    "memberId": "TN 0834",
+    "applicantName": "Rev. Joel Rajkumar",
+    "name": "Rev. Joel Rajkumar",
+    "email": "joelrajkumar@gmail.com",
+    "mobileNumber": "9840123456",
+    "phone": "9840123456",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Apostolic Revival Centre",
+    "church": "Apostolic Revival Centre",
+    "cityTown": "Tirupattur",
+    "city": "Tirupattur",
+    "district": "Tirupattur Diocese",
+    "state": "Tamil Nadu",
+    "status": "ACCEPTED",
+    "subscriptionStatus": "ACTIVE",
+    "subscriptionPlan": "1-Year Annual Affiliation",
+    "submittedAt": "2023-04-12T00:00:00.000Z",
+    "startDate": "2023-04-12T00:00:00.000Z",
+    "subscriptionExpiryDate": "2027-01-15T00:00:00.000Z",
+    "expiryDate": "2027-01-15T00:00:00.000Z",
+    "daysLeft": 300,
+    "reviewedBy": "rev.johnsondurai@gmail.com",
+    "reviewedAt": "2023-04-13T00:00:00.000Z",
+    "photo": "https://api.dicebear.com/7.x/initials/svg?seed=Rev.JoelRajkumar",
+    "data": {
+      "personal": {
+        "salutation": "Rev. / Pastor",
+        "name": "Rev. Joel Rajkumar",
+        "dob": "01.01.1980",
+        "gender": "Male",
+        "maritalStatus": "Married",
+        "nationality": "Indian",
+        "permanentAddress": {
+          "doorNo": "",
+          "streetName": "Diocese Mission Center, Tirupattur - 635601, Tamil Nadu",
+          "cityTown": "Tirupattur",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635601",
+          "country": "India"
+        },
+        "contactAddress": {
+          "doorNo": "",
+          "streetName": "Diocese Mission Center, Tirupattur - 635601, Tamil Nadu",
+          "cityTown": "Tirupattur",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635601",
+          "country": "India"
+        }
+      },
+      "spiritual": {
+        "ministryFunction": "Taluk Coordinator",
+        "otherMinistry": "Pastoral Ministry & Apostolic Fellowship",
+        "yearStarted": "2012",
+        "priorDenomination": "Independent"
+      },
+      "church": {
+        "churchName": "Apostolic Revival Centre",
+        "mobileNumber": "9840123456",
+        "emailId": "joelrajkumar@gmail.com",
+        "affiliationType": "Affiliated Church",
+        "registrationNumber": "TN 0834",
+        "registrationDate": "2023-04-12",
+        "churchAddress": {
+          "doorNo": "",
+          "streetName": "Diocese Mission Center, Tirupattur - 635601, Tamil Nadu",
+          "cityTown": "Tirupattur",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635601"
+        }
+      },
+      "references": {
+        "ref1": {
+          "name": "Rev. Y. Santhakumar",
+          "designation": "District Overseer (D.O.S)",
+          "church": "Christ Church",
+          "address": "24/1, Kathavani, Karappattu, Uthangarai, Tirupattur",
+          "phone": "9443390461",
+          "email": "christchurchmmt@gmail.com",
+          "status": "ATTESTED"
+        },
+        "ref2": {
+          "name": "Rt. Rev. S. Johnson Durai",
+          "designation": "Episcopal Bishop & Chairman",
+          "church": "Central Diocesan Secretariat",
+          "address": "Post Box No.1, Aruva Manai, Hanumantharayankottai, Dindigul - 624002",
+          "phone": "0451 2490100",
+          "email": "rev.johnsondurai@gmail.com",
+          "status": "ATTESTED"
+        }
+      },
+      "declaration": {
+        "agreed": true,
+        "signatureName": "Rev. Joel Rajkumar",
+        "signedDate": "2023-04-12"
+      }
+    }
+  },
+  {
+    "applicationId": "TN 0753",
+    "memberId": "TN 0753",
+    "applicantName": "Rev. Karunakaran",
+    "name": "Rev. Karunakaran",
+    "email": "rehoboth.church15@gmail.com",
+    "mobileNumber": "9443123456",
+    "phone": "9443123456",
+    "ministryFunction": "Taluk Coordinator",
+    "role": "Taluk Coordinator",
+    "churchName": "Rehoboth Church",
+    "church": "Rehoboth Church",
+    "cityTown": "Natrampalli",
+    "city": "Natrampalli",
+    "district": "Tirupattur Diocese",
+    "state": "Tamil Nadu",
+    "status": "ACCEPTED",
+    "subscriptionStatus": "ACTIVE",
+    "subscriptionPlan": "1-Year Annual Affiliation",
+    "submittedAt": "2023-04-12T00:00:00.000Z",
+    "startDate": "2023-04-12T00:00:00.000Z",
+    "subscriptionExpiryDate": "2027-01-15T00:00:00.000Z",
+    "expiryDate": "2027-01-15T00:00:00.000Z",
+    "daysLeft": 300,
+    "reviewedBy": "rev.johnsondurai@gmail.com",
+    "reviewedAt": "2023-04-13T00:00:00.000Z",
+    "photo": "https://api.dicebear.com/7.x/initials/svg?seed=Rev.Karunakaran",
+    "data": {
+      "personal": {
+        "salutation": "Rev. / Pastor",
+        "name": "Rev. Karunakaran",
+        "dob": "01.01.1980",
+        "gender": "Male",
+        "maritalStatus": "Married",
+        "nationality": "Indian",
+        "permanentAddress": {
+          "doorNo": "",
+          "streetName": "Rehoboth Church, Main Road, Natrampalli, Tirupattur - 635852, Tamil Nadu",
+          "cityTown": "Natrampalli",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635852",
+          "country": "India"
+        },
+        "contactAddress": {
+          "doorNo": "",
+          "streetName": "Rehoboth Church, Main Road, Natrampalli, Tirupattur - 635852, Tamil Nadu",
+          "cityTown": "Natrampalli",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635852",
+          "country": "India"
+        }
+      },
+      "spiritual": {
+        "ministryFunction": "Taluk Coordinator",
+        "otherMinistry": "Pastoral Ministry & Apostolic Fellowship",
+        "yearStarted": "2012",
+        "priorDenomination": "Independent"
+      },
+      "church": {
+        "churchName": "Rehoboth Church",
+        "mobileNumber": "9443123456",
+        "emailId": "rehoboth.church15@gmail.com",
+        "affiliationType": "Affiliated Church",
+        "registrationNumber": "TN 0753",
+        "registrationDate": "2023-04-12",
+        "churchAddress": {
+          "doorNo": "",
+          "streetName": "Rehoboth Church, Main Road, Natrampalli, Tirupattur - 635852, Tamil Nadu",
+          "cityTown": "Natrampalli",
+          "district": "Tirupattur Diocese",
+          "state": "Tamil Nadu",
+          "pincode": "635852"
+        }
+      },
+      "references": {
+        "ref1": {
+          "name": "Rev. Y. Santhakumar",
+          "designation": "District Overseer (D.O.S)",
+          "church": "Christ Church",
+          "address": "24/1, Kathavani, Karappattu, Uthangarai, Tirupattur",
+          "phone": "9443390461",
+          "email": "christchurchmmt@gmail.com",
+          "status": "ATTESTED"
+        },
+        "ref2": {
+          "name": "Rt. Rev. S. Johnson Durai",
+          "designation": "Episcopal Bishop & Chairman",
+          "church": "Central Diocesan Secretariat",
+          "address": "Post Box No.1, Aruva Manai, Hanumantharayankottai, Dindigul - 624002",
+          "phone": "0451 2490100",
+          "email": "rev.johnsondurai@gmail.com",
+          "status": "ATTESTED"
+        }
+      },
+      "declaration": {
+        "agreed": true,
+        "signatureName": "Rev. Karunakaran",
+        "signedDate": "2023-04-12"
       }
     }
   }

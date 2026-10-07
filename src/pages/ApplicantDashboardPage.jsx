@@ -1,9 +1,10 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
 import { api } from '../services/api'
 import FilledApplicationPdf from '../components/Form/FilledApplicationPdf'
+import ApprovalRoadmap from '../components/Roadmap/ApprovalRoadmap'
 import {
   UserCheckIcon,
   DocumentIcon,
@@ -109,8 +110,14 @@ export default function ApplicantDashboardPage() {
           {/* Status Badge Card */}
           <div className={`app-status-hero-card ${application.status.toLowerCase().replace(/\s+/g, '-')}`}>
             <div className="status-hero-left">
-              <span className="status-hero-label">{isTa ? 'தற்போதைய நிலை' : 'Current Application Status'}</span>
-              <h2 className="status-hero-val">{application.status}</h2>
+              <span className="status-hero-label">{isTa ? 'தற்போதைய பேராய நிலை' : 'Current Diocesan Application Status'}</span>
+              <h2 className="status-hero-val">
+                {application.status === 'ACCEPTED' ? (isTa ? 'அங்கீகரிக்கப்பட்டது' : 'Approved & Affiliated')
+                  : application.status === 'RECOMMENDED_BY_DOS' || application.status === 'PENDING_BISHOP_APPROVAL' ? (isTa ? 'கண்காணிப்பாளர் பரிந்துரைத்தார் • பேராயர் பார்வைக்கு' : 'Recommended by DOS • Awaiting Bishop Sign-Off')
+                  : application.status === 'REJECTED' ? (isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected')
+                  : application.status === 'UNDER_REVIEW_DOS' || application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' ? (isTa ? 'கண்காணிப்பாளர் (DOS) பரிசீலனையில்' : 'Under Review by District Overseer (DOS)')
+                  : (isTa ? 'வரைவு' : 'Incomplete Draft')}
+              </h2>
               <p className="status-hero-id">
                 {isTa ? 'விண்ணப்ப எண்' : 'Application ID'}: <strong>{application.applicationId}</strong>
               </p>
@@ -128,16 +135,22 @@ export default function ApplicantDashboardPage() {
                   <span>{isTa ? 'அங்கீகரிக்கப்பட்டது' : 'Approved & Affiliated'}</span>
                 </div>
               )}
+              {(application.status === 'RECOMMENDED_BY_DOS' || application.status === 'PENDING_BISHOP_APPROVAL') && (
+                <div className="status-pill-lg pending" style={{ background: '#fef3c7', color: '#b45309', border: '1px solid #fde68a' }}>
+                  <UserCheckIcon size={20} />
+                  <span>{isTa ? 'கண்காணிப்பாளர் பரிந்துரைத்தார்' : 'DOS Recommended'}</span>
+                </div>
+              )}
               {application.status === 'REJECTED' && (
                 <div className="status-pill-lg rejected">
                   <AlertCircleIcon size={20} />
                   <span>{isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected'}</span>
                 </div>
               )}
-              {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW') && (
+              {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' || application.status === 'UNDER_REVIEW_DOS') && (
                 <div className="status-pill-lg pending">
                   <UserCheckIcon size={20} />
-                  <span>{isTa ? 'பரிசீலனையில் உள்ளது' : 'Under Review'}</span>
+                  <span>{isTa ? 'DOS பரிசீலனை' : 'Under DOS Review'}</span>
                 </div>
               )}
               {application.status === 'DRAFT' && (
@@ -148,6 +161,18 @@ export default function ApplicantDashboardPage() {
               )}
             </div>
           </div>
+
+          {/* Interactive Approval Journey Roadmap with Particle Canvas & Glowing Track */}
+          <ApprovalRoadmap
+            status={application.status}
+            applicationId={application.applicationId}
+            applicantName={application.applicantName || application.data?.personal?.name || user.name}
+            district={application.data?.personal?.permanentAddress?.district || 'Tamil Nadu'}
+            taluk={application.data?.personal?.permanentAddress?.taluk || 'General'}
+            dosName={application.data?.references?.ref1?.name || 'District Overseer (DOS)'}
+            submittedAt={application.submittedAt ? new Date(application.submittedAt).toLocaleDateString() : ''}
+            isTa={isTa}
+          />
 
           {/* Rejection Notice Banner */}
           {application.status === 'REJECTED' && application.rejectionReason && (

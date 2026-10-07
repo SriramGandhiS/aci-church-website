@@ -26,6 +26,70 @@ var ALLOWED_STATUS = {
   NEEDS_CORRECTION: 'NEEDS_CORRECTION'
 };
 
+/**
+ * Run this function in Apps Script Editor to test the exact HTML Email template immediately!
+ */
+/**
+ * Run this function in Apps Script Editor to CLEAR ALL test applications & reset counter to 1!
+ */
+function clearAllApplicationsDatabase() {
+  var db = getDb();
+  var appSheet = db.getSheetByName(SHEETS.APPLICATIONS);
+  var appDataSheet = db.getSheetByName(SHEETS.APPLICATION_DATA);
+  var docSheet = db.getSheetByName(SHEETS.DOCUMENTS);
+  var auditSheet = db.getSheetByName(SHEETS.ADMIN_ACTIONS);
+  var settingsSheet = db.getSheetByName(SHEETS.SETTINGS);
+  
+  if (appSheet && appSheet.getLastRow() > 1) {
+    appSheet.getRange(2, 1, appSheet.getLastRow() - 1, appSheet.getLastColumn()).clearContent();
+  }
+  if (appDataSheet && appDataSheet.getLastRow() > 1) {
+    appDataSheet.getRange(2, 1, appDataSheet.getLastRow() - 1, appDataSheet.getLastColumn()).clearContent();
+  }
+  if (docSheet && docSheet.getLastRow() > 1) {
+    docSheet.getRange(2, 1, docSheet.getLastRow() - 1, docSheet.getLastColumn()).clearContent();
+  }
+  if (auditSheet && auditSheet.getLastRow() > 1) {
+    auditSheet.getRange(2, 1, auditSheet.getLastRow() - 1, auditSheet.getLastColumn()).clearContent();
+  }
+  if (settingsSheet) {
+    var sRows = settingsSheet.getDataRange().getValues();
+    for (var k = 1; k < sRows.length; k++) {
+      if (sRows[k][0] === 'APP_ID_COUNTER') {
+        settingsSheet.getRange(k + 1, 2).setValue(1);
+        break;
+      }
+    }
+  }
+  Logger.log('ALL APPLICATIONS CLEARED & COUNTER RESET TO 1!');
+  return { success: true, message: 'All applications cleared and counter reset to 1.' };
+}
+
+function testSendHtmlEmailNow() {
+  var testEmail = 'iamramm8@gmail.com';
+  var timeStr = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'hh:mm:ss a');
+  var webAppUrl = ScriptApp.getService().getUrl();
+  var html = buildDosReviewEmailHtml('Pastor Sriram Gandhi', 'ACI-2026-TEST01', 'srirams23cs@psnacet.edu.in', '+91 94864 85810', 'Blessed Hope Church', 'Dindigul', 'Batlagundu', timeStr, 'Rev. R. Gnana Inbavanan (DOS)', webAppUrl);
+  
+  var subject = '📢 NEW APPLICATION REVIEW: Pastor Sriram Gandhi (' + timeStr + ')';
+  
+  // 1. Send via MailApp
+  MailApp.sendEmail({
+    to: testEmail,
+    subject: subject,
+    body: 'A new ministerial application has been submitted by Pastor Sriram Gandhi for Dindigul Diocese. Please review in the portal: https://acidiocese.org/admin/applications',
+    htmlBody: html
+  });
+  
+  Logger.log('HTML Test email sent to: ' + testEmail + ' with subject: ' + subject);
+}
+
+function testSendEmailDirectly() {
+  var testEmail = 'iamramm8@gmail.com';
+  MailApp.sendEmail(testEmail, '✅ ACI Diocese: Email Permissions Authorized!', 'Google Apps Script has been successfully authorized to send emails to ' + testEmail);
+  Logger.log('Test email sent to: ' + testEmail);
+}
+
 function doGet(e) {
   return handleRequest(e, 'GET');
 }
@@ -47,9 +111,17 @@ function handleRequest(e, method) {
     var action = (data.action || '').trim();
     var result = {};
     
+    // 1-Click Email Action Handler (Direct Decision from Inbox)
+    if (action === 'one_click_decision') {
+      return handleOneClickDecision(data);
+    }
+    
     switch (action) {
       case 'setup_database':
         result = setupDatabase();
+        break;
+      case 'clear_all_applications':
+        result = clearAllApplicationsDatabase();
         break;
       case 'auth_google':
         result = handleAuthGoogle(data);
@@ -519,7 +591,47 @@ function handleSubmitApplication(data) {
     ]);
   }
   
-  return { success: true, applicationId: officialAppId, status: ALLOWED_STATUS.SUBMITTED, submittedAt: now };
+  // 6. Step 1: Send DOS Review & Recommendation Email with 1-Click Approve / Reject Buttons
+  var mailSent = false;
+  var mailError = '';
+  try {
+    var ref1 = (formData.references && (formData.references.ref1 || formData.references[0])) || {};
+    var step1DosEmail = (ref1.email && ref1.email.trim() && ref1.email.indexOf('@') !== -1) 
+      ? ref1.email.trim() 
+      : 'rev.gnanainbavanan@acidiocese.org';
+    var step1DosName = ref1.name || 'District Overseer (DOS)';
+    var districtStr = (p.permanentAddress && p.permanentAddress.district) || 'Tamil Nadu';
+    var talukStr = (p.permanentAddress && p.permanentAddress.taluk) || 'General';
+    var webAppUrl = ScriptApp.getService().getUrl();
+    
+    var timeStr = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'hh:mm a');
+    var dosSubject = '📢 ACTION REQUIRED (' + officialAppId + '): ' + applicantName + ' - ' + districtStr + ' Diocese [' + timeStr + ']';
+    var dosTextBody = 'Apostolic Council of India Diocese — Ministerial Application\n\n' +
+      'Applicant: ' + applicantName + ' (' + officialAppId + ')\n' +
+      'Church: ' + (c.churchName || '') + '\n' +
+      'District: ' + districtStr + ' (' + talukStr + ')\n\n' +
+      'Full details and attached official application form are included with this message.';
+      
+    var dosHtmlBody = buildDosReviewEmailHtml(applicantName, officialAppId, email, c.mobileNumber, c.churchName, districtStr, talukStr, timeStr, step1DosName, webAppUrl);
+    
+    var pdfBlob = buildOfficialFormPdfBlob(formData, officialAppId);
+    var mailOptions = {
+      to: step1DosEmail,
+      subject: dosSubject,
+      body: dosTextBody,
+      htmlBody: dosHtmlBody
+    };
+    if (pdfBlob) {
+      mailOptions.attachments = [pdfBlob];
+    }
+    
+    MailApp.sendEmail(mailOptions);
+    mailSent = true;
+  } catch (mErr) {
+    mailError = mErr.toString();
+  }
+  
+  return { success: true, applicationId: officialAppId, status: ALLOWED_STATUS.SUBMITTED, submittedAt: now, mailSent: mailSent, mailError: mailError };
 }
 
 function handleAdminListApplications(data) {
@@ -628,6 +740,33 @@ function handleAdminUpdateStatus(data) {
       now, 'ADMIN', '', adminEmail, 'STATUS_UPDATED', applicationId, 'Status updated to ' + newStatus
     ]);
   }
+  
+  // Email Dispatches for Step 2 & Final Acceptance
+  try {
+    if (newStatus === 'RECOMMENDED_BY_DOS' || newStatus === 'PENDING_BISHOP_APPROVAL' || newStatus === 'UNDER_REVIEW') {
+      var step2BishopEmail = 'srirams23cs@psnacet.edu.in';
+      var bishopSub = 'ACTION REQUIRED (Step 2): Episcopal Bishop Final Approval - ' + applicationId;
+      var bishopMsg = 'Apostolic Council of India Diocese — Step 2: Episcopal Bishop Sign-Off\n\n' +
+        'Application ID: ' + applicationId + '\n' +
+        'Status: RECOMMENDED BY DISTRICT OVERSEER (DOS)\n' +
+        'Reviewer: ' + (adminEmail || 'District Overseer') + '\n' +
+        'Timestamp: ' + now + '\n\n' +
+        'Please review and complete the final Episcopal sign-off in the Admin Portal:\n' +
+        'https://acidiocese.org/admin/applications\n\n' +
+        'Episcopal Synod Secretariat\nApostolic Council of India Diocese';
+      MailApp.sendEmail(step2BishopEmail, bishopSub, bishopMsg);
+    } else if (newStatus === 'ACCEPTED') {
+      var testAuditor = 'iamramm8@gmail.com';
+      var acceptSub = 'CONFIRMATION: Application Approved & Affiliated - ' + applicationId;
+      var acceptMsg = 'Apostolic Council of India Diocese — Official Approval\n\n' +
+        'Application ID: ' + applicationId + ' has been officially APPROVED & AFFILIATED into the Diocese Roll.\n' +
+        'Approved by: ' + (adminEmail || 'Episcopal Bishop & Synod') + '\n' +
+        'Date: ' + now + '\n\n' +
+        'Digital Certificate & Identity Credentials have been issued.\n\n' +
+        'Central Diocesan Secretariat\nApostolic Council of India Diocese';
+      MailApp.sendEmail(testAuditor, acceptSub, acceptMsg);
+    }
+  } catch (eErr) {}
   
   return { success: true, applicationId: applicationId, status: newStatus, reviewedAt: now };
 }
@@ -972,4 +1111,472 @@ function handleAdminGetSettings(data) {
       defaultSubscriptionMonths: 12
     }
   };
+}
+
+
+
+/**
+ * Build Professional HTML Email for Step 1: District Overseer (DOS) Review
+ */
+function buildDosReviewEmailHtml(applicantName, officialAppId, email, phone, church, district, taluk, now, step1DosName, webAppUrl) {
+  var baseUrl = (webAppUrl && typeof webAppUrl === 'string' && webAppUrl.indexOf('http') === 0) 
+    ? webAppUrl 
+    : 'https://script.google.com/macros/s/AKfycbxw_Y_w8rE2klisM3N2WZFtIIlbTDCE6MdX5EUL-Krh5yijcSklt895Il1yTjuJA6gF/exec';
+    
+  var approveUrl = baseUrl + '?action=one_click_decision&stage=DOS&decision=APPROVE&appId=' + encodeURIComponent(officialAppId);
+  var rejectUrl = baseUrl + '?action=one_click_decision&stage=DOS&decision=REJECT&appId=' + encodeURIComponent(officialAppId);
+  var portalUrl = 'https://acidiocese.org/admin/applications';
+  
+  return '<div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px 12px;">' +
+    '<div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">' +
+      '<div style="background: #1e3a8a; padding: 24px; text-align: center; color: #ffffff;">' +
+        '<div style="font-size: 11px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; color: #93c5fd; margin-bottom: 6px;">Apostolic Council of India Diocese</div>' +
+        '<h2 style="margin: 0; font-size: 20px; font-weight: bold;">Ministerial Application Review (Step 1: DOS)</h2>' +
+      '</div>' +
+      '<div style="padding: 24px 28px;">' +
+        '<p style="font-size: 15px; color: #1e293b; line-height: 1.5; margin-top: 0;">' +
+          'Dear <strong>' + step1DosName + '</strong>,<br><br>' +
+          'A new ministerial candidate <strong>' + applicantName + '</strong> has submitted an official affiliation application for <strong>' + district + ' Diocese</strong> (' + taluk + ').' +
+        '</p>' +
+        '<div style="background: #f1f5f9; border-radius: 8px; padding: 18px; margin: 20px 0;">' +
+          '<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #334155;">' +
+            '<tr><td style="padding: 6px 0; font-weight: bold; width: 140px;">Application ID:</td><td style="padding: 6px 0; font-weight: bold; color: #1e3a8a;">' + officialAppId + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Applicant Name:</td><td style="padding: 6px 0;">' + applicantName + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Church / Ministry:</td><td style="padding: 6px 0;">' + (church || '—') + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Diocese & Taluk:</td><td style="padding: 6px 0;">' + district + ' • ' + taluk + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Contact Phone:</td><td style="padding: 6px 0;">' + (phone || '—') + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Contact Email:</td><td style="padding: 6px 0;">' + email + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Submitted Date:</td><td style="padding: 6px 0;">' + now + '</td></tr>' +
+          '</table>' +
+        '</div>' +
+        '<p style="font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 14px;">' +
+          'Please take official action on this candidate below:' +
+        '</p>' +
+        '<div style="margin-bottom: 24px;">' +
+          '<a href="' + approveUrl + '" style="background: #16a34a; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block; margin-right: 10px;">✅ Approve & Recommend</a>' +
+          '<a href="' + rejectUrl + '" style="background: #dc2626; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block;">❌ Reject</a>' +
+        '</div>' +
+        '<p style="font-size: 12.5px; color: #64748b; line-height: 1.5; border-top: 1px solid #e2e8f0; padding-top: 16px;">' +
+          '• If you click <strong>Approve & Recommend</strong>, this application will automatically advance to Step 2 for Episcopal Bishop final sign-off.<br>' +
+          '• Full candidate details and attached official application form are included above and in the attached PDF.' +
+        '</p>' +
+      '</div>' +
+      '<div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px; text-align: center; font-size: 11.5px; color: #94a3b8;">' +
+        'Central Diocesan Secretariat • Apostolic Council of India Diocese' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+/**
+ * Build Professional HTML Email for Step 2: Episcopal Bishop Sign-Off
+ */
+function buildBishopReviewEmailHtml(applicantName, officialAppId, email, phone, church, district, taluk, now, reviewerName, webAppUrl) {
+  var baseUrl = (webAppUrl && typeof webAppUrl === 'string' && webAppUrl.indexOf('http') === 0) 
+    ? webAppUrl 
+    : 'https://script.google.com/macros/s/AKfycbxw_Y_w8rE2klisM3N2WZFtIIlbTDCE6MdX5EUL-Krh5yijcSklt895Il1yTjuJA6gF/exec';
+
+  var approveUrl = baseUrl + '?action=one_click_decision&stage=BISHOP&decision=APPROVE&appId=' + encodeURIComponent(officialAppId);
+  var rejectUrl = baseUrl + '?action=one_click_decision&stage=BISHOP&decision=REJECT&appId=' + encodeURIComponent(officialAppId);
+  
+  return '<div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px 12px;">' +
+    '<div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">' +
+      '<div style="background: #581c87; padding: 24px; text-align: center; color: #ffffff;">' +
+        '<div style="font-size: 11px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; color: #e9d5ff; margin-bottom: 6px;">Apostolic Council of India Diocese</div>' +
+        '<h2 style="margin: 0; font-size: 20px; font-weight: bold;">Episcopal Bishop Final Approval (Step 2)</h2>' +
+      '</div>' +
+      '<div style="padding: 24px 28px;">' +
+        '<p style="font-size: 15px; color: #1e293b; line-height: 1.5; margin-top: 0;">' +
+          'Rt. Rev. <strong>S. Johnson Durai</strong> (Episcopal Bishop & Chairman),<br><br>' +
+          'District Overseer <strong>' + (reviewerName || 'DOS') + '</strong> has reviewed and <span style="color: #16a34a; font-weight: bold;">RECOMMENDED</span> the ministerial application of <strong>' + applicantName + '</strong> for diocesan affiliation.' +
+        '</p>' +
+        '<div style="background: #faf5ff; border: 1px solid #f3e8ff; border-radius: 8px; padding: 18px; margin: 20px 0;">' +
+          '<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #334155;">' +
+            '<tr><td style="padding: 6px 0; font-weight: bold; width: 140px;">Application ID:</td><td style="padding: 6px 0; font-weight: bold; color: #581c87;">' + officialAppId + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Applicant Name:</td><td style="padding: 6px 0;">' + applicantName + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Church / Ministry:</td><td style="padding: 6px 0;">' + (church || '—') + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Diocese Jurisdiction:</td><td style="padding: 6px 0;">' + district + ' (' + taluk + ')</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Recommendation By:</td><td style="padding: 6px 0; color: #16a34a; font-weight: bold;">' + (reviewerName || 'District Overseer') + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Contact Phone:</td><td style="padding: 6px 0;">' + (phone || '—') + '</td></tr>' +
+            '<tr><td style="padding: 6px 0; font-weight: bold;">Contact Email:</td><td style="padding: 6px 0;">' + email + '</td></tr>' +
+          '</table>' +
+        '</div>' +
+        '<p style="font-size: 14px; font-weight: bold; color: #0f172a; margin-bottom: 14px;">' +
+          'Episcopal Final Decision:' +
+        '</p>' +
+        '<div style="margin-bottom: 24px;">' +
+          '<a href="' + approveUrl + '" style="background: #581c87; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block; margin-right: 10px;">✅ Final Sign-Off & Accept</a>' +
+          '<a href="' + rejectUrl + '" style="background: #dc2626; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block;">❌ Reject</a>' +
+        '</div>' +
+        '<p style="font-size: 12.5px; color: #64748b; line-height: 1.5; border-top: 1px solid #e2e8f0; padding-top: 16px;">' +
+          '• Clicking <strong>Final Sign-Off & Accept</strong> will immediately register the member on the Synod Roll and dispatch their Affiliation Certificate.<br>' +
+          '• Full candidate details and attached official application form are included above and in the attached PDF.' +
+        '</p>' +
+      '</div>' +
+      '<div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px; text-align: center; font-size: 11.5px; color: #94a3b8;">' +
+        'Central Diocesan Secretariat • Apostolic Council of India Diocese' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+/**
+ * 1-Click Action Handler for Email Buttons
+ */
+function handleOneClickDecision(data) {
+  var stage = (data.stage || 'DOS').toUpperCase();
+  var decision = (data.decision || '').toUpperCase();
+  var appId = (data.appId || '').trim();
+  var now = new Date().toISOString();
+  
+  var db = getDb();
+  var appSheet = db.getSheetByName(SHEETS.APPLICATIONS);
+  var appDataSheet = db.getSheetByName(SHEETS.APPLICATION_DATA);
+  var auditSheet = db.getSheetByName(SHEETS.ADMIN_ACTIONS);
+  
+  if (!appSheet || !appId) {
+    return HtmlService.createHtmlOutput('<h3>Error: Application ID missing.</h3>');
+  }
+  
+  var rows = appSheet.getDataRange().getValues();
+  var rowIndex = -1;
+  var applicantName = '';
+  var applicantEmail = '';
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] && rows[i][0].toString().trim() === appId) {
+      rowIndex = i + 1;
+      applicantEmail = rows[i][3];
+      applicantName = rows[i][4];
+      break;
+    }
+  }
+  
+  if (rowIndex === -1) {
+    if (appId === 'ACI-2026-TEST01' || appId.indexOf('TEST') !== -1 || rowIndex === -1) {
+      // Dynamic fallback for test links or preview
+      var previewName = applicantName || 'Pastor S. John Samuel';
+      var previewDistrict = 'Dindigul';
+      var previewTaluk = 'Batlagundu';
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml(stage, decision, appId, previewName, previewDistrict, previewTaluk, 'Rev. R. Gnana Inbavanan (DOS)'));
+    }
+  }
+  
+  var appData = {};
+  if (appDataSheet) {
+    var dRows = appDataSheet.getDataRange().getValues();
+    for (var j = 1; j < dRows.length; j++) {
+      if (dRows[j][0] && dRows[j][0].toString() === appId) {
+        try { appData = JSON.parse(dRows[j][dRows[j].length - 2]); } catch(e){}
+        break;
+      }
+    }
+  }
+  
+  var p = appData.personal || {};
+  var c = appData.church || {};
+  var district = (p.permanentAddress && p.permanentAddress.district) || 'Dindigul';
+  var taluk = (p.permanentAddress && p.permanentAddress.taluk) || 'Batlagundu';
+  var webAppUrl = ScriptApp.getService().getUrl();
+  
+  if (stage === 'DOS') {
+    var ref1 = (appData.references && appData.references.ref1) || {};
+    var dosName = ref1.name || 'District Overseer';
+    var dosRoleStr = dosName + ' (DOS for ' + district + ' Diocese, ' + (taluk || 'General') + ')';
+    var currentStatus = (rows[rowIndex - 1] && rows[rowIndex - 1][5]) || '';
+    
+    // Check if already recommended or approved
+    if (decision === 'APPROVE' && (currentStatus === 'RECOMMENDED_BY_DOS' || currentStatus === 'UNDER_REVIEW' || currentStatus === 'ACCEPTED')) {
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('DOS', 'ALREADY_APPROVED', appId, applicantName, district, taluk, dosRoleStr))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    }
+
+    if (decision === 'APPROVE') {
+      appSheet.getRange(rowIndex, 6).setValue(ALLOWED_STATUS.UNDER_REVIEW);
+      appSheet.getRange(rowIndex, 8).setValue(now);
+      appSheet.getRange(rowIndex, 10).setValue(now);
+      appSheet.getRange(rowIndex, 11).setValue(dosRoleStr + ' (1-Click Approval)');
+      
+      if (auditSheet) {
+        auditSheet.appendRow(['AUD-' + Utilities.getUuid().substring(0,8).toUpperCase(), now, 'DOS', '', (ref1.email || 'dos@acidiocese.org'), 'DOS_RECOMMENDED', appId, 'Recommended by ' + dosRoleStr + ' via 1-click email']);
+      }
+      
+      // Send Step 2 Email to Bishop
+      try {
+        var ref2 = (appData.references && (appData.references.ref2 || appData.references[1])) || {};
+        var bishopEmail = (ref2.email && ref2.email.trim() && ref2.email.indexOf('@') !== -1)
+          ? ref2.email.trim()
+          : 'rev.johnsondurai@gmail.com';
+        var bishopSub = 'ACTION REQUIRED (Step 2): Episcopal Bishop Final Approval - ' + applicantName + ' (' + appId + ')';
+        var bishopHtml = buildBishopReviewEmailHtml(applicantName, appId, applicantEmail, c.mobileNumber, c.churchName, district, taluk, now, dosRoleStr, webAppUrl);
+        var bishopPdfBlob = buildOfficialFormPdfBlob(appData, appId);
+        var bishopMailOptions = {
+          to: bishopEmail,
+          subject: bishopSub,
+          body: 'Step 2: Bishop sign-off required for ' + applicantName + ' (' + appId + ') - Recommended by ' + dosRoleStr,
+          htmlBody: bishopHtml
+        };
+        if (bishopPdfBlob) {
+          bishopMailOptions.attachments = [bishopPdfBlob];
+        }
+        MailApp.sendEmail(bishopMailOptions);
+      } catch(bErr) {}
+      
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('DOS', 'APPROVE', appId, applicantName, district, taluk, dosRoleStr))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+      
+    } else {
+      appSheet.getRange(rowIndex, 6).setValue(ALLOWED_STATUS.REJECTED);
+      appSheet.getRange(rowIndex, 8).setValue(now);
+      appSheet.getRange(rowIndex, 10).setValue(now);
+      appSheet.getRange(rowIndex, 11).setValue('District Overseer (1-Click Rejection)');
+      appSheet.getRange(rowIndex, 12).setValue('Declined during preliminary District Overseer review.');
+      
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('DOS', 'REJECT', appId, applicantName, district, taluk, dosRoleStr))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    }
+  } else {
+    // Stage === BISHOP
+    var currentStatusB = (rows[rowIndex - 1] && rows[rowIndex - 1][5]) || '';
+    if (decision === 'APPROVE' && currentStatusB === 'ACCEPTED') {
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('BISHOP', 'ALREADY_APPROVED', appId, applicantName, district, taluk, 'Rt. Rev. S. Johnson Durai'))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    }
+
+    if (decision === 'APPROVE') {
+      appSheet.getRange(rowIndex, 6).setValue(ALLOWED_STATUS.ACCEPTED);
+      appSheet.getRange(rowIndex, 8).setValue(now);
+      appSheet.getRange(rowIndex, 10).setValue(now);
+      appSheet.getRange(rowIndex, 11).setValue('Rt. Rev. S. Johnson Durai (Episcopal Bishop)');
+      
+      // Notify Applicant
+      try {
+        if (applicantEmail && applicantEmail.indexOf('@') !== -1) {
+          var notifySub = 'CONGRATULATIONS: Your Diocesan Affiliation Application is APPROVED! (' + appId + ')';
+          var notifyMsg = 'Apostolic Council of India Diocese — Affiliation Confirmed\n\n' +
+            'Dear ' + applicantName + ',\n\n' +
+            'Your ministerial affiliation application (ID: ' + appId + ') has been officially APPROVED & SIGNED-OFF by Episcopal Bishop Rt. Rev. S. Johnson Durai.\n\n' +
+            'Your record is now active on the Diocesan Synod Roll.\n\n' +
+            'Central Diocesan Secretariat\nApostolic Council of India Diocese';
+          MailApp.sendEmail(applicantEmail, notifySub, notifyMsg);
+        }
+      } catch(nErr) {}
+      
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('BISHOP', 'APPROVE', appId, applicantName, district, taluk, 'Rt. Rev. S. Johnson Durai'))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    } else {
+      appSheet.getRange(rowIndex, 6).setValue(ALLOWED_STATUS.REJECTED);
+      return HtmlService.createHtmlOutput(buildCelebrationDecisionHtml('BISHOP', 'REJECT', appId, applicantName, district, taluk, 'Rt. Rev. S. Johnson Durai'))
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    }
+  }
+}
+
+/**
+ * Builds the Pure CSS Mobile-First Glass UI Landing Screen with Golden Rain & Glowing Roadmap
+ */
+function buildCelebrationDecisionHtml(stage, decision, appId, applicantName, district, taluk, reviewerName) {
+  var isAlready = decision === 'ALREADY_APPROVED';
+  var isApprove = decision === 'APPROVE' || isAlready;
+  var isBishop = stage === 'BISHOP';
+  
+  var title = isAlready
+    ? (isBishop ? 'Already Approved & Affiliated!' : 'Already Recommended by DOS!')
+    : (!isApprove 
+        ? 'Application Decision: Declined' 
+        : (isBishop ? 'Episcopal Affiliation Approved!' : 'DOS Recommendation Recorded!'));
+        
+  var subtitle = isAlready
+    ? 'This application has ALREADY been officially processed in the database. No further duplicate action is required.'
+    : (!isApprove 
+        ? 'The application has been officially marked as Rejected.' 
+        : (isBishop 
+            ? 'Application ' + appId + ' is officially AFFILIATED & registered into the Diocesan Synod Roll.' 
+            : 'Recommended by ' + (reviewerName || 'District Overseer') + '. Transferred to Step 2 for Episcopal Bishop Sign-off.'));
+            
+  var stageNum = !isApprove ? 1 : (isBishop ? 4 : 3);
+  var progressWidth = !isApprove ? '25%' : (isBishop ? '100%' : '66%');
+  var trackerUrl = 'https://acidiocese.org/get-involved/status';
+
+  return '<!DOCTYPE html><html><head>' +
+    '<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' +
+    '<title>' + title + '</title>' +
+    '<style>' +
+    '* { box-sizing: border-box; margin: 0; padding: 0; }' +
+    'body { background: #0a0c10; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; overflow-x: hidden; position: relative; }' +
+    
+    /* Pure CSS Falling Particles */
+    '.particle { position: absolute; border-radius: 50%; background: radial-gradient(circle, #e5c98a 0%, rgba(200, 169, 110, 0) 70%); pointer-events: none; opacity: 0.6; animation: fall linear infinite; }' +
+    '@keyframes fall { from { transform: translateY(-20px) rotate(0deg); opacity: 0.8; } to { transform: translateY(105vh) rotate(360deg); opacity: 0; } }' +
+    '.p1 { top: -10px; left: 10%; width: 6px; height: 6px; animation-duration: 4s; animation-delay: 0s; }' +
+    '.p2 { top: -10px; left: 25%; width: 8px; height: 8px; animation-duration: 6s; animation-delay: 1.5s; }' +
+    '.p3 { top: -10px; left: 45%; width: 5px; height: 5px; animation-duration: 5s; animation-delay: 0.8s; }' +
+    '.p4 { top: -10px; left: 65%; width: 7px; height: 7px; animation-duration: 7s; animation-delay: 2s; }' +
+    '.p5 { top: -10px; left: 80%; width: 9px; height: 9px; animation-duration: 5.5s; animation-delay: 1s; }' +
+    '.p6 { top: -10px; left: 92%; width: 6px; height: 6px; animation-duration: 4.5s; animation-delay: 2.5s; }' +
+
+    /* Glass Card */
+    '.card { position: relative; z-index: 10; max-width: 540px; width: 100%; background: #12151d; border: 1.5px solid ' + (isAlready ? '#f59e0b' : 'rgba(200, 169, 110, 0.45)') + '; border-radius: 22px; padding: 28px 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.85), 0 0 40px ' + (isAlready ? 'rgba(245, 158, 11, 0.2)' : 'rgba(200, 169, 110, 0.15)') + '; text-align: center; }' +
+    
+    '.crest { width: 54px; height: 54px; margin: 0 auto 14px; background: ' + (isAlready ? 'rgba(245, 158, 11, 0.15)' : 'rgba(200, 169, 110, 0.15)') + '; border: 1.5px solid ' + (isAlready ? '#f59e0b' : 'rgba(200, 169, 110, 0.5)') + '; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: ' + (isAlready ? '#fbbf24' : '#e5c98a') + '; }' +
+    
+    '.badge { display: inline-block; background: ' + (isAlready ? 'rgba(245, 158, 11, 0.18)' : 'rgba(200, 169, 110, 0.12)') + '; color: ' + (isAlready ? '#fbbf24' : '#e5c98a') + '; font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px; padding: 5px 14px; border-radius: 999px; text-transform: uppercase; border: 1px solid ' + (isAlready ? 'rgba(245, 158, 11, 0.4)' : 'rgba(200, 169, 110, 0.3)') + '; margin-bottom: 12px; }' +
+    
+    'h1 { font-size: 21px; font-weight: 800; color: #ffffff; margin-bottom: 8px; line-height: 1.3; }' +
+    '.sub { font-size: 13.5px; color: #9ca3af; line-height: 1.5; margin-bottom: 22px; padding: 0 8px; }' +
+    
+    /* Ticket Box */
+    '.ticket-box { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(200, 169, 110, 0.35); border-radius: 12px; padding: 12px 16px; margin-bottom: 22px; display: flex; justify-content: space-between; align-items: center; text-align: left; }' +
+    '.ticket-name { font-size: 14px; font-weight: 700; color: #ffffff; }' +
+    '.ticket-dist { font-size: 12px; color: #c8a96e; }' +
+    '.ticket-id { font-family: monospace; font-size: 13px; font-weight: 800; color: #e5c98a; background: rgba(200, 169, 110, 0.15); padding: 4px 8px; border-radius: 6px; }' +
+    
+    /* Glowing Roadmap */
+    '.track-wrap { position: relative; margin: 20px 0; }' +
+    '.track-bg { height: 6px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; position: absolute; top: 15px; left: 8%; right: 8%; z-index: 1; }' +
+    '.track-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #c8a96e 100%); border-radius: 999px; width: ' + progressWidth + '; box-shadow: 0 0 15px rgba(200, 169, 110, 0.8); }' +
+    '.steps-grid { position: relative; z-index: 2; display: flex; justify-content: space-between; }' +
+    '.step-node { display: flex; flex-direction: column; align-items: center; width: 23%; text-align: center; font-size: 10px; font-weight: 700; color: #6b7280; }' +
+    '.step-node.done { color: #10b981; }' +
+    '.step-node.active { color: #e5c98a; }' +
+    '.step-dot { width: 30px; height: 30px; border-radius: 50%; background: #131722; border: 2px solid #374151; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #9ca3af; margin-bottom: 6px; }' +
+    '.step-node.done .step-dot { background: #10b981; border-color: #34d399; color: #0b0d13; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }' +
+    '.step-node.active .step-dot { background: #c8a96e; border-color: #fde047; color: #0b0d13; box-shadow: 0 0 18px rgba(200, 169, 110, 0.9); }' +
+    
+    /* Orange State Button if already approved */
+    '.already-pill { display: inline-flex; align-items: center; gap: 6px; background: #f59e0b; color: #0b0d13; font-weight: 800; font-size: 12.5px; padding: 10px 18px; border-radius: 10px; margin-bottom: 14px; text-transform: uppercase; }' +
+
+    /* CTA Button */
+    '.cta-btn { display: block; width: 100%; background: ' + (isAlready ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' : 'linear-gradient(135deg, #c8a96e 0%, #a68444 100%)') + '; color: #0b0d13; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 800; text-align: center; text-decoration: none; box-shadow: 0 6px 20px rgba(200, 169, 110, 0.35); margin-top: 14px; }' +
+    '</style></head><body>' +
+    
+    /* Falling Particles */
+    '<div class="particle p1"></div><div class="particle p2"></div><div class="particle p3"></div>' +
+    '<div class="particle p4"></div><div class="particle p5"></div><div class="particle p6"></div>' +
+
+    '<div class="card">' +
+      '<div class="crest">' + (isAlready ? '⚠️' : (isApprove ? '✠' : '❌')) + '</div>' +
+      '<span class="badge">Apostolic Council of India Diocese</span>' +
+      (isAlready ? '<div class="already-pill">⚠️ Decision Already Recorded</div>' : '') +
+      '<h1>' + title + '</h1>' +
+      '<p class="sub">' + subtitle + '</p>' +
+      '<div class="ticket-box">' +
+        '<div>' +
+          '<div class="ticket-name">' + applicantName + '</div>' +
+          '<div class="ticket-dist">' + district + ' Diocese (' + taluk + ')</div>' +
+        '</div>' +
+        '<div class="ticket-id">' + appId + '</div>' +
+      '</div>' +
+      '<div class="track-wrap">' +
+        '<div class="track-bg"><div class="track-fill"></div></div>' +
+        '<div class="steps-grid">' +
+          '<div class="step-node done"><div class="step-dot">✓</div><span>1. Submitted</span></div>' +
+          '<div class="step-node ' + (stageNum >= 2 ? (stageNum > 2 ? 'done' : 'active') : '') + '"><div class="step-dot">' + (stageNum > 2 ? '✓' : '2') + '</div><span>2. DOS Review</span></div>' +
+          '<div class="step-node ' + (stageNum >= 3 ? (stageNum > 3 ? 'done' : 'active') : '') + '"><div class="step-dot">' + (stageNum > 3 ? '✓' : '3') + '</div><span>3. Bishop Sign-Off</span></div>' +
+          '<div class="step-node ' + (stageNum === 4 ? 'done' : '') + '"><div class="step-dot">' + (stageNum === 4 ? '✓' : '4') + '</div><span>4. Synod Roll</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="background: rgba(200, 169, 110, 0.08); border: 1px solid rgba(200, 169, 110, 0.25); border-radius: 12px; padding: 14px; margin-top: 16px; font-size: 13px; color: #d1d5db; line-height: 1.5;">' +
+        '✨ <strong>Official Diocesan Verification Active</strong><br>' +
+        '<span style="font-size: 12px; color: #9ca3af;">Record ID: <strong style="color: #e5c98a;">' + appId + '</strong> • Timestamp: ' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'dd MMM yyyy, hh:mm a') + '</span>' +
+      '</div>' +
+    '</div>' +
+    '</body></html>';
+}
+
+/**
+ * Generates the Official 4-Page Application Form as an attached PDF Blob
+ */
+function buildOfficialFormPdfBlob(data, applicationId) {
+  var p = (data && data.personal) || {};
+  var perm = p.permanentAddress || {};
+  var sp = (data && data.spiritual) || {};
+  var aff = (data && data.affiliation) || {};
+  var ch = (data && data.church) || {};
+  var mh = (data && data.ministryHistory) || {};
+  var ref = (data && data.references) || {};
+  
+  var name = (p.name || '').toUpperCase();
+  var salutation = p.salutation || 'Pastor';
+  var dob = p.dob || '—';
+  var gender = p.gender || '—';
+  var marital = p.maritalStatus || '—';
+  var nationality = p.nationality || 'Indian';
+  var permAddr = (perm.doorNo ? perm.doorNo + ', ' : '') + (perm.streetName ? perm.streetName + ', ' : '') + (perm.cityTown ? perm.cityTown + ', ' : '') + (perm.taluk ? perm.taluk + ' (Tk), ' : '') + (perm.district ? perm.district + ' (Dt), ' : '') + (perm.state || 'Tamil Nadu') + (perm.pincode ? ' - ' + perm.pincode : '');
+  var chName = ch.name || ch.churchName || 'Local Church';
+  var chAddr = (ch.doorNo ? ch.doorNo + ', ' : '') + (ch.streetName ? ch.streetName + ', ' : '') + (ch.cityTown ? ch.cityTown + ', ' : '') + (ch.taluk ? ch.taluk + ' (Tk), ' : '') + (ch.district ? ch.district + ' (Dt), ' : '') + (ch.state || 'Tamil Nadu') + (ch.pincode ? ' - ' + ch.pincode : '');
+  var ministryCalling = sp.ministryCalling || sp.ministryFunction || 'Pastor';
+  var waterBaptism = sp.waterBaptismDate ? 'Yes (' + sp.waterBaptismDate + ', by ' + (sp.waterBaptismMinister || '—') + ')' : 'Yes';
+  var holySpirit = sp.holySpiritBaptism ? 'Yes (Speaking in Tongues: ' + (sp.speakingInTongues ? 'Yes' : 'No') + ')' : 'Yes';
+  var membersCount = ch.totalMembers || ch.membersCount || '—';
+  var ref1 = ref.ref1 || {};
+  
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' +
+    'body { font-family: Arial, Helvetica, sans-serif; color: #111827; margin: 0; padding: 24px; font-size: 12.5px; line-height: 1.4; }' +
+    '.header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px; margin-bottom: 16px; }' +
+    '.header h1 { margin: 0 0 4px; font-size: 18px; color: #1e3a8a; text-transform: uppercase; }' +
+    '.header h2 { margin: 0 0 4px; font-size: 13.5px; color: #b45309; }' +
+    '.header p { margin: 0; font-size: 11px; color: #4b5563; }' +
+    '.badge-row { display: flex; justify-content: space-between; background: #f8fafc; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 6px; margin-bottom: 16px; font-weight: bold; font-size: 12px; }' +
+    '.section-title { background: #1e3a8a; color: #ffffff; padding: 6px 10px; font-size: 12.5px; font-weight: bold; border-radius: 4px; margin: 16px 0 10px; text-transform: uppercase; }' +
+    'table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }' +
+    'th, td { border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 12px; text-align: left; vertical-align: top; }' +
+    'th { background: #f1f5f9; color: #334155; width: 32%; font-weight: 600; }' +
+    '.footer-notice { border-top: 1px solid #cbd5e1; margin-top: 24px; padding-top: 12px; font-size: 10.5px; color: #64748b; text-align: center; }' +
+    '</style></head><body>' +
+    '<div class="header">' +
+      '<h1>Apostolic Council of India Diocese</h1>' +
+      '<h2>Official Diocesan Ministerial Membership Application Form</h2>' +
+      '<p>Central Diocesan Office: Post Box No.1, Aruva Manai, Hanumantharayankottai, Dindigul - 624002, Tamil Nadu</p>' +
+    '</div>' +
+    '<div class="badge-row">' +
+      '<span>Application ID: <strong style="color:#1e3a8a;">' + applicationId + '</strong></span>' +
+      '<span>Jurisdiction: <strong>' + (perm.district || 'Tamil Nadu') + ' Diocese (' + (perm.taluk || 'General') + ')</strong></span>' +
+      '<span>Status: <strong style="color:#15803d;">OFFICIAL DIOCESAN SUBMISSION</strong></span>' +
+    '</div>' +
+    '<div class="section-title">1. Personal Information of Applicant</div>' +
+    '<table>' +
+      '<tr><th>Full Name</th><td><strong>' + salutation + ' ' + name + '</strong></td></tr>' +
+      '<tr><th>Baptismal Name</th><td>' + (p.baptismalName || '—') + '</td></tr>' +
+      '<tr><th>Date of Birth & Gender</th><td>DOB: ' + dob + ' | Gender: ' + gender + ' | Nationality: ' + nationality + '</td></tr>' +
+      '<tr><th>Marital Status</th><td>' + marital + '</td></tr>' +
+      '<tr><th>Permanent Address</th><td>' + permAddr + '</td></tr>' +
+      '<tr><th>Contact Details</th><td>Mobile: ' + (ch.mobileNumber || p.mobile || '—') + ' | Email: ' + (data.email || p.email || '—') + '</td></tr>' +
+    '</table>' +
+    '<div class="section-title">2. Spiritual Information & Ministry Calling</div>' +
+    '<table>' +
+      '<tr><th>Ministry Calling (Fivefold)</th><td><strong>' + ministryCalling + '</strong></td></tr>' +
+      '<tr><th>Water Baptism</th><td>' + waterBaptism + '</td></tr>' +
+      '<tr><th>Holy Spirit Baptism</th><td>' + holySpirit + '</td></tr>' +
+      '<tr><th>Ministry Experience</th><td>' + (mh.experienceYears || '5+') + ' Years in Active Vineyard Ministry</td></tr>' +
+    '</table>' +
+    '<div class="section-title">3. Local Church & Ministry Station</div>' +
+    '<table>' +
+      '<tr><th>Church / Ministry Name</th><td><strong>' + chName + '</strong></td></tr>' +
+      '<tr><th>Church Address</th><td>' + chAddr + '</td></tr>' +
+      '<tr><th>Total Congregation Members</th><td>' + membersCount + ' Believers</td></tr>' +
+      '<tr><th>Affiliation Status</th><td>' + (aff.affiliationType || 'Independent Church') + '</td></tr>' +
+    '</table>' +
+    '<div class="section-title">4. Diocesan Referees & Governance Route</div>' +
+    '<table>' +
+      '<tr><th>Assigned District Overseer (DOS)</th><td><strong>' + (ref1.name || 'District Overseer') + '</strong> (' + (ref1.diocesanId || ref1.regNo || 'DOS') + ')<br>Church: ' + (ref1.church || 'Diocesan Parish') + '<br>Email: ' + (ref1.email || '—') + ' | Phone: ' + (ref1.phone || '—') + '</td></tr>' +
+      '<tr><th>Episcopal Bishop (Chairman)</th><td><strong>Rt. Rev. S. Johnson Durai</strong> (TN 0001)<br>Episcopal Bishop & Chairman, Central Diocesan Office, Dindigul</td></tr>' +
+    '</table>' +
+    '<div class="section-title">5. Solemn Ministerial Declaration</div>' +
+    '<p style="font-size: 11px; color: #374151; font-style: italic; margin: 6px 0;">"I solemnly declare that all the information furnished above is true and correct to the best of my knowledge. I promise to abide by the constitution, bye-laws, spiritual ethics, and episcopal governance of the Apostolic Council of India Diocese."</p>' +
+    '<div class="footer-notice">Official Record Generated by ACI Central Diocesan Secretariat • Application ID: ' + applicationId + '</div>' +
+    '</body></html>';
+    
+  try {
+    return HtmlService.createHtmlOutput(html).getAs('application/pdf').setName(applicationId + '_Official_Application_Form.pdf');
+  } catch (err) {
+    Logger.log('PDF Gen error: ' + err);
+    return null;
+  }
 }
