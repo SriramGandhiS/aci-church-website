@@ -6,17 +6,19 @@ export { getTalukCoordinator, TALUK_COORDINATORS_MAP }
  * Used for automatic 2-step location pre-selection and referee routing in ministerial applications.
  */
 
-export const BISHOP_REFEREE = {
-  name: 'Rt. Rev. S. Johnson Durai',
-  dioceseId: 'TN 0001',
-  designation: 'Episcopal Bishop & Chairman',
+export const CENTRAL_ADMIN_REFEREE = {
+  name: 'Central Diocesan Administration',
+  dioceseId: 'ACI-HQ-01',
+  designation: 'Diocesan Synod & Administration',
   church: 'Central Diocesan Secretariat & Synod',
   address: 'Post Box No.1, Aruva Manai, Hanumantharayankottai, Dindigul - 624002, Tamil Nadu',
   phone: '0451 2490100',
   mobile: '+91 94864 85810',
-  email: 'rev.johnsondurai@gmail.com',
+  email: 'admin@acidiocese.org',
   status: 'SYNOD_VERIFIED'
 }
+
+export const BISHOP_REFEREE = CENTRAL_ADMIN_REFEREE // alias for backwards compatibility
 
 export const DIOCESE_LOCATIONS = {
   'Tirupattur': {
@@ -123,7 +125,36 @@ export const DIOCESE_LOCATIONS = {
       address: '3/274 - D5 Mayiladuthurai, Anuppankulam - 626189, Sivakasi Tk, Virudhunagar Dt, Tamil Nadu',
       phone: '9944662106',
       email: 'rev.chinnappadoss.sivakasi@gmail.com'
-    }
+    },
+    dosTeam: [
+      {
+        name: 'Rev. M. Jedidiah Durairaj',
+        regNo: 'TN 0630',
+        designation: 'Sattur Taluk Coordinator',
+        church: 'Tamil Baptist Church, Sattur',
+        email: 'jedidiah.durairaj@gmail.com',
+        phone: '9994411422',
+        taluk: 'Sattur'
+      },
+      {
+        name: 'Rev. S. James',
+        regNo: 'TN 0637',
+        designation: 'Virudhunagar Taluk Coordinator',
+        church: 'Divine Love Church, Virudhunagar',
+        email: 'heavenjjames1986@gmail.com',
+        phone: '9629437495',
+        taluk: 'Virudhunagar'
+      },
+      {
+        name: 'Rev. V. Joshua Selva Kumar',
+        regNo: 'TN 0262',
+        designation: 'Sivakasi Taluk Coordinator',
+        church: 'El-Bethel Prayer House, Sivakasi',
+        email: 'selvagbc@gmail.com',
+        phone: '8144603057',
+        taluk: 'Sivakasi'
+      }
+    ]
   },
   'Kanniyakumari': {
     districtEn: 'Kanniyakumari (Nagercoil)',
@@ -383,10 +414,10 @@ export function getDistrictLocation(districtName) {
  */
 export function getAutoReferees(districtName, talukName) {
   const loc = getDistrictLocation(districtName)
-  const dos = loc ? loc.dos : BISHOP_REFEREE
+  const districtDos = loc ? loc.dos : CENTRAL_ADMIN_REFEREE
 
   // Reference 1 is always the official District Overseer
-  const assignedDos = { ...dos }
+  const assignedDos = { ...districtDos }
 
   // Reference 2 is the Taluk Coordinator extracted from Diocesan Records
   const coord = getTalukCoordinator(districtName, talukName) || {
@@ -427,6 +458,17 @@ export function getAutoReferees(districtName, talukName) {
   return {
     ref1: ref1Data,
     ref2: ref2Data,
+    ref3: {
+      name: CENTRAL_ADMIN_REFEREE.name,
+      dioceseId: CENTRAL_ADMIN_REFEREE.dioceseId,
+      designation: CENTRAL_ADMIN_REFEREE.designation,
+      church: CENTRAL_ADMIN_REFEREE.church,
+      address: CENTRAL_ADMIN_REFEREE.address,
+      phone: CENTRAL_ADMIN_REFEREE.phone,
+      email: CENTRAL_ADMIN_REFEREE.email || 'admin@acidiocese.org',
+      knownDuration: 'Diocesan Synod Roll',
+      status: 'PENDING_ADMIN_FINAL_APPROVAL'
+    },
     dos: ref1Data,
     coordinator: ref2Data
   }

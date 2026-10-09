@@ -97,39 +97,39 @@ export default function ApprovalRoadmap({
       titleTa: 'விண்ணப்பம் பதிவு செய்யப்பட்டது',
       actorEn: 'Applicant & Digital Registry',
       actorTa: 'விண்ணப்பதாரர் & இணையப் பதிவேடு',
-      descEn: 'Full 4-page profile & enclosures interlocked securely in central database.',
+      descEn: 'Full profile and attached official application form submitted to central database.',
       descTa: 'அனைத்து விவரங்களும் மத்திய தரவுத்தளத்தில் பதிவு செய்யப்பட்டன.',
       date: submittedAt || 'Stage 1 Complete'
     },
     {
       num: 2,
-      titleEn: 'Taluk Coordinator & DOS Verification',
-      titleTa: 'தாலுகா ஒருங்கிணைப்பாளர் & DOS களப் பரிந்துரை',
-      actorEn: `${dosName} & Taluk Coordinator`,
-      actorTa: `${district} தாலுகா ஒருங்கிணைப்பாளர் & DOS`,
-      descEn: `Field endorsement & background verification for ${district} Diocese (${taluk} Taluk).`,
-      descTa: `${district} பேராயம் (${taluk} தாலுகா) கள ஆய்வு மற்றும் பரிந்துரை.`,
-      date: currentStage >= 2 ? (currentStage > 2 ? 'Recommended ✓' : 'Under Review ⏳') : 'Pending'
+      titleEn: 'DOS Verification & Recommendation',
+      titleTa: 'மாவட்ட கண்காணிப்பாளர் (DOS) பரிந்துரை',
+      actorEn: dosName || 'District Overseer (DOS)',
+      actorTa: `${district} மாவட்ட கண்காணிப்பாளர்`,
+      descEn: `Official field recommendation for ${district} Diocese.`,
+      descTa: `${district} பேராயத்திற்கான அதிகாரப்பூர்வ களப் பரிந்துரை.`,
+      date: currentStage >= 2 ? (currentStage > 2 ? 'Recommended ✓' : 'Under DOS Review ⏳') : 'Pending'
     },
     {
       num: 3,
-      titleEn: 'Episcopal Bishop Final Sign-Off',
-      titleTa: 'பேராயர் இறுதி ஒப்புதல் & கையொப்பம்',
-      actorEn: 'Rt. Rev. S. Johnson Durai',
-      actorTa: 'பேராயர் முனைவர் S. ஜான்சன் துரை',
-      descEn: 'Official Episcopal Council vetting & constitutional affiliation sanction.',
-      descTa: 'அப்போஸ்தல பேராய ஆட்சிமன்றத்தின் இறுதி ஒப்புதல்.',
-      date: currentStage >= 3 ? (currentStage > 3 ? 'Approved ✓' : 'Awaiting Sign-Off ⏳') : 'Pending'
+      titleEn: 'District Coordinator Verification',
+      titleTa: 'மாவட்ட / தாலுகா ஒருங்கிணைப்பாளர் சரிபார்ப்பு',
+      actorEn: 'District / Taluk Coordinator',
+      actorTa: `${taluk} தாலுகா ஒருங்கிணைப்பாளர்`,
+      descEn: `Local pastoral endorsement for ${taluk} region.`,
+      descTa: `${taluk} பகுதிக்கான ஒருங்கிணைப்பாளர் சரிபார்ப்பு.`,
+      date: currentStage >= 3 ? (currentStage > 3 ? 'Verified ✓' : 'Under Coordinator Review ⏳') : 'Pending'
     },
     {
       num: 4,
-      titleEn: 'Synod Roll Active & Credentials',
-      titleTa: 'பேராயப் பதிவேடு & சான்றிதழ் வழங்கல்',
-      actorEn: 'Central Diocesan Secretariat',
-      actorTa: 'மத்திய பேராய தலைமைச் செயலகம்',
-      descEn: 'Official Membership ID, Digital Certificate & Synod voting roll active.',
+      titleEn: 'Central ACI Admin Sanction & Roll Active',
+      titleTa: 'மத்திய ACI நிர்வாக இறுதி ஒப்புதல் & பேராயப் பதிவேடு',
+      actorEn: 'Central ACI Admin (admin@acidiocese.org)',
+      actorTa: 'மத்திய ACI நிர்வாகம்',
+      descEn: 'Official membership enrollment, ID, digital credentials & Synod Roll active.',
       descTa: 'அங்கீகாரச் சான்றிதழ் மற்றும் அடையாளச் சான்று வழங்கப்பட்டது.',
-      date: currentStage === 4 ? 'Synod Verified ✓' : 'Final Step'
+      date: currentStage === 4 ? 'Admin Approved & Roll Active ✓' : 'Final Step'
     }
   ]
 
