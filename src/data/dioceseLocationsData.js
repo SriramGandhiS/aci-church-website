@@ -3,17 +3,19 @@
  * Used for automatic 2-step location pre-selection and referee routing in ministerial applications.
  */
 
-export const BISHOP_REFEREE = {
-  name: 'Rt. Rev. S. Johnson Durai',
-  dioceseId: 'TN 0001',
-  designation: 'Episcopal Bishop & Chairman',
+export const CENTRAL_ADMIN_REFEREE = {
+  name: 'Central Diocesan Administration',
+  dioceseId: 'ACI-HQ-01',
+  designation: 'Diocesan Synod & Administration',
   church: 'Central Diocesan Secretariat & Synod',
   address: 'Post Box No.1, Aruva Manai, Hanumantharayankottai, Dindigul - 624002, Tamil Nadu',
   phone: '0451 2490100',
   mobile: '+91 94864 85810',
-  email: 'rev.johnsondurai@gmail.com',
+  email: 'admin@acidiocese.org',
   status: 'SYNOD_VERIFIED'
 }
+
+export const BISHOP_REFEREE = CENTRAL_ADMIN_REFEREE // alias for backwards compatibility
 
 export const DIOCESE_LOCATIONS = {
   'Tirupattur': {
@@ -120,7 +122,36 @@ export const DIOCESE_LOCATIONS = {
       address: '3/274 - D5 Mayiladuthurai, Anuppankulam - 626189, Sivakasi Tk, Virudhunagar Dt, Tamil Nadu',
       phone: '9944662106',
       email: 'rev.chinnappadoss.sivakasi@gmail.com'
-    }
+    },
+    dosTeam: [
+      {
+        name: 'Rev. M. Jedidiah Durairaj',
+        regNo: 'TN 0630',
+        designation: 'Sattur Taluk Coordinator',
+        church: 'Tamil Baptist Church, Sattur',
+        email: 'jedidiah.durairaj@gmail.com',
+        phone: '9994411422',
+        taluk: 'Sattur'
+      },
+      {
+        name: 'Rev. S. James',
+        regNo: 'TN 0637',
+        designation: 'Virudhunagar Taluk Coordinator',
+        church: 'Divine Love Church, Virudhunagar',
+        email: 'heavenjjames1986@gmail.com',
+        phone: '9629437495',
+        taluk: 'Virudhunagar'
+      },
+      {
+        name: 'Rev. V. Joshua Selva Kumar',
+        regNo: 'TN 0262',
+        designation: 'Sivakasi Taluk Coordinator',
+        church: 'El-Bethel Prayer House, Sivakasi',
+        email: 'selvagbc@gmail.com',
+        phone: '8144603057',
+        taluk: 'Sivakasi'
+      }
+    ]
   },
   'Kanniyakumari': {
     districtEn: 'Kanniyakumari (Nagercoil)',
@@ -378,20 +409,20 @@ export function getDistrictLocation(districtName) {
  */
 export function getAutoReferees(districtName, talukName) {
   const loc = getDistrictLocation(districtName)
-  const dos = loc ? loc.dos : BISHOP_REFEREE
+  const districtDos = loc ? loc.dos : CENTRAL_ADMIN_REFEREE
 
-  // Check if there is a specific DOS team member assigned to this taluk
-  let assignedDos = { ...dos }
+  // Check if there is a specific Taluk Coordinator assigned to this taluk
+  let talukCoordinator = null
   if (loc && loc.dosTeam && talukName) {
     const talukMatch = loc.dosTeam.find(t => 
       t.taluk.toLowerCase().includes(talukName.toLowerCase()) || 
       talukName.toLowerCase().includes(t.taluk.toLowerCase())
     )
     if (talukMatch) {
-      assignedDos = {
+      talukCoordinator = {
         name: talukMatch.name,
         regNo: talukMatch.regNo,
-        designation: 'District Overseer / Coordinator',
+        designation: talukMatch.designation || 'District / Taluk Coordinator',
         church: talukMatch.church,
         address: `${talukMatch.taluk}, ${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
         phone: talukMatch.phone,
@@ -400,28 +431,58 @@ export function getAutoReferees(districtName, talukName) {
     }
   }
 
+  // If no separate taluk coordinator is assigned, fallback to district overseer / zonal head
+  const coordinatorRef = talukCoordinator || (loc?.zonalHead ? {
+    name: loc.zonalHead.name,
+    regNo: loc.zonalHead.regNo,
+    designation: loc.zonalHead.designation || 'District Coordinator / Zonal Head',
+    church: loc.zonalHead.church,
+    address: loc.zonalHead.address,
+    phone: loc.zonalHead.phone,
+    email: loc.zonalHead.email
+  } : {
+    name: districtDos.name,
+    regNo: districtDos.regNo,
+    designation: `${districtName || 'District'} Coordinator`,
+    church: districtDos.church,
+    address: districtDos.address,
+    phone: districtDos.phone,
+    email: districtDos.email
+  })
+
   return {
     ref1: {
-      name: assignedDos.name,
-      dioceseId: assignedDos.regNo || 'DOS-OFFICIAL',
-      designation: assignedDos.designation || 'District Overseer (D.O.S)',
-      church: assignedDos.church || 'Diocesan Parish',
-      address: assignedDos.address || `${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
-      phone: assignedDos.phone || '',
-      email: assignedDos.email || 'admin@acidiocese.org',
+      name: districtDos.name,
+      dioceseId: districtDos.regNo || 'DOS-OFFICIAL',
+      designation: districtDos.designation || 'District Overseer (D.O.S)',
+      church: districtDos.church || 'Diocesan Parish',
+      address: districtDos.address || `${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
+      phone: districtDos.phone || '',
+      email: districtDos.email || 'admin@acidiocese.org',
       knownDuration: 'Over 3 Years',
       status: 'PENDING_DOS_RECOMMENDATION'
     },
     ref2: {
-      name: BISHOP_REFEREE.name,
-      dioceseId: BISHOP_REFEREE.dioceseId,
-      designation: BISHOP_REFEREE.designation,
-      church: BISHOP_REFEREE.church,
-      address: BISHOP_REFEREE.address,
-      phone: BISHOP_REFEREE.phone,
-      email: BISHOP_REFEREE.email || 'rev.johnsondurai@gmail.com',
+      name: coordinatorRef.name,
+      dioceseId: coordinatorRef.regNo || 'COORD-OFFICIAL',
+      designation: coordinatorRef.designation || 'District / Taluk Coordinator',
+      church: coordinatorRef.church || 'Diocesan Parish',
+      address: coordinatorRef.address || `${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
+      phone: coordinatorRef.phone || '',
+      email: coordinatorRef.email || districtDos.email || 'admin@acidiocese.org',
+      knownDuration: 'Over 2 Years',
+      status: 'PENDING_COORDINATOR_VERIFICATION'
+    },
+    ref3: {
+      name: CENTRAL_ADMIN_REFEREE.name,
+      dioceseId: CENTRAL_ADMIN_REFEREE.dioceseId,
+      designation: CENTRAL_ADMIN_REFEREE.designation,
+      church: CENTRAL_ADMIN_REFEREE.church,
+      address: CENTRAL_ADMIN_REFEREE.address,
+      phone: CENTRAL_ADMIN_REFEREE.phone,
+      email: CENTRAL_ADMIN_REFEREE.email || 'admin@acidiocese.org',
       knownDuration: 'Diocesan Synod Roll',
-      status: 'PENDING_BISHOP_APPROVAL'
+      status: 'PENDING_ADMIN_FINAL_APPROVAL'
     }
   }
 }

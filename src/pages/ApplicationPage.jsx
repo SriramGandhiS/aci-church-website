@@ -2524,39 +2524,40 @@ export default function ApplicationPage() {
                 </div>
               )}
 
-              {/* Two References Inputs — Auto-Routed via DOS & Bishop */}
+              {/* Three References Inputs — Auto-Routed via DOS, District Coordinator & Central ACI Admin */}
               <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                   <h3 style={{ fontSize: '14.5px', fontWeight: 700, color: '#0f172a', margin: 0 }}>
-                    {isTa ? 'X. இரண்டு பேராய அங்கத்தினர்களின் பரிந்துரை' : 'X. Details of Two Official References (Mandatory)'}
+                    {isTa ? 'X. பேராய பரிந்துரையாளர்கள் (3-அடுக்கு சரிபார்ப்பு)' : 'X. Official Diocesan References (3-Tier Verification: DOS, Coordinator & Admin)'}
                   </h3>
                   <button 
                     type="button" 
                     onClick={() => setShowLocModal(true)}
                     style={{ fontSize: '12px', color: '#1e40af', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
                   >
-                    {isTa ? 'மண்டல கண்காணிப்பாளரை மாற்ற' : 'Change District Overseer (DOS)'}
+                    {isTa ? 'மண்டலத்தை மாற்ற' : 'Change Jurisdiction & District'}
                   </button>
                 </div>
 
-                <div className="clean-grid-2" style={{ marginBottom: '18px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px', marginBottom: '18px' }}>
+                  {/* Ref 1: District Overseer (DOS) */}
                   <div style={{ background: '#f8fafc', border: '1.5px solid #bfdbfe', borderRadius: '8px', padding: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1e40af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        {isTa ? 'பரிந்துரை 1: மாவட்ட கண்காணிப்பாளர் (DOS)' : 'Reference 1: District Overseer (DOS)'}
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: '#1e40af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {isTa ? 'படி 1: மாவட்ட கண்காணிப்பாளர் (DOS)' : 'Step 1: District Overseer (DOS)'}
                       </span>
-                      <span style={{ fontSize: '10px', background: '#dbeafe', color: '#1e40af', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
-                        {isTa ? 'தானியங்கி பரிந்துரை' : 'Auto-Assigned'}
+                      <span style={{ fontSize: '9.5px', background: '#dbeafe', color: '#1e40af', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
+                        {isTa ? 'களப் பரிந்துரை' : 'Field Review'}
                       </span>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <div>
-                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் பெயர்' : 'Overseer Name'}</label>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் பெயர்' : 'DOS Name'}</label>
                         <input
                           type="text"
-                          value={formData.references.ref1.name}
-                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, name: e.target.value } } }))}
-                          placeholder="Name of Referrer"
+                          value={formData.references?.ref1?.name || ''}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...(p.references?.ref1 || {}), name: e.target.value } } }))}
+                          placeholder="Name of DOS"
                           className="clean-input"
                           style={{ fontWeight: 600, color: '#0f172a' }}
                         />
@@ -2566,8 +2567,8 @@ export default function ApplicationPage() {
                           <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'பதிவு எண்' : 'Diocese ID'}</label>
                           <input
                             type="text"
-                            value={formData.references.ref1.diocesanId || formData.references.ref1.dioceseId}
-                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, diocesanId: e.target.value, dioceseId: e.target.value } } }))}
+                            value={formData.references?.ref1?.diocesanId || formData.references?.ref1?.dioceseId || ''}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...(p.references?.ref1 || {}), diocesanId: e.target.value, dioceseId: e.target.value } } }))}
                             placeholder="e.g. TN 0283"
                             className="clean-input"
                           />
@@ -2576,20 +2577,20 @@ export default function ApplicationPage() {
                           <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'அலைபேசி' : 'Phone'}</label>
                           <input
                             type="tel"
-                            value={formData.references.ref1.phone}
-                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, phone: e.target.value } } }))}
+                            value={formData.references?.ref1?.phone || ''}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...(p.references?.ref1 || {}), phone: e.target.value } } }))}
                             placeholder="Mobile Number"
                             className="clean-input"
                           />
                         </div>
                       </div>
                       <div>
-                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் மின்னஞ்சல் (பரிந்துரை இணைப்பு அனுப்பப்படும்)' : 'Official Email (Receives Recommendation Link)'}</label>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'கண்காணிப்பாளர் மின்னஞ்சல்' : 'Official DOS Email'}</label>
                         <input
                           type="email"
-                          value={formData.references.ref1.email || ''}
-                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...p.references.ref1, email: e.target.value } } }))}
-                          placeholder="e.g. christchurchmmt@gmail.com"
+                          value={formData.references?.ref1?.email || ''}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref1: { ...(p.references?.ref1 || {}), email: e.target.value } } }))}
+                          placeholder="e.g. dos@acidiocese.org"
                           className="clean-input"
                           style={{ color: '#1e40af', fontWeight: 600 }}
                         />
@@ -2597,23 +2598,24 @@ export default function ApplicationPage() {
                     </div>
                   </div>
 
+                  {/* Ref 2: District / Taluk Coordinator */}
                   <div style={{ background: '#f8fafc', border: '1.5px solid #fed7aa', borderRadius: '8px', padding: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#c2410c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        {isTa ? 'பரிந்துரை 2: பேராய தலைமை & சினாடு' : 'Reference 2: Episcopal Bishop & Synod'}
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: '#c2410c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {isTa ? 'படி 2: தாலுகா ஒருங்கிணைப்பாளர்' : 'Step 2: Taluk Coordinator'}
                       </span>
-                      <span style={{ fontSize: '10px', background: '#ffedd5', color: '#c2410c', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
-                        {isTa ? 'முதன்மை ஒப்புதல்' : 'Final Authority'}
+                      <span style={{ fontSize: '9.5px', background: '#ffedd5', color: '#c2410c', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
+                        {isTa ? 'மண்டல சரிபார்ப்பு' : 'Local Verification'}
                       </span>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <div>
-                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'தலைமை பேராயர் பெயர்' : 'Episcopal Authority'}</label>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'ஒருங்கிணைப்பாளர் பெயர்' : 'Coordinator Name'}</label>
                         <input
                           type="text"
-                          value={formData.references.ref2.name}
-                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, name: e.target.value } } }))}
-                          placeholder="Name of Referrer"
+                          value={formData.references?.ref2?.name || ''}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...(p.references?.ref2 || {}), name: e.target.value } } }))}
+                          placeholder="Name of Coordinator"
                           className="clean-input"
                           style={{ fontWeight: 600, color: '#0f172a' }}
                         />
@@ -2623,9 +2625,9 @@ export default function ApplicationPage() {
                           <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'பதிவு எண்' : 'Diocese ID'}</label>
                           <input
                             type="text"
-                            value={formData.references.ref2.diocesanId || formData.references.ref2.dioceseId}
-                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, diocesanId: e.target.value, dioceseId: e.target.value } } }))}
-                            placeholder="e.g. TN 0001"
+                            value={formData.references?.ref2?.diocesanId || formData.references?.ref2?.dioceseId || ''}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...(p.references?.ref2 || {}), diocesanId: e.target.value, dioceseId: e.target.value } } }))}
+                            placeholder="e.g. TN 0630"
                             className="clean-input"
                           />
                         </div>
@@ -2633,22 +2635,78 @@ export default function ApplicationPage() {
                           <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'அலைபேசி' : 'Phone'}</label>
                           <input
                             type="tel"
-                            value={formData.references.ref2.phone}
-                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, phone: e.target.value } } }))}
+                            value={formData.references?.ref2?.phone || ''}
+                            onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...(p.references?.ref2 || {}), phone: e.target.value } } }))}
                             placeholder="Mobile Number"
                             className="clean-input"
                           />
                         </div>
                       </div>
                       <div>
-                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'செயலக மின்னஞ்சல்' : 'Diocesan Secretariat Email'}</label>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'ஒருங்கிணைப்பாளர் மின்னஞ்சல்' : 'Coordinator Email'}</label>
                         <input
                           type="email"
-                          value={formData.references.ref2.email || 'rev.johnsondurai@gmail.com'}
-                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...p.references.ref2, email: e.target.value } } }))}
-                          placeholder="rev.johnsondurai@gmail.com"
+                          value={formData.references?.ref2?.email || ''}
+                          onChange={(e) => setFormData(p => ({ ...p, references: { ...p.references, ref2: { ...(p.references?.ref2 || {}), email: e.target.value } } }))}
+                          placeholder="e.g. coordinator@gmail.com"
                           className="clean-input"
                           style={{ color: '#c2410c', fontWeight: 600 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Ref 3: Central ACI Administration */}
+                  <div style={{ background: '#f8fafc', border: '1.5px solid #bbf7d0', borderRadius: '8px', padding: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: '#15803d', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {isTa ? 'படி 3: மத்திய ACI நிர்வாகம்' : 'Step 3: Central ACI Administration'}
+                      </span>
+                      <span style={{ fontSize: '9.5px', background: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '999px', fontWeight: 700 }}>
+                        {isTa ? 'இறுதி ஒப்புதல்' : 'Final Authority'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'நிர்வாகப் பிரிவு' : 'Authority'}</label>
+                        <input
+                          type="text"
+                          value="Central Diocesan Administration"
+                          readOnly
+                          className="clean-input"
+                          style={{ fontWeight: 600, color: '#0f172a', background: '#f1f5f9' }}
+                        />
+                      </div>
+                      <div className="clean-grid-2" style={{ gap: '8px' }}>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'பதிவு எண்' : 'Diocese ID'}</label>
+                          <input
+                            type="text"
+                            value="ACI-HQ-01"
+                            readOnly
+                            className="clean-input"
+                            style={{ background: '#f1f5f9' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'அலைபேசி' : 'Phone'}</label>
+                          <input
+                            type="tel"
+                            value="+91 94864 85810"
+                            readOnly
+                            className="clean-input"
+                            style={{ background: '#f1f5f9' }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>{isTa ? 'மத்திய ACI மின்னஞ்சல்' : 'Central Admin Email'}</label>
+                        <input
+                          type="email"
+                          value="admin@acidiocese.org"
+                          readOnly
+                          className="clean-input"
+                          style={{ color: '#15803d', fontWeight: 600, background: '#f1f5f9' }}
                         />
                       </div>
                     </div>
