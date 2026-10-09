@@ -5,7 +5,7 @@
  */
 
 var SPREADSHEET_ID = '1ube3Rrk0vba9fqjss963TvJcQSg-1jdiukF_5o5eGW8';
-var ADMIN_EMAILS = 'rev.johnsondurai@gmail.com,admin@acidiocese.org,iamramm8@gmail.com';
+var ADMIN_EMAILS = 'rev.johnsondurai@gmail.com,admin@acidiocese.org,iamramm8@gmail.com,samkanmani0365@gmail.com,jojojoseph444@gmail.com,jedidiah.durairaj@gmail.com,heavenjjames1986@gmail.com,selvagbc@gmail.com';
 
 var SHEETS = {
   USERS: 'Users',

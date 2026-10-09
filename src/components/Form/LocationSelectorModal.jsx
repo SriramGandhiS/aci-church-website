@@ -42,6 +42,7 @@ export default function LocationSelectorModal({
 
   const refs = selectedDistrict ? getAutoReferees(selectedDistrict, selectedTaluk) : null
   const dos = refs?.ref1 || null
+  const coordinator = refs?.ref2 || null
   const isSelectionComplete = !!selectedDistrict && (talukList.length === 0 || !!selectedTaluk)
 
   const handleApply = () => {
@@ -52,7 +53,8 @@ export default function LocationSelectorModal({
       districtEn: locData?.districtEn || selectedDistrict,
       taluk: selectedTaluk,
       referees: refs,
-      dos: dos
+      dos: dos,
+      coordinator: coordinator
     })
   }
 
@@ -148,28 +150,60 @@ export default function LocationSelectorModal({
           </div>
         </div>
 
-        {/* Dynamic Assigned DOS Profile Card (Revealed upon selection) */}
+        {/* Dynamic Assigned Referees: District Overseer & Taluk Coordinator */}
         {selectedDistrict && dos ? (
-          <div className="loc-glass-dos-card">
-            <div className="loc-dos-header">
-              <div className="loc-dos-tag">
-                <UserCheckIcon size={14} />
-                <span>{isTa ? 'ஒதுக்கப்பட்ட மாவட்ட கண்காணிப்பாளர் (DOS)' : 'ASSIGNED DISTRICT OVERSEER (DOS)'}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {/* Card 1: Reference 1 — District Overseer */}
+            <div className="loc-glass-dos-card">
+              <div className="loc-dos-header">
+                <div className="loc-dos-tag">
+                  <UserCheckIcon size={14} />
+                  <span>{isTa ? 'பரிந்துரை 1: மாவட்ட கண்காணிப்பாளர் (DOS)' : 'REFERENCE 1: DISTRICT OVERSEER (DOS)'}</span>
+                </div>
+                <span className="loc-dos-reg">{dos.diocesanId || dos.regNo}</span>
               </div>
-              <span className="loc-dos-reg">{dos.diocesanId || dos.regNo}</span>
+
+              <div className="loc-dos-content">
+                <div className="loc-dos-name-row">
+                  <h3 className="loc-dos-name">{dos.name}</h3>
+                  <span className="loc-dos-district">{selectedDistrict} {isTa ? 'பேராயம்' : 'Diocese'}</span>
+                </div>
+                <p className="loc-dos-church">{dos.church}</p>
+                <div className="loc-dos-contact">
+                  <span>📧 {dos.email}</span>
+                  {dos.phone && <span>📞 {dos.phone}</span>}
+                </div>
+              </div>
             </div>
 
-            <div className="loc-dos-content">
-              <div className="loc-dos-name-row">
-                <h3 className="loc-dos-name">{dos.name}</h3>
-                <span className="loc-dos-district">{selectedDistrict} {isTa ? 'பேராயம்' : 'Diocese'} ({selectedTaluk})</span>
+            {/* Card 2: Reference 2 — Taluk Coordinator */}
+            {coordinator && (
+              <div className="loc-glass-dos-card" style={{ borderColor: 'rgba(96, 165, 250, 0.4)', background: 'linear-gradient(145deg, rgba(59, 130, 246, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)' }}>
+                <div className="loc-dos-header">
+                  <div className="loc-dos-tag" style={{ color: '#93c5fd' }}>
+                    <UserCheckIcon size={14} />
+                    <span>{isTa ? 'பரிந்துரை 2: தாலுகா ஒருங்கிணைப்பாளர்' : 'REFERENCE 2: TALUK COORDINATOR'}</span>
+                  </div>
+                  <span className="loc-dos-reg" style={{ color: '#bfdbfe', background: 'rgba(59, 130, 246, 0.2)', borderColor: 'rgba(59, 130, 246, 0.4)' }}>
+                    {coordinator.diocesanId || coordinator.regNo}
+                  </span>
+                </div>
+
+                <div className="loc-dos-content">
+                  <div className="loc-dos-name-row">
+                    <h3 className="loc-dos-name">{coordinator.name}</h3>
+                    <span className="loc-dos-district" style={{ color: '#93c5fd' }}>
+                      {selectedTaluk || 'Taluk'} {isTa ? 'வட்டாரம்' : 'Taluk'} ({selectedDistrict})
+                    </span>
+                  </div>
+                  <p className="loc-dos-church">{coordinator.church}</p>
+                  <div className="loc-dos-contact">
+                    <span>📧 {coordinator.email}</span>
+                    {coordinator.phone && <span>📞 {coordinator.phone}</span>}
+                  </div>
+                </div>
               </div>
-              <p className="loc-dos-church">{dos.church}</p>
-              <div className="loc-dos-contact">
-                <span>📧 {dos.email}</span>
-                {dos.phone && <span>📞 {dos.phone}</span>}
-              </div>
-            </div>
+            )}
 
             <div className="loc-glass-pipeline">
               <div className="loc-pipe-step active">
@@ -179,19 +213,19 @@ export default function LocationSelectorModal({
               <span className="loc-pipe-arrow">&rarr;</span>
               <div className="loc-pipe-step active">
                 <span className="loc-pipe-num">2</span>
-                <span>{dos.name.split(' ')[1] || 'DOS'} Review</span>
+                <span>{isTa ? 'ஒருங்கிணைப்பாளர் & DOS ஆய்வு' : 'Coordinator & DOS Review'}</span>
               </div>
               <span className="loc-pipe-arrow">&rarr;</span>
               <div className="loc-pipe-step">
                 <span className="loc-pipe-num">3</span>
-                <span>Bishop Sign-Off</span>
+                <span>{isTa ? 'பேராயர் ஒப்புதல்' : 'Bishop Sign-Off'}</span>
               </div>
             </div>
           </div>
         ) : (
           <div className="loc-glass-prompt-box">
             <ShieldIcon size={22} />
-            <span>{isTa ? 'மாவட்ட கண்காணிப்பாளர் மற்றும் ஒப்புதல் வழித்தடத்தைக் காண உங்கள் மாவட்டத்தைத் தேர்ந்தெடுக்கவும்.' : 'Please select your District to view the assigned District Overseer and approval route.'}</span>
+            <span>{isTa ? 'மாவட்ட கண்காணிப்பாளர் (பரிந்துரை 1) மற்றும் தாலுகா ஒருங்கிணைப்பாளரைக் (பரிந்துரை 2) காண உங்கள் மாவட்டம் மற்றும் தாலுகாவைத் தேர்ந்தெடுக்கவும்.' : 'Please select your District and Taluk to view your assigned District Overseer (Ref 1) and Taluk Coordinator (Ref 2).'}</span>
           </div>
         )}
 

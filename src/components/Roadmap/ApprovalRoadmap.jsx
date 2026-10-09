@@ -103,12 +103,12 @@ export default function ApprovalRoadmap({
     },
     {
       num: 2,
-      titleEn: 'DOS Verification & Recommendation',
-      titleTa: 'மாவட்ட கண்காணிப்பாளர் (DOS) பரிந்துரை',
-      actorEn: dosName || 'District Overseer',
-      actorTa: `${district} மாவட்ட கண்காணிப்பாளர்`,
-      descEn: `Field endorsement for ${district} Diocese (${taluk}).`,
-      descTa: `${district} பேராயத்திற்கான அதிகாரப்பூர்வ களப் பரிந்துரை.`,
+      titleEn: 'Taluk Coordinator & DOS Verification',
+      titleTa: 'தாலுகா ஒருங்கிணைப்பாளர் & DOS களப் பரிந்துரை',
+      actorEn: `${dosName} & Taluk Coordinator`,
+      actorTa: `${district} தாலுகா ஒருங்கிணைப்பாளர் & DOS`,
+      descEn: `Field endorsement & background verification for ${district} Diocese (${taluk} Taluk).`,
+      descTa: `${district} பேராயம் (${taluk} தாலுகா) கள ஆய்வு மற்றும் பரிந்துரை.`,
       date: currentStage >= 2 ? (currentStage > 2 ? 'Recommended ✓' : 'Under Review ⏳') : 'Pending'
     },
     {

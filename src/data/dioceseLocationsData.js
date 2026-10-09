@@ -1,3 +1,6 @@
+import { getTalukCoordinator, TALUK_COORDINATORS_MAP } from './talukCoordinatorsData.js'
+export { getTalukCoordinator, TALUK_COORDINATORS_MAP }
+
 /**
  * ACI DIOCESE — OFFICIAL JURISDICTION, DISTRICTS, TALUKS & DISTRICT OVERSEERS (DOS) DIRECTORY
  * Used for automatic 2-step location pre-selection and referee routing in ministerial applications.
@@ -44,13 +47,13 @@ export const DIOCESE_LOCATIONS = {
     state: 'Tamil Nadu',
     taluks: ['Madurai North', 'Madurai South', 'Madurai East', 'Madurai West', 'Melur', 'Thirumangalam', 'Vadipatti', 'Usilampatti', 'Peraiyur'],
     dos: {
-      name: 'Rev. Joseph Durai',
-      regNo: 'TN 0006',
+      name: 'Rev. J. Joseph',
+      regNo: 'TN 0667',
       designation: 'District Overseer (D.O.S)',
-      church: 'Madurai Diocesan Mission Church',
-      address: 'Near Mattuthavani, Madurai - 625007, Tamil Nadu',
-      phone: '9443128910',
-      email: 'rev.josephdurai.madurai@gmail.com'
+      church: 'Wonder Word Ministries',
+      address: 'Plot No.4, Anbu Nagar, 2nd Street, Madurai - 625016, Tamil Nadu',
+      phone: '9994747045',
+      email: 'jojojoseph444@gmail.com'
     }
   },
   'Dindigul': {
@@ -375,53 +378,57 @@ export function getDistrictLocation(districtName) {
 
 /**
  * Generates official referee pre-fills based on chosen District & Taluk.
+ * Ref 1: District Overseer (D.O.S)
+ * Ref 2: Taluk Coordinator (distinct ministerial leader assigned for that taluk)
  */
 export function getAutoReferees(districtName, talukName) {
   const loc = getDistrictLocation(districtName)
   const dos = loc ? loc.dos : BISHOP_REFEREE
 
-  // Check if there is a specific DOS team member assigned to this taluk
-  let assignedDos = { ...dos }
-  if (loc && loc.dosTeam && talukName) {
-    const talukMatch = loc.dosTeam.find(t => 
-      t.taluk.toLowerCase().includes(talukName.toLowerCase()) || 
-      talukName.toLowerCase().includes(t.taluk.toLowerCase())
-    )
-    if (talukMatch) {
-      assignedDos = {
-        name: talukMatch.name,
-        regNo: talukMatch.regNo,
-        designation: 'District Overseer / Coordinator',
-        church: talukMatch.church,
-        address: `${talukMatch.taluk}, ${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
-        phone: talukMatch.phone,
-        email: talukMatch.email
-      }
-    }
+  // Reference 1 is always the official District Overseer
+  const assignedDos = { ...dos }
+
+  // Reference 2 is the Taluk Coordinator extracted from Diocesan Records
+  const coord = getTalukCoordinator(districtName, talukName) || {
+    name: 'Rev. Diocesan Taluk Coordinator',
+    regNo: 'TN 0500',
+    phone: '0451 2490100',
+    email: 'coordinator@acidiocese.org',
+    church: `${talukName || 'Taluk'} Diocesan Fellowship`,
+    address: `${talukName || ''}, ${loc?.districtEn || districtName || 'Diocese'}, Tamil Nadu`,
+    designation: 'Taluk Coordinator',
+    taluk: talukName || ''
+  }
+
+  const ref1Data = {
+    name: assignedDos.name,
+    dioceseId: assignedDos.regNo || assignedDos.dioceseId || 'DOS-OFFICIAL',
+    designation: assignedDos.designation || 'District Overseer (D.O.S)',
+    church: assignedDos.church || 'Diocesan Parish',
+    address: assignedDos.address || `${loc?.districtEn || districtName || 'Diocese'}, Tamil Nadu`,
+    phone: assignedDos.phone || '',
+    email: assignedDos.email || 'dos@acidiocese.org',
+    knownDuration: 'Over 3 Years',
+    status: 'PENDING_DOS_RECOMMENDATION'
+  }
+
+  const ref2Data = {
+    name: coord.name,
+    dioceseId: coord.regNo || coord.dioceseId || 'COORD-OFFICIAL',
+    designation: 'Taluk Coordinator',
+    church: coord.church || `${talukName || 'Taluk'} Diocesan Parish`,
+    address: coord.address || `${talukName || ''}, ${loc?.districtEn || districtName || 'Diocese'}, Tamil Nadu`,
+    phone: coord.phone || '',
+    email: coord.email || 'coordinator@acidiocese.org',
+    knownDuration: 'Over 2 Years',
+    status: 'PENDING_COORDINATOR_RECOMMENDATION'
   }
 
   return {
-    ref1: {
-      name: assignedDos.name,
-      dioceseId: assignedDos.regNo || 'DOS-OFFICIAL',
-      designation: assignedDos.designation || 'District Overseer (D.O.S)',
-      church: assignedDos.church || 'Diocesan Parish',
-      address: assignedDos.address || `${loc?.districtEn || 'Diocese'}, Tamil Nadu`,
-      phone: assignedDos.phone || '',
-      email: assignedDos.email || 'admin@acidiocese.org',
-      knownDuration: 'Over 3 Years',
-      status: 'PENDING_DOS_RECOMMENDATION'
-    },
-    ref2: {
-      name: BISHOP_REFEREE.name,
-      dioceseId: BISHOP_REFEREE.dioceseId,
-      designation: BISHOP_REFEREE.designation,
-      church: BISHOP_REFEREE.church,
-      address: BISHOP_REFEREE.address,
-      phone: BISHOP_REFEREE.phone,
-      email: BISHOP_REFEREE.email || 'rev.johnsondurai@gmail.com',
-      knownDuration: 'Diocesan Synod Roll',
-      status: 'PENDING_BISHOP_APPROVAL'
-    }
+    ref1: ref1Data,
+    ref2: ref2Data,
+    dos: ref1Data,
+    coordinator: ref2Data
   }
 }
+

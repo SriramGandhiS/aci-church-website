@@ -62,7 +62,12 @@ const ADMIN_EMAILS_LIST = [
   'iamramm8@gmail.com',
   'rev.johnsondurai@gmail.com',
   'admin@acidiocese.org',
-  'sriramgandhis@gmail.com'
+  'sriramgandhis@gmail.com',
+  'samkanmani0365@gmail.com',
+  'jojojoseph444@gmail.com',
+  'jedidiah.durairaj@gmail.com',
+  'heavenjjames1986@gmail.com',
+  'selvagbc@gmail.com'
 ]
 
 export const isEmailAdmin = (em) => {
@@ -160,7 +165,7 @@ const SEED_COORDINATORS = [
   },
   {
     id: 'COORD-01',
-    name: 'Rev. M. Jedidiah Durairaj',
+    name: 'Rev. Jeddiah Dhurai Raj',
     regNo: 'TN 0630',
     role: 'Sattur Taluk Coordinator',
     district: 'Virudhunagar Diocese',
@@ -188,7 +193,7 @@ const SEED_COORDINATORS = [
   },
   {
     id: 'COORD-03',
-    name: 'Rev. V. Joshua Selva Kumar',
+    name: 'Rev. Selvakumar',
     regNo: 'TN 0262',
     role: 'Sivakasi Coordinator',
     district: 'Virudhunagar Diocese',
@@ -198,6 +203,34 @@ const SEED_COORDINATORS = [
     phone: '8144603057',
     assignedChurches: 9,
     activeMembers: 37,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-MDU-01',
+    name: 'Rev. J. Joseph',
+    regNo: 'TN 0667',
+    role: 'District Overseer (D.O.S)',
+    district: 'Madurai Diocese',
+    taluk: 'Madurai',
+    church: 'Wonder Word Ministries',
+    email: 'jojojoseph444@gmail.com',
+    phone: '9994747045',
+    assignedChurches: 28,
+    activeMembers: 110,
+    status: 'ACTIVE'
+  },
+  {
+    id: 'COORD-MDU-02',
+    name: 'Rev. J. Shyam Raj',
+    regNo: 'TN 0661',
+    role: 'Thirumangalam Taluk Coordinator',
+    district: 'Madurai Diocese',
+    taluk: 'Thirumangalam',
+    church: "God's Light Ministries",
+    email: 'samkanmani0365@gmail.com',
+    phone: '7708126275',
+    assignedChurches: 11,
+    activeMembers: 42,
     status: 'ACTIVE'
   }
 ]

@@ -115,7 +115,7 @@ export default function ApplicantDashboardPage() {
                 {application.status === 'ACCEPTED' ? (isTa ? 'அங்கீகரிக்கப்பட்டது' : 'Approved & Affiliated')
                   : application.status === 'RECOMMENDED_BY_DOS' || application.status === 'PENDING_BISHOP_APPROVAL' ? (isTa ? 'கண்காணிப்பாளர் பரிந்துரைத்தார் • பேராயர் பார்வைக்கு' : 'Recommended by DOS • Awaiting Bishop Sign-Off')
                   : application.status === 'REJECTED' ? (isTa ? 'நிராகரிக்கப்பட்டது' : 'Application Rejected')
-                  : application.status === 'UNDER_REVIEW_DOS' || application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' ? (isTa ? 'கண்காணிப்பாளர் (DOS) பரிசீலனையில்' : 'Under Review by District Overseer (DOS)')
+                  : application.status === 'UNDER_REVIEW_DOS' || application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' ? (isTa ? 'ஒருங்கிணைப்பாளர் & கண்காணிப்பாளர் (DOS) பரிசீலனையில்' : 'Under Review by Taluk Coordinator & DOS')
                   : (isTa ? 'வரைவு' : 'Incomplete Draft')}
               </h2>
               <p className="status-hero-id">
@@ -150,7 +150,7 @@ export default function ApplicantDashboardPage() {
               {(application.status === 'SUBMITTED' || application.status === 'UNDER_REVIEW' || application.status === 'UNDER_REVIEW_DOS') && (
                 <div className="status-pill-lg pending">
                   <UserCheckIcon size={20} />
-                  <span>{isTa ? 'DOS பரிசீலனை' : 'Under DOS Review'}</span>
+                  <span>{isTa ? 'ஒருங்கிணைப்பாளர் & DOS பரிசீலனை' : 'Under Coordinator & DOS Review'}</span>
                 </div>
               )}
               {application.status === 'DRAFT' && (
