@@ -31,12 +31,12 @@ export default function DiocesePage() {
             {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா மாவட்ட பேராயங்கள்' : 'APOSTOLIC COUNCIL OF INDIA DISTRICT DIOCESES'}
           </p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 400, marginBottom: '16px', color: '#ffffff' }}>
-            {isTa ? 'ஏசிஐ ஏழு மாவட்ட பேராயங்கள்' : 'Seven District Dioceses of ACI'}
+            {isTa ? 'ஏசிஐ மாவட்ட பேராயங்கள்' : 'District Dioceses of ACI'}
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '820px', fontSize: '15px', lineHeight: '1.7' }}>
             {isTa
-              ? 'தமிழ்நாடு முழுவதும் பரந்து விரிந்து தேவ ஊழியங்களை தாங்கி நடத்தும் 7 அதிகாரப்பூர்வ மாவட்ட பேராயங்களின் சபைகள் மற்றும் தலைமை விபரம்.'
-              : 'Discover the seven district diocesan networks operating across Tamil Nadu under the Apostolic Council of India, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின்கீழ் செயல்படும் அதிகாரப்பூர்வ மறைமாவட்டப் பேராயங்களின் விபரம்.'
+              : 'Discover the District Diocesan networks, operating under the Apostolic Council of India Diocese, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
           </p>
         </div>
       </div>
@@ -45,17 +45,22 @@ export default function DiocesePage() {
 
         {/* Overview Banner */}
         <div style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '4px solid #c8a96e', padding: '28px 32px', marginBottom: '56px', borderRadius: '6px' }}>
-          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', color: '#ffffff', marginBottom: '8px', fontWeight: 400 }}>
-            {isTa ? 'ஏழு மாவட்ட பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across Seven District Dioceses'}
+          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', color: '#ffffff', marginBottom: '12px', fontWeight: 400 }}>
+            {isTa ? 'மாவட்ட பேராயங்களின் ஒருங்கிணைந்த கட்டமைப்பு' : 'Unified Episcopal Governance Across District Dioceses'}
           </h3>
-          <p style={{ fontSize: '14.5px', lineHeight: '1.7', color: 'rgba(255,255,255,0.75)', margin: 0 }}>
+          <p style={{ fontSize: '14.5px', lineHeight: '1.75', color: 'rgba(255,255,255,0.85)', margin: '0 0 12px 0' }}>
             {isTa
-              ? 'ஒவ்வொரு மாவட்ட பேராயமும் மத்திய பேராய தலைமை மற்றும் சினோட் ஆலோசனை மன்றத்தின் கீழ் இயங்கி, அந்தந்த மாவட்டங்களில் உள்ள சபைகளுக்கும் ஊழியர்களுக்கும் ஆவிக்குரிய, சட்டப்பூர்வ மற்றும் மிஷனெரி உதவிகளை வழங்கி வருகிறது.'
-              : 'Each district diocese operates under central apostolic episcopal oversight and the Synod Advisory Council, providing biblical ordination, pastoral shelter, legal accreditation, and missionary backing to local congregations.'}
+              ? 'ஒவ்வொரு மாவட்ட பேராயமும், மைய அப்போஸ்தலப் பேராய மேற்பார்வையின் கீழ் உள்ள ஆலோசனைக் குழுவின் கட்டுப்பாட்டில் செயல்படுகிறது. இது உள்ளூர் சபைகளுக்கு விவிலிய அடிப்படையிலான திருநிலைப்படுத்தல், ஆன்மீகப் பாதுகாப்பு, சட்டப்பூர்வ அங்கீகாரம் மற்றும் மறைப்பணி ஆதரவை வழங்குகிறது.'
+              : 'Each District Diocese operates under the control of Synod (Advisory council of Central Diocese) central apostolic Episcopal oversight; Providing biblical Ordination, Pastoral Shelter, Legal accreditation, and missionary backing to local congregations.'}
+          </p>
+          <p style={{ fontSize: '14px', lineHeight: '1.7', color: 'rgba(255,255,255,0.75)', margin: 0 }}>
+            {isTa
+              ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின்கீழ் செயல்படும் அதிகாரப்பூர்வ மறைமாவட்டப் பேராயங்களின் விபரம்.'
+              : 'Discover the District Diocesan networks, operating under the Apostolic Council of India Diocese, empowering pastors, planting vibrant local churches, and advancing the Kingdom of God.'}
           </p>
         </div>
 
-        {/* 7 Dioceses List */}
+        {/* Dioceses List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
           {diocesesList.map((d) => (
             <section

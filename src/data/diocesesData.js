@@ -21,8 +21,8 @@ export const diocesesList = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nalvazhi+Church+160+A+Nalvazhi+Church+Street+Ponneri+Tirupattur+Tamil+Nadu+635851',
     phone: '+91 99437 59925',
     email: 'johnbsimson2010@gmail.com',
-    descriptionEn: 'Shepherding churches and pastoral ministers across Tirupattur, Vaniyambadi, Ambur, Natrampalli, and adjoining rural mission fields with active youth evangelism and ministry training.',
-    descriptionTa: 'திருப்பத்தூர், வாணியம்பாடி, ஆம்பூர், நாட்ராம்பள்ளி மற்றும் சுற்றியுள்ள கிராமப்புற சுவிசேஷப் பணிகளை ஒருங்கிணைத்து போதகர்களையும் சபைகளையும் தாங்கி நடத்தும் பேராயம்.',
+    descriptionEn: 'Shepherding the Shepherds across the Districts of Tirupattur , Krishnagiri, Vellore and Ranipet',
+    descriptionTa: 'திருப்பத்தூர், கிருஷ்ணகிரி, வேலூர் மற்றும் ராணிப்பேட்டை ஆகிய மாவட்டங்களில் மேய்ப்பர்களை வழிநடத்தி சபைகளையும் போதகர்களையும் தாங்கி நடத்தும் பேராயம்.',
     highlights: [
       { en: 'Pastoral Fellowship & Leadership Training', ta: 'மேய்ப்பர்கள் ஐக்கியம் & தலைமைத்துவ பயிற்சி' },
       { en: 'Rural Mission & Church Planting Wings', ta: 'கிராமப்புற நற்செய்தி பணி & சபை நிறுவுதல்' },

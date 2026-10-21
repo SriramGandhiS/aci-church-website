@@ -142,13 +142,13 @@ export default function DioceseSection() {
           </p>
           <h2 className="t-headline diocese-title" style={{ color: '#ffffff' }}>
             {isTa
-              ? '7 மாவட்ட பேராயங்களின் ஒருங்கிணைந்த எபிஸ்கோபல் கட்டமைப்பு'
-              : 'Seven District Dioceses of ACI Across Tamil Nadu'}
+              ? 'மாவட்ட பேராயங்களின் ஒருங்கிணைந்த எபிஸ்கோபல் கட்டமைப்பு'
+              : 'District Dioceses of ACI Across Tamil Nadu'}
           </h2>
           <p className="t-body diocese-sub">
             {isTa
-              ? 'தமிழ்நாடு முழுவதும் மேய்ப்பர்களுக்கு மேய்ச்சலளித்து, திருச்சபைகளை பலப்படுத்தி, இறைபணியை முன்னெடுக்கும் 7 அதிகாரப்பூர்வ மாவட்ட பேராயங்கள்.'
-              : 'Structured into 7 district diocesan networks providing episcopal shelter, biblical training, statutory legal backing, and pastoral fellowship.'}
+              ? 'தமிழ்நாடு முழுவதும் மேய்ப்பர்களுக்கு மேய்ச்சலளித்து, திருச்சபைகளை பலப்படுத்தி, இறைபணியை முன்னெடுக்கும் அதிகாரப்பூர்வ மாவட்ட பேராயங்கள்.'
+              : 'Structured district diocesan networks providing episcopal shelter, biblical training, statutory legal backing, and pastoral fellowship.'}
           </p>
         </div>
 
