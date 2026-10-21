@@ -16,7 +16,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. B. சிம்சன்',
     image: '/dioceses/bishop-1.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nalvazhi+Church+160+A+Nalvazhi+Church+Street+Ponneri+Tirupattur+Tamil+Nadu+635851',
-    descEn: 'Empowering pastors, church planting initiatives, and active youth evangelism across northern mission fields.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'வட தமிழகத்தில் போதகர்கள் ஐக்கியம், சபை நிறுவுதல் மற்றும் வாலிபர் எழுப்புதல் பணிகளை வழிநடத்துகிறது.'
   },
   {
@@ -30,7 +30,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. S. ஆனந்த்',
     image: '/dioceses/bishop-2.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Creator+Mission+Church+389+TTC+Nagar+Adhanoor+Guduvancheri+Kanchipuram+Tamil+Nadu+603202',
-    descEn: 'Serving urban and coastal congregations with pastoral care, youth leadership, and Christian episcopal marriage services.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'கடலோர மற்றும் புறநகர் திருச்சபைகளுக்கு மேய்ப்பர்கள் பாதுகாப்பு மற்றும் எபிஸ்கோபல் திருமணப் பதிவுகள் வழங்குகிறது.'
   },
   {
@@ -44,7 +44,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. A. பொன்ராஜ்',
     image: '/dioceses/bishop-3.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Apostolic+Fellowship+Tabernacle+135+Kaloor+Road+Appasamy+Nagar+Tindivanam+Villupuram+Tamil+Nadu+604002',
-    descEn: 'Uniting independent pastors, conducting revival crusades, and organizing Sunday school teacher training.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'சுயாதீன போதகர்களை ஒன்றிணைத்து எழுப்புதல் கூட்டங்கள் மற்றும் சிறுவர் ஊழிய ஆசிரியர்கள் பயிற்சி அளிக்கிறது.'
   },
   {
@@ -58,7 +58,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. Dr. L. சுரேஷ் டேனியல்',
     image: '/dioceses/bishop-4.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Good+Shepherd+Revival+Church+11+2+Soosai+Nagar+3rd+Street+CAS+Colony+Madurai+Tamil+Nadu+625018',
-    descEn: 'Fostering deep doctrinal clarity, apostolic church visitations, and regional conventions in the southern belt.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'தென் தமிழகத்தில் அப்போஸ்தல சபை சந்திப்புகள், மண்டல மாநாடுகள் மற்றும் ஆழமான வேத உபதேசங்களை முன்னெடுக்கிறது.'
   },
   {
@@ -72,7 +72,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. G. எட்வின் ஜோசப் செல்வராஜ்',
     image: '/dioceses/bishop-5.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bethel+Faith+Prayer+House+27+2nd+Street+Mannarpuram+Trichy+Tamil+Nadu+620020',
-    descEn: 'Theological research hub, Word Sharing meets, and multi-district pastor leadership summits in central Tamil Nadu.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'காவிரி டெல்டா மற்றும் மத்திய தமிழகத்தில் இறையியல் கருத்தரங்குகள் மற்றும் வார்த்தைப் பகிர்வு கூட்டங்களை நடத்துகிறது.'
   },
   {
@@ -86,7 +86,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. A. சின்னப்பதாஸ்',
     image: '/dioceses/bishop-6.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Apostolic+Christian+Ministries+Foundation+Mayiladundurai+Anuppankulam+Sivakasi+Virudhunagar+Tamil+Nadu+626189',
-    descEn: 'Spearheading 7-member missionary teams, family enrichment fellowship, and local church strengthening.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: '7 பேர் கொண்ட நற்செய்தி குழுக்கள், குடும்ப ஆசீர்வாத ஐக்கியம் மற்றும் சபைகளை பலப்படுத்தும் பணிகளை செய்கிறது.'
   },
   {
@@ -100,7 +100,7 @@ const regionalDioceses = [
     bishopNameTa: 'Rt. Rev. J. சுஜின்',
     image: '/dioceses/bishop-7.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Jesus+Living+Ministry+7+53B+Paruthivilai+Mondaikadu+Kalkullam+Kanniyakumari+Tamil+Nadu+629252',
-    descEn: 'Intercessory prayer networks, coastal evangelism, and ministerial fellowship in the southern tip of India.',
+    descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'தென் கடலோர பகுதிகளில் இடைவிடா ஜெப நெட்வொர்க், மீனவ மக்கள் சுவிசேஷ பணி மற்றும் போதகர் ஐக்கியம்.'
   }
 ]

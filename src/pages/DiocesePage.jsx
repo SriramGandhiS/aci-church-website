@@ -228,7 +228,7 @@ export default function DiocesePage() {
                           {isTa ? (d.churchNameTa || d.churchName) : d.churchName}
                         </h3>
                         <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                          {isTa ? 'முதன்மை மாவட்ட சபை மையம்' : 'Diocesan District Church Center & Pastoral Office'}
+                          {isTa ? 'பேராய அலுவலகம்' : 'Diocesan Office'}
                         </span>
                       </div>
                     </div>
@@ -250,16 +250,14 @@ export default function DiocesePage() {
                         <p style={{ fontSize: '14.5px', fontWeight: 600, color: '#ffffff', margin: '0 0 2px 0' }}>
                           {isTa ? (d.pastorNameTa || d.pastorName) : d.pastorName}
                         </p>
-                        <span style={{ fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
-                          {isTa ? (d.pastorDesignationTa || d.pastorDesignation) : d.pastorDesignation}
-                        </span>
+                        
                       </div>
                     </div>
 
                     {/* Church Address */}
                     <div>
                       <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8a96e', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                        {isTa ? 'சபை முகவரி' : 'Church Address'}
+                        {isTa ? 'அலுவலக முகவரி' : 'Office Address'}
                       </span>
                       <p style={{ fontSize: '13.5px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', margin: 0, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                         <LocationIcon size={15} color="#c8a96e" style={{ marginTop: '3px', flexShrink: 0 }} />
