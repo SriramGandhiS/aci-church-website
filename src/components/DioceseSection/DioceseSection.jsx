@@ -57,7 +57,7 @@ const regionalDioceses = [
     bishopNameEn: 'Rt. Rev. Dr. L. Suresh Daniel',
     bishopNameTa: 'Rt. Rev. Dr. L. சுரேஷ் டேனியல்',
     image: '/dioceses/bishop-4.jpg',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Good+Shepherd+Revival+Church+11+2+Soosai+Nagar+3rd+Street+CAS+Colony+Madurai+Tamil+Nadu+625018',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=266+Kovil+Street+AIBEA+Nagar+A+Colony+Paravai+Madurai+625402',
     descEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descTa: 'தென் தமிழகத்தில் அப்போஸ்தல சபை சந்திப்புகள், மண்டல மாநாடுகள் மற்றும் ஆழமான வேத உபதேசங்களை முன்னெடுக்கிறது.'
   },
