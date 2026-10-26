@@ -77,10 +77,9 @@ export default function Newsletter() {
                 ACI Diocese Bank Details:
               </h3>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '15px', color: 'rgba(255,255,255,0.9)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <li><strong>Account Name:</strong> Apostolic Council of India Diocese</li>
-                <li><strong>Account No.:</strong> <span style={{ color: '#FFD700', fontWeight: 600 }}>1567201000059</span></li>
-                <li><strong>IFSC Code:</strong> CNRB0001567</li>
                 <li><strong>Bank Name:</strong> Canara Bank</li>
+                <li><strong>Current A/c No.:</strong> <span style={{ color: '#FFD700', fontWeight: 600 }}>1567201000059</span></li>
+                <li><strong>IFSC Code:</strong> CNRB0001567</li>
                 <li><strong>Branch:</strong> Hanumantharayankottai, Dindigul District</li>
               </ul>
             </div>

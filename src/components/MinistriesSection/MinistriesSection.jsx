@@ -8,10 +8,10 @@ const activitiesList = [
     id: 'ordination',
     titleEn: 'ORDINATION',
     titleTa: 'பிரதிஷ்டை ஊழியம்',
-    summaryEn: 'Bi-annual Episcopal Ordination of fivefold ministers (Apostles, Prophets, Pastors, Teachers, Evangelists) actively laboring in God’s vineyard for at least 5 years.',
+    summaryEn: 'Annual Episcopal Ordination of fivefold ministers (Apostles, Prophets, Pastors, Teachers, Evangelists) actively laboring in God’s vineyard for at least 5 years.',
     summaryTa: 'தேவனின் திராட்சைத் தோட்டத்தில் குறைந்தது 5 ஆண்டுகள் உண்மையாய் பணியாற்றிய ஐவகை ஊழியர்களுக்கு வழங்கப்படும் எபிஸ்கோபல் பிரதிஷ்டை.',
-    detailsEn: 'Ordination takes place twice a year at the Central Diocesan Office upon confession of faith and confirmation of calling as per the Word of God and Indian law to exercise Christian Episcopal rights.',
-    detailsTa: 'விசுவாச அறிக்கை மற்றும் வேத அழைப்பின் உறுதிப்பாட்டின்படி மத்திய பேராய அலுவலகத்தில் ஆண்டுக்கு இருமுறை எபிஸ்கோபல் பிரதிஷ்டை ஆராதனை நடைபெறுகிறது.',
+    detailsEn: 'Ordination takes place once a year at the Central Diocesan Office upon confession of faith and confirmation of calling as per the Word of God and Indian law to exercise Christian Episcopal rights.',
+    detailsTa: 'விசுவாச அறிக்கை மற்றும் வேத அழைப்பின் உறுதிப்பாட்டின்படி மத்திய பேராய அலுவலகத்தில் ஆண்டுக்கு ஒருமுறை எபிஸ்கோபல் பிரதிஷ்டை ஆராதனை நடைபெறுகிறது.',
     cat: 'Ordination',
   },
   {

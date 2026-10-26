@@ -372,23 +372,23 @@ export default function SynodPage() {
       {/* 1. SYNOD GENERAL COUNCIL & MEMBERS */}
       <section id="synodgeneralcouncil" style={S.sec}>
         <div style={S.con}>
-          <h2 style={S.h2}>{isTa ? 'சினோட் பொது ஆலோசனைப் பேரவை & உறுப்பினர்கள்' : 'Synod General Council & Members'}</h2>
+          <h2 style={S.h2}>{isTa ? 'சினோட் ஆலோசனை மன்றம் & உறுப்பினர்கள்' : 'Synod Advisory Council & Members'}</h2>
           <div style={{ marginTop: '28px' }}>
             <p style={S.p}>
               {isTa
-                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக மற்றும் தலைமை அறங்காவலர் குழு உறுப்பினர்களைக் கொண்டுள்ளது. (விபரங்களை அறிய உறுப்பினரை கிளிக் செய்யவும்):'
-                : 'The Synod General Council serves as the apex administrative and central trustee leadership council of the ACI Diocese across India. (Click on any member card to view complete record details):'}
+                ? 'சினோட் ஆலோசனை மன்றமானது அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயத்தின் உச்ச நிர்வாக மற்றும் தலைமை அறங்காவலர் குழு உறுப்பினர்களைக் கொண்டுள்ளது.'
+                : 'The Synod Advisory Council serves as the apex administrative and central trustee leadership council.'}
             </p>
 
             {/* General Council Members */}
             {renderMemberCards(generalCouncilMembers)}
 
             <div style={S.divider} />
-            <p style={S.subH}>{isTa ? 'பொது ஆலோசனைப் பேரவையின் கூட்டங்கள் மற்றும் நோக்கங்கள்:' : 'General Council Meetings & Objectives:'}</p>
+            <p style={S.subH}>{isTa ? 'ஆலோசனை மன்றத்தின் கூட்டங்கள் மற்றும் நோக்கங்கள்:' : 'Advisory Council Meetings & Objectives:'}</p>
             <p style={isTa ? S.pTa : S.p}>
               {isTa
-                ? 'சினோட் பொது ஆலோசனைப் பேரவையானது குறிப்பிட்ட கால இடைவெளிகளில் கூடி, திருச்சபைகளின் பாதுகாப்பு, மேய்ப்பர்களின் வாழ்வாதார உதவிகள், சபை சந்திப்புப் பணிகள் மற்றும் சுவிசேஷப் புறசந்திப்பு பணிகளை திட்டமிட்டு முன்னெடுக்கிறது.'
-                : 'The Synod General Council convenes at regular intervals to plan church protection, pastoral livelihood assistance, fellowship visits, and evangelistic outreaches across all diocesan territories.'}
+                ? 'சினோட் ஆலோசனை மன்றமானது குறிப்பிட்ட கால இடைவெளிகளில் கூடி, திருச்சபைகளின் பாதுகாப்பு, மேய்ப்பர்களின் வாழ்வாதார உதவிகள், சபை சந்திப்புப் பணிகள் மற்றும் சுவிசேஷப் புறசந்திப்பு பணிகளை திட்டமிட்டு முன்னெடுக்கிறது.'
+                : 'The Synod Advisory Council convenes at regular intervals to plan church protection, pastoral livelihood assistance, fellowship visits, and evangelistic outreaches across all diocesan territories.'}
             </p>
           </div>
         </div>
@@ -404,14 +404,14 @@ export default function SynodPage() {
                 <p style={S.pTa}>சபை ஆலோசனை மன்றமானது அனைத்து அறங்காவலர்களையும் மற்றும் பேராயத்தின் அப்போஸ்தலர்கள், தீர்க்கதரிசிகள், சுவிசேஷகர்கள், மேய்ப்பர்கள், போதகர்கள் ஆகியோரை தன்னகத்தே கொண்டுள்ளது.</p>
                 <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>அ.</strong> இந்த அறக்கட்டளையின் நிறுவனரும், தலைமைப் பேராயருமான (Archbishop) பேரருட்திரு ச. ஜான்சன்துரை அவர்கள் இந்த சபை ஆலோசனை மன்றத்தின் தலைவராக, தனது வாழ்நாள் முழுவதும் தொடர்ந்து இருப்பார்.</p>
                 <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>ஆ.</strong> சபை ஆலோசனை மன்றத்தின் தலைவர் அறங்காவலர்களுடன் கலந்தாலோசித்து சபை ஆலோசனை மன்றத்திற்கான உறுப்பினர்களை நியமிப்பார்.</p>
-                <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>இ.</strong> இந்த சபை ஆலோசனை மன்றமானது அதிகபட்சமாக இருபது உறுப்பினர்களையும் குறைந்தபட்சமாக ஒன்பது உறுப்பினர்களையும் கொண்டதாயிருக்கிறது.</p>
+                <p style={S.pTa}><strong style={{ color: '#c8a96e' }}>இ.</strong> இந்த சபை ஆலோசனை மன்றமானது அதிகபட்சமாக முப்பது உறுப்பினர்களையும் குறைந்தபட்சமாக ஒன்பது உறுப்பினர்களையும் கொண்டதாயிருக்கிறது.</p>
               </>
             ) : (
               <>
-                <p style={S.p}>The Synod shall comprise of all the Trustees of the Board and Apostles, Prophets, Evangelists, Pastors, Teachers, and Clergy and/or Laity, who fulfill any or all of the Ministerial Callings. They will look after the Spiritual needs and welfare of various Committees of Apostolic Council of India Diocese.</p>
+                <p style={S.p}>The Synod shall comprise of all the Trustees of the Board and Apostles, Prophets, Evangelists, Pastors, Teachers, and Clergy or Laity, who fulfill any or all of the Ministerial Callings. They will look after the Spiritual needs and welfare of various Committees of Apostolic Council of India Diocese.</p>
                 <p style={S.p}><strong style={{ color: '#c8a96e' }}>a)</strong> The Most Reverend Archbishop S. Johnson Durai, the Author of the Trust, shall be the Chairman of the Synod for life and shall name the successor who will take his place on his resignation or death.</p>
                 <p style={S.p}><strong style={{ color: '#c8a96e' }}>b)</strong> The Chairman of the Synod shall nominate and appoint the members to the synod in consultation with the Board of Trustees. This shall be the first Synod and shall be responsible for all the committees and their responsibilities.</p>
-                <p style={S.p}><strong style={{ color: '#c8a96e' }}>c)</strong> The Synod comprises of not more than TWENTY members and not less than NINE.</p>
+                <p style={S.p}><strong style={{ color: '#c8a96e' }}>c)</strong> The Synod comprises of not more than THIRTY members and not less than NINE.</p>
               </>
             )}
           </div>

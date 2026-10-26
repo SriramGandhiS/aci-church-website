@@ -25,10 +25,10 @@ const S = {
 function BankDetails({ isTa }) {
   return (
     <div style={S.bank}>
-      <p style={S.bankTitle}>{isTa ? 'ஏசிஐ பேராய வங்கி விபரங்கள்' : 'ACI Diocese Bank Details'}</p>
-      <p style={S.bankRow}>{isTa ? 'வங்கி கணக்கு எண்:' : 'Account No.:'} <span style={S.bankVal}>1567201000059</span></p>
+      <p style={S.bankTitle}>{isTa ? 'ஏசிஐ வங்கி விபரங்கள்' : 'ACI Bank Details'}</p>
+      <p style={S.bankRow}>{isTa ? 'வங்கி பெயர்:' : 'Bank Name:'} <span style={S.bankVal}>{isTa ? 'கனரா வங்கி' : 'Canara Bank'}</span></p>
+      <p style={S.bankRow}>{isTa ? 'நடப்பு கணக்கு எண்:' : 'Current A/c No.:'} <span style={S.bankVal}>1567201000059</span></p>
       <p style={S.bankRow}>{isTa ? 'IFSC குறியீடு:' : 'IFSC Code:'} <span style={S.bankVal}>CNRB0001567</span></p>
-      <p style={S.bankRow}>{isTa ? 'வங்கி பெயர்:' : 'Bank:'} <span style={S.bankVal}>{isTa ? 'கனரா வங்கி' : 'Canara Bank'}</span></p>
       <p style={S.bankRow}>{isTa ? 'கிளை:' : 'Branch:'} <span style={S.bankVal}>{isTa ? 'ஹனுமந்தராயன்கோட்டை' : 'Hanumantharayankottai'}</span></p>
     </div>
   )
@@ -166,12 +166,12 @@ export default function PartnershipPage() {
           <div style={{ marginTop: '28px' }}>
             {isTa ? (
               <>
-                <p style={S.pTa}>பேராயத்தின் வளர்ச்சிக்காக நிர்ணயித்துக்கொண்ட ஒரு தொகையை மாதந்தோறும் தன்னார்வமாக தங்களது பங்களிப்பை தொடர்ந்து செலுத்துவது.</p>
+                <p style={S.pTa}>பேராயத்தின் வளர்ச்சிக்காக நிர்ணயித்துக்கொண்ட ஒரு தொகையை மாதந்தோறும் தன்னார்வமாக தங்களது பங்களிப்பை தொடர்ந்து செலுத்துவது, மற்றும் அறங்காவலர்களின் பங்களிப்பு.</p>
                 <p style={S.pTa}>பொருத்தனையோடு கூட மாதந்தோறும் தனது பங்களிப்பை நல்குபவர்கள் பேராயத்தின் பங்காளர்கள் ஆகலாம்.</p>
               </>
             ) : (
               <>
-                <p style={S.p}>Voluntarily fixing an amount of money for the development of our Diocese as monthly contribution.</p>
+                <p style={S.p}>Voluntarily fixing an amount of money for the development of our Diocese as monthly contribution, trustees contributions.</p>
                 <p style={S.p}>Those who are contributing a promised amount in every month shall become a partner in this diocese.</p>
               </>
             )}

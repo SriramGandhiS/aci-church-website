@@ -66,7 +66,7 @@ export const navItems = [
     hasDropdown: true,
     href: '/synod',
     items: [
-      { label: 'SYNOD GENERAL COUNCIL', href: '/synod#synodgeneralcouncil' },
+      { label: 'SYNOD ADVISORY COUNCIL', href: '/synod#synodgeneralcouncil' },
       { label: 'ABOUT', href: '/synod#aboutsynod' },
       { label: 'FUNCTIONS OF SYNOD', href: '/synod#synodfunctions' },
       { label: 'SYNOD (ACADEMIC COUNCIL) & MEMBERS', href: '/synod#synodacademiccouncil' },

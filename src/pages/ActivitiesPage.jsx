@@ -95,10 +95,9 @@ const pageStyles = {
   },
 }
 
-function SectionHeader({ label, title }) {
+function SectionHeader({ title }) {
   return (
     <div style={{ marginBottom: '28px' }}>
-      <p style={pageStyles.label}>{label}</p>
       <h2 style={pageStyles.sectionHeading}>{title}</h2>
     </div>
   )
@@ -128,14 +127,10 @@ export default function ActivitiesPage() {
           <p style={{ ...pageStyles.label, marginBottom: '8px' }}>
             {isTa ? 'அப்போஸ்தல கவுன்சில் ஆஃப் இந்தியா பேராயம்' : 'APOSTOLIC COUNCIL OF INDIA DIOCESE'}
           </p>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 400, marginBottom: '16px' }}>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(52px, 7.5vw, 86px)', lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: 500, marginBottom: '16px' }}>
             {isTa ? 'பேராயத்தின் முக்கிய செயல்பாடுகள் & ஊழியங்கள்' : 'Activities & Ministries'}
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.65)', maxWidth: '750px', fontSize: '15px', lineHeight: 1.7 }}>
-            {isTa
-              ? 'தமிழகம் மற்றும் தேசமெங்கும் இயங்கும் 7 முக்கிய ஊழியத் தூண்கள் மூலம் போதகர்களை தாங்கி, திருச்சபைகளை பலப்படுத்துகிறோம்.'
-              : 'Detailed overview of the seven core ministerial pillars functioning under the ACI Diocese across India.'}
-          </p>
+          
         </div>
       </div>
 
@@ -143,7 +138,6 @@ export default function ActivitiesPage() {
       <section id="ordination" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 01' : 'Activity · 01'}
             title={isTa ? 'பிரதிஷ்டை ஊழியம்' : 'Ordination'}
           />
 
@@ -160,7 +154,7 @@ export default function ActivitiesPage() {
               <p style={pageStyles.tamilPara}>
                 தேவனால் தேர்ந்தெடுக்கப்பட்ட மற்றும் பரிசுத்த ஆவியினால் நியமிக்கப்பட்ட ஊழியர்களை நாம் உறுதியாக நம்புகிறோம்;
                 இந்த நியமனம் தேசத்தின் சட்டப்படி கிறிஸ்தவ உரிமைகளைப் பயன்படுத்துவதற்காக உள்ளது.
-                நியமனம் ஆண்டுக்கு இரண்டு முறை மத்திய பேராய அலுவலகத்தில் நடைபெறுகிறது.
+                நியமனம் ஆண்டுக்கு ஒரு முறை மத்திய பேராய அலுவலகத்தில் நடைபெறுகிறது.
               </p>
             </>
           ) : (
@@ -192,7 +186,6 @@ export default function ActivitiesPage() {
       <section id="wordsharingmeet" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 02' : 'Activity · 02'}
             title={isTa ? 'வார்த்தைப் பகிர்வு கூட்டம்' : 'Word Sharing Meet'}
           />
 
@@ -221,7 +214,6 @@ export default function ActivitiesPage() {
       <section id="zonalmeet" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 03' : 'Activity · 03'}
             title={isTa ? 'மண்டலக் கூட்டங்கள்' : 'Zonal Meet'}
           />
 
@@ -248,7 +240,6 @@ export default function ActivitiesPage() {
       <section id="churchvisit" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 04' : 'Activity · 04'}
             title={isTa ? 'சபை சந்திப்பு' : 'Church Visit'}
           />
 
@@ -275,7 +266,6 @@ export default function ActivitiesPage() {
       <section id="childrenministry" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 05' : 'Activity · 05'}
             title={isTa ? 'சிறுவர் ஊழியம் & VBS' : 'Children Ministry & VBS'}
           />
 
@@ -313,7 +303,6 @@ export default function ActivitiesPage() {
       <section id="youthministry" style={pageStyles.section}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 06' : 'Activity · 06'}
             title={isTa ? 'வாலிபர் ஊழியம்' : 'Youth Ministry'}
           />
 
@@ -347,7 +336,6 @@ export default function ActivitiesPage() {
       <section id="outreach" style={{ ...pageStyles.section, borderBottom: 'none' }}>
         <div style={pageStyles.container}>
           <SectionHeader
-            label={isTa ? 'செயல்பாடு · 07' : 'Activity · 07'}
             title={isTa ? 'புறசந்திப்பு & சுவிசேஷ ஊழியம்' : 'Outreach & Missions'}
           />
 
