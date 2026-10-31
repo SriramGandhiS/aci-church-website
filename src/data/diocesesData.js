@@ -80,7 +80,7 @@ export const diocesesList = [
     addressTa: 'எண்: 135, காலூர் ரோடு, அப்பாசாமி நகர், திண்டிவனம், விழுப்புரம் மாவட்டம், தமிழ்நாடு - 604002.',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Apostolic+Fellowship+Tabernacle+135+Kaloor+Road+Appasamy+Nagar+Tindivanam+Villupuram+Tamil+Nadu+604002',
     phone: '+91 98949 61442',
-    email: '',
+    email: 'acivillupuramdiocese@gmail.com',
     descriptionEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descriptionTa: 'ஆயராகப் பணியாற்றுதல், போதகர்களுக்கு ஊட்டுதல், சபைகளை நிறுவுதல், சுயாதீன ஊழியர்களை ஒன்றிணைத்தல், மேய்ப்பர் பணியுடன் சேவை செய்தல், எழுப்புதல் படையெழுச்சிக் கூட்டங்களை நடத்துதல், திருநிலைப்படுத்துதல் ஆராதனைகளை ஏற்பாடு செய்தல், பிராந்திய மாநாடுகள் மற்றும் வார்த்தைப் பகிர்வுக் கூட்டங்களை நடத்துதல், இறையியல் ஆராய்ச்சி மையமாகப் பணியாற்றுதல், மற்றும் ஆழ்ந்த கோட்பாட்டுத் தெளிவை வளர்த்தல், அப்போஸ்தல சபை சந்திப்புகள் மற்றும் உள்ளூர் சபைகளைப் பலப்படுத்துதல், பரிந்துரை ஜெப வலையமைப்பாகப் பணியாற்றுதல்.',
     highlights: [
@@ -110,7 +110,7 @@ export const diocesesList = [
     addressTa: '266, கோவில் தெரு, AIBEA நகர் "A" காலனி, பரவை - 625402, மதுரை மாவட்டம்.',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=266+Kovil+Street+AIBEA+Nagar+A+Colony+Paravai+Madurai+625402',
     phone: '+91 77089 55991',
-    email: 'sureshdaniell@gmail.com',
+    email: 'acimaduraidiocese@gmail.com',
     descriptionEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descriptionTa: 'ஆயராகப் பணியாற்றுதல், போதகர்களுக்கு ஊட்டுதல், சபைகளை நிறுவுதல், சுயாதீன ஊழியர்களை ஒன்றிணைத்தல், மேய்ப்பர் பணியுடன் சேவை செய்தல், எழுப்புதல் படையெழுச்சிக் கூட்டங்களை நடத்துதல், திருநிலைப்படுத்துதல் ஆராதனைகளை ஏற்பாடு செய்தல், பிராந்திய மாநாடுகள் மற்றும் வார்த்தைப் பகிர்வுக் கூட்டங்களை நடத்துதல், இறையியல் ஆராய்ச்சி மையமாகப் பணியாற்றுதல், மற்றும் ஆழ்ந்த கோட்பாட்டுத் தெளிவை வளர்த்தல், அப்போஸ்தல சபை சந்திப்புகள் மற்றும் உள்ளூர் சபைகளைப் பலப்படுத்துதல், பரிந்துரை ஜெப வலையமைப்பாகப் பணியாற்றுதல்.',
     highlights: [
@@ -170,7 +170,7 @@ export const diocesesList = [
     addressTa: '3/274 – D5 மயிலாடுதுறை, அனுப்பன்குளம், சிவகாசி தாலுகா, விருதுநகர் மாவட்டம், தமிழ்நாடு - 626189.',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Apostolic+Christian+Ministries+Foundation+Mayiladundurai+Anuppankulam+Sivakasi+Virudhunagar+Tamil+Nadu+626189',
     phone: '+91 99446 62106',
-    email: 'jeevapathailsvk@gmail.com',
+    email: 'acivirudhunagardiocese@gmail.com',
     descriptionEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descriptionTa: 'ஆயராகப் பணியாற்றுதல், போதகர்களுக்கு ஊட்டுதல், சபைகளை நிறுவுதல், சுயாதீன ஊழியர்களை ஒன்றிணைத்தல், மேய்ப்பர் பணியுடன் சேவை செய்தல், எழுப்புதல் படையெழுச்சிக் கூட்டங்களை நடத்துதல், திருநிலைப்படுத்துதல் ஆராதனைகளை ஏற்பாடு செய்தல், பிராந்திய மாநாடுகள் மற்றும் வார்த்தைப் பகிர்வுக் கூட்டங்களை நடத்துதல், இறையியல் ஆராய்ச்சி மையமாகப் பணியாற்றுதல், மற்றும் ஆழ்ந்த கோட்பாட்டுத் தெளிவை வளர்த்தல், அப்போஸ்தல சபை சந்திப்புகள் மற்றும் உள்ளூர் சபைகளைப் பலப்படுத்துதல், பரிந்துரை ஜெப வலையமைப்பாகப் பணியாற்றுதல்.',
     highlights: [
@@ -235,7 +235,7 @@ export const diocesesList = [
     addressTa: '7/53B, பருத்திவிளை, மண்டைக்காடு, கல்குளம், கன்னியாகுமரி மாவட்டம், தமிழ்நாடு - 629252.',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Jesus+Living+Ministry+7+53B+Paruthivilai+Mondaikadu+Kalkullam+Kanniyakumari+Tamil+Nadu+629252',
     phone: '+91 94864 43529',
-    email: '',
+    email: 'Acikanyakumaridiocese@gmail.com',
     descriptionEn: 'Work as a Bishop, Empowering Ministers, Church Planting, Uniting Independent Ministers, Serving with Pastoral Care, Conducting revival crusades, Organizing Ordination services, Conducting regional conventions and word sharing meets, Work as theological research hub and fostering deep doctrinal clarity, Apostolic Church visitations and strengthening local churches, Work as an intercessory prayer network.',
     descriptionTa: 'ஆயராகப் பணியாற்றுதல், போதகர்களுக்கு ஊட்டுதல், சபைகளை நிறுவுதல், சுயாதீன ஊழியர்களை ஒன்றிணைத்தல், மேய்ப்பர் பணியுடன் சேவை செய்தல், எழுப்புதல் படையெழுச்சிக் கூட்டங்களை நடத்துதல், திருநிலைப்படுத்துதல் ஆராதனைகளை ஏற்பாடு செய்தல், பிராந்திய மாநாடுகள் மற்றும் வார்த்தைப் பகிர்வுக் கூட்டங்களை நடத்துதல், இறையியல் ஆராய்ச்சி மையமாகப் பணியாற்றுதல், மற்றும் ஆழ்ந்த கோட்பாட்டுத் தெளிவை வளர்த்தல், அப்போஸ்தல சபை சந்திப்புகள் மற்றும் உள்ளூர் சபைகளைப் பலப்படுத்துதல், பரிந்துரை ஜெப வலையமைப்பாகப் பணியாற்றுதல்.',
     highlights: [
